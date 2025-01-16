@@ -1,0 +1,5695 @@
+@prefix pi: <https://crust.irk.ru/ontology/pollution/1.0/> .
+@prefix pt: <https://crust.irk.ru/ontology/pollution/terms/1.0/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+pi:Данные_Харанцы_Ольхон_xls_Лист1 pt:sample pi:AGS-0084,
+        pi:AGS-0085,
+        pi:AGS-0086,
+        pi:AGS-0087,
+        pi:AGS-0088,
+        pi:AGS-0089,
+        pi:AGS-0090,
+        pi:AGS-0091,
+        pi:AGS-0092,
+        pi:AGS-0093,
+        pi:AGS-0094,
+        pi:AGS-0095,
+        pi:AGS-0096,
+        pi:AGS-0097,
+        pi:AGS-0098,
+        pi:AGS-0099,
+        pi:AGS-0100,
+        pi:AGS-0101,
+        pi:AGS-0102,
+        pi:AGS-0103,
+        pi:AGS-0104,
+        pi:AGS-0105,
+        pi:AGS-0106,
+        pi:AGS-0107,
+        pi:AGS-0109,
+        pi:AGS-0110 .
+
+pi:Данные_Хужир_Ольхон_xls_Лист1 pt:sample pi:UGS-0211,
+        pi:UGS-0212,
+        pi:UGS-0214,
+        pi:UGS-0215,
+        pi:UGS-0216,
+        pi:UGS-0217,
+        pi:UGS-0218,
+        pi:UGS-0219,
+        pi:UGS-0220,
+        pi:UGS-0221,
+        pi:UGS-0222,
+        pi:UGS-0224,
+        pi:UGS-0225,
+        pi:UGS-0227,
+        pi:UGS-0228,
+        pi:UGS-0229,
+        pi:UGS-0230,
+        pi:UGS-0231,
+        pi:UGS-0233,
+        pi:UGS-0234,
+        pi:UGS-0235,
+        pi:UGS-0237,
+        pi:UGS-0238,
+        pi:UGS-0239,
+        pi:UGS-0240,
+        pi:UGS-0241,
+        pi:UGS-0242,
+        pi:UGS-0243,
+        pi:UGS-0244,
+        pi:UGS-0246,
+        pi:UGS-0247,
+        pi:UGS-0249,
+        pi:UGS-0250,
+        pi:UGS-0251,
+        pi:UGS-0252,
+        pi:UGS-0255,
+        pi:UGS-0256,
+        pi:UGS-0258,
+        pi:UGS-0260,
+        pi:UGS-0262,
+        pi:UGS-0266,
+        pi:UGS-0267,
+        pi:UGS-0268,
+        pi:UGS-0269,
+        pi:UGS-0270,
+        pi:UGW-0264 .
+
+pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист1 pt:sample pi:CHK-1-TOT,
+        pi:CHK-2-TOT,
+        pi:CHK-3,
+        pi:CHK-3-TOT,
+        pi:HAK-1-TOT,
+        pi:HAK-2-TOT,
+        pi:HAK-3-TOT,
+        pi:SB-1-1-100,
+        pi:SB-1-1-TOT,
+        pi:SB-1-2-100,
+        pi:SB-1-2-TOT,
+        pi:SB-1-3-100,
+        pi:SB-1-3-TOT,
+        pi:YM-1-1-100,
+        pi:YM-1-1-TOT,
+        pi:YM-1-2-100,
+        pi:YM-1-2-TOT,
+        pi:YM-1-3-100,
+        pi:YM-1-3-TOT,
+        pi:YM-1-4-100,
+        pi:YM-1-4-TOT,
+        pi:YM-1-5-100,
+        pi:YM-1-5-TOT,
+        pi:YM-1-6-100,
+        pi:YM-1-6-TOT,
+        pi:YM-1-7-100,
+        pi:YM-1-7-TOT,
+        pi:YM-1-8-100,
+        pi:YM-1-8-TOT,
+        pi:YM-1-9-100,
+        pi:YM-1-9-TOT,
+        pi:YO-1-100,
+        pi:YO-1-TOT,
+        pi:YO-2-100,
+        pi:YO-2-TOT,
+        pi:YO-3-100,
+        pi:YO-3-TOT .
+
+pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист2 pt:sample pi:YM-1-1-100,
+        pi:YM-1-1-TOT,
+        pi:YM-1-2-100,
+        pi:YM-1-2-TOT,
+        pi:YM-1-3-100,
+        pi:YM-1-3-TOT,
+        pi:YM-1-4-100,
+        pi:YM-1-4-TOT,
+        pi:YM-1-5-100,
+        pi:YM-1-5-TOT,
+        pi:YM-1-6-100,
+        pi:YM-1-6-TOT,
+        pi:YM-1-7-100,
+        pi:YM-1-7-TOT,
+        pi:YM-1-8-100,
+        pi:YM-1-8-TOT,
+        pi:YM-1-9-100,
+        pi:YM-1-9-TOT,
+        pi:YO-1-100,
+        pi:YO-1-TOT,
+        pi:YO-2-100,
+        pi:YO-2-TOT,
+        pi:YO-3-100,
+        pi:YO-3-TOT .
+
+pi:AGS-0084 pt:Al 1.1406e+01 ;
+    pt:As 1.3e+00 ;
+    pt:Ba 7.004e+02 ;
+    pt:Ca 2.36e+00 ;
+    pt:Ce 3.36e+01 ;
+    pt:Cl 7.73e+01 ;
+    pt:Co 1.48e+01 ;
+    pt:Cr 8.04e+01 ;
+    pt:Cu 2.65e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 4.794e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K 1.603e+00 ;
+    pt:La 3.08e+01 ;
+    pt:Mg 1.255e+00 ;
+    pt:Mn 1.67e-01 ;
+    pt:Mo 1.9e+00 ;
+    pt:Na 9.64e-01 ;
+    pt:Nb 1.42e+01 ;
+    pt:Nd 1.98e+01 ;
+    pt:Ni 4.11e+01 ;
+    pt:P 1.943466e+03 ;
+    pt:Pb 1.29e+01 ;
+    pt:Rb 3.57e+01 ;
+    pt:S 2.997e+02 ;
+    pt:Sc 1.66e+01 ;
+    pt:Si 6.24e+01 ;
+    pt:Sr 3.059e+02 ;
+    pt:Th 6.8e+00 ;
+    pt:Ti 9.28e-01 ;
+    pt:U 4e+00 ;
+    pt:V 1.356e+02 ;
+    pt:Y 1.84e+01 ;
+    pt:Zn 1.046e+02 ;
+    pt:Zr 2.021e+02 ;
+    pt:в_д "107°25'31.41\"В" ;
+    pt:с_ш " 53°12'43.46\"С" .
+
+pi:AGS-0085 pt:Al 1.2427e+01 ;
+    pt:As 3.4e+00 ;
+    pt:Ba 9.355e+02 ;
+    pt:Ca 5.4e+00 ;
+    pt:Ce 4.65e+01 ;
+    pt:Cl 9.43e+01 ;
+    pt:Co 1.71e+01 ;
+    pt:Cr 9.78e+01 ;
+    pt:Cu 3.43e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 5.585e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K 1.299e+00 ;
+    pt:La 3.33e+01 ;
+    pt:Mg 1.574e+00 ;
+    pt:Mn 3.68e-01 ;
+    pt:Mo 3.2e+00 ;
+    pt:Na 5.35e-01 ;
+    pt:Nb 1.42e+01 ;
+    pt:Nd 3.22e+01 ;
+    pt:Ni 6.72e+01 ;
+    pt:P 2.576556e+03 ;
+    pt:Pb 1.85e+01 ;
+    pt:Rb 3.69e+01 ;
+    pt:S 8.623e+02 ;
+    pt:Sc 1.33e+01 ;
+    pt:Si 4.751e+01 ;
+    pt:Sr 3.001e+02 ;
+    pt:Th 6.8e+00 ;
+    pt:Ti 1.292e+00 ;
+    pt:U 4.7e+00 ;
+    pt:V 1.701e+02 ;
+    pt:Y 2.43e+01 ;
+    pt:Zn 1.852e+02 ;
+    pt:Zr 3.055e+02 ;
+    pt:в_д "107°26'53.08\"В" ;
+    pt:с_ш " 53°12'57.96\"С" .
+
+pi:AGS-0086 pt:Al 9.8e-01 ;
+    pt:As 1.063e+02 ;
+    pt:Ba 5.57e+01 ;
+    pt:Ca 1.892e+00 ;
+    pt:Ce 2.48e+01 ;
+    pt:Cl 2.13e+02 ;
+    pt:Co 6.85e+01 ;
+    pt:Cr 1.391e+02 ;
+    pt:Cu 5.49e+01 ;
+    pt:F 1.69e+01 ;
+    pt:Fe 1.16e-01 ;
+    pt:Ga 0e+00 ;
+    pt:K 6.042e+01 ;
+    pt:La 8.087e+02 ;
+    pt:Mg 8.63e-01 ;
+    pt:Mn 7.5e-01 ;
+    pt:Na 2e+00 ;
+    pt:Nb 8.78e+01 ;
+    pt:Nd 2.55e+01 ;
+    pt:Ni 1.31e+01 ;
+    pt:P 1.1e+01 ;
+    pt:Pb 4.5e+00 ;
+    pt:Rb 8e+00 ;
+    pt:S 1.601488e+03 ;
+    pt:Sc 1.05e+01 ;
+    pt:Si 1.1506e+01 ;
+    pt:Sr 1.78e+01 ;
+    pt:Th 1.9e+00 ;
+    pt:Ti 1.71e+00 ;
+    pt:U 5.3e+00 ;
+    pt:V 1.037e+02 ;
+    pt:Y 3.588e+02 ;
+    pt:Zn 3.34e+01 ;
+    pt:Zr 1.39e+01 ;
+    pt:в_д "107°29'32.73\"В" ;
+    pt:с_ш " 53°12'22.29\"С" .
+
+pi:AGS-0087 pt:Al 1.238e+01 ;
+    pt:As 1.9e+00 ;
+    pt:Ba 8.159e+02 ;
+    pt:Ca 2.93e+00 ;
+    pt:Ce 4.05e+01 ;
+    pt:Cl 9.53e+01 ;
+    pt:Co 1.36e+01 ;
+    pt:Cr 7.92e+01 ;
+    pt:Cu 1.53e+01 ;
+    pt:F 2.10972e+02 ;
+    pt:Fe 3.993e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K 1.577e+00 ;
+    pt:La 1.98e+01 ;
+    pt:Mg 1.357e+00 ;
+    pt:Mn 3.58e-01 ;
+    pt:Mo 1.4e+00 ;
+    pt:Na 1.052e+00 ;
+    pt:Nb 1.17e+01 ;
+    pt:Nd 1.47e+01 ;
+    pt:Ni 2.76e+01 ;
+    pt:P 2.634448e+03 ;
+    pt:Pb 1.65e+01 ;
+    pt:Rb 4.04e+01 ;
+    pt:S 2.16e+02 ;
+    pt:Sc 1.47e+01 ;
+    pt:Si 5.462e+01 ;
+    pt:Sr 3.549e+02 ;
+    pt:Th 6.2e+00 ;
+    pt:Ti 1.069e+00 ;
+    pt:U 2.6e+00 ;
+    pt:V 1.068e+02 ;
+    pt:Y 1.61e+01 ;
+    pt:Zn 1.309e+02 ;
+    pt:Zr 1.266e+02 ;
+    pt:в_д "107°28'38.90\"В" ;
+    pt:с_ш " 53°12'23.42\"С" .
+
+pi:AGS-0088 pt:Al 1.1152e+01 ;
+    pt:As 2.6e+00 ;
+    pt:Ba 7.375e+02 ;
+    pt:Ca 2.26e+00 ;
+    pt:Ce 2.94e+01 ;
+    pt:Cl 1.162e+02 ;
+    pt:Co 1.05e+01 ;
+    pt:Cr 6.17e+01 ;
+    pt:Cu 1.45e+01 ;
+    pt:F 1.20913e+02 ;
+    pt:Fe 3.015e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K 1.588e+00 ;
+    pt:La 1.44e+01 ;
+    pt:Mg 9.1e-01 ;
+    pt:Mn 4.06e-01 ;
+    pt:Mo 1.4e+00 ;
+    pt:Na 1.17e+00 ;
+    pt:Nb 1.08e+01 ;
+    pt:Nd 1.05e+01 ;
+    pt:Ni 2.02e+01 ;
+    pt:P 1.472566e+03 ;
+    pt:Pb 2.07e+01 ;
+    pt:Rb 4.41e+01 ;
+    pt:S 3.822e+02 ;
+    pt:Sc 1.1e+01 ;
+    pt:Si 5.683e+01 ;
+    pt:Sr 3.746e+02 ;
+    pt:Th 5.2e+00 ;
+    pt:Ti 8.25e-01 ;
+    pt:U 2.2e+00 ;
+    pt:V 7.46e+01 ;
+    pt:Y 1.33e+01 ;
+    pt:Zn 7.83e+01 ;
+    pt:Zr 1.411e+02 ;
+    pt:в_д "107°27'43.22\"В" ;
+    pt:с_ш " 53°11'52.22\"С" .
+
+pi:AGS-0089 pt:Al 1.0564e+01 ;
+    pt:As 2.3e+00 ;
+    pt:Ba 7.505e+02 ;
+    pt:Ca 2.25e+00 ;
+    pt:Ce 4.39e+01 ;
+    pt:Cl 9.64e+01 ;
+    pt:Co 1.12e+01 ;
+    pt:Cr 6.34e+01 ;
+    pt:Cu 1.34e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.522e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K 1.775e+00 ;
+    pt:La 2.51e+01 ;
+    pt:Mg 1.154e+00 ;
+    pt:Mn 1.58e-01 ;
+    pt:Mo 1.6e+00 ;
+    pt:Na 1.315e+00 ;
+    pt:Nb 1.12e+01 ;
+    pt:Nd 1.75e+01 ;
+    pt:Ni 2.36e+01 ;
+    pt:P 1.015468e+03 ;
+    pt:Pb 1.72e+01 ;
+    pt:Rb 5.43e+01 ;
+    pt:S 1.543e+02 ;
+    pt:Sc 1.23e+01 ;
+    pt:Si 5.585e+01 ;
+    pt:Sr 4.082e+02 ;
+    pt:Th 5.3e+00 ;
+    pt:Ti 8.15e-01 ;
+    pt:U 2.8e+00 ;
+    pt:V 8.49e+01 ;
+    pt:Y 1.54e+01 ;
+    pt:Zn 6.89e+01 ;
+    pt:Zr 1.877e+02 ;
+    pt:в_д "107°27'15.39\"В" ;
+    pt:с_ш " 53°11'36.61\"С" .
+
+pi:AGS-0090 pt:Al 1.0681e+01 ;
+    pt:As 3.6e+00 ;
+    pt:Ba 8.543e+02 ;
+    pt:Ca 2.14e+00 ;
+    pt:Ce 2.98e+01 ;
+    pt:Cl 7.45e+01 ;
+    pt:Co 1.26e+01 ;
+    pt:Cr 7.79e+01 ;
+    pt:Cu 1.58e+01 ;
+    pt:F 1.74899e+02 ;
+    pt:Fe 3.871e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K 1.967e+00 ;
+    pt:La 1.61e+01 ;
+    pt:Mg 1.227e+00 ;
+    pt:Mn 2.28e-01 ;
+    pt:Mo 1e+00 ;
+    pt:Na 1.229e+00 ;
+    pt:Nb 8.3e+00 ;
+    pt:Nd 1.18e+01 ;
+    pt:Ni 2.67e+01 ;
+    pt:P 1.415962e+03 ;
+    pt:Pb 1.79e+01 ;
+    pt:Rb 6.36e+01 ;
+    pt:S 2.494e+02 ;
+    pt:Sc 6.3e+00 ;
+    pt:Si 6.341e+01 ;
+    pt:Sr 4.226e+02 ;
+    pt:Th 5.2e+00 ;
+    pt:Ti 6.7e-01 ;
+    pt:U 1.8e+00 ;
+    pt:V 8.75e+01 ;
+    pt:Y 1.46e+01 ;
+    pt:Zn 8.25e+01 ;
+    pt:Zr 1.119e+02 ;
+    pt:в_д "107°27'41.37\"В" ;
+    pt:с_ш " 53°11'19.90\"С" .
+
+pi:AGS-0091 pt:Al 9.251e+00 ;
+    pt:As 1.1e+00 ;
+    pt:Ba 8.532e+02 ;
+    pt:Ca 1.67e+00 ;
+    pt:Ce 2.72e+01 ;
+    pt:Cl 7.39e+01 ;
+    pt:Co 9.6e+00 ;
+    pt:Cr 4.42e+01 ;
+    pt:Cu 1.35e+01 ;
+    pt:F 1.58306e+02 ;
+    pt:Fe 2.424e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K 2.02e+00 ;
+    pt:La 1.94e+01 ;
+    pt:Mg 8.54e-01 ;
+    pt:Mn 4.57e-01 ;
+    pt:Mo 8e-01 ;
+    pt:Na 1.202e+00 ;
+    pt:Nb 6.9e+00 ;
+    pt:Nd 1.02e+01 ;
+    pt:Ni 1.92e+01 ;
+    pt:P 2.083113e+03 ;
+    pt:Pb 1.88e+01 ;
+    pt:Rb 5.78e+01 ;
+    pt:S 2.212e+02 ;
+    pt:Sc 1.03e+01 ;
+    pt:Si 5.987e+01 ;
+    pt:Sr 3.227e+02 ;
+    pt:Th 4.4e+00 ;
+    pt:Ti 4.85e-01 ;
+    pt:U 2.2e+00 ;
+    pt:V 5.82e+01 ;
+    pt:Y 1.08e+01 ;
+    pt:Zn 9.19e+01 ;
+    pt:Zr 7.25e+01 ;
+    pt:в_д "107°27'13.54\"В" ;
+    pt:с_ш " 53°11'4.29\"С" .
+
+pi:AGS-0092 pt:Al 9.026e+00 ;
+    pt:As 2.7e+00 ;
+    pt:Ba 9.024e+02 ;
+    pt:Ca 2.87e+00 ;
+    pt:Ce 3.82e+01 ;
+    pt:Cl 6.45e+01 ;
+    pt:Co 1.03e+01 ;
+    pt:Cr 6.4e+01 ;
+    pt:Cu 1.53e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.795e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K 1.798e+00 ;
+    pt:La 1.79e+01 ;
+    pt:Mg 1.919e+00 ;
+    pt:Mn 2.34e-01 ;
+    pt:Mo 1.3e+00 ;
+    pt:Na 1.409e+00 ;
+    pt:Nb 8.6e+00 ;
+    pt:Nd 2.27e+01 ;
+    pt:Ni 2.21e+01 ;
+    pt:P 2.156566e+03 ;
+    pt:Pb 1.6e+01 ;
+    pt:Rb 5.36e+01 ;
+    pt:S 4.495e+02 ;
+    pt:Sc 1.29e+01 ;
+    pt:Si 6.252e+01 ;
+    pt:Sr 3.41e+02 ;
+    pt:Th 4.5e+00 ;
+    pt:Ti 7.41e-01 ;
+    pt:U 2.6e+00 ;
+    pt:V 9.5e+01 ;
+    pt:Y 1.71e+01 ;
+    pt:Zn 7.1e+01 ;
+    pt:Zr 1.484e+02 ;
+    pt:в_д "107°27'39.51\"В" ;
+    pt:с_ш " 53°10'47.58\"С" .
+
+pi:AGS-0093 pt:Al 9.452e+00 ;
+    pt:As 2.9e+00 ;
+    pt:Ba 6.647e+02 ;
+    pt:Ca 3.03e+00 ;
+    pt:Ce 2.42e+01 ;
+    pt:Cl 3.52e+01 ;
+    pt:Co 9.8e+00 ;
+    pt:Cr 5.17e+01 ;
+    pt:Cu 1.45e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 4.092e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K 1.53e+00 ;
+    pt:La 1.97e+01 ;
+    pt:Mg 2.526e+00 ;
+    pt:Mn 1.88e-01 ;
+    pt:Mo 1.6e+00 ;
+    pt:Na 1.483e+00 ;
+    pt:Nb 1.05e+01 ;
+    pt:Nd 1.19e+01 ;
+    pt:Ni 1.71e+01 ;
+    pt:P 1.380244e+03 ;
+    pt:Pb 1.31e+01 ;
+    pt:Rb 4.52e+01 ;
+    pt:S 3.418e+02 ;
+    pt:Sc 9.3e+00 ;
+    pt:Si 6.354e+01 ;
+    pt:Sr 2.839e+02 ;
+    pt:Th 4.9e+00 ;
+    pt:Ti 8.52e-01 ;
+    pt:U 2.3e+00 ;
+    pt:V 9.75e+01 ;
+    pt:Y 1.78e+01 ;
+    pt:Zn 7.91e+01 ;
+    pt:Zr 1.764e+02 ;
+    pt:в_д "107°27'39.51\"В" ;
+    pt:с_ш " 53°10'47.58\"С" .
+
+pi:AGS-0094 pt:Al 1.1274e+01 ;
+    pt:As 4e+00 ;
+    pt:Ba 8.758e+02 ;
+    pt:Ca 1.92e+00 ;
+    pt:Ce 3.94e+01 ;
+    pt:Cl 1.19e+02 ;
+    pt:Co 1.18e+01 ;
+    pt:Cr 6.18e+01 ;
+    pt:Cu 1.45e+01 ;
+    pt:F 9.7084e+01 ;
+    pt:Fe 3.419e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K 1.932e+00 ;
+    pt:La 2.31e+01 ;
+    pt:Mg 1.049e+00 ;
+    pt:Mn 4.31e-01 ;
+    pt:Mo 1.7e+00 ;
+    pt:Na 1.151e+00 ;
+    pt:Nb 1.12e+01 ;
+    pt:Nd 1.6e+01 ;
+    pt:Ni 2.6e+01 ;
+    pt:P 1.54404e+03 ;
+    pt:Pb 1.74e+01 ;
+    pt:Rb 6.06e+01 ;
+    pt:S 3.185e+02 ;
+    pt:Sc 1.2e+01 ;
+    pt:Si 6.647e+01 ;
+    pt:Sr 3.591e+02 ;
+    pt:Th 5.4e+00 ;
+    pt:Ti 8.02e-01 ;
+    pt:U 2.3e+00 ;
+    pt:V 7.84e+01 ;
+    pt:Y 1.38e+01 ;
+    pt:Zn 8.28e+01 ;
+    pt:Zr 1.732e+02 ;
+    pt:в_д "107°26'21.57\"В" ;
+    pt:с_ш " 53°11'37.72\"С" .
+
+pi:AGS-0095 pt:Al 1.1385e+01 ;
+    pt:As 3.1e+00 ;
+    pt:Ba 9.949e+02 ;
+    pt:Ca 1.85e+00 ;
+    pt:Ce 3.94e+01 ;
+    pt:Cl 1.566e+02 ;
+    pt:Co 1.32e+01 ;
+    pt:Cr 5.96e+01 ;
+    pt:Cu 1.62e+01 ;
+    pt:F 2.22727e+02 ;
+    pt:Fe 3.237e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K 1.866e+00 ;
+    pt:La 2.39e+01 ;
+    pt:Mg 1.145e+00 ;
+    pt:Mn 6.59e-01 ;
+    pt:Mo 1.1e+00 ;
+    pt:Na 9.52e-01 ;
+    pt:Nb 8.7e+00 ;
+    pt:Nd 1.57e+01 ;
+    pt:Ni 2.48e+01 ;
+    pt:P 1.657962e+03 ;
+    pt:Pb 2.07e+01 ;
+    pt:Rb 5.93e+01 ;
+    pt:S 4.002e+02 ;
+    pt:Sc 7.3e+00 ;
+    pt:Si 5.948e+01 ;
+    pt:Sr 3.172e+02 ;
+    pt:Th 5.1e+00 ;
+    pt:Ti 7.52e-01 ;
+    pt:U 2.6e+00 ;
+    pt:V 8.57e+01 ;
+    pt:Y 1.39e+01 ;
+    pt:Zn 1.068e+02 ;
+    pt:Zr 1.071e+02 ;
+    pt:в_д "107°25'55.58\"В" ;
+    pt:с_ш " 53°11'54.43\"С" .
+
+pi:AGS-0096 pt:Al 1.0068e+01 ;
+    pt:As 4.2e+00 ;
+    pt:Ba 7.023e+02 ;
+    pt:Ca 2.12e+00 ;
+    pt:Ce 2.63e+01 ;
+    pt:Cl 1.117e+02 ;
+    pt:Co 1.08e+01 ;
+    pt:Cr 6.7e+01 ;
+    pt:Cu 1.48e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.781e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K 1.856e+00 ;
+    pt:La 1.85e+01 ;
+    pt:Mg 1.118e+00 ;
+    pt:Mn 1.87e-01 ;
+    pt:Mo 1.2e+00 ;
+    pt:Na 1.126e+00 ;
+    pt:Nb 9.5e+00 ;
+    pt:Nd 1.67e+01 ;
+    pt:Ni 1.98e+01 ;
+    pt:P 1.176493e+03 ;
+    pt:Pb 1.77e+01 ;
+    pt:Rb 5.81e+01 ;
+    pt:S 4.16e+02 ;
+    pt:Sc 7.3e+00 ;
+    pt:Si 6.073e+01 ;
+    pt:Sr 3.924e+02 ;
+    pt:Th 4.6e+00 ;
+    pt:Ti 8.15e-01 ;
+    pt:U 2.3e+00 ;
+    pt:V 8.81e+01 ;
+    pt:Y 1.46e+01 ;
+    pt:Zn 5.4e+01 ;
+    pt:Zr 1.28e+02 ;
+    pt:в_д "107°25'18.40\"В" ;
+    pt:с_ш " 53°12'51.81\"С" .
+
+pi:AGS-0097 pt:Al 9.684e+00 ;
+    pt:As 3.8e+00 ;
+    pt:Ba 8.39e+02 ;
+    pt:Ca 2.68e+00 ;
+    pt:Ce 4.2e+01 ;
+    pt:Cl 1.077e+02 ;
+    pt:Co 1.78e+01 ;
+    pt:Cr 7.2e+01 ;
+    pt:Cu 1.58e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.406e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K 1.495e+00 ;
+    pt:La 2.26e+01 ;
+    pt:Mg 1.16e+00 ;
+    pt:Mn 6.94e-01 ;
+    pt:Mo 1e+00 ;
+    pt:Na 7.8e-01 ;
+    pt:Nb 9e+00 ;
+    pt:Nd 2.01e+01 ;
+    pt:Ni 2.44e+01 ;
+    pt:P 1.669087e+03 ;
+    pt:Pb 1.84e+01 ;
+    pt:Rb 4.52e+01 ;
+    pt:S 7.282e+02 ;
+    pt:Sc 7.9e+00 ;
+    pt:Si 5.31e+01 ;
+    pt:Sr 3.429e+02 ;
+    pt:Th 5.7e+00 ;
+    pt:Ti 6.91e-01 ;
+    pt:U 2.2e+00 ;
+    pt:V 8.98e+01 ;
+    pt:Y 1.71e+01 ;
+    pt:Zn 9.99e+01 ;
+    pt:Zr 1.208e+02 ;
+    pt:в_д "107°25'31.41\"В" ;
+    pt:с_ш " 53°12'43.46\"С" .
+
+pi:AGS-0098 pt:Al 1.243e+01 ;
+    pt:As 4e+00 ;
+    pt:Ba 5.642e+02 ;
+    pt:Ca 3.52e+00 ;
+    pt:Ce 3.15e+01 ;
+    pt:Cl 1.133e+02 ;
+    pt:Co 1.45e+01 ;
+    pt:Cr 1.083e+02 ;
+    pt:Cu 1.51e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 4.375e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K 1.553e+00 ;
+    pt:La 1.55e+01 ;
+    pt:Mg 1.446e+00 ;
+    pt:Mn 2.66e-01 ;
+    pt:Mo 1.6e+00 ;
+    pt:Na 9.16e-01 ;
+    pt:Nb 1.05e+01 ;
+    pt:Nd 2e+01 ;
+    pt:Ni 2.03e+01 ;
+    pt:P 1.885647e+03 ;
+    pt:Pb 1.84e+01 ;
+    pt:Rb 6.9e+01 ;
+    pt:S 8.694e+02 ;
+    pt:Sc 0e+00 ;
+    pt:Si 5.178e+01 ;
+    pt:Sr 4.076e+02 ;
+    pt:Th 6.3e+00 ;
+    pt:Ti 1.652e+00 ;
+    pt:U 2.3e+00 ;
+    pt:V 1.228e+02 ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 5.87e+01 ;
+    pt:Zr 2.002e+02 ;
+    pt:в_д "107°28'11.06\"В" ;
+    pt:с_ш " 53°12'7.82\"С" .
+
+pi:AGS-0099 pt:Al 1.2622e+01 ;
+    pt:As 6.3e+00 ;
+    pt:Ba 6.007e+02 ;
+    pt:Ca 5.19e+00 ;
+    pt:Ce 5.23e+01 ;
+    pt:Cl 9.27e+01 ;
+    pt:Co 2.12e+01 ;
+    pt:Cr 1.449e+02 ;
+    pt:Cu 5.91e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 7.503e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K 1.336e+00 ;
+    pt:La 5.52e+01 ;
+    pt:Mg 1.875e+00 ;
+    pt:Mn 6.4e-02 ;
+    pt:Mo 1.08e+01 ;
+    pt:Na 3.64e-01 ;
+    pt:Nb 9.5e+00 ;
+    pt:Nd 3.32e+01 ;
+    pt:Ni 8.37e+01 ;
+    pt:P 1.712506e+03 ;
+    pt:Pb 2.01e+01 ;
+    pt:Rb 4.56e+01 ;
+    pt:S 8.5403e+03 ;
+    pt:Sc 0e+00 ;
+    pt:Si 4.391e+01 ;
+    pt:Sr 3.574e+02 ;
+    pt:Th 8.5e+00 ;
+    pt:Ti 9.07e-01 ;
+    pt:U 1.34e+01 ;
+    pt:V 2.057e+02 ;
+    pt:Y 2.59e+01 ;
+    pt:Zn 1.756e+02 ;
+    pt:Zr 1.019e+02 ;
+    pt:в_д "107°27'45.07\"В" ;
+    pt:с_ш " 53°12'24.53\"С" .
+
+pi:AGS-0100 pt:Al 7.704e+00 ;
+    pt:As 2.4e+00 ;
+    pt:Ba 6.789e+02 ;
+    pt:Ca 2.59e+00 ;
+    pt:Ce 2.59e+01 ;
+    pt:Cl 5.43e+01 ;
+    pt:Co 7.2e+00 ;
+    pt:Cr 6.72e+01 ;
+    pt:Cu 1.77e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.318e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K 1.71e+00 ;
+    pt:La 1.08e+01 ;
+    pt:Mg 1.053e+00 ;
+    pt:Mn 4.7e-02 ;
+    pt:Mo 2e+00 ;
+    pt:Na 1.32e+00 ;
+    pt:Nb 7.4e+00 ;
+    pt:Nd 1.48e+01 ;
+    pt:Ni 2.45e+01 ;
+    pt:P 8.462894e+02 ;
+    pt:Pb 1.49e+01 ;
+    pt:Rb 5.15e+01 ;
+    pt:S 1.4788e+03 ;
+    pt:Sc 0e+00 ;
+    pt:Si 6.808e+01 ;
+    pt:Sr 4.951e+02 ;
+    pt:Th 4.8e+00 ;
+    pt:Ti 5.1e-01 ;
+    pt:U 3.5e+00 ;
+    pt:V 9.63e+01 ;
+    pt:Y 1.62e+01 ;
+    pt:Zn 4.15e+01 ;
+    pt:Zr 1.169e+02 ;
+    pt:в_д "107°26'51.24\"В" ;
+    pt:с_ш " 53°12'25.64\"С" .
+
+pi:AGS-0101 pt:Al 8.244e+00 ;
+    pt:As 2.5e+00 ;
+    pt:Ba 5.946e+02 ;
+    pt:Ca 3.47e+00 ;
+    pt:Ce 2.6e+01 ;
+    pt:Cl 5.87e+01 ;
+    pt:Co 1.16e+01 ;
+    pt:Cr 8.89e+01 ;
+    pt:Cu 1.62e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 4.362e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K 1.478e+00 ;
+    pt:La 1.44e+01 ;
+    pt:Mg 1.336e+00 ;
+    pt:Mn 1.58e-01 ;
+    pt:Mo 1.5e+00 ;
+    pt:Na 1.131e+00 ;
+    pt:Nb 1.28e+01 ;
+    pt:Nd 1.75e+01 ;
+    pt:Ni 2.3e+01 ;
+    pt:P 2.330936e+03 ;
+    pt:Pb 1.27e+01 ;
+    pt:Rb 3.44e+01 ;
+    pt:S 1.7634e+03 ;
+    pt:Sc 0e+00 ;
+    pt:Si 6.272e+01 ;
+    pt:Sr 3.757e+02 ;
+    pt:Th 5.7e+00 ;
+    pt:Ti 8.43e-01 ;
+    pt:U 4.7e+00 ;
+    pt:V 1.028e+02 ;
+    pt:Y 2.25e+01 ;
+    pt:Zn 5.71e+01 ;
+    pt:Zr 1.321e+02 ;
+    pt:в_д "107°26'25.25\"В" ;
+    pt:с_ш " 53°12'42.35\"С" .
+
+pi:AGS-0102 pt:Al 7.848e+00 ;
+    pt:As 4.7e+00 ;
+    pt:Ba 6.706e+02 ;
+    pt:Ca 2.83e+00 ;
+    pt:Ce 1.89e+01 ;
+    pt:Cl 7.99e+01 ;
+    pt:Co 1.26e+01 ;
+    pt:Cr 7.4e+01 ;
+    pt:Cu 2e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 4.853e+00 ;
+    pt:Ga 8e+00 ;
+    pt:K 1.756e+00 ;
+    pt:La 1.92e+01 ;
+    pt:Mg 1.136e+00 ;
+    pt:Mn 1.57e-01 ;
+    pt:Mo 1.4e+00 ;
+    pt:Na 9.9e-01 ;
+    pt:Nb 9.6e+00 ;
+    pt:Nd 1.24e+01 ;
+    pt:Ni 4.08e+01 ;
+    pt:P 4.865969e+03 ;
+    pt:Pb 2.36e+02 ;
+    pt:Rb 2.51e+01 ;
+    pt:S 1.183e+03 ;
+    pt:Sc 0e+00 ;
+    pt:Si 6.337e+01 ;
+    pt:Sr 2.115e+02 ;
+    pt:Th 1.7e+00 ;
+    pt:Ti 6.83e-01 ;
+    pt:U 2.5e+00 ;
+    pt:V 8.76e+01 ;
+    pt:Y 9.4e+00 ;
+    pt:Zn 9.75e+01 ;
+    pt:Zr 8.81e+01 ;
+    pt:в_д "107°25'30.02\"В" ;
+    pt:с_ш " 53°12'58.37\"С" .
+
+pi:AGS-0103 pt:Al 8.418e+00 ;
+    pt:As 3.9e+00 ;
+    pt:Ba 7.797e+02 ;
+    pt:Ca 2.86e+00 ;
+    pt:Ce 3.68e+01 ;
+    pt:Cl 9.2e+01 ;
+    pt:Co 1.38e+01 ;
+    pt:Cr 7.33e+01 ;
+    pt:Cu 1.94e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 4.553e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K 1.561e+00 ;
+    pt:La 2.13e+01 ;
+    pt:Mg 1.214e+00 ;
+    pt:Mn 2.39e-01 ;
+    pt:Mo 1.8e+00 ;
+    pt:Na 9.03e-01 ;
+    pt:Nb 1.15e+01 ;
+    pt:Nd 1.78e+01 ;
+    pt:Ni 2.39e+01 ;
+    pt:P 2.280628e+03 ;
+    pt:Pb 1.55e+01 ;
+    pt:Rb 4.45e+01 ;
+    pt:S 1.0201e+03 ;
+    pt:Sc 0e+00 ;
+    pt:Si 6.097e+01 ;
+    pt:Sr 3.791e+02 ;
+    pt:Th 5.3e+00 ;
+    pt:Ti 7.29e-01 ;
+    pt:U 3.4e+00 ;
+    pt:V 1.004e+02 ;
+    pt:Y 1.98e+01 ;
+    pt:Zn 8.41e+01 ;
+    pt:Zr 1.644e+02 ;
+    pt:в_д "107°25'28.48\"В" ;
+    pt:с_ш " 53°13'0.19\"С" .
+
+pi:AGS-0104 pt:Al 7.889e+00 ;
+    pt:As 3.5e+00 ;
+    pt:Ba 6.27e+02 ;
+    pt:Ca 3.31e+00 ;
+    pt:Ce 3.19e+01 ;
+    pt:Cl 2.64e+01 ;
+    pt:Co 9.9e+00 ;
+    pt:Cr 7.34e+01 ;
+    pt:Cu 2.17e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.998e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K 1.671e+00 ;
+    pt:La 1.59e+01 ;
+    pt:Mg 1.227e+00 ;
+    pt:Mn 8.6e-02 ;
+    pt:Mo 1.1e+00 ;
+    pt:Na 1.155e+00 ;
+    pt:Nb 8.2e+00 ;
+    pt:Nd 1.19e+01 ;
+    pt:Ni 2.95e+01 ;
+    pt:P 1.208909e+03 ;
+    pt:Pb 1.52e+01 ;
+    pt:Rb 4.35e+01 ;
+    pt:S 5.174e+02 ;
+    pt:Sc 0e+00 ;
+    pt:Si 6.627e+01 ;
+    pt:Sr 4.429e+02 ;
+    pt:Th 5.3e+00 ;
+    pt:Ti 5.06e-01 ;
+    pt:U 2.6e+00 ;
+    pt:V 9.93e+01 ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 5.23e+01 ;
+    pt:Zr 9.66e+01 ;
+    pt:в_д "107°25'43.74\"В" ;
+    pt:с_ш " 53°13'11.43\"С" .
+
+pi:AGS-0105 pt:Al 7.969e+00 ;
+    pt:As 2.8e+00 ;
+    pt:Ba 6.074e+02 ;
+    pt:Ca 3.43e+00 ;
+    pt:Ce 3.01e+01 ;
+    pt:Cl 2.39e+01 ;
+    pt:Co 8.9e+00 ;
+    pt:Cr 7.05e+01 ;
+    pt:Cu 1.7e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.452e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K 1.643e+00 ;
+    pt:La 1.74e+01 ;
+    pt:Mg 1.103e+00 ;
+    pt:Mn 8.2e-02 ;
+    pt:Mo 2.1e+00 ;
+    pt:Na 1.278e+00 ;
+    pt:Nb 1.18e+01 ;
+    pt:Nd 1.67e+01 ;
+    pt:Ni 2.18e+01 ;
+    pt:P 1.164438e+03 ;
+    pt:Pb 1.46e+01 ;
+    pt:Rb 3.97e+01 ;
+    pt:S 5.094e+02 ;
+    pt:Sc 0e+00 ;
+    pt:Si 6.883e+01 ;
+    pt:Sr 4.323e+02 ;
+    pt:Th 5.5e+00 ;
+    pt:Ti 7.36e-01 ;
+    pt:U 2.4e+00 ;
+    pt:V 9.38e+01 ;
+    pt:Y 1.59e+01 ;
+    pt:Zn 4.21e+01 ;
+    pt:Zr 2.15e+02 ;
+    pt:в_д "107°25'32.78\"В" ;
+    pt:с_ш " 53°13'15.36\"С" .
+
+pi:AGS-0106 pt:Al 3.2809e+01 ;
+    pt:As 6e-01 ;
+    pt:Ba 2.278e+02 ;
+    pt:Ca 7.87e+00 ;
+    pt:Ce 6.49e+01 ;
+    pt:Cl 3.83e+01 ;
+    pt:Co 3.07e+01 ;
+    pt:Cr 2.604e+02 ;
+    pt:Cu 1.08e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 6.19e+00 ;
+    pt:Ga 5e+00 ;
+    pt:K 9.6e-01 ;
+    pt:La 1.61e+01 ;
+    pt:Mg 5.758e+00 ;
+    pt:Mn 4.65e-01 ;
+    pt:Mo 2.6e+01 ;
+    pt:Na 7.54e-01 ;
+    pt:Nb 5.95e+01 ;
+    pt:Nd 4.45e+01 ;
+    pt:Ni 1.43e+01 ;
+    pt:P 7.434012e+02 ;
+    pt:Pb 4e-01 ;
+    pt:Rb 1.93e+01 ;
+    pt:S 7.52e+01 ;
+    pt:Sc 0e+00 ;
+    pt:Si 4.77e+01 ;
+    pt:Sr 3.297e+02 ;
+    pt:Th 1.03e+01 ;
+    pt:Ti 7.553e+00 ;
+    pt:U 1.11e+01 ;
+    pt:V 2.966e+02 ;
+    pt:Y 6.11e+01 ;
+    pt:Zn 9.81e+01 ;
+    pt:Zr 2.927e+03 ;
+    pt:в_д "107°25'20.76\"В" ;
+    pt:с_ш " 53°13'21.53\"С" .
+
+pi:AGS-0107 pt:Al 7.657e+00 ;
+    pt:As 1.3e+00 ;
+    pt:Ba 5.791e+02 ;
+    pt:Ca 3.04e+00 ;
+    pt:Ce 1.95e+01 ;
+    pt:Cl 2.95e+01 ;
+    pt:Co 7.9e+00 ;
+    pt:Cr 7.31e+01 ;
+    pt:Cu 1.15e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.51e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K 1.511e+00 ;
+    pt:La 9.4e+00 ;
+    pt:Mg 1.082e+00 ;
+    pt:Mn 8.3e-02 ;
+    pt:Mo 2.3e+00 ;
+    pt:Na 1.489e+00 ;
+    pt:Nb 1.41e+01 ;
+    pt:Nd 1.13e+01 ;
+    pt:Ni 1.65e+01 ;
+    pt:P 8.116986e+02 ;
+    pt:Pb 9.1e+00 ;
+    pt:Rb 3.67e+01 ;
+    pt:S 2.942e+02 ;
+    pt:Sc 0e+00 ;
+    pt:Si 7.059e+01 ;
+    pt:Sr 4.618e+02 ;
+    pt:Th 5.4e+00 ;
+    pt:Ti 7.96e-01 ;
+    pt:U 3.5e+00 ;
+    pt:V 9.3e+01 ;
+    pt:Y 2.29e+01 ;
+    pt:Zn 3.72e+01 ;
+    pt:Zr 2.621e+02 ;
+    pt:в_д "107°25'4.42\"В" ;
+    pt:с_ш " 53°13'31.39\"С" .
+
+pi:AGS-0109 pt:Al 5.413e+00 ;
+    pt:As 5e-01 ;
+    pt:Ba 6.158e+02 ;
+    pt:Ca 2.49e+00 ;
+    pt:Ce 2.09e+01 ;
+    pt:Cl 8.23e+01 ;
+    pt:Co 5.9e+00 ;
+    pt:Cr 5.71e+01 ;
+    pt:Cu 1.58e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 2.535e+00 ;
+    pt:Ga 8e+00 ;
+    pt:K 1.659e+00 ;
+    pt:La 7.1e+00 ;
+    pt:Mg 1.045e+00 ;
+    pt:Mn 6.9e-02 ;
+    pt:Mo 1.1e+00 ;
+    pt:Na 1.158e+00 ;
+    pt:Nb 8.4e+00 ;
+    pt:Nd 1.09e+01 ;
+    pt:Ni 1.42e+01 ;
+    pt:P 4.625881e+03 ;
+    pt:Pb 2.64e+01 ;
+    pt:Rb 3.22e+01 ;
+    pt:S 1.5513e+03 ;
+    pt:Sc 0e+00 ;
+    pt:Si 7.173e+01 ;
+    pt:Sr 3.339e+02 ;
+    pt:Th 3.9e+00 ;
+    pt:Ti 4.48e-01 ;
+    pt:U 1.5e+00 ;
+    pt:V 6.34e+01 ;
+    pt:Y 1.29e+01 ;
+    pt:Zn 5.89e+01 ;
+    pt:Zr 1.159e+02 ;
+    pt:в_д "107°24'48.59\"В" ;
+    pt:с_ш " 53°13'41.05\"С" .
+
+pi:AGS-0110 pt:Al 7.222e+00 ;
+    pt:As 7.2e+00 ;
+    pt:Ba 7.403e+02 ;
+    pt:Ca 3.15e+00 ;
+    pt:Ce 3.18e+01 ;
+    pt:Cl 1.931e+02 ;
+    pt:Co 1.39e+01 ;
+    pt:Cr 5.96e+01 ;
+    pt:Cu 2.07e+01 ;
+    pt:F 0e+00 ;
+    pt:Fe 3.706e+00 ;
+    pt:Ga 8e+00 ;
+    pt:K 1.383e+00 ;
+    pt:La 2.66e+01 ;
+    pt:Mg 9.79e-01 ;
+    pt:Mn 3.92e-01 ;
+    pt:Mo 1.3e+00 ;
+    pt:Na 5.82e-01 ;
+    pt:Nb 5.5e+00 ;
+    pt:Nd 1.41e+01 ;
+    pt:Ni 2e+01 ;
+    pt:P 4.01632e+03 ;
+    pt:Pb 5.57e+01 ;
+    pt:Rb 3.68e+01 ;
+    pt:S 2.6554e+03 ;
+    pt:Sc 0e+00 ;
+    pt:Si 4.401e+01 ;
+    pt:Sr 2.474e+02 ;
+    pt:Th 4.3e+00 ;
+    pt:Ti 5.4e-01 ;
+    pt:U 2e+00 ;
+    pt:V 7.71e+01 ;
+    pt:Y 1.27e+01 ;
+    pt:Zn 1.161e+02 ;
+    pt:Zr 6.31e+01 ;
+    pt:в_д "107°25'12.36\"В" ;
+    pt:с_ш " 53°13'7.49\"С" .
+
+pi:CHK-1-TOT pt:As_Int 7.8e-03 ;
+    pt:As_PPM 1.3e+00 ;
+    pt:Ca "N.A." ;
+    pt:Ca_Int 1.93074e+01 ;
+    pt:Date 4.424305e+04,
+        4.424306e+04 ;
+    pt:Fe "N.A." ;
+    pt:Fe_Int 1.417609e+02 ;
+    pt:Hg_Int 1.047e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:Nb_Int 2.563e-01 ;
+    pt:Nb_PPM 1.1e+01 ;
+    pt:Pb_Int 9.21e-02 ;
+    pt:Pb_PPM 1.29e+01 ;
+    pt:Rb_Int 8.932e-01 ;
+    pt:Rb_PPM 4.72e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.899e-01,
+        1.97332e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:Si "N.A." ;
+    pt:Si_Int 1.650264e+02 ;
+    pt:Sr_Int 2.89672e+01 ;
+    pt:Sr_PPM 1.7054e+03 ;
+    pt:Y_Int 6.821e-01 ;
+    pt:Y_PPM 2.1e+01 ;
+    pt:Zr_Int 5.4754e+00 ;
+    pt:Zr_PPM 1.013e+02 .
+
+pi:CHK-2-TOT pt:As_Int 1.03e-02 ;
+    pt:As_PPM 3.6e+00 ;
+    pt:Ca "N.A." ;
+    pt:Ca_Int 1.67861e+01 ;
+    pt:Date 4.424307e+04,
+        4.424308e+04 ;
+    pt:Fe "N.A." ;
+    pt:Fe_Int 8.67506e+01 ;
+    pt:Hg_Int 1.185e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:Nb_Int 8.19e-02 ;
+    pt:Nb_PPM 3.1e+00 ;
+    pt:Pb_Int 1.051e-01 ;
+    pt:Pb_PPM 1.7e+01 ;
+    pt:Rb_Int 1.1623e+00 ;
+    pt:Rb_PPM 5.47e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.874e-01,
+        2.12027e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:Si "N.A." ;
+    pt:Si_Int 1.853615e+02 ;
+    pt:Sr_Int 3.70606e+01 ;
+    pt:Sr_PPM 1.9033e+03 ;
+    pt:Y_Int 5.153e-01 ;
+    pt:Y_PPM 1.16e+01 ;
+    pt:Zr_Int 5.9664e+00 ;
+    pt:Zr_PPM 7.65e+01 .
+
+pi:CHK-3 pt:Al 1.3845e+01 ;
+    pt:Al_Int 5.20098e+01 ;
+    pt:Ca 7.88e+00,
+        8.15e+00 ;
+    pt:Ca_Int 1.187579e+02,
+        1.191517e+02 ;
+    pt:Co_Int 3.34e-02 ;
+    pt:Co_PPM 1.56e+01 ;
+    pt:Cr_Int 1.632e-01 ;
+    pt:Cr_PPM 1.198e+02 ;
+    pt:Cu_Int 9.58e-02 ;
+    pt:Cu_PPM 1.23e+01 ;
+    pt:Date 4.424398e+04,
+        4.424398e+04,
+        4.424399e+04 ;
+    pt:Fe 5.749e+00,
+        6.47e+00 ;
+    pt:Fe_Int 2.78718e+02,
+        2.813414e+02 ;
+    pt:Hg_Int 4.316e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.535e+00 ;
+    pt:K_Int 2.59553e+01 ;
+    pt:Mg 2.462e+00 ;
+    pt:Mg_Int 1.69662e+01 ;
+    pt:Mn 1.38e-01,
+        "N.A." ;
+    pt:Mn_Int 7.8307e+00,
+        7.9665e+00 ;
+    pt:Na 8.021e+00 ;
+    pt:Na_Int 9.1599e+00 ;
+    pt:Ni_Int 2.283e-01 ;
+    pt:Ni_PPM 1.92e+01 ;
+    pt:P 5.88e-01 ;
+    pt:P_Int 2.6743e+00 ;
+    pt:Pb_Int 1.265e-01 ;
+    pt:Pb_PPM 1.35e+01 ;
+    pt:Rh_Int 2.383e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 3.2e-02 ;
+    pt:S_Int 5.118e-01 ;
+    pt:Si 4.615e+01,
+        4.8153e+01 ;
+    pt:Si_Int 1.86172e+02,
+        1.910776e+02 ;
+    pt:Ti 8.96e-01,
+        9.1e-01 ;
+    pt:Ti_Int 1.11046e+01,
+        1.11876e+01 ;
+    pt:V_Int 9.41e-02 ;
+    pt:V_PPM 1.381e+02 ;
+    pt:Zn_Int 3.861e-01 ;
+    pt:Zn_PPM 7.43e+01 .
+
+pi:CHK-3-TOT pt:As_Int 1.09e-02 ;
+    pt:As_PPM 4.1e+00 ;
+    pt:Ca "N.A." ;
+    pt:Ca_Int 1.75302e+01 ;
+    pt:Date 4.424308e+04,
+        4.424309e+04 ;
+    pt:Fe "N.A." ;
+    pt:Fe_Int 9.87705e+01 ;
+    pt:Hg_Int 1.316e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:Nb_Int 1.429e-01 ;
+    pt:Nb_PPM 5.3e+00 ;
+    pt:Pb_Int 1.027e-01 ;
+    pt:Pb_PPM 1.63e+01 ;
+    pt:Rb_Int 1.0718e+00 ;
+    pt:Rb_PPM 5.18e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.859e-01,
+        2.09012e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:Si "N.A." ;
+    pt:Si_Int 1.705721e+02 ;
+    pt:Sr_Int 3.45444e+01 ;
+    pt:Sr_PPM 1.8274e+03 ;
+    pt:Y_Int 5.926e-01 ;
+    pt:Y_PPM 1.51e+01 ;
+    pt:Zr_Int 5.8797e+00 ;
+    pt:Zr_PPM 8.59e+01 .
+
+pi:HAK-1-TOT pt:As_Int 1.04e-02 ;
+    pt:As_PPM 3.6e+00 ;
+    pt:Ca "N.A." ;
+    pt:Ca_Int 1.0104e+01 ;
+    pt:Date 4.42431e+04,
+        4.424311e+04 ;
+    pt:Fe "N.A." ;
+    pt:Fe_Int 2.81767e+01 ;
+    pt:Hg_Int 1.418e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:Nb_Int 3.339e-01 ;
+    pt:Nb_PPM 8.3e+00 ;
+    pt:Pb_Int 1.236e-01 ;
+    pt:Pb_PPM 2.21e+01 ;
+    pt:Rb_Int 3.5718e+00 ;
+    pt:Rb_PPM 1.2e+02 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.482e-01,
+        2.37236e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:Si "N.A." ;
+    pt:Si_Int 2.608165e+02 ;
+    pt:Sr_Int 8.7464e+00 ;
+    pt:Sr_PPM 3.364e+02 ;
+    pt:Y_Int 1.0254e+00 ;
+    pt:Y_PPM 1.37e+01 ;
+    pt:Zr_Int 2.6155e+00 ;
+    pt:Zr_PPM 5.63e+01 .
+
+pi:HAK-2-TOT pt:As_Int 9.4e-03 ;
+    pt:As_PPM 2.7e+00 ;
+    pt:Ca "N.A." ;
+    pt:Ca_Int 9.7068e+00 ;
+    pt:Date 4.424312e+04,
+        4.424313e+04 ;
+    pt:Fe "N.A." ;
+    pt:Fe_Int 3.39794e+01 ;
+    pt:Hg_Int 1.254e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:Nb_Int 4.601e-01 ;
+    pt:Nb_PPM 1.18e+01 ;
+    pt:Pb_Int 1.267e-01 ;
+    pt:Pb_PPM 2.31e+01 ;
+    pt:Rb_Int 3.4082e+00 ;
+    pt:Rb_PPM 1.175e+02 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.498e-01,
+        2.34707e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:Si "N.A." ;
+    pt:Si_Int 2.796292e+02 ;
+    pt:Sr_Int 8.4136e+00 ;
+    pt:Sr_PPM 3.345e+02 ;
+    pt:Y_Int 1.0906e+00 ;
+    pt:Y_PPM 1.8e+01 ;
+    pt:Zr_Int 2.4759e+00 ;
+    pt:Zr_PPM 5.38e+01 .
+
+pi:HAK-3-TOT pt:As_Int 9.7e-03 ;
+    pt:As_PPM 3e+00 ;
+    pt:Ca "N.A." ;
+    pt:Ca_Int 1.1445e+01 ;
+    pt:Date 4.424313e+04,
+        4.424314e+04 ;
+    pt:Fe "N.A." ;
+    pt:Fe_Int 1.180281e+02 ;
+    pt:Hg_Int 1.409e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:Nb_Int 1.7533e+00 ;
+    pt:Nb_PPM 6.94e+01 ;
+    pt:Pb_Int 1.175e-01 ;
+    pt:Pb_PPM 2.03e+01 ;
+    pt:Rb_Int 2.4623e+00 ;
+    pt:Rb_PPM 1.082e+02 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.479e-01,
+        2.07264e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:Si "N.A." ;
+    pt:Si_Int 2.5513e+02 ;
+    pt:Sr_Int 6.952e+00 ;
+    pt:Sr_PPM 3.74e+02 ;
+    pt:Y_Int 1.6921e+00 ;
+    pt:Y_PPM 4.9e+01 ;
+    pt:Zr_Int 5.1275e+00 ;
+    pt:Zr_PPM 1.821e+02 .
+
+pi:SB-1-1-100 pt:Al 1.4197e+01 ;
+    pt:Al_Int 4.44654e+01 ;
+    pt:Ca 4.69e+00,
+        4.75e+00 ;
+    pt:Ca_Int 6.44732e+01,
+        6.46113e+01 ;
+    pt:Co_Int 5.44e-02 ;
+    pt:Co_PPM 2.23e+01 ;
+    pt:Cr_Int 2.457e-01 ;
+    pt:Cr_PPM 1.862e+02 ;
+    pt:Cu_Int 1.451e-01 ;
+    pt:Cu_PPM 1.94e+01 ;
+    pt:Date 4.424389e+04,
+        4.42439e+04,
+        4.424391e+04 ;
+    pt:Fe 8.341e+00,
+        9.369e+00 ;
+    pt:Fe_Int 4.148723e+02,
+        4.202628e+02 ;
+    pt:Hg_Int 5.973e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.726e+00 ;
+    pt:K_Int 2.82936e+01 ;
+    pt:Mg 2.864e+00 ;
+    pt:Mg_Int 1.42e+01 ;
+    pt:Mn 1.25e-01,
+        "N.A." ;
+    pt:Mn_Int 7.497e+00,
+        7.5781e+00 ;
+    pt:Na 3.405e+00 ;
+    pt:Na_Int 6.8802e+00 ;
+    pt:Ni_Int 4.269e-01 ;
+    pt:Ni_PPM 3.72e+01 ;
+    pt:P 2.92e-01 ;
+    pt:P_Int 1.308e+00 ;
+    pt:Pb_Int 1.63e-01 ;
+    pt:Pb_PPM 1.9e+01 ;
+    pt:Rh_Int 2.171e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 4e-03 ;
+    pt:S_Int 2.124e-01 ;
+    pt:Si 4.9226e+01,
+        5.616e+01 ;
+    pt:Si_Int 2.248116e+02,
+        2.322956e+02 ;
+    pt:Ti 1.197e+00,
+        1.247e+00 ;
+    pt:Ti_Int 1.62354e+01,
+        1.63119e+01 ;
+    pt:V_Int 1.077e-01 ;
+    pt:V_PPM 1.33e+02 ;
+    pt:Zn_Int 2.959e-01 ;
+    pt:Zn_PPM 5.75e+01 .
+
+pi:SB-1-1-TOT pt:Al 1.3546e+01 ;
+    pt:Al_Int 5.18114e+01 ;
+    pt:As_Int 1.09e-02 ;
+    pt:As_PPM 4.1e+00 ;
+    pt:Ca 4.77e+00,
+        5.14e+00,
+        "N.A." ;
+    pt:Ca_Int 1.84705e+01,
+        6.87471e+01,
+        6.91135e+01 ;
+    pt:Co_Int 4.74e-02 ;
+    pt:Co_PPM 1.87e+01 ;
+    pt:Cr_Int 2.173e-01 ;
+    pt:Cr_PPM 1.601e+02 ;
+    pt:Cu_Int 1.196e-01 ;
+    pt:Cu_PPM 1.48e+01 ;
+    pt:Date 4.424298e+04,
+        4.424299e+04,
+        4.424437e+04,
+        4.424438e+04,
+        4.424438e+04 ;
+    pt:Fe 7.664e+00,
+        8.706e+00,
+        "N.A." ;
+    pt:Fe_Int 3.37745e+02,
+        3.847247e+02,
+        3.906759e+02 ;
+    pt:Hg_Int 1.094e-01,
+        3.787e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.299e+00 ;
+    pt:K_Int 3.77868e+01 ;
+    pt:Mg 4.114e+00 ;
+    pt:Mg_Int 2.09549e+01 ;
+    pt:Mn 1.54e-01,
+        "N.A." ;
+    pt:Mn_Int 9.6715e+00,
+        9.6795e+00 ;
+    pt:Na 2.48e+00 ;
+    pt:Na_Int 6.9553e+00 ;
+    pt:Nb_Int 4.567e-01 ;
+    pt:Nb_PPM 2.32e+01 ;
+    pt:Ni_Int 5.453e-01 ;
+    pt:Ni_PPM 4.59e+01 ;
+    pt:P 1.59e-01 ;
+    pt:P_Int 6.942e-01 ;
+    pt:Pb_Int 8.55e-02,
+        1.494e-01 ;
+    pt:Pb_PPM 1.04e+01,
+        1.71e+01 ;
+    pt:Rb_Int 1.6442e+00 ;
+    pt:Rb_PPM 8.09e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.916e-01,
+        2.201e-01,
+        1.91804e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 8.38e-02 ;
+    pt:Si 5.3718e+01,
+        6.024e+01,
+        "N.A." ;
+    pt:Si_Int 1.765145e+02,
+        2.389311e+02,
+        2.490491e+02 ;
+    pt:Sr_Int 3.9314e+00 ;
+    pt:Sr_PPM 2.426e+02 ;
+    pt:Ti 8.5e-01,
+        9.12e-01 ;
+    pt:Ti_Int 1.21124e+01,
+        1.21506e+01 ;
+    pt:V_Int 9.53e-02 ;
+    pt:V_PPM 1.253e+02 ;
+    pt:Y_Int 1.197e+00 ;
+    pt:Y_PPM 3.73e+01 ;
+    pt:Zn_Int 3.178e-01 ;
+    pt:Zn_PPM 6.1e+01 ;
+    pt:Zr_Int 4.5003e+00 ;
+    pt:Zr_PPM 1.859e+02 .
+
+pi:SB-1-2-100 pt:Al 1.5082e+01 ;
+    pt:Al_Int 5.6993e+01 ;
+    pt:Ca 3.45e+00,
+        3.55e+00 ;
+    pt:Ca_Int 4.88265e+01,
+        4.92593e+01 ;
+    pt:Co_Int 4.94e-02 ;
+    pt:Co_PPM 2.03e+01 ;
+    pt:Cr_Int 2.053e-01 ;
+    pt:Cr_PPM 1.498e+02 ;
+    pt:Cu_Int 1.385e-01 ;
+    pt:Cu_PPM 1.74e+01 ;
+    pt:Date 4.424392e+04,
+        4.424393e+04,
+        4.424394e+04 ;
+    pt:Fe 8.215e+00,
+        9.271e+00 ;
+    pt:Fe_Int 4.054045e+02,
+        4.107766e+02 ;
+    pt:Hg_Int 4.239e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.382e+00 ;
+    pt:K_Int 3.87185e+01 ;
+    pt:Mg 4.132e+00 ;
+    pt:Mg_Int 2.00128e+01 ;
+    pt:Mn 1.17e-01,
+        "N.A." ;
+    pt:Mn_Int 7.1436e+00,
+        7.1808e+00 ;
+    pt:Na 2.252e+00 ;
+    pt:Na_Int 5.6831e+00 ;
+    pt:Ni_Int 5.152e-01 ;
+    pt:Ni_PPM 4.33e+01 ;
+    pt:P 1.97e-01 ;
+    pt:P_Int 8.831e-01 ;
+    pt:Pb_Int 1.428e-01 ;
+    pt:Pb_PPM 1.67e+01 ;
+    pt:Rh_Int 2.225e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 9e-03 ;
+    pt:S_Int 2.673e-01 ;
+    pt:Si 4.2854e+01,
+        5.524e+01 ;
+    pt:Si_Int 2.188687e+02,
+        2.265743e+02 ;
+    pt:Ti 9.91e-01,
+        1.01e+00 ;
+    pt:Ti_Int 1.31074e+01,
+        1.31961e+01 ;
+    pt:V_Int 1.075e-01 ;
+    pt:V_PPM 1.401e+02 ;
+    pt:Zn_Int 3.803e-01 ;
+    pt:Zn_PPM 7.2e+01 .
+
+pi:SB-1-2-TOT pt:Al 1.2236e+01 ;
+    pt:Al_Int 5.56523e+01 ;
+    pt:As_Int 1.22e-02 ;
+    pt:As_PPM 5.3e+00 ;
+    pt:Ca 3.38e+00,
+        3.83e+00,
+        "N.A." ;
+    pt:Ca_Int 1.64826e+01,
+        5.14567e+01,
+        5.14637e+01 ;
+    pt:Co_Int 3.69e-02 ;
+    pt:Co_PPM 1.32e+01 ;
+    pt:Cr_Int 1.681e-01 ;
+    pt:Cr_PPM 1.184e+02 ;
+    pt:Cu_Int 1.421e-01 ;
+    pt:Cu_PPM 1.56e+01 ;
+    pt:Date 4.4243e+04,
+        4.424301e+04,
+        4.42444e+04,
+        4.424441e+04,
+        4.424441e+04 ;
+    pt:Fe 5.433e+00,
+        6.484e+00,
+        "N.A." ;
+    pt:Fe_Int 2.63667e+02,
+        2.74933e+02,
+        2.780197e+02 ;
+    pt:Hg_Int 1.124e-01,
+        4.488e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.84e+00 ;
+    pt:K_Int 4.62147e+01 ;
+    pt:Mg 3.063e+00 ;
+    pt:Mg_Int 1.74452e+01 ;
+    pt:Mn 9.6e-02,
+        "N.A." ;
+    pt:Mn_Int 5.9882e+00,
+        6.0198e+00 ;
+    pt:Na 2.411e+00 ;
+    pt:Na_Int 7.9086e+00 ;
+    pt:Nb_Int 2.821e-01 ;
+    pt:Nb_PPM 1.33e+01 ;
+    pt:Ni_Int 4.784e-01 ;
+    pt:Ni_PPM 3.35e+01 ;
+    pt:P 1.13e-01 ;
+    pt:P_Int 4.755e-01 ;
+    pt:Pb_Int 9.39e-02,
+        1.827e-01 ;
+    pt:Pb_PPM 1.3e+01,
+        2.05e+01 ;
+    pt:Rb_Int 2.2369e+00 ;
+    pt:Rb_PPM 1.03e+02 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.677e-01,
+        2.131e-01,
+        2.00655e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 8.46e-02 ;
+    pt:Si 5.5221e+01,
+        6.32e+01,
+        "N.A." ;
+    pt:Si_Int 2.02864e+02,
+        2.51421e+02,
+        2.610693e+02 ;
+    pt:Sr_Int 4.3601e+00 ;
+    pt:Sr_PPM 2.493e+02 ;
+    pt:Ti 5.09e-01,
+        5.55e-01 ;
+    pt:Ti_Int 7.5068e+00,
+        7.5175e+00 ;
+    pt:V_Int 6.84e-02 ;
+    pt:V_PPM 9.16e+01 ;
+    pt:Y_Int 1.068e+00 ;
+    pt:Y_PPM 2.69e+01 ;
+    pt:Zn_Int 2.573e-01 ;
+    pt:Zn_PPM 4.57e+01 ;
+    pt:Zr_Int 3.912e+00 ;
+    pt:Zr_PPM 1.491e+02 .
+
+pi:SB-1-3-100 pt:Al 1.5806e+01 ;
+    pt:Al_Int 4.6664e+01 ;
+    pt:Ca 4.61e+00,
+        4.62e+00 ;
+    pt:Ca_Int 6.18166e+01,
+        6.19902e+01 ;
+    pt:Co_Int 6.35e-02 ;
+    pt:Co_PPM 2.72e+01 ;
+    pt:Cr_Int 2.977e-01 ;
+    pt:Cr_PPM 2.316e+02 ;
+    pt:Cu_Int 1.176e-01 ;
+    pt:Cu_PPM 1.71e+01 ;
+    pt:Date 4.424395e+04,
+        4.424396e+04,
+        4.424396e+04 ;
+    pt:Fe 1.1025e+01,
+        1.1723e+01 ;
+    pt:Fe_Int 5.295436e+02,
+        5.519965e+02 ;
+    pt:Hg_Int 3.53e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.789e+00 ;
+    pt:K_Int 2.92806e+01 ;
+    pt:Mg 3.909e+00 ;
+    pt:Mg_Int 1.781e+01 ;
+    pt:Mn 1.43e-01,
+        "N.A." ;
+    pt:Mn_Int 8.699e+00,
+        8.8243e+00 ;
+    pt:Na 2.55e+00 ;
+    pt:Na_Int 5.8362e+00 ;
+    pt:Ni_Int 4.999e-01 ;
+    pt:Ni_PPM 5.01e+01 ;
+    pt:P 2.36e-01 ;
+    pt:P_Int 1.1133e+00 ;
+    pt:Pb_Int 1.331e-01 ;
+    pt:Pb_PPM 1.61e+01 ;
+    pt:Rh_Int 2.056e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 5e-03 ;
+    pt:S_Int 2.119e-01 ;
+    pt:Si 4.5907e+01,
+        5.368e+01 ;
+    pt:Si_Int 2.117928e+02,
+        2.18685e+02 ;
+    pt:Ti 1.451e+00,
+        1.48e+00 ;
+    pt:Ti_Int 1.89318e+01,
+        1.90537e+01 ;
+    pt:V_Int 1.278e-01 ;
+    pt:V_PPM 1.581e+02 ;
+    pt:Zn_Int 3.607e-01 ;
+    pt:Zn_PPM 7.42e+01 .
+
+pi:SB-1-3-TOT pt:As_Int 8.6e-03 ;
+    pt:As_PPM 1.9e+00 ;
+    pt:Ca "N.A." ;
+    pt:Ca_Int 2.09277e+01 ;
+    pt:Date 4.424301e+04,
+        4.424302e+04 ;
+    pt:Fe "N.A." ;
+    pt:Fe_Int 5.038098e+02 ;
+    pt:Hg_Int 9.84e-02 ;
+    pt:Hg_PPM "N.A." ;
+    pt:Nb_Int 6.683e-01 ;
+    pt:Nb_PPM 4.11e+01 ;
+    pt:Pb_Int 7.33e-02 ;
+    pt:Pb_PPM 6.4e+00 ;
+    pt:Rb_Int 1.1e+00 ;
+    pt:Rb_PPM 6.2e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.908e-01,
+        1.71404e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:Si "N.A." ;
+    pt:Si_Int 1.713603e+02 ;
+    pt:Sr_Int 3.5073e+00 ;
+    pt:Sr_PPM 2.53e+02 ;
+    pt:Y_Int 1.3926e+00 ;
+    pt:Y_PPM 5.15e+01 ;
+    pt:Zr_Int 9.1269e+00 ;
+    pt:Zr_PPM 4.451e+02 .
+
+pi:UGS-0211 pt:Al2O3 1.388e+01 ;
+    pt:As 5.7e+00 ;
+    pt:Ba 5.91e+02 ;
+    pt:CaO 5.16e+00 ;
+    pt:Ce 3.2e+01 ;
+    pt:Co 2.9e+01 ;
+    pt:Cr 1.11e+02 ;
+    pt:Cu 3.6e+01 ;
+    pt:F 3.06e+02 ;
+    pt:Fe2O3_общ 6.554e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 1.281e+00 ;
+    pt:La 3e+01 ;
+    pt:MgO 3.03e+00 ;
+    pt:MnO 3.37e-01 ;
+    pt:Na2O 1.996e+00 ;
+    pt:Nb 7.7e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 3.6e+01 ;
+    pt:P2O5 1.62e-01 ;
+    pt:Pb 1.6e+01 ;
+    pt:Rb 4.7e+01 ;
+    pt:S_общ 1.89e+02 ;
+    pt:SiO2 5.339e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.83e+02 ;
+    pt:Th 5.3e+00 ;
+    pt:TiO2 6.97e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.43e+02 ;
+    pt:W "< 5" ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 1.06e+02 ;
+    pt:Zr 1.55e+02 ;
+    pt:Сорг 3e-01 ;
+    pt:в_д 1.074069e+02 ;
+    pt:с_ш 5.314953e+01 .
+
+pi:UGS-0212 pt:Al2O3 1.155e+01 ;
+    pt:As 3.1e+00 ;
+    pt:Ba 8.58e+02 ;
+    pt:CaO 2.53e+00 ;
+    pt:Ce 4.4e+01 ;
+    pt:Co 1.5e+01 ;
+    pt:Cr 6.6e+01 ;
+    pt:Cu 1.8e+01 ;
+    pt:F 3.28e+02 ;
+    pt:Fe2O3_общ 2.906e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.439e+00 ;
+    pt:La 2.8e+01 ;
+    pt:MgO 1.29e+00 ;
+    pt:MnO 2.97e-01 ;
+    pt:Na2O 1.606e+00 ;
+    pt:Nb 9.1e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 3.6e+01 ;
+    pt:P2O5 1e-01 ;
+    pt:Pb 2.4e+01 ;
+    pt:Rb 8.9e+01 ;
+    pt:S_общ 1.95e+02 ;
+    pt:SiO2 6.306e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.03e+02 ;
+    pt:Th 6.5e+00 ;
+    pt:TiO2 6.29e-01 ;
+    pt:U "< 3" ;
+    pt:V 7.5e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 7.8e+01 ;
+    pt:Zr 1.42e+02 ;
+    pt:Сорг 3.96e+00 ;
+    pt:в_д 1.074074e+02 ;
+    pt:с_ш 5.315851e+01 .
+
+pi:UGS-0214 pt:Al2O3 8.33e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 6.53e+02 ;
+    pt:CaO 9.8e-01 ;
+    pt:Ce 1.3e+01 ;
+    pt:Co 2.4e+00 ;
+    pt:Cr 2.3e+01 ;
+    pt:Cu 1.1e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 3.02e-01 ;
+    pt:Ga 7e+00 ;
+    pt:K2O 2.859e+00 ;
+    pt:La 6.7e+00 ;
+    pt:MgO 3.6e-01 ;
+    pt:MnO 1.72e-01 ;
+    pt:Na2O 9.73e-01 ;
+    pt:Nb 4.3e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 9.2e+00 ;
+    pt:P2O5 5.4e-02 ;
+    pt:Pb 2.8e+01 ;
+    pt:Rb 1.03e+02 ;
+    pt:S_общ 1.76e+02 ;
+    pt:SiO2 7.831e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 1.97e+02 ;
+    pt:Th 5e+00 ;
+    pt:TiO2 2.11e-01 ;
+    pt:U 3.4e+00 ;
+    pt:V 3e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.3e+01 ;
+    pt:Zn 2.8e+01 ;
+    pt:Zr 7.8e+01 ;
+    pt:Сорг 1.8e+00 ;
+    pt:в_д 1.073925e+02 ;
+    pt:с_ш 5.315881e+01 .
+
+pi:UGS-0215 pt:Al2O3 1.109e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 6.75e+02 ;
+    pt:CaO 1.98e+00 ;
+    pt:Ce 2.9e+01 ;
+    pt:Co 5.7e+00 ;
+    pt:Cr 3.8e+01 ;
+    pt:Cu 1.4e+01 ;
+    pt:F 3.04e+02 ;
+    pt:Fe2O3_общ 2.204e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.727e+00 ;
+    pt:La 3.3e+01 ;
+    pt:MgO 8.7e-01 ;
+    pt:MnO 9.1e-02 ;
+    pt:Na2O 1.558e+00 ;
+    pt:Nb 8.1e+00 ;
+    pt:Nd 1.4e+01 ;
+    pt:Ni 1.5e+01 ;
+    pt:P2O5 6.9e-02 ;
+    pt:Pb 2.4e+01 ;
+    pt:Rb 8.4e+01 ;
+    pt:S_общ 1.18e+02 ;
+    pt:SiO2 7.219e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.98e+02 ;
+    pt:Th 6.5e+00 ;
+    pt:TiO2 4.99e-01 ;
+    pt:U "< 3" ;
+    pt:V 5.1e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 3.5e+01 ;
+    pt:Zr 1.8e+02 ;
+    pt:Сорг 1.86e+00 ;
+    pt:в_д 1.073997e+02 ;
+    pt:с_ш 5.315417e+01 .
+
+pi:UGS-0216 pt:Al2O3 1.447e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 1.055e+03 ;
+    pt:CaO 1.66e+00 ;
+    pt:Ce 5.4e+01 ;
+    pt:Co 1.3e+01 ;
+    pt:Cr 5.4e+01 ;
+    pt:Cu 2e+01 ;
+    pt:F 4.83e+02 ;
+    pt:Fe2O3_общ 3.058e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 3.402e+00 ;
+    pt:La 4.3e+01 ;
+    pt:MgO 9.7e-01 ;
+    pt:MnO 2.44e-01 ;
+    pt:Na2O 7.13e-01 ;
+    pt:Nb 1.2e+01 ;
+    pt:Nd 1.7e+01 ;
+    pt:Ni 2.9e+01 ;
+    pt:P2O5 1.42e-01 ;
+    pt:Pb 3.1e+01 ;
+    pt:Rb 1.34e+02 ;
+    pt:S_общ 1.53e+02 ;
+    pt:SiO2 6.514e+01 ;
+    pt:Sn " < 4" ;
+    pt:Sr 2.9e+02 ;
+    pt:Th 9.2e+00 ;
+    pt:TiO2 6e-01 ;
+    pt:U "< 3" ;
+    pt:V 6.7e+01 ;
+    pt:W "< 5" ;
+    pt:Y 2.2e+01 ;
+    pt:Zn 4.7e+01 ;
+    pt:Zr 1.45e+02 ;
+    pt:Сорг 1.2e+00 ;
+    pt:в_д 1.07392e+02 ;
+    pt:с_ш 5.314983e+01 .
+
+pi:UGS-0217 pt:Al2O3 1.611e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 1.048e+03 ;
+    pt:CaO 2.12e+00 ;
+    pt:Ce 7.6e+01 ;
+    pt:Co 1.6e+01 ;
+    pt:Cr 5.3e+01 ;
+    pt:Cu 2.4e+01 ;
+    pt:F 4.87e+02 ;
+    pt:Fe2O3_общ 3.829e+00 ;
+    pt:Ga 1.5e+01 ;
+    pt:K2O 2.854e+00 ;
+    pt:La 5.6e+01 ;
+    pt:MgO 1.23e+00 ;
+    pt:MnO 2.84e-01 ;
+    pt:Na2O 1.216e+00 ;
+    pt:Nb 1.3e+01 ;
+    pt:Nd 2.9e+01 ;
+    pt:Ni 2.9e+01 ;
+    pt:P2O5 1.56e-01 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 1.14e+02 ;
+    pt:S_общ 1.95e+02 ;
+    pt:SiO2 5.692e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.62e+02 ;
+    pt:Th 1e+01 ;
+    pt:TiO2 7.17e-01 ;
+    pt:U "< 3" ;
+    pt:V 8.8e+01 ;
+    pt:W "< 5" ;
+    pt:Y 2.2e+01 ;
+    pt:Zn 7.7e+01 ;
+    pt:Zr 1.95e+02 ;
+    pt:Сорг 7.8e+00 ;
+    pt:в_д 1.073848e+02 ;
+    pt:с_ш 5.315447e+01 .
+
+pi:UGS-0218 pt:Al2O3 1.077e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 6.92e+02 ;
+    pt:CaO 1.72e+00 ;
+    pt:Ce 3.8e+01 ;
+    pt:Co 4.8e+00 ;
+    pt:Cr 3.5e+01 ;
+    pt:Cu 1.2e+01 ;
+    pt:F 2.42e+02 ;
+    pt:Fe2O3_общ 1.605e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K2O 2.735e+00 ;
+    pt:La 1.7e+01 ;
+    pt:MgO 6.6e-01 ;
+    pt:MnO 1.57e-01 ;
+    pt:Na2O 1.365e+00 ;
+    pt:Nb 8.6e+00 ;
+    pt:Nd 1.2e+01 ;
+    pt:Ni 1.5e+01 ;
+    pt:P2O5 6.9e-02 ;
+    pt:Pb 2.4e+01 ;
+    pt:Rb 9.1e+01 ;
+    pt:S_общ 1.4e+02 ;
+    pt:SiO2 6.932e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.9e+02 ;
+    pt:Th 5.1e+00 ;
+    pt:TiO2 5.31e-01 ;
+    pt:U "< 3" ;
+    pt:V 5.2e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 3.3e+01 ;
+    pt:Zr 2.52e+02 ;
+    pt:Сорг 6.6e-01 ;
+    pt:в_д 1.073853e+02 ;
+    pt:с_ш 5.316345e+01 .
+
+pi:UGS-0219 pt:Al2O3 8.93e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 6.42e+02 ;
+    pt:CaO 1.29e+00 ;
+    pt:Ce 2.5e+01 ;
+    pt:Co 4.8e+00 ;
+    pt:Cr 2.5e+01 ;
+    pt:Cu 1.3e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 3.8e-01 ;
+    pt:Ga 9e+00 ;
+    pt:K2O 2.748e+00 ;
+    pt:La 9.1e+00 ;
+    pt:MgO 4.5e-01 ;
+    pt:MnO 2.12e-01 ;
+    pt:Na2O 1e+00 ;
+    pt:Nb 6.2e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.2e+01 ;
+    pt:P2O5 8.9e-02 ;
+    pt:Pb 2.6e+01 ;
+    pt:Rb 9.4e+01 ;
+    pt:S_общ 1.31e+02 ;
+    pt:SiO2 7.283e+01 ;
+    pt:Sn 4.1e+00 ;
+    pt:Sr 2.39e+02 ;
+    pt:Th 4.4e+00 ;
+    pt:TiO2 2.07e-01 ;
+    pt:U "< 3" ;
+    pt:V 3e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.4e+01 ;
+    pt:Zn 4.2e+01 ;
+    pt:Zr 6.6e+01 ;
+    pt:Сорг 1.75e+00 ;
+    pt:в_д 1.07378e+02 ;
+    pt:с_ш 5.316809e+01 .
+
+pi:UGS-0220 pt:Al2O3 1.179e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 7.64e+02 ;
+    pt:CaO 1.85e+00 ;
+    pt:Ce 3.9e+01 ;
+    pt:Co 8.3e+00 ;
+    pt:Cr 4.1e+01 ;
+    pt:Cu 1.5e+01 ;
+    pt:F 3.05e+02 ;
+    pt:Fe2O3_общ 1.87e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.726e+00 ;
+    pt:La 2e+01 ;
+    pt:MgO 8.7e-01 ;
+    pt:MnO 2.31e-01 ;
+    pt:Na2O 1.486e+00 ;
+    pt:Nb 9.3e+00 ;
+    pt:Nd 1.7e+01 ;
+    pt:Ni 2e+01 ;
+    pt:P2O5 1.28e-01 ;
+    pt:Pb 2.6e+01 ;
+    pt:Rb 1e+02 ;
+    pt:S_общ 9.9e+01 ;
+    pt:SiO2 6.878e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.91e+02 ;
+    pt:Th 7.4e+00 ;
+    pt:TiO2 4.8e-01 ;
+    pt:U "< 3" ;
+    pt:V 5.6e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 6.6e+01 ;
+    pt:Zr 1.66e+02 ;
+    pt:Сорг 3e-01 ;
+    pt:в_д 1.073775e+02 ;
+    pt:с_ш 5.315911e+01 .
+
+pi:UGS-0221 pt:Al2O3 1.197e+01 ;
+    pt:As 9.1e+00 ;
+    pt:Ba 1.18e+03 ;
+    pt:CaO 3e+00 ;
+    pt:Ce 4.2e+01 ;
+    pt:Co 1.5e+01 ;
+    pt:Cr 4.6e+01 ;
+    pt:Cu 2.2e+01 ;
+    pt:F 3.53e+02 ;
+    pt:Fe2O3_общ 2.051e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 2.844e+00 ;
+    pt:La 2.5e+01 ;
+    pt:MgO 1.2e+00 ;
+    pt:MnO 3.44e-01 ;
+    pt:Na2O 1.5e+00 ;
+    pt:Nb 9.2e+00 ;
+    pt:Nd 1.9e+01 ;
+    pt:Ni 2.6e+01 ;
+    pt:P2O5 3.64e-01 ;
+    pt:Pb 2.8e+01 ;
+    pt:Rb 1.06e+02 ;
+    pt:S_общ 6.41e+02 ;
+    pt:SiO2 5.42e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.62e+02 ;
+    pt:Th 7.1e+00 ;
+    pt:TiO2 5.43e-01 ;
+    pt:U "< 3" ;
+    pt:V 6.1e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 7e+01 ;
+    pt:Zr 1.13e+02 ;
+    pt:Сорг 9.7e+00 ;
+    pt:в_д 1.073915e+02 ;
+    pt:с_ш 5.314085e+01 .
+
+pi:UGS-0222 pt:Al2O3 1.074e+01 ;
+    pt:As 4.3e+00 ;
+    pt:Ba 7.4e+02 ;
+    pt:CaO 1.52e+00 ;
+    pt:Ce 2.7e+01 ;
+    pt:Co 5.2e+00 ;
+    pt:Cr 3.3e+01 ;
+    pt:Cu 1.2e+01 ;
+    pt:F 2.11e+02 ;
+    pt:Fe2O3_общ 1.048e+00 ;
+    pt:Ga 9e+00 ;
+    pt:K2O 2.995e+00 ;
+    pt:La 1.4e+01 ;
+    pt:MgO 5.8e-01 ;
+    pt:MnO 1.88e-01 ;
+    pt:Na2O 1.347e+00 ;
+    pt:Nb 7.9e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.5e+01 ;
+    pt:P2O5 7.4e-02 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 1.06e+02 ;
+    pt:S_общ 1.35e+02 ;
+    pt:SiO2 7.055e+01 ;
+    pt:Sn 4.4e+00 ;
+    pt:Sr 3.15e+02 ;
+    pt:Th 5.4e+00 ;
+    pt:TiO2 3.51e-01 ;
+    pt:U "< 3" ;
+    pt:V 3.9e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.5e+01 ;
+    pt:Zn 4.4e+01 ;
+    pt:Zr 1.18e+02 ;
+    pt:Сорг 2.86e+00 ;
+    pt:в_д 1.073992e+02 ;
+    pt:с_ш 5.314519e+01 .
+
+pi:UGS-0224 pt:Al2O3 1.13e+01 ;
+    pt:As 4.3e+00 ;
+    pt:Ba 7.48e+02 ;
+    pt:CaO 2.82e+00 ;
+    pt:Ce 3e+01 ;
+    pt:Co 1.5e+01 ;
+    pt:Cr 4.9e+01 ;
+    pt:Cu 1.5e+01 ;
+    pt:F 2.57e+02 ;
+    pt:Fe2O3_общ 1.975e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.266e+00 ;
+    pt:La 2e+01 ;
+    pt:MgO 1.1e+00 ;
+    pt:MnO 3.56e-01 ;
+    pt:Na2O 1.594e+00 ;
+    pt:Nb 7.6e+00 ;
+    pt:Nd 1.4e+01 ;
+    pt:Ni 2.3e+01 ;
+    pt:P2O5 1.43e-01 ;
+    pt:Pb 2.4e+01 ;
+    pt:Rb 8e+01 ;
+    pt:S_общ 3e+02 ;
+    pt:SiO2 5.866e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.99e+02 ;
+    pt:Th 6.3e+00 ;
+    pt:TiO2 5.98e-01 ;
+    pt:U "< 3" ;
+    pt:V 7.4e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.9e+01 ;
+    pt:Zn 6.2e+01 ;
+    pt:Zr 2.19e+02 ;
+    pt:Сорг 4.6e+00 ;
+    pt:в_д 1.074146e+02 ;
+    pt:с_ш 5.315387e+01 .
+
+pi:UGS-0225 pt:Al2O3 1.381e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 4.53e+02 ;
+    pt:CaO 4.97e+00 ;
+    pt:Ce 2.6e+01 ;
+    pt:Co 2.5e+01 ;
+    pt:Cr 8e+01 ;
+    pt:Cu 2.8e+01 ;
+    pt:F 3.62e+02 ;
+    pt:Fe2O3_общ 6.422e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 1.555e+00 ;
+    pt:La 2.2e+01 ;
+    pt:MgO 2.68e+00 ;
+    pt:MnO 2.08e-01 ;
+    pt:Na2O 2.065e+00 ;
+    pt:Nb 9e+00 ;
+    pt:Nd 1.3e+01 ;
+    pt:Ni 3.5e+01 ;
+    pt:P2O5 8.9e-02 ;
+    pt:Pb 1.4e+01 ;
+    pt:Rb 5.5e+01 ;
+    pt:S_общ 7.9e+01 ;
+    pt:SiO2 5.808e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.24e+02 ;
+    pt:Th 5.6e+00 ;
+    pt:TiO2 8.27e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.37e+02 ;
+    pt:W "< 5" ;
+    pt:Y 1.9e+01 ;
+    pt:Zn 9.3e+01 ;
+    pt:Zr 1.09e+02 ;
+    pt:Сорг 3.2e+00 ;
+    pt:в_д 1.074141e+02 ;
+    pt:с_ш 5.314489e+01 .
+
+pi:UGS-0227 pt:Al2O3 1.112e+01 ;
+    pt:As 1.1e+01 ;
+    pt:Ba 1.432e+03 ;
+    pt:CaO 4.45e+00 ;
+    pt:Ce 3.5e+01 ;
+    pt:Co 3.2e+01 ;
+    pt:Cr 4.6e+01 ;
+    pt:Cu 2.7e+01 ;
+    pt:F 4.09e+02 ;
+    pt:Fe2O3_общ 4.337e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 1.648e+00 ;
+    pt:La 2.6e+01 ;
+    pt:MgO 2.61e+00 ;
+    pt:MnO 8.45e-01 ;
+    pt:Na2O 1.566e+00 ;
+    pt:Nb 9.1e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 2.9e+01 ;
+    pt:P2O5 5.34e-01 ;
+    pt:Pb 2e+01 ;
+    pt:Rb 5.6e+01 ;
+    pt:S_общ 7.37e+02 ;
+    pt:SiO2 4.125e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.34e+02 ;
+    pt:Th 5.5e+00 ;
+    pt:TiO2 8.41e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.22e+02 ;
+    pt:W "< 5" ;
+    pt:Y 1.9e+01 ;
+    pt:Zn 1.34e+02 ;
+    pt:Zr 1.25e+02 ;
+    pt:Сорг 8.08e+00 ;
+    pt:в_д 1.074136e+02 ;
+    pt:с_ш 5.313591e+01 .
+
+pi:UGS-0228 pt:Al2O3 1.232e+01 ;
+    pt:As 4.5e+00 ;
+    pt:Ba 9.78e+02 ;
+    pt:CaO 2.18e+00 ;
+    pt:Ce 3.3e+01 ;
+    pt:Co 7.2e+00 ;
+    pt:Cr 2.9e+01 ;
+    pt:Cu 1.3e+01 ;
+    pt:F 2.82e+02 ;
+    pt:Fe2O3_общ 7.41e-01 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 3.327e+00 ;
+    pt:La 2.2e+01 ;
+    pt:MgO 7e-01 ;
+    pt:MnO 2.68e-01 ;
+    pt:Na2O 1.844e+00 ;
+    pt:Nb 9.7e+00 ;
+    pt:Nd 1.3e+01 ;
+    pt:Ni 1.4e+01 ;
+    pt:P2O5 1.26e-01 ;
+    pt:Pb 2.8e+01 ;
+    pt:Rb 1.11e+02 ;
+    pt:S_общ 2.33e+02 ;
+    pt:SiO2 6.367e+01 ;
+    pt:Sn 4.4e+00 ;
+    pt:Sr 4.29e+02 ;
+    pt:Th 5.3e+00 ;
+    pt:TiO2 5.34e-01 ;
+    pt:U "< 3" ;
+    pt:V 4.4e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.9e+01 ;
+    pt:Zn 3.4e+01 ;
+    pt:Zr 1.82e+02 ;
+    pt:Сорг 3e+00 ;
+    pt:в_д 1.074059e+02 ;
+    pt:с_ш 5.313158e+01 .
+
+pi:UGS-0229 pt:Al2O3 1.256e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 9.13e+02 ;
+    pt:CaO 1.11e+00 ;
+    pt:Ce 2.2e+01 ;
+    pt:Co 2.8e+00 ;
+    pt:Cr 2.1e+01 ;
+    pt:Cu 1.2e+01 ;
+    pt:F 2.39e+02 ;
+    pt:Fe2O3_общ 1.054e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 3.919e+00 ;
+    pt:La 1.5e+01 ;
+    pt:MgO 3.7e-01 ;
+    pt:MnO 4.3e-02 ;
+    pt:Na2O 1.746e+00 ;
+    pt:Nb 6.3e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.2e+01 ;
+    pt:P2O5 7.6e-02 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 1.29e+02 ;
+    pt:S_общ 7.8e+01 ;
+    pt:SiO2 7.322e+01 ;
+    pt:Sn 4.5e+00 ;
+    pt:Sr 4.01e+02 ;
+    pt:Th 5.2e+00 ;
+    pt:TiO2 2.55e-01 ;
+    pt:U "< 3" ;
+    pt:V 2.7e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.3e+01 ;
+    pt:Zn 2.4e+01 ;
+    pt:Zr 7.4e+01 ;
+    pt:Сорг 1.5e+00 ;
+    pt:в_д 1.074054e+02 ;
+    pt:с_ш 5.31226e+01 .
+
+pi:UGS-0230 pt:Al2O3 1.274e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 1.078e+03 ;
+    pt:CaO 1.52e+00 ;
+    pt:Ce 3.6e+01 ;
+    pt:Co 5.8e+00 ;
+    pt:Cr 2.9e+01 ;
+    pt:Cu 1.3e+01 ;
+    pt:F 3.03e+02 ;
+    pt:Fe2O3_общ 1.37e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 3.841e+00 ;
+    pt:La 1.9e+01 ;
+    pt:MgO 5.8e-01 ;
+    pt:MnO 1.23e-01 ;
+    pt:Na2O 1.698e+00 ;
+    pt:Nb 9.5e+00 ;
+    pt:Nd 1.6e+01 ;
+    pt:Ni 1.6e+01 ;
+    pt:P2O5 8.6e-02 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 1.17e+02 ;
+    pt:S_общ 8.4e+01 ;
+    pt:SiO2 7.082e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.86e+02 ;
+    pt:Th 5.9e+00 ;
+    pt:TiO2 3.58e-01 ;
+    pt:U "< 3" ;
+    pt:V 4.4e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.6e+01 ;
+    pt:Zn 2.9e+01 ;
+    pt:Zr 1.08e+02 ;
+    pt:Сорг 1.1e+00 ;
+    pt:в_д 1.073982e+02 ;
+    pt:с_ш 5.312724e+01 .
+
+pi:UGS-0231 pt:Al2O3 1.315e+01 ;
+    pt:As 4.3e+00 ;
+    pt:Ba 1.278e+03 ;
+    pt:CaO 3.96e+00 ;
+    pt:Ce 5.8e+01 ;
+    pt:Co 3e+01 ;
+    pt:Cr 4.8e+01 ;
+    pt:Cu 2.9e+01 ;
+    pt:F 4.32e+02 ;
+    pt:Fe2O3_общ 4.141e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 2.019e+00 ;
+    pt:La 2.6e+01 ;
+    pt:MgO 2.37e+00 ;
+    pt:MnO 7.58e-01 ;
+    pt:Na2O 2.361e+00 ;
+    pt:Nb 9.8e+00 ;
+    pt:Nd 1.6e+01 ;
+    pt:Ni 3.6e+01 ;
+    pt:P2O5 3.79e-01 ;
+    pt:Pb 1.8e+01 ;
+    pt:Rb 4.9e+01 ;
+    pt:S_общ 1.13e+02 ;
+    pt:SiO2 5.312e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.02e+02 ;
+    pt:Th 6.2e+00 ;
+    pt:TiO2 8.74e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.16e+02 ;
+    pt:W "< 5" ;
+    pt:Y 2.3e+01 ;
+    pt:Zn 8.5e+01 ;
+    pt:Zr 1.45e+02 ;
+    pt:Сорг 3.2e+00 ;
+    pt:в_д 1.07391e+02 ;
+    pt:с_ш 5.313188e+01 .
+
+pi:UGS-0233 pt:Al2O3 1.423e+01 ;
+    pt:As 1.1e+01 ;
+    pt:Ba 9.33e+02 ;
+    pt:CaO 4.33e+00 ;
+    pt:Ce 3e+01 ;
+    pt:Co 1.5e+01 ;
+    pt:Cr 3e+01 ;
+    pt:Cu 1.5e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 1.236e+00 ;
+    pt:Ga 1.3e+01 ;
+    pt:K2O 1.395e+00 ;
+    pt:La 1.6e+01 ;
+    pt:MgO 1.24e+00 ;
+    pt:MnO 5.61e-01 ;
+    pt:Na2O 2.846e+00 ;
+    pt:Nb 6.6e+00 ;
+    pt:Nd 1e+01 ;
+    pt:Ni 1.8e+01 ;
+    pt:P2O5 2.48e-01 ;
+    pt:Pb 2.3e+01 ;
+    pt:Rb 4.6e+01 ;
+    pt:S_общ 4.08e+02 ;
+    pt:SiO2 4.693e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 5.45e+02 ;
+    pt:Th 6.2e+00 ;
+    pt:TiO2 5.03e-01 ;
+    pt:U "< 3" ;
+    pt:V 5.2e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 1.03e+02 ;
+    pt:Zr 1.3e+02 ;
+    pt:Сорг 7.3e+00 ;
+    pt:в_д 1.074064e+02 ;
+    pt:с_ш 5.314055e+01 .
+
+pi:UGS-0234 pt:Al2O3 1.318e+01 ;
+    pt:As 3.2e+00 ;
+    pt:Ba 5.64e+02 ;
+    pt:CaO 4.8e+00 ;
+    pt:Ce 3.7e+01 ;
+    pt:Co 2.8e+01 ;
+    pt:Cr 9.3e+01 ;
+    pt:Cu 3.2e+01 ;
+    pt:F 4.09e+02 ;
+    pt:Fe2O3_общ 6.327e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 1.935e+00 ;
+    pt:La 2.6e+01 ;
+    pt:MgO 2.9e+00 ;
+    pt:MnO 2.44e-01 ;
+    pt:Na2O 1.926e+00 ;
+    pt:Nb 1.1e+01 ;
+    pt:Nd 1.9e+01 ;
+    pt:Ni 4.1e+01 ;
+    pt:P2O5 1.62e-01 ;
+    pt:Pb 2e+01 ;
+    pt:Rb 6.3e+01 ;
+    pt:S_общ 2.11e+02 ;
+    pt:SiO2 5.876e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.25e+02 ;
+    pt:Th 7.4e+00 ;
+    pt:TiO2 9.1e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.62e+02 ;
+    pt:W "< 5" ;
+    pt:Y 2.4e+01 ;
+    pt:Zn 7.8e+01 ;
+    pt:Zr 1.39e+02 ;
+    pt:Сорг 6.44e+00 ;
+    pt:в_д 1.073977e+02 ;
+    pt:с_ш 5.311826e+01 .
+
+pi:UGS-0235 pt:Al2O3 1.183e+01 ;
+    pt:As 6.7e+00 ;
+    pt:Ba 8.18e+02 ;
+    pt:CaO 4.05e+00 ;
+    pt:Ce 3.9e+01 ;
+    pt:Co 1.7e+01 ;
+    pt:Cr 6.4e+01 ;
+    pt:Cu 2.7e+01 ;
+    pt:F 3.09e+02 ;
+    pt:Fe2O3_общ 4.475e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 1.194e+00 ;
+    pt:La 1.8e+01 ;
+    pt:MgO 2.51e+00 ;
+    pt:MnO 2.97e-01 ;
+    pt:Na2O 1.962e+00 ;
+    pt:Nb 8.2e+00 ;
+    pt:Nd 1e+01 ;
+    pt:Ni 3.2e+01 ;
+    pt:P2O5 1.88e-01 ;
+    pt:Pb 2.3e+01 ;
+    pt:Rb 3.3e+01 ;
+    pt:S_общ 4.02e+02 ;
+    pt:SiO2 5.715e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.36e+02 ;
+    pt:Th 5.5e+00 ;
+    pt:TiO2 7.15e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.02e+02 ;
+    pt:W "< 5" ;
+    pt:Y 2.2e+01 ;
+    pt:Zn 9e+01 ;
+    pt:Zr 1.46e+02 ;
+    pt:Сорг 7.1e+00 ;
+    pt:в_д 1.073905e+02 ;
+    pt:с_ш 5.31229e+01 .
+
+pi:UGS-0237 pt:Al2O3 1.224e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 6.83e+02 ;
+    pt:CaO 3.11e+00 ;
+    pt:Ce 4.3e+01 ;
+    pt:Co 1.1e+01 ;
+    pt:Cr 5.9e+01 ;
+    pt:Cu 1.7e+01 ;
+    pt:F 3.43e+02 ;
+    pt:Fe2O3_общ 3.296e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 2.429e+00 ;
+    pt:La 2.3e+01 ;
+    pt:MgO 1.49e+00 ;
+    pt:MnO 2.01e-01 ;
+    pt:Na2O 1.807e+00 ;
+    pt:Nb 7.9e+00 ;
+    pt:Nd 1.9e+01 ;
+    pt:Ni 2.6e+01 ;
+    pt:P2O5 1.95e-01 ;
+    pt:Pb 2.4e+01 ;
+    pt:Rb 7.4e+01 ;
+    pt:S_общ 1.51e+02 ;
+    pt:SiO2 6.497e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.74e+02 ;
+    pt:Th 7.7e+00 ;
+    pt:TiO2 5.96e-01 ;
+    pt:U "< 3" ;
+    pt:V 8.1e+01 ;
+    pt:W "< 5" ;
+    pt:Y 2e+01 ;
+    pt:Zn 4.5e+01 ;
+    pt:Zr 1.35e+02 ;
+    pt:Сорг 2.76e+00 ;
+    pt:в_д 1.073756e+02 ;
+    pt:с_ш 5.31232e+01 .
+
+pi:UGS-0238 pt:Al2O3 1.165e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 5.81e+02 ;
+    pt:CaO 2.89e+00 ;
+    pt:Ce 2.9e+01 ;
+    pt:Co 1.1e+01 ;
+    pt:Cr 7.1e+01 ;
+    pt:Cu 1.6e+01 ;
+    pt:F 2.41e+02 ;
+    pt:Fe2O3_общ 2.639e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 1.974e+00 ;
+    pt:La 1.5e+01 ;
+    pt:MgO 1.35e+00 ;
+    pt:MnO 2.36e-01 ;
+    pt:Na2O 2.142e+00 ;
+    pt:Nb 8.2e+00 ;
+    pt:Nd 1.3e+01 ;
+    pt:Ni 3.2e+01 ;
+    pt:P2O5 1.28e-01 ;
+    pt:Pb 2.3e+01 ;
+    pt:Rb 6.1e+01 ;
+    pt:S_общ 8.3e+01 ;
+    pt:SiO2 6.861e+01 ;
+    pt:Sn 4.5e+00 ;
+    pt:Sr 2.82e+02 ;
+    pt:Th 5.8e+00 ;
+    pt:TiO2 5.18e-01 ;
+    pt:U "< 3" ;
+    pt:V 7.5e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 4e+01 ;
+    pt:Zr 1.23e+02 ;
+    pt:Сорг 2.18e+00 ;
+    pt:в_д 1.073833e+02 ;
+    pt:с_ш 5.312754e+01 .
+
+pi:UGS-0239 pt:Al2O3 1.123e+01 ;
+    pt:As 3.3e+00 ;
+    pt:Ba 8.36e+02 ;
+    pt:CaO 1.9e+00 ;
+    pt:Ce 3.6e+01 ;
+    pt:Co 8.4e+00 ;
+    pt:Cr 3.7e+01 ;
+    pt:Cu 1.5e+01 ;
+    pt:F 2.66e+02 ;
+    pt:Fe2O3_общ 7.15e-01 ;
+    pt:Ga 9e+00 ;
+    pt:K2O 2.843e+00 ;
+    pt:La 2.6e+01 ;
+    pt:MgO 6.9e-01 ;
+    pt:MnO 3.88e-01 ;
+    pt:Na2O 1.318e+00 ;
+    pt:Nb 7.8e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 2e+01 ;
+    pt:P2O5 1.42e-01 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 9.8e+01 ;
+    pt:S_общ 2.26e+02 ;
+    pt:SiO2 6.389e+01 ;
+    pt:Sn 4.7e+00 ;
+    pt:Sr 3.1e+02 ;
+    pt:Th 5.6e+00 ;
+    pt:TiO2 3.97e-01 ;
+    pt:U "< 3" ;
+    pt:V 4.6e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 5.7e+01 ;
+    pt:Zr 1.33e+02 ;
+    pt:Сорг 6.66e+00 ;
+    pt:в_д 1.073703e+02 ;
+    pt:с_ш 5.316375e+01 .
+
+pi:UGS-0240 pt:Al2O3 8.42e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 5.78e+02 ;
+    pt:CaO 9.6e-01 ;
+    pt:Ce 1.1e+01 ;
+    pt:Co 3.2e+00 ;
+    pt:Cr 2.7e+01 ;
+    pt:Cu 1.1e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 7.6e-01 ;
+    pt:Ga 7e+00 ;
+    pt:K2O 2.844e+00 ;
+    pt:La 2.2e+01 ;
+    pt:MgO 3.8e-01 ;
+    pt:MnO 9.2e-02 ;
+    pt:Na2O 1.001e+00 ;
+    pt:Nb 3.7e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1e+01 ;
+    pt:P2O5 4.2e-02 ;
+    pt:Pb 2.6e+01 ;
+    pt:Rb 9.3e+01 ;
+    pt:S_общ 1.09e+02 ;
+    pt:SiO2 8.011e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.23e+02 ;
+    pt:Th 4.6e+00 ;
+    pt:TiO2 1.99e-01 ;
+    pt:U "< 3" ;
+    pt:V 2.4e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.2e+01 ;
+    pt:Zn 3e+01 ;
+    pt:Zr 6.1e+01 ;
+    pt:Сорг 2.3e+00 ;
+    pt:в_д 1.073708e+02 ;
+    pt:с_ш 5.317272e+01 .
+
+pi:UGS-0241 pt:Al2O3 8.58e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 6.22e+02 ;
+    pt:CaO 1.06e+00 ;
+    pt:Ce 1.4e+01 ;
+    pt:Co 4.5e+00 ;
+    pt:Cr 3e+01 ;
+    pt:Cu 1.1e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 7.85e-01 ;
+    pt:Ga 8e+00 ;
+    pt:K2O 2.873e+00 ;
+    pt:La 1.5e+01 ;
+    pt:MgO 4e-01 ;
+    pt:MnO 1.37e-01 ;
+    pt:Na2O 1e+00 ;
+    pt:Nb 6.1e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.1e+01 ;
+    pt:P2O5 4.7e-02 ;
+    pt:Pb 2.5e+01 ;
+    pt:Rb 9e+01 ;
+    pt:S_общ 1.27e+02 ;
+    pt:SiO2 7.71e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.31e+02 ;
+    pt:Th 4.3e+00 ;
+    pt:TiO2 2.74e-01 ;
+    pt:U "< 3" ;
+    pt:V 2.7e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.4e+01 ;
+    pt:Zn 3.2e+01 ;
+    pt:Zr 1.3e+02 ;
+    pt:Сорг 1.8e+00 ;
+    pt:в_д 1.073636e+02 ;
+    pt:с_ш 5.317736e+01 .
+
+pi:UGS-0242 pt:Al2O3 1.008e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 7.74e+02 ;
+    pt:CaO 1.13e+00 ;
+    pt:Ce 2.7e+01 ;
+    pt:Co 5.2e+00 ;
+    pt:Cr 2.4e+01 ;
+    pt:Cu 1.2e+01 ;
+    pt:F 2.28e+02 ;
+    pt:Fe2O3_общ 1.278e+00 ;
+    pt:Ga 8e+00 ;
+    pt:K2O 3.158e+00 ;
+    pt:La 2.1e+01 ;
+    pt:MgO 4.5e-01 ;
+    pt:MnO 1.29e-01 ;
+    pt:Na2O 1.28e+00 ;
+    pt:Nb 8.9e+00 ;
+    pt:Nd 1.2e+01 ;
+    pt:Ni 1.3e+01 ;
+    pt:P2O5 7.4e-02 ;
+    pt:Pb 2.9e+01 ;
+    pt:Rb 1e+02 ;
+    pt:S_общ 1.05e+02 ;
+    pt:SiO2 7.514e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.97e+02 ;
+    pt:Th 6.1e+00 ;
+    pt:TiO2 3.08e-01 ;
+    pt:U "< 3" ;
+    pt:V 3.8e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.6e+01 ;
+    pt:Zn 3.5e+01 ;
+    pt:Zr 1.27e+02 ;
+    pt:Сорг 1.4e+00 ;
+    pt:в_д 1.073564e+02 ;
+    pt:с_ш 5.3182e+01 .
+
+pi:UGS-0243 pt:Al2O3 7.85e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 6.79e+02 ;
+    pt:CaO 1.32e+00 ;
+    pt:Ce 2.6e+01 ;
+    pt:Co 4.8e+00 ;
+    pt:Cr 2.2e+01 ;
+    pt:Cu 1.2e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 6.96e-01 ;
+    pt:Ga 8e+00 ;
+    pt:K2O 2.667e+00 ;
+    pt:La 1.7e+01 ;
+    pt:MgO 4.2e-01 ;
+    pt:MnO 1.49e-01 ;
+    pt:Na2O 9.59e-01 ;
+    pt:Nb 6.1e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1e+01 ;
+    pt:P2O5 7.1e-02 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 8.9e+01 ;
+    pt:S_общ 2.53e+02 ;
+    pt:SiO2 7.471e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.32e+02 ;
+    pt:Th 4.4e+00 ;
+    pt:TiO2 2.56e-01 ;
+    pt:U "< 3" ;
+    pt:V 2.8e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.4e+01 ;
+    pt:Zn 4e+01 ;
+    pt:Zr 9.9e+01 ;
+    pt:Сорг 5.48e+00 ;
+    pt:в_д 1.073491e+02 ;
+    pt:с_ш 5.318664e+01 .
+
+pi:UGS-0244 pt:Al2O3 1.095e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 6.51e+02 ;
+    pt:CaO 2.01e+00 ;
+    pt:Ce 3.7e+01 ;
+    pt:Co 9.9e+00 ;
+    pt:Cr 5.8e+01 ;
+    pt:Cu 2e+01 ;
+    pt:F 3.55e+02 ;
+    pt:Fe2O3_общ 3.055e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.626e+00 ;
+    pt:La 3.1e+01 ;
+    pt:MgO 1.04e+00 ;
+    pt:MnO 1.41e-01 ;
+    pt:Na2O 1.201e+00 ;
+    pt:Nb 9.6e+00 ;
+    pt:Nd 1.7e+01 ;
+    pt:Ni 2.2e+01 ;
+    pt:P2O5 1.64e-01 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 1.06e+02 ;
+    pt:S_общ 2.3e+02 ;
+    pt:SiO2 6.606e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.07e+02 ;
+    pt:Th 7.6e+00 ;
+    pt:TiO2 5.23e-01 ;
+    pt:U "< 3" ;
+    pt:V 6.3e+01 ;
+    pt:W "< 5" ;
+    pt:Y 2e+01 ;
+    pt:Zn 6.1e+01 ;
+    pt:Zr 1.56e+02 ;
+    pt:Сорг 9.08e+00 ;
+    pt:в_д 1.07325e+02 ;
+    pt:с_ш 5.315565e+01 .
+
+pi:UGS-0246 pt:Al2O3 1.067e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 5.62e+02 ;
+    pt:CaO 1.5e+00 ;
+    pt:Ce 4.2e+01 ;
+    pt:Co 6e+00 ;
+    pt:Cr 4.3e+01 ;
+    pt:Cu 1.9e+01 ;
+    pt:F 3.75e+02 ;
+    pt:Fe2O3_общ 2.473e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 3.07e+00 ;
+    pt:La 2.8e+01 ;
+    pt:MgO 8.8e-01 ;
+    pt:MnO 6e-02 ;
+    pt:Na2O 1.209e+00 ;
+    pt:Nb 6.7e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 1.9e+01 ;
+    pt:P2O5 1.05e-01 ;
+    pt:Pb 2.8e+01 ;
+    pt:Rb 1.05e+02 ;
+    pt:S_общ 2.22e+02 ;
+    pt:SiO2 7.115e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 1.99e+02 ;
+    pt:Th 6.6e+00 ;
+    pt:TiO2 3.3e-01 ;
+    pt:U "< 3" ;
+    pt:V 4.9e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 3.2e+01 ;
+    pt:Zr 9.9e+01 ;
+    pt:Сорг 2.04e+00 ;
+    pt:в_д 1.073178e+02 ;
+    pt:с_ш 5.316029e+01 .
+
+pi:UGS-0247 pt:Al2O3 1.447e+01 ;
+    pt:As 8e+00 ;
+    pt:Ba 7.86e+02 ;
+    pt:CaO 1.86e+00 ;
+    pt:Ce 1.01e+02 ;
+    pt:Co 1.6e+01 ;
+    pt:Cr 6.7e+01 ;
+    pt:Cu 3e+01 ;
+    pt:F 6.08e+02 ;
+    pt:Fe2O3_общ 5.08e+00 ;
+    pt:Ga 1.3e+01 ;
+    pt:K2O 3.46e+00 ;
+    pt:La 8.4e+01 ;
+    pt:MgO 1.6e+00 ;
+    pt:MnO 1.58e-01 ;
+    pt:Na2O 1.65e+00 ;
+    pt:Nb 1.4e+01 ;
+    pt:Nd 3.6e+01 ;
+    pt:Ni 3.1e+01 ;
+    pt:P2O5 2.68e-01 ;
+    pt:Pb 3e+01 ;
+    pt:Rb 1.17e+02 ;
+    pt:S_общ 5.9e+02 ;
+    pt:SiO2 5.831e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.01e+02 ;
+    pt:Th 1.8e+01 ;
+    pt:TiO2 6.15e-01 ;
+    pt:U 3.4e+00 ;
+    pt:V 8.3e+01 ;
+    pt:W "< 5" ;
+    pt:Y 2.2e+01 ;
+    pt:Zn 7.6e+01 ;
+    pt:Zr 1.53e+02 ;
+    pt:Сорг 4.4e+00 ;
+    pt:в_д 1.073183e+02 ;
+    pt:с_ш 5.316927e+01 .
+
+pi:UGS-0249 pt:Al2O3 8.95e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 7.76e+02 ;
+    pt:CaO 1.49e+00 ;
+    pt:Ce 1.8e+01 ;
+    pt:Co 3.1e+00 ;
+    pt:Cr 2.3e+01 ;
+    pt:Cu 1.5e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 7.5e-01 ;
+    pt:Ga 8e+00 ;
+    pt:K2O 3.078e+00 ;
+    pt:La 1.5e+01 ;
+    pt:MgO 4.9e-01 ;
+    pt:MnO 1.23e-01 ;
+    pt:Na2O 1.118e+00 ;
+    pt:Nb 4.2e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.2e+01 ;
+    pt:P2O5 1.12e-01 ;
+    pt:Pb 2.7e+01 ;
+    pt:Rb 9.9e+01 ;
+    pt:S_общ 2.18e+02 ;
+    pt:SiO2 7.349e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.54e+02 ;
+    pt:Th 5e+00 ;
+    pt:TiO2 1.77e-01 ;
+    pt:U "< 3" ;
+    pt:V 3e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.2e+01 ;
+    pt:Zn 4.3e+01 ;
+    pt:Zr 4.8e+01 ;
+    pt:Сорг 5e+00 ;
+    pt:в_д 1.073337e+02 ;
+    pt:с_ш 5.317795e+01 .
+
+pi:UGS-0250 pt:Al2O3 1.5e+01 ;
+    pt:As 5.1e+00 ;
+    pt:Ba 8.07e+02 ;
+    pt:CaO 6.02e+00 ;
+    pt:Ce 5.4e+01 ;
+    pt:Co 3e+01 ;
+    pt:Cr 9.2e+01 ;
+    pt:Cu 4e+01 ;
+    pt:F 4.92e+02 ;
+    pt:Fe2O3_общ 7.529e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 1.856e+00 ;
+    pt:La 3.7e+01 ;
+    pt:MgO 3.61e+00 ;
+    pt:MnO 2.46e-01 ;
+    pt:Na2O 2.47e+00 ;
+    pt:Nb 7e+00 ;
+    pt:Nd 2.4e+01 ;
+    pt:Ni 3.6e+01 ;
+    pt:P2O5 2.37e-01 ;
+    pt:Pb 1.3e+01 ;
+    pt:Rb 5e+01 ;
+    pt:S_общ 1.55e+02 ;
+    pt:SiO2 5.159e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 3.78e+02 ;
+    pt:Th 6.2e+00 ;
+    pt:TiO2 8.64e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.53e+02 ;
+    pt:W "< 5" ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 8.2e+01 ;
+    pt:Zr 8.2e+01 ;
+    pt:Сорг 2.36e+00 ;
+    pt:в_д 1.073621e+02 ;
+    pt:с_ш 5.315043e+01 .
+
+pi:UGS-0251 pt:Al2O3 1.181e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 9.12e+02 ;
+    pt:CaO 2.8e+00 ;
+    pt:Ce 4.3e+01 ;
+    pt:Co 1.6e+01 ;
+    pt:Cr 5.8e+01 ;
+    pt:Cu 1.9e+01 ;
+    pt:F 3.19e+02 ;
+    pt:Fe2O3_общ 1.369e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.603e+00 ;
+    pt:La 3.3e+01 ;
+    pt:MgO 1.28e+00 ;
+    pt:MnO 5.77e-01 ;
+    pt:Na2O 1.265e+00 ;
+    pt:Nb 8.4e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 2.8e+01 ;
+    pt:P2O5 2.09e-01 ;
+    pt:Pb 2.6e+01 ;
+    pt:Rb 8.9e+01 ;
+    pt:S_общ 2.24e+02 ;
+    pt:SiO2 5.937e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.44e+02 ;
+    pt:Th 7.2e+00 ;
+    pt:TiO2 5.62e-01 ;
+    pt:U "< 3" ;
+    pt:V 6.7e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.9e+01 ;
+    pt:Zn 1.07e+02 ;
+    pt:Zr 1.39e+02 ;
+    pt:Сорг 6.78e+00 ;
+    pt:в_д 1.073549e+02 ;
+    pt:с_ш 5.315506e+01 .
+
+pi:UGS-0252 pt:Al2O3 1.248e+01 ;
+    pt:As 3.2e+00 ;
+    pt:Ba 9.21e+02 ;
+    pt:CaO 3.03e+00 ;
+    pt:Ce 4.6e+01 ;
+    pt:Co 1.5e+01 ;
+    pt:Cr 6.5e+01 ;
+    pt:Cu 1.9e+01 ;
+    pt:F 4.3e+02 ;
+    pt:Fe2O3_общ 4.316e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 2.576e+00 ;
+    pt:La 2.5e+01 ;
+    pt:MgO 1.75e+00 ;
+    pt:MnO 1.81e-01 ;
+    pt:Na2O 2.05e+00 ;
+    pt:Nb 7.9e+00 ;
+    pt:Nd 1.7e+01 ;
+    pt:Ni 2.6e+01 ;
+    pt:P2O5 2.65e-01 ;
+    pt:Pb 2.2e+01 ;
+    pt:Rb 7.4e+01 ;
+    pt:S_общ 2.41e+02 ;
+    pt:SiO2 5.984e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 4.84e+02 ;
+    pt:Th 6.2e+00 ;
+    pt:TiO2 7.42e-01 ;
+    pt:U "< 3" ;
+    pt:V 8.4e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 5.7e+01 ;
+    pt:Zr 2.14e+02 ;
+    pt:Сорг 9.96e+00 ;
+    pt:в_д 1.07377e+02 ;
+    pt:с_ш 5.315013e+01 .
+
+pi:UGS-0255 pt:Al2O3 8.09e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 6.4e+02 ;
+    pt:CaO 1.31e+00 ;
+    pt:Ce 2.1e+01 ;
+    pt:Co 3e+00 ;
+    pt:Cr 2.7e+01 ;
+    pt:Cu 1.2e+01 ;
+    pt:F "< 200" ;
+    pt:Fe2O3_общ 8.13e-01 ;
+    pt:Ga 7e+00 ;
+    pt:K2O 2.714e+00 ;
+    pt:La 7.5e+00 ;
+    pt:MgO 4.6e-01 ;
+    pt:MnO 1.48e-01 ;
+    pt:Na2O 1.037e+00 ;
+    pt:Nb 8.7e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.1e+01 ;
+    pt:P2O5 4.5e-02 ;
+    pt:Pb 2.5e+01 ;
+    pt:Rb 8.8e+01 ;
+    pt:S_общ 1.3e+02 ;
+    pt:SiO2 7.65e+01 ;
+    pt:Sn 5.3e+00 ;
+    pt:Sr 2.4e+02 ;
+    pt:Th 4.9e+00 ;
+    pt:TiO2 3.35e-01 ;
+    pt:U "< 3" ;
+    pt:V 3.3e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.6e+01 ;
+    pt:Zn 3.7e+01 ;
+    pt:Zr 1.32e+02 ;
+    pt:Сорг 5.2e+00 ;
+    pt:в_д 1.073631e+02 ;
+    pt:с_ш 5.316838e+01 .
+
+pi:UGS-0256 pt:Al2O3 9.81e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 6.74e+02 ;
+    pt:CaO 1.22e+00 ;
+    pt:Ce 2e+01 ;
+    pt:Co 4e+00 ;
+    pt:Cr 2.6e+01 ;
+    pt:Cu 1.2e+01 ;
+    pt:F 2.23e+02 ;
+    pt:Fe2O3_общ 8.66e-01 ;
+    pt:Ga 8e+00 ;
+    pt:K2O 3.006e+00 ;
+    pt:La 1.6e+01 ;
+    pt:MgO 5e-01 ;
+    pt:MnO 1.58e-01 ;
+    pt:Na2O 1.186e+00 ;
+    pt:Nb 5.1e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.2e+01 ;
+    pt:P2O5 7.2e-02 ;
+    pt:Pb 2.6e+01 ;
+    pt:Rb 9.7e+01 ;
+    pt:S_общ 1.33e+02 ;
+    pt:SiO2 7.674e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.66e+02 ;
+    pt:Th 5.2e+00 ;
+    pt:TiO2 2.93e-01 ;
+    pt:U "< 3" ;
+    pt:V 3.3e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.4e+01 ;
+    pt:Zn 3.7e+01 ;
+    pt:Zr 1.33e+02 ;
+    pt:Сорг 4.5e+00 ;
+    pt:в_д 1.073559e+02 ;
+    pt:с_ш 5.317302e+01 .
+
+pi:UGS-0258 pt:Al2O3 9.58e+00 ;
+    pt:As "< 3" ;
+    pt:Ba 7.5e+02 ;
+    pt:CaO 1.38e+00 ;
+    pt:Ce 2.9e+01 ;
+    pt:Co 3.7e+00 ;
+    pt:Cr 2.9e+01 ;
+    pt:Cu 1.3e+01 ;
+    pt:F 2.08e+02 ;
+    pt:Fe2O3_общ 8.61e-01 ;
+    pt:Ga 9e+00 ;
+    pt:K2O 2.915e+00 ;
+    pt:La 1.8e+01 ;
+    pt:MgO 5.8e-01 ;
+    pt:MnO 2.01e-01 ;
+    pt:Na2O 1.12e+00 ;
+    pt:Nb 6.7e+00 ;
+    pt:Nd "< 9" ;
+    pt:Ni 1.4e+01 ;
+    pt:P2O5 6.2e-02 ;
+    pt:Pb 2.6e+01 ;
+    pt:Rb 9.9e+01 ;
+    pt:S_общ 1.75e+02 ;
+    pt:SiO2 7.631e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.66e+02 ;
+    pt:Th 4.9e+00 ;
+    pt:TiO2 3.72e-01 ;
+    pt:U "< 3" ;
+    pt:V 4.2e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.6e+01 ;
+    pt:Zn 3.1e+01 ;
+    pt:Zr 9.6e+01 ;
+    pt:Сорг 5.8e+00 ;
+    pt:в_д 1.073414e+02 ;
+    pt:с_ш 5.318229e+01 .
+
+pi:UGS-0260 pt:Al2O3 1.194e+01 ;
+    pt:As 3.8e+00 ;
+    pt:Ba 7.05e+02 ;
+    pt:CaO 4.09e+00 ;
+    pt:Ce 3.7e+01 ;
+    pt:Co 2.2e+01 ;
+    pt:Cr 1.07e+02 ;
+    pt:Cu 2.3e+01 ;
+    pt:F 3.28e+02 ;
+    pt:Fe2O3_общ 4.008e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 2.07e+00 ;
+    pt:La 2.2e+01 ;
+    pt:MgO 2.13e+00 ;
+    pt:MnO 4.95e-01 ;
+    pt:Na2O 1.45e+00 ;
+    pt:Nb 7e+00 ;
+    pt:Nd 1.9e+01 ;
+    pt:Ni 4.8e+01 ;
+    pt:P2O5 1.45e-01 ;
+    pt:Pb 2.1e+01 ;
+    pt:Rb 7e+01 ;
+    pt:S_общ 2.62e+02 ;
+    pt:SiO2 5.662e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 1.92e+02 ;
+    pt:Th 6.7e+00 ;
+    pt:TiO2 7.27e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.13e+02 ;
+    pt:W "< 5" ;
+    pt:Y 2e+01 ;
+    pt:Zn 8.8e+01 ;
+    pt:Zr 1.54e+02 ;
+    pt:Сорг 1e+01 ;
+    pt:в_д 1.073322e+02 ;
+    pt:с_ш 5.315102e+01 .
+
+pi:UGS-0262 pt:Al2O3 1.18e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 1.076e+03 ;
+    pt:CaO 3.99e+00 ;
+    pt:Ce 4.4e+01 ;
+    pt:Co 3.1e+01 ;
+    pt:Cr 1.02e+02 ;
+    pt:Cu 3.2e+01 ;
+    pt:F 5.09e+02 ;
+    pt:Fe2O3_общ 5.505e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 2.277e+00 ;
+    pt:La 2.8e+01 ;
+    pt:MgO 2.77e+00 ;
+    pt:MnO 3e-01 ;
+    pt:Na2O 1.41e+00 ;
+    pt:Nb 7e+00 ;
+    pt:Nd 1.6e+01 ;
+    pt:Ni 7.4e+01 ;
+    pt:P2O5 5.32e-01 ;
+    pt:Pb 1.8e+01 ;
+    pt:Rb 8.3e+01 ;
+    pt:S_общ 7.64e+02 ;
+    pt:SiO2 5.42e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.43e+02 ;
+    pt:Th 5.8e+00 ;
+    pt:TiO2 5.75e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.09e+02 ;
+    pt:W "< 5" ;
+    pt:Y 2.2e+01 ;
+    pt:Zn 6.3e+01 ;
+    pt:Zr 7.2e+01 ;
+    pt:Сорг 9.34e+00 ;
+    pt:в_д 1.073409e+02 ;
+    pt:с_ш 5.317331e+01 .
+
+pi:UGS-0266 pt:Al2O3 1.08e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 7.84e+02 ;
+    pt:CaO 3.1e+00 ;
+    pt:Ce 4.5e+01 ;
+    pt:Co 1.4e+01 ;
+    pt:Cr 5.7e+01 ;
+    pt:Cu 1.9e+01 ;
+    pt:F 3.32e+02 ;
+    pt:Fe2O3_общ 2.214e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.43e+00 ;
+    pt:La 2.8e+01 ;
+    pt:MgO 1.3e+00 ;
+    pt:MnO 3.69e-01 ;
+    pt:Na2O 1.336e+00 ;
+    pt:Nb 8.7e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 2.9e+01 ;
+    pt:P2O5 1.95e-01 ;
+    pt:Pb 2.4e+01 ;
+    pt:Rb 8.3e+01 ;
+    pt:S_общ 4.33e+02 ;
+    pt:SiO2 6.032e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.41e+02 ;
+    pt:Th 7.7e+00 ;
+    pt:TiO2 5.36e-01 ;
+    pt:U "< 3" ;
+    pt:V 7e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.9e+01 ;
+    pt:Zn 6.1e+01 ;
+    pt:Zr 1.74e+02 ;
+    pt:Сорг 9.1e+00 ;
+    pt:в_д 1.073245e+02 ;
+    pt:с_ш 5.314667e+01 .
+
+pi:UGS-0267 pt:Al2O3 1.233e+01 ;
+    pt:As 1.2e+01 ;
+    pt:Ba 1.597e+03 ;
+    pt:CaO 4.04e+00 ;
+    pt:Ce 7e+01 ;
+    pt:Co 3.7e+01 ;
+    pt:Cr 1.78e+02 ;
+    pt:Cu 3.4e+01 ;
+    pt:F 4.78e+02 ;
+    pt:Fe2O3_общ 6.249e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 2.079e+00 ;
+    pt:La 3.6e+01 ;
+    pt:MgO 2.97e+00 ;
+    pt:MnO 4.28e-01 ;
+    pt:Na2O 1.737e+00 ;
+    pt:Nb 7.4e+00 ;
+    pt:Nd 2.9e+01 ;
+    pt:Ni 6.9e+01 ;
+    pt:P2O5 2.51e-01 ;
+    pt:Pb 2.1e+01 ;
+    pt:Rb 6.5e+01 ;
+    pt:S_общ 4.34e+02 ;
+    pt:SiO2 4.426e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 4.98e+02 ;
+    pt:Th 7.4e+00 ;
+    pt:TiO2 1.057e+00 ;
+    pt:U "< 3" ;
+    pt:V 1.4e+02 ;
+    pt:W "< 5" ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 1.27e+02 ;
+    pt:Zr 1.15e+02 ;
+    pt:Сорг 9.94e+00 ;
+    pt:в_д 1.073395e+02 ;
+    pt:с_ш 5.314638e+01 .
+
+pi:UGS-0268 pt:Al2O3 1.428e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 7.58e+02 ;
+    pt:CaO 5.18e+00 ;
+    pt:Ce 5.4e+01 ;
+    pt:Co 2.5e+01 ;
+    pt:Cr 1.04e+02 ;
+    pt:Cu 5.2e+01 ;
+    pt:F 5.21e+02 ;
+    pt:Fe2O3_общ 5.797e+00 ;
+    pt:Ga 1.2e+01 ;
+    pt:K2O 2.248e+00 ;
+    pt:La 3.3e+01 ;
+    pt:MgO 2.96e+00 ;
+    pt:MnO 3.27e-01 ;
+    pt:Na2O 1.958e+00 ;
+    pt:Nb 8.6e+00 ;
+    pt:Nd 2e+01 ;
+    pt:Ni 5.3e+01 ;
+    pt:P2O5 2.58e-01 ;
+    pt:Pb 1.8e+01 ;
+    pt:Rb 6.8e+01 ;
+    pt:S_общ 2.5e+02 ;
+    pt:SiO2 5.242e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 5.01e+02 ;
+    pt:Th 7.7e+00 ;
+    pt:TiO2 7.78e-01 ;
+    pt:U "< 3" ;
+    pt:V 1.23e+02 ;
+    pt:W "< 5" ;
+    pt:Y 1.7e+01 ;
+    pt:Zn 7.8e+01 ;
+    pt:Zr 8.3e+01 ;
+    pt:Сорг 7.18e+00 ;
+    pt:в_д 1.0734e+02 ;
+    pt:с_ш 5.315536e+01 .
+
+pi:UGS-0269 pt:Al2O3 1.131e+01 ;
+    pt:As 4.2e+00 ;
+    pt:Ba 8.8e+02 ;
+    pt:CaO 4.85e+00 ;
+    pt:Ce 6.3e+01 ;
+    pt:Co 2e+01 ;
+    pt:Cr 1.14e+02 ;
+    pt:Cu 3.6e+01 ;
+    pt:F 4.78e+02 ;
+    pt:Fe2O3_общ 3.604e+00 ;
+    pt:Ga 1.1e+01 ;
+    pt:K2O 2.535e+00 ;
+    pt:La 4.4e+01 ;
+    pt:MgO 2.3e+00 ;
+    pt:MnO 4.14e-01 ;
+    pt:Na2O 1.023e+00 ;
+    pt:Nb 8.3e+00 ;
+    pt:Nd 2.1e+01 ;
+    pt:Ni 6.9e+01 ;
+    pt:P2O5 2.97e-01 ;
+    pt:Pb 2.2e+01 ;
+    pt:Rb 9.4e+01 ;
+    pt:S_общ 3.99e+02 ;
+    pt:SiO2 5.199e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 4.34e+02 ;
+    pt:Th 8.5e+00 ;
+    pt:TiO2 5.23e-01 ;
+    pt:U "< 3" ;
+    pt:V 9.4e+01 ;
+    pt:W "< 5" ;
+    pt:Y 2.3e+01 ;
+    pt:Zn 1.12e+02 ;
+    pt:Zr 9.4e+01 ;
+    pt:Сорг 9.8e+00 ;
+    pt:в_д 1.073477e+02 ;
+    pt:с_ш 5.31597e+01 .
+
+pi:UGS-0270 pt:Al2O3 1.05e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 8.94e+02 ;
+    pt:CaO 1.43e+00 ;
+    pt:Ce 3.5e+01 ;
+    pt:Co 6.9e+00 ;
+    pt:Cr 3.8e+01 ;
+    pt:Cu 1.6e+01 ;
+    pt:F 2.76e+02 ;
+    pt:Fe2O3_общ 1.278e+00 ;
+    pt:Ga 8e+00 ;
+    pt:K2O 2.733e+00 ;
+    pt:La 2e+01 ;
+    pt:MgO 7.3e-01 ;
+    pt:MnO 2.74e-01 ;
+    pt:Na2O 1.048e+00 ;
+    pt:Nb 5.9e+00 ;
+    pt:Nd 1.7e+01 ;
+    pt:Ni 1.8e+01 ;
+    pt:P2O5 1.57e-01 ;
+    pt:Pb 2.8e+01 ;
+    pt:Rb 9.8e+01 ;
+    pt:S_общ 1.84e+02 ;
+    pt:SiO2 7.057e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.32e+02 ;
+    pt:Th 6e+00 ;
+    pt:TiO2 3.14e-01 ;
+    pt:U "< 3" ;
+    pt:V 4.4e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.6e+01 ;
+    pt:Zn 9.5e+01 ;
+    pt:Zr 6.5e+01 ;
+    pt:Сорг 6e+00 ;
+    pt:в_д 1.073482e+02 ;
+    pt:с_ш 5.316868e+01 .
+
+pi:UGW-0264 pt:Al2O3 1.103e+01 ;
+    pt:As "< 3" ;
+    pt:Ba 7.98e+02 ;
+    pt:CaO 1.93e+00 ;
+    pt:Ce 4e+01 ;
+    pt:Co 9e+00 ;
+    pt:Cr 5.2e+01 ;
+    pt:Cu 1.7e+01 ;
+    pt:F 3.26e+02 ;
+    pt:Fe2O3_общ 2.042e+00 ;
+    pt:Ga 1e+01 ;
+    pt:K2O 2.703e+00 ;
+    pt:La 2.6e+01 ;
+    pt:MgO 9.5e-01 ;
+    pt:MnO 2.62e-01 ;
+    pt:Na2O 1.154e+00 ;
+    pt:Nb 7.3e+00 ;
+    pt:Nd 1.8e+01 ;
+    pt:Ni 2.4e+01 ;
+    pt:P2O5 1.38e-01 ;
+    pt:Pb 2.6e+01 ;
+    pt:Rb 9.7e+01 ;
+    pt:S_общ 2.07e+02 ;
+    pt:SiO2 6.713e+01 ;
+    pt:Sn "< 4" ;
+    pt:Sr 2.23e+02 ;
+    pt:Th 6.4e+00 ;
+    pt:TiO2 4.63e-01 ;
+    pt:U "< 3" ;
+    pt:V 5.9e+01 ;
+    pt:W "< 5" ;
+    pt:Y 1.8e+01 ;
+    pt:Zn 6.6e+01 ;
+    pt:Zr 1.42e+02 ;
+    pt:Сорг 9.6e+00 ;
+    pt:в_д 1.073549e+02 ;
+    pt:с_ш 5.315506e+01 .
+
+pi:YM-1-1-100 pt:Al 1.4156e+01 ;
+    pt:Al_Int 5.19564e+01 ;
+    pt:As 4.230769e-01,
+        2.2e+00 ;
+    pt:As_Int 8.8e-03 ;
+    pt:As_PPM 2.2e+00 ;
+    pt:CF 1e+00 ;
+    pt:Ca 4.42e+00,
+        4.48e+00,
+        "N.A." ;
+    pt:Ca_Int 1.74709e+01,
+        6.30089e+01,
+        6.34202e+01 ;
+    pt:Co 1.070588e+00,
+        1.82e+01 ;
+    pt:Co_Int 4.28e-02 ;
+    pt:Co_PPM 1.82e+01 ;
+    pt:Cr 1.019388e+00,
+        9.99e+01 ;
+    pt:Cr_Int 1.399e-01 ;
+    pt:Cr_PPM 9.99e+01 ;
+    pt:Cu 3.217391e-01,
+        1.48e+01 ;
+    pt:Cu_Int 1.243e-01 ;
+    pt:Cu_PPM 1.48e+01 ;
+    pt:Date 4.424265e+04,
+        4.424266e+04,
+        4.424353e+04,
+        4.424354e+04,
+        4.424354e+04 ;
+    pt:Fe 6.629e+00,
+        7.413e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 7.413e+04 ;
+    pt:Fe2O3_tot 7.413e+00 ;
+    pt:Fe_Int 3.179835e+02,
+        3.25646e+02,
+        3.309272e+02 ;
+    pt:Hg_Int 1.093e-01,
+        3.873e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.784e+00 ;
+    pt:K_Int 2.92262e+01 ;
+    pt:Mg 3.824e+00 ;
+    pt:Mg_Int 2.07081e+01 ;
+    pt:Mn 1.36e-01,
+        "N.A." ;
+    pt:Mn_Int 8.208e+00,
+        8.2667e+00 ;
+    pt:Na 3.594e+00 ;
+    pt:Na_Int 7.5437e+00 ;
+    pt:Nb 1.97e+01 ;
+    pt:Nb_Int 3.86e-01 ;
+    pt:Nb_PPM 1.97e+01 ;
+    pt:Ni 7.790698e-01,
+        3.35e+01 ;
+    pt:Ni_Int 4.284e-01 ;
+    pt:Ni_PPM 3.35e+01 ;
+    pt:P 2.58e-01 ;
+    pt:PLI 9.324368e-01 ;
+    pt:P_Int 1.1316e+00 ;
+    pt:Pb 1.83e+00,
+        1.83e+01 ;
+    pt:Pb_Int 8.21e-02,
+        1.618e-01 ;
+    pt:Pb_PPM 8.9e+00,
+        1.83e+01 ;
+    pt:Rb 5.08e+01 ;
+    pt:Rb_Int 9.859e-01 ;
+    pt:Rb_PPM 5.08e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.837e-01,
+        2.294e-01,
+        1.89302e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 1.6e-02 ;
+    pt:S_Int 3.599e-01 ;
+    pt:Si 4.8702e+01,
+        5.434e+01,
+        "N.A." ;
+    pt:Si_Int 1.607044e+02,
+        2.186524e+02,
+        2.243523e+02 ;
+    pt:Sr 2.920192e+00,
+        6.074e+02 ;
+    pt:Sr_Int 9.6438e+00 ;
+    pt:Sr_PPM 6.074e+02 ;
+    pt:Ti 9.76e-01,
+        1.005e+00 ;
+    pt:Ti_Int 1.2946e+01,
+        1.30463e+01 ;
+    pt:V 1.230702e+00,
+        1.403e+02 ;
+    pt:V_Int 1.054e-01 ;
+    pt:V_PPM 1.403e+02 ;
+    pt:Y 3.43e+01 ;
+    pt:Y_Int 1.005e+00 ;
+    pt:Y_PPM 3.43e+01 ;
+    pt:Zn 7e-01,
+        6.37e+01 ;
+    pt:Zn_Int 3.449e-01 ;
+    pt:Zn_PPM 6.37e+01 ;
+    pt:Zr 1.908e+02 ;
+    pt:Zr_Int 5.1777e+00 ;
+    pt:Zr_PPM 1.908e+02 ;
+    pt:пробы 1e+00 .
+
+pi:YM-1-1-TOT pt:Al 1.1553e+01 ;
+    pt:Al_Int 6.01284e+01 ;
+    pt:As 4.807692e-01,
+        2.5e+00 ;
+    pt:As_Int 9.1e-03 ;
+    pt:As_PPM 2.5e+00 ;
+    pt:CF 6e+00 ;
+    pt:Ca 2.27e+00,
+        2.57e+00,
+        "N.A." ;
+    pt:Ca_Int 1.38322e+01,
+        3.56697e+01,
+        3.60663e+01 ;
+    pt:Co 3.705882e-01,
+        6.3e+00 ;
+    pt:Co_Int 1.86e-02 ;
+    pt:Co_PPM 6.3e+00 ;
+    pt:Cr 3.887755e-01,
+        3.81e+01 ;
+    pt:Cr_Int 5.84e-02 ;
+    pt:Cr_PPM 3.81e+01 ;
+    pt:Cu 2.413043e-01,
+        1.11e+01 ;
+    pt:Cu_Int 1.221e-01 ;
+    pt:Cu_PPM 1.11e+01 ;
+    pt:Date 4.424274e+04,
+        4.424275e+04,
+        4.424401e+04,
+        4.424401e+04,
+        4.424402e+04 ;
+    pt:Fe 2.703e+00,
+        3.297e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 3.297e+04 ;
+    pt:Fe2O3_tot 3.297e+00 ;
+    pt:Fe_Int 1.354071e+02,
+        1.366964e+02,
+        1.372896e+02 ;
+    pt:Hg_Int 1.247e-01,
+        4.81e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.824e+00 ;
+    pt:K_Int 4.55592e+01 ;
+    pt:Mg 1.091e+00 ;
+    pt:Mg_Int 1.02666e+01 ;
+    pt:Mn 5e-02,
+        "N.A." ;
+    pt:Mn_Int 3.0358e+00 ;
+    pt:Na 3.261e+00 ;
+    pt:Na_Int 1.0775e+01 ;
+    pt:Nb 2.9e+00 ;
+    pt:Nb_Int 7.52e-02 ;
+    pt:Nb_PPM 2.9e+00 ;
+    pt:Ni 2.906977e-01,
+        1.25e+01 ;
+    pt:Ni_Int 2.341e-01 ;
+    pt:Ni_PPM 1.25e+01 ;
+    pt:P 1.15e-01 ;
+    pt:PLI 5.797415e-01 ;
+    pt:P_Int 4.603e-01 ;
+    pt:Pb 2.43e+00,
+        2.43e+01 ;
+    pt:Pb_Int 1.23e-01,
+        2.227e-01 ;
+    pt:Pb_PPM 2.26e+01,
+        2.43e+01 ;
+    pt:Rb 7.62e+01 ;
+    pt:Rb_Int 1.8977e+00 ;
+    pt:Rb_PPM 7.62e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 2.013e-01,
+        2.152e-01,
+        2.20453e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.057e-01 ;
+    pt:Si 6.2163e+01,
+        6.277e+01,
+        "N.A." ;
+    pt:Si_Int 1.880655e+02,
+        2.528746e+02,
+        2.628922e+02 ;
+    pt:Sr 3.328846e+00,
+        6.924e+02 ;
+    pt:Sr_Int 1.47177e+01 ;
+    pt:Sr_PPM 6.924e+02 ;
+    pt:Ti 2.61e-01,
+        2.86e-01 ;
+    pt:Ti_Int 3.8665e+00,
+        3.8667e+00 ;
+    pt:V 5.052632e-01,
+        5.76e+01 ;
+    pt:V_Int 4.2e-02 ;
+    pt:V_PPM 5.76e+01 ;
+    pt:Y 1.47e+01 ;
+    pt:Y_Int 7.259e-01 ;
+    pt:Y_PPM 1.47e+01 ;
+    pt:Zn 3.725275e-01,
+        3.39e+01 ;
+    pt:Zn_Int 2.114e-01 ;
+    pt:Zn_PPM 3.39e+01 ;
+    pt:Zr 7.28e+01 ;
+    pt:Zr_Int 3.517e+00 ;
+    pt:Zr_PPM 7.28e+01 ;
+    pt:пробы 6e+00 .
+
+pi:YM-1-2-100 pt:Al 1.4922e+01 ;
+    pt:Al_Int 5.27117e+01 ;
+    pt:As 3.846154e-01,
+        2e+00 ;
+    pt:As_Int 8.6e-03 ;
+    pt:As_PPM 2e+00 ;
+    pt:CF 2e+00 ;
+    pt:Ca 4.76e+00,
+        4.8e+00,
+        "N.A." ;
+    pt:Ca_Int 1.83546e+01,
+        6.72341e+01,
+        6.72533e+01 ;
+    pt:Co 9.529412e-01,
+        1.62e+01 ;
+    pt:Co_Int 3.9e-02 ;
+    pt:Co_PPM 1.62e+01 ;
+    pt:Cr 1.052041e+00,
+        1.031e+02 ;
+    pt:Cr_Int 1.427e-01 ;
+    pt:Cr_PPM 1.031e+02 ;
+    pt:Cu 3.043478e-01,
+        1.4e+01 ;
+    pt:Cu_Int 1.159e-01 ;
+    pt:Cu_PPM 1.4e+01 ;
+    pt:Date 4.424267e+04,
+        4.424268e+04,
+        4.424356e+04,
+        4.424356e+04,
+        4.424357e+04 ;
+    pt:Fe 6.829e+00,
+        7.52e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 7.52e+04 ;
+    pt:Fe2O3_tot 7.52e+00 ;
+    pt:Fe_Int 3.295999e+02,
+        3.337903e+02,
+        3.414113e+02 ;
+    pt:Hg_Int 9.15e-02,
+        3.845e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.777e+00 ;
+    pt:K_Int 2.91777e+01 ;
+    pt:Mg 4.145e+00 ;
+    pt:Mg_Int 2.17904e+01 ;
+    pt:Mn 1.44e-01,
+        "N.A." ;
+    pt:Mn_Int 8.8395e+00,
+        8.8644e+00 ;
+    pt:Na 3.72e+00 ;
+    pt:Na_Int 7.5623e+00 ;
+    pt:Nb 2.39e+01 ;
+    pt:Nb_Int 4.831e-01 ;
+    pt:Nb_PPM 2.39e+01 ;
+    pt:Ni 7.418605e-01,
+        3.19e+01 ;
+    pt:Ni_Int 3.981e-01 ;
+    pt:Ni_PPM 3.19e+01 ;
+    pt:P 2.7e-01 ;
+    pt:PLI 8.858523e-01 ;
+    pt:P_Int 1.182e+00 ;
+    pt:Pb 1.58e+00,
+        1.58e+01 ;
+    pt:Pb_Int 7.79e-02,
+        1.398e-01 ;
+    pt:Pb_PPM 7.6e+00,
+        1.58e+01 ;
+    pt:Rb 4.54e+01 ;
+    pt:Rb_Int 8.929e-01 ;
+    pt:Rb_PPM 4.54e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.963e-01,
+        2.157e-01,
+        1.91413e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 1e-03 ;
+    pt:S_Int 1.839e-01 ;
+    pt:Si 4.9932e+01,
+        5.433e+01,
+        "N.A." ;
+    pt:Si_Int 1.69944e+02,
+        2.196181e+02,
+        2.26637e+02 ;
+    pt:Sr 2.720192e+00,
+        5.658e+02 ;
+    pt:Sr_Int 9.14e+00 ;
+    pt:Sr_PPM 5.658e+02 ;
+    pt:Ti 1.093e+00,
+        1.135e+00 ;
+    pt:Ti_Int 1.45929e+01,
+        1.47505e+01 ;
+    pt:V 1.274561e+00,
+        1.453e+02 ;
+    pt:V_Int 1.11e-01 ;
+    pt:V_PPM 1.453e+02 ;
+    pt:Y 4e+01 ;
+    pt:Y_Int 1.0973e+00 ;
+    pt:Y_PPM 4e+01 ;
+    pt:Zn 7.043956e-01,
+        6.41e+01 ;
+    pt:Zn_Int 3.435e-01 ;
+    pt:Zn_PPM 6.41e+01 ;
+    pt:Zr 1.918e+02 ;
+    pt:Zr_Int 5.1922e+00 ;
+    pt:Zr_PPM 1.918e+02 ;
+    pt:пробы 2e+00 .
+
+pi:YM-1-2-TOT pt:Al 1.1586e+01 ;
+    pt:Al_Int 5.79131e+01 ;
+    pt:As 7.692308e-01,
+        4e+00 ;
+    pt:As_Int 1.09e-02 ;
+    pt:As_PPM 4e+00 ;
+    pt:CF 7e+00 ;
+    pt:Ca 2.51e+00,
+        2.78e+00,
+        "N.A." ;
+    pt:Ca_Int 1.4416e+01,
+        3.92256e+01,
+        3.943e+01 ;
+    pt:Co 3.941176e-01,
+        6.7e+00 ;
+    pt:Co_Int 1.88e-02 ;
+    pt:Co_PPM 6.7e+00 ;
+    pt:Cr 4.459184e-01,
+        4.37e+01 ;
+    pt:Cr_Int 6.63e-02 ;
+    pt:Cr_PPM 4.37e+01 ;
+    pt:Cu 2.478261e-01,
+        1.14e+01 ;
+    pt:Cu_Int 1.221e-01 ;
+    pt:Cu_PPM 1.14e+01 ;
+    pt:Date 4.424276e+04,
+        4.424277e+04,
+        4.424403e+04,
+        4.424404e+04,
+        4.424405e+04 ;
+    pt:Fe 2.957e+00,
+        3.575e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 3.575e+04 ;
+    pt:Fe2O3_tot 3.575e+00 ;
+    pt:Fe_Int 1.464791e+02,
+        1.474153e+02,
+        1.490923e+02 ;
+    pt:Hg_Int 1.286e-01,
+        4.717e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.663e+00 ;
+    pt:K_Int 4.30366e+01 ;
+    pt:Mg 1.219e+00 ;
+    pt:Mg_Int 1.09595e+01 ;
+    pt:Mn 5.5e-02,
+        "N.A." ;
+    pt:Mn_Int 3.312e+00,
+        3.3162e+00 ;
+    pt:Na 3.33e+00 ;
+    pt:Na_Int 1.04656e+01 ;
+    pt:Nb 3.7e+00 ;
+    pt:Nb_Int 9.42e-02 ;
+    pt:Nb_PPM 3.7e+00 ;
+    pt:Ni 3.023256e-01,
+        1.3e+01 ;
+    pt:Ni_Int 2.333e-01 ;
+    pt:Ni_PPM 1.3e+01 ;
+    pt:P 1.27e-01 ;
+    pt:PLI 6.28756e-01 ;
+    pt:P_Int 5.19e-01 ;
+    pt:Pb 2.27e+00,
+        2.27e+01 ;
+    pt:Pb_Int 1.145e-01,
+        2.077e-01 ;
+    pt:Pb_PPM 1.97e+01,
+        2.27e+01 ;
+    pt:Rb 7.56e+01 ;
+    pt:Rb_Int 1.8205e+00 ;
+    pt:Rb_PPM 7.56e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.922e-01,
+        2.189e-01,
+        2.16724e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.11e-01 ;
+    pt:Si 5.8569e+01,
+        6.001e+01,
+        "N.A." ;
+    pt:Si_Int 1.76559e+02,
+        2.418973e+02,
+        2.505768e+02 ;
+    pt:Sr 3.404808e+00,
+        7.082e+02 ;
+    pt:Sr_Int 1.44666e+01 ;
+    pt:Sr_PPM 7.082e+02 ;
+    pt:Ti 3.22e-01,
+        3.44e-01 ;
+    pt:Ti_Int 4.5886e+00,
+        4.598e+00 ;
+    pt:V 5.614035e-01,
+        6.4e+01 ;
+    pt:V_Int 4.69e-02 ;
+    pt:V_PPM 6.4e+01 ;
+    pt:Y 1.54e+01 ;
+    pt:Y_Int 7.3e-01 ;
+    pt:Y_PPM 1.54e+01 ;
+    pt:Zn 3.494505e-01,
+        3.18e+01 ;
+    pt:Zn_Int 1.957e-01 ;
+    pt:Zn_PPM 3.18e+01 ;
+    pt:Zr 7.36e+01 ;
+    pt:Zr_Int 3.4643e+00 ;
+    pt:Zr_PPM 7.36e+01 ;
+    pt:пробы 7e+00 .
+
+pi:YM-1-3-100 pt:Al 1.4103e+01 ;
+    pt:Al_Int 4.91993e+01 ;
+    pt:As 7.307692e-01,
+        3.8e+00 ;
+    pt:As_Int 1.06e-02 ;
+    pt:As_PPM 3.8e+00 ;
+    pt:CF 3e+00 ;
+    pt:Ca 4.9e+00,
+        4.93e+00,
+        "N.A." ;
+    pt:Ca_Int 1.84461e+01,
+        6.93864e+01,
+        6.95418e+01 ;
+    pt:Co 1.2e+00,
+        2.04e+01 ;
+    pt:Co_Int 4.67e-02 ;
+    pt:Co_PPM 2.04e+01 ;
+    pt:Cr 1.073469e+00,
+        1.052e+02 ;
+    pt:Cr_Int 1.462e-01 ;
+    pt:Cr_PPM 1.052e+02 ;
+    pt:Cu 3.173913e-01,
+        1.46e+01 ;
+    pt:Cu_Int 1.203e-01 ;
+    pt:Cu_PPM 1.46e+01 ;
+    pt:Date 4.424269e+04,
+        4.42427e+04,
+        4.424359e+04,
+        4.424359e+04,
+        4.42436e+04 ;
+    pt:Fe 6.556e+00,
+        7.238e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 7.238e+04 ;
+    pt:Fe2O3_tot 7.238e+00 ;
+    pt:Fe_Int 3.151206e+02,
+        3.195506e+02,
+        3.276067e+02 ;
+    pt:Hg_Int 1.016e-01,
+        4.412e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.556e+00 ;
+    pt:K_Int 2.55825e+01 ;
+    pt:Mg 3.632e+00 ;
+    pt:Mg_Int 1.9491e+01 ;
+    pt:Mn 1.41e-01,
+        "N.A." ;
+    pt:Mn_Int 8.5126e+00,
+        8.5628e+00 ;
+    pt:Na 3.882e+00 ;
+    pt:Na_Int 7.5819e+00 ;
+    pt:Nb 2.18e+01 ;
+    pt:Nb_Int 4.208e-01 ;
+    pt:Nb_PPM 2.18e+01 ;
+    pt:Ni 6.976744e-01,
+        3e+01 ;
+    pt:Ni_Int 3.779e-01 ;
+    pt:Ni_PPM 3e+01 ;
+    pt:P 2.9e-01 ;
+    pt:PLI 9.778198e-01 ;
+    pt:P_Int 1.2723e+00 ;
+    pt:Pb 1.65e+00,
+        1.65e+01 ;
+    pt:Pb_Int 7.96e-02,
+        1.458e-01 ;
+    pt:Pb_PPM 8.2e+00,
+        1.65e+01 ;
+    pt:Rb 4.32e+01 ;
+    pt:Rb_Int 8.267e-01 ;
+    pt:Rb_PPM 4.32e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.942e-01,
+        2.137e-01,
+        1.87757e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 2e-03 ;
+    pt:S_Int 1.969e-01 ;
+    pt:Si 4.8971e+01,
+        5.408e+01,
+        "N.A." ;
+    pt:Si_Int 1.493366e+02,
+        2.184367e+02,
+        2.250375e+02 ;
+    pt:Sr 2.854808e+00,
+        5.938e+02 ;
+    pt:Sr_Int 9.3123e+00 ;
+    pt:Sr_PPM 5.938e+02 ;
+    pt:Ti 1.049e+00,
+        1.067e+00 ;
+    pt:Ti_Int 1.38467e+01,
+        1.39417e+01 ;
+    pt:V 1.277193e+00,
+        1.456e+02 ;
+    pt:V_Int 1.092e-01 ;
+    pt:V_PPM 1.456e+02 ;
+    pt:Y 3.81e+01 ;
+    pt:Y_Int 1.0566e+00 ;
+    pt:Y_PPM 3.81e+01 ;
+    pt:Zn 6.516484e-01,
+        5.93e+01 ;
+    pt:Zn_Int 3.185e-01 ;
+    pt:Zn_PPM 5.93e+01 ;
+    pt:Zr 1.745e+02 ;
+    pt:Zr_Int 4.7589e+00 ;
+    pt:Zr_PPM 1.745e+02 ;
+    pt:пробы 3e+00 .
+
+pi:YM-1-3-TOT pt:Al 1.0871e+01 ;
+    pt:Al_Int 5.51049e+01 ;
+    pt:As 9.807692e-01,
+        5.1e+00 ;
+    pt:As_Int 1.2e-02 ;
+    pt:As_PPM 5.1e+00 ;
+    pt:CF 8e+00 ;
+    pt:Ca 2.27e+00,
+        2.54e+00,
+        "N.A." ;
+    pt:Ca_Int 1.37286e+01,
+        3.59233e+01,
+        3.59335e+01 ;
+    pt:Co 3.823529e-01,
+        6.5e+00 ;
+    pt:Co_Int 1.83e-02 ;
+    pt:Co_PPM 6.5e+00 ;
+    pt:Cr 4.05102e-01,
+        3.97e+01 ;
+    pt:Cr_Int 6.07e-02 ;
+    pt:Cr_PPM 3.97e+01 ;
+    pt:Cu 2.23913e-01,
+        1.03e+01 ;
+    pt:Cu_Int 1.14e-01 ;
+    pt:Cu_PPM 1.03e+01 ;
+    pt:Date 4.424277e+04,
+        4.424278e+04,
+        4.424406e+04,
+        4.424407e+04,
+        4.424408e+04 ;
+    pt:Fe 2.676e+00,
+        3.245e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 3.245e+04 ;
+    pt:Fe2O3_tot 3.245e+00 ;
+    pt:Fe_Int 1.333108e+02,
+        1.350281e+02,
+        1.384758e+02 ;
+    pt:Hg_Int 1.265e-01,
+        4.513e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.534e+00 ;
+    pt:K_Int 4.08834e+01 ;
+    pt:Mg 1.025e+00 ;
+    pt:Mg_Int 9.497e+00 ;
+    pt:Mn 5.1e-02,
+        "N.A." ;
+    pt:Mn_Int 3.0473e+00,
+        3.0831e+00 ;
+    pt:Na 2.928e+00 ;
+    pt:Na_Int 1.01331e+01 ;
+    pt:Nb 3.6e+00 ;
+    pt:Nb_Int 8.94e-02 ;
+    pt:Nb_PPM 3.6e+00 ;
+    pt:Ni 2.883721e-01,
+        1.24e+01 ;
+    pt:Ni_Int 2.311e-01 ;
+    pt:Ni_PPM 1.24e+01 ;
+    pt:P 1.02e-01 ;
+    pt:PLI 6.130703e-01 ;
+    pt:P_Int 4.15e-01 ;
+    pt:Pb 2.21e+00,
+        2.21e+01 ;
+    pt:Pb_Int 1.18e-01,
+        2.032e-01 ;
+    pt:Pb_PPM 2.08e+01,
+        2.21e+01 ;
+    pt:Rb 7.52e+01 ;
+    pt:Rb_Int 1.8129e+00 ;
+    pt:Rb_PPM 7.52e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.894e-01,
+        2.086e-01,
+        2.16729e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.032e-01 ;
+    pt:Si 5.6299e+01,
+        6.025e+01,
+        "N.A." ;
+    pt:Si_Int 1.743773e+02,
+        2.42939e+02,
+        2.516597e+02 ;
+    pt:Sr 3.341827e+00,
+        6.951e+02 ;
+    pt:Sr_Int 1.42002e+01 ;
+    pt:Sr_PPM 6.951e+02 ;
+    pt:Ti 2.78e-01,
+        3.01e-01 ;
+    pt:Ti_Int 3.9783e+00,
+        4.0236e+00 ;
+    pt:V 5.122807e-01,
+        5.84e+01 ;
+    pt:V_Int 4.26e-02 ;
+    pt:V_PPM 5.84e+01 ;
+    pt:Y 1.51e+01 ;
+    pt:Y_Int 7.191e-01 ;
+    pt:Y_PPM 1.51e+01 ;
+    pt:Zn 3.296703e-01,
+        3e+01 ;
+    pt:Zn_Int 1.872e-01 ;
+    pt:Zn_PPM 3e+01 ;
+    pt:Zr 7.65e+01 ;
+    pt:Zr_Int 3.5088e+00 ;
+    pt:Zr_PPM 7.65e+01 ;
+    pt:пробы 8e+00 .
+
+pi:YM-1-4-100 pt:Al 1.5093e+01 ;
+    pt:Al_Int 5.12789e+01 ;
+    pt:As 3.846154e-01,
+        2e+00 ;
+    pt:As_Int 8.6e-03 ;
+    pt:As_PPM 2e+00 ;
+    pt:CF 4e+00 ;
+    pt:Ca 5.48e+00,
+        5.49e+00,
+        "N.A." ;
+    pt:Ca_Int 1.93853e+01,
+        7.69421e+01,
+        7.69427e+01 ;
+    pt:Co 1.329412e+00,
+        2.26e+01 ;
+    pt:Co_Int 5.05e-02 ;
+    pt:Co_PPM 2.26e+01 ;
+    pt:Cr 1.172449e+00,
+        1.149e+02 ;
+    pt:Cr_Int 1.575e-01 ;
+    pt:Cr_PPM 1.149e+02 ;
+    pt:Cu 3.173913e-01,
+        1.46e+01 ;
+    pt:Cu_Int 1.145e-01 ;
+    pt:Cu_PPM 1.46e+01 ;
+    pt:Date 4.424271e+04,
+        4.424272e+04,
+        4.424361e+04,
+        4.424362e+04,
+        4.424363e+04 ;
+    pt:Fe 7.717e+00,
+        8.441e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 8.441e+04 ;
+    pt:Fe2O3_tot 8.441e+00 ;
+    pt:Fe_Int 3.699987e+02,
+        3.78249e+02,
+        3.841944e+02 ;
+    pt:Hg_Int 8.75e-02,
+        3.666e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.57e+00 ;
+    pt:K_Int 2.59095e+01 ;
+    pt:Mg 4.563e+00 ;
+    pt:Mg_Int 2.35269e+01 ;
+    pt:Mn 1.62e-01,
+        "N.A." ;
+    pt:Mn_Int 9.9489e+00,
+        9.9841e+00 ;
+    pt:Na 4.024e+00 ;
+    pt:Na_Int 7.2784e+00 ;
+    pt:Nb 2.58e+01 ;
+    pt:Nb_Int 4.797e-01 ;
+    pt:Nb_PPM 2.58e+01 ;
+    pt:Ni 8.627907e-01,
+        3.71e+01 ;
+    pt:Ni_Int 4.306e-01 ;
+    pt:Ni_PPM 3.71e+01 ;
+    pt:P 3.18e-01 ;
+    pt:PLI 9.748291e-01 ;
+    pt:P_Int 1.4269e+00 ;
+    pt:Pb 1.54e+00,
+        1.54e+01 ;
+    pt:Pb_Int 7.14e-02,
+        1.349e-01 ;
+    pt:Pb_PPM 5.4e+00,
+        1.54e+01 ;
+    pt:Rb 4.04e+01 ;
+    pt:Rb_Int 7.522e-01 ;
+    pt:Rb_PPM 4.04e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.995e-01,
+        2.244e-01,
+        1.83775e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.829e-01 ;
+    pt:Si 4.9061e+01,
+        5.275e+01,
+        "N.A." ;
+    pt:Si_Int 1.49758e+02,
+        2.120634e+02,
+        2.182597e+02 ;
+    pt:Sr 2.720673e+00,
+        5.659e+02 ;
+    pt:Sr_Int 8.599e+00 ;
+    pt:Sr_PPM 5.659e+02 ;
+    pt:Ti 1.179e+00,
+        1.194e+00 ;
+    pt:Ti_Int 1.53861e+01,
+        1.53927e+01 ;
+    pt:V 1.498246e+00,
+        1.708e+02 ;
+    pt:V_Int 1.254e-01 ;
+    pt:V_PPM 1.708e+02 ;
+    pt:Y 4.16e+01 ;
+    pt:Y_Int 1.1011e+00 ;
+    pt:Y_PPM 4.16e+01 ;
+    pt:Zn 7.714286e-01,
+        7.02e+01 ;
+    pt:Zn_Int 3.639e-01 ;
+    pt:Zn_PPM 7.02e+01 ;
+    pt:Zr 1.95e+02 ;
+    pt:Zr_Int 5.0286e+00 ;
+    pt:Zr_PPM 1.95e+02 ;
+    pt:пробы 4e+00 .
+
+pi:YM-1-4-TOT pt:Al 1.1217e+01 ;
+    pt:Al_Int 5.76165e+01 ;
+    pt:As 1.134615e+00,
+        5.9e+00 ;
+    pt:As_Int 1.29e-02 ;
+    pt:As_PPM 5.9e+00 ;
+    pt:CF 9e+00 ;
+    pt:Ca 2.26e+00,
+        2.54e+00,
+        "N.A." ;
+    pt:Ca_Int 1.4106e+01,
+        3.57711e+01,
+        3.57864e+01 ;
+    pt:Co 3.647059e-01,
+        6.2e+00 ;
+    pt:Co_Int 1.78e-02 ;
+    pt:Co_PPM 6.2e+00 ;
+    pt:Cr 4.346939e-01,
+        4.26e+01 ;
+    pt:Cr_Int 6.47e-02 ;
+    pt:Cr_PPM 4.26e+01 ;
+    pt:Cu 2.304348e-01,
+        1.06e+01 ;
+    pt:Cu_Int 1.163e-01 ;
+    pt:Cu_PPM 1.06e+01 ;
+    pt:Date 4.424279e+04,
+        4.42428e+04,
+        4.424409e+04,
+        4.42441e+04,
+        4.42441e+04 ;
+    pt:Fe 2.766e+00,
+        3.38e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 3.38e+04 ;
+    pt:Fe2O3_tot 3.38e+00 ;
+    pt:Fe_Int 1.376456e+02,
+        1.387368e+02,
+        1.396952e+02 ;
+    pt:Hg_Int 1.251e-01,
+        4.686e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.616e+00 ;
+    pt:K_Int 4.22009e+01 ;
+    pt:Mg 9.76e-01 ;
+    pt:Mg_Int 9.8528e+00 ;
+    pt:Mn 5e-02,
+        "N.A." ;
+    pt:Mn_Int 2.952e+00,
+        2.9857e+00 ;
+    pt:Na 3.237e+00 ;
+    pt:Na_Int 1.07454e+01 ;
+    pt:Nb 3e-01,
+        1e+00 ;
+    pt:Nb_Int 1.55e-02 ;
+    pt:Nb_PPM 1e+00 ;
+    pt:Ni 2.860465e-01,
+        1.23e+01 ;
+    pt:Ni_Int 2.282e-01 ;
+    pt:Ni_PPM 1.23e+01 ;
+    pt:P 1.13e-01 ;
+    pt:PLI 6.098498e-01 ;
+    pt:P_Int 4.598e-01 ;
+    pt:Pb 2.31e+00,
+        2.31e+01 ;
+    pt:Pb_Int 1.172e-01,
+        2.117e-01 ;
+    pt:Pb_PPM 2.06e+01,
+        2.31e+01 ;
+    pt:Rb 6.54e+01 ;
+    pt:Rb_Int 1.6928e+00 ;
+    pt:Rb_PPM 6.54e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.725e-01,
+        2.058e-01,
+        2.2489e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.025e-01 ;
+    pt:Si 5.9934e+01,
+        6.084e+01,
+        "N.A." ;
+    pt:Si_Int 1.674315e+02,
+        2.449451e+02,
+        2.540043e+02 ;
+    pt:Sr 2.895673e+00,
+        6.023e+02 ;
+    pt:Sr_Int 1.34518e+01 ;
+    pt:Sr_PPM 6.023e+02 ;
+    pt:Ti 2.68e-01,
+        2.88e-01 ;
+    pt:Ti_Int 3.8545e+00,
+        3.8567e+00 ;
+    pt:V 4.833333e-01,
+        5.51e+01 ;
+    pt:V_Int 4.03e-02 ;
+    pt:V_PPM 5.51e+01 ;
+    pt:Y 1.36e+01 ;
+    pt:Y_Int 6.577e-01 ;
+    pt:Y_PPM 1.36e+01 ;
+    pt:Zn 3.043956e-01,
+        2.77e+01 ;
+    pt:Zn_Int 1.724e-01 ;
+    pt:Zn_PPM 2.77e+01 ;
+    pt:Zr 6.58e+01 ;
+    pt:Zr_Int 3.2483e+00 ;
+    pt:Zr_PPM 6.58e+01 ;
+    pt:пробы 9e+00 .
+
+pi:YM-1-5-100 pt:Al 1.4891e+01 ;
+    pt:Al_Int 4.95341e+01 ;
+    pt:Ca 5.09e+00,
+        5.13e+00 ;
+    pt:Ca_Int 7.17117e+01,
+        7.20128e+01 ;
+    pt:Co 1.92e+01 ;
+    pt:Co_Int 4.37e-02 ;
+    pt:Co_PPM 1.92e+01 ;
+    pt:Cr 1.219e+02 ;
+    pt:Cr_Int 1.664e-01 ;
+    pt:Cr_PPM 1.219e+02 ;
+    pt:Cu 1.47e+01 ;
+    pt:Cu_Int 1.16e-01 ;
+    pt:Cu_PPM 1.47e+01 ;
+    pt:Date 4.424364e+04,
+        4.424365e+04,
+        4.424366e+04 ;
+    pt:Fe 7.685e+00,
+        8.25e+00 ;
+    pt:Fe2O3_tot 8.25e+00 ;
+    pt:Fe_Int 3.689613e+02,
+        3.814799e+02 ;
+    pt:Hg_Int 3.613e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.582e+00 ;
+    pt:K_Int 2.60369e+01 ;
+    pt:Mg 4.166e+00 ;
+    pt:Mg_Int 2.1636e+01 ;
+    pt:Mn 1.57e-01,
+        "N.A." ;
+    pt:Mn_Int 9.5042e+00,
+        9.5267e+00 ;
+    pt:Na 3.514e+00 ;
+    pt:Na_Int 7.2325e+00 ;
+    pt:Ni 3.71e+01 ;
+    pt:Ni_Int 4.349e-01 ;
+    pt:Ni_PPM 3.71e+01 ;
+    pt:P 2.61e-01 ;
+    pt:P_Int 1.1786e+00 ;
+    pt:Pb 1.39e+01 ;
+    pt:Pb_Int 1.22e-01 ;
+    pt:Pb_PPM 1.39e+01 ;
+    pt:Rh_Int 2.21e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 3e-03 ;
+    pt:S_Int 2.091e-01 ;
+    pt:Si 4.7234e+01,
+        5.164e+01 ;
+    pt:Si_Int 2.077915e+02,
+        2.147855e+02 ;
+    pt:Ti 1.196e+00,
+        1.213e+00 ;
+    pt:Ti_Int 1.5463e+01,
+        1.55475e+01 ;
+    pt:V 1.664e+02 ;
+    pt:V_Int 1.239e-01 ;
+    pt:V_PPM 1.664e+02 ;
+    pt:Zn 6.88e+01 ;
+    pt:Zn_Int 3.595e-01 ;
+    pt:Zn_PPM 6.88e+01 .
+
+pi:YM-1-5-TOT pt:Al 1.1333e+01 ;
+    pt:Al_Int 5.92183e+01 ;
+    pt:As 7.884615e-01,
+        4.1e+00 ;
+    pt:As_Int 1.09e-02 ;
+    pt:As_PPM 4.1e+00 ;
+    pt:CF 1e+01 ;
+    pt:Ca 2.57e+00,
+        2.96e+00,
+        "N.A." ;
+    pt:Ca_Int 1.42884e+01,
+        4.06492e+01,
+        4.07528e+01 ;
+    pt:Co 4.411765e-01,
+        7.5e+00 ;
+    pt:Co_Int 2.2e-02 ;
+    pt:Co_PPM 7.5e+00 ;
+    pt:Cr 4.55102e-01,
+        4.46e+01 ;
+    pt:Cr_Int 6.77e-02 ;
+    pt:Cr_PPM 4.46e+01 ;
+    pt:Cu 2.521739e-01,
+        1.16e+01 ;
+    pt:Cu_Int 1.227e-01 ;
+    pt:Cu_PPM 1.16e+01 ;
+    pt:Date 4.424281e+04,
+        4.424282e+04,
+        4.424415e+04,
+        4.424415e+04,
+        4.424416e+04 ;
+    pt:Fe 3.125e+00,
+        3.885e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 3.885e+04 ;
+    pt:Fe2O3_tot 3.885e+00 ;
+    pt:Fe_Int 1.538155e+02,
+        1.590374e+02,
+        1.595167e+02 ;
+    pt:Hg_Int 1.205e-01,
+        4.391e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.619e+00 ;
+    pt:K_Int 4.2355e+01 ;
+    pt:Mg 9.78e-01 ;
+    pt:Mg_Int 1.02153e+01 ;
+    pt:Mn 5.3e-02,
+        "N.A." ;
+    pt:Mn_Int 3.2324e+00,
+        3.3096e+00 ;
+    pt:Na 3.411e+00 ;
+    pt:Na_Int 1.13252e+01 ;
+    pt:Nb 3e-01,
+        2.1e+00 ;
+    pt:Nb_Int 4e-02 ;
+    pt:Nb_PPM 2.1e+00 ;
+    pt:Ni 3.27907e-01,
+        1.41e+01 ;
+    pt:Ni_Int 2.515e-01 ;
+    pt:Ni_PPM 1.41e+01 ;
+    pt:P 1.15e-01 ;
+    pt:PLI 6.32971e-01 ;
+    pt:P_Int 4.653e-01 ;
+    pt:Pb 2.23e+00,
+        2.23e+01 ;
+    pt:Pb_Int 1.086e-01,
+        2.039e-01 ;
+    pt:Pb_PPM 1.76e+01,
+        2.23e+01 ;
+    pt:Rb 6.59e+01 ;
+    pt:Rb_Int 1.4996e+00 ;
+    pt:Rb_PPM 6.59e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.665e-01,
+        2.161e-01,
+        2.10001e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 9e-02 ;
+    pt:Si 6.368e+01,
+        6.6247e+01,
+        "N.A." ;
+    pt:Si_Int 1.668857e+02,
+        2.553107e+02,
+        2.639726e+02 ;
+    pt:Sr 3.238462e+00,
+        6.736e+02 ;
+    pt:Sr_Int 1.28573e+01 ;
+    pt:Sr_PPM 6.736e+02 ;
+    pt:Ti 2.49e-01,
+        2.72e-01 ;
+    pt:Ti_Int 3.6965e+00,
+        3.7013e+00 ;
+    pt:V 5.508772e-01,
+        6.28e+01 ;
+    pt:V_Int 4.46e-02 ;
+    pt:V_PPM 6.28e+01 ;
+    pt:Y 1.43e+01 ;
+    pt:Y_Int 6.361e-01 ;
+    pt:Y_PPM 1.43e+01 ;
+    pt:Zn 3.131868e-01,
+        2.85e+01 ;
+    pt:Zn_Int 1.74e-01 ;
+    pt:Zn_PPM 2.85e+01 ;
+    pt:Zr 7.07e+01 ;
+    pt:Zr_Int 3.1366e+00 ;
+    pt:Zr_PPM 7.07e+01 ;
+    pt:пробы 1e+01 .
+
+pi:YM-1-6-100 pt:Al 1.7558e+01 ;
+    pt:Al_Int 4.94363e+01 ;
+    pt:Ca 6.64e+00,
+        7.01e+00 ;
+    pt:Ca_Int 9.20794e+01,
+        9.26162e+01 ;
+    pt:Co 2.79e+01 ;
+    pt:Co_Int 5.91e-02 ;
+    pt:Co_PPM 2.79e+01 ;
+    pt:Cr 1.553e+02 ;
+    pt:Cr_Int 2.012e-01 ;
+    pt:Cr_PPM 1.553e+02 ;
+    pt:Cu 1.66e+01 ;
+    pt:Cu_Int 1.161e-01 ;
+    pt:Cu_PPM 1.66e+01 ;
+    pt:Date 4.424367e+04,
+        4.424368e+04,
+        4.424368e+04 ;
+    pt:Fe 9.719e+00,
+        1.017e+01 ;
+    pt:Fe2O3_tot 1.017e+01 ;
+    pt:Fe_Int 4.757588e+02,
+        4.818756e+02 ;
+    pt:Hg_Int 3.506e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.346e+00 ;
+    pt:K_Int 2.24071e+01 ;
+    pt:Mg 5.611e+00 ;
+    pt:Mg_Int 2.61699e+01 ;
+    pt:Mn 2.02e-01,
+        "N.A." ;
+    pt:Mn_Int 1.24139e+01,
+        1.24307e+01 ;
+    pt:Na 4.14e+00 ;
+    pt:Na_Int 6.8342e+00 ;
+    pt:Ni 4.72e+01 ;
+    pt:Ni_Int 4.778e-01 ;
+    pt:Ni_PPM 4.72e+01 ;
+    pt:P 3.55e-01 ;
+    pt:P_Int 1.6596e+00 ;
+    pt:Pb 1.26e+01 ;
+    pt:Pb_Int 1.088e-01 ;
+    pt:Pb_PPM 1.26e+01 ;
+    pt:Rh_Int 2.342e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 1e-03 ;
+    pt:S_Int 2.068e-01 ;
+    pt:Si 4.9053e+01,
+        4.992e+01 ;
+    pt:Si_Int 2.018965e+02,
+        2.083697e+02 ;
+    pt:Ti 1.708e+00,
+        1.717e+00 ;
+    pt:Ti_Int 2.17376e+01,
+        2.18678e+01 ;
+    pt:V 2.076e+02 ;
+    pt:V_Int 1.556e-01 ;
+    pt:V_PPM 2.076e+02 ;
+    pt:Zn 8.39e+01 ;
+    pt:Zn_Int 4.074e-01 ;
+    pt:Zn_PPM 8.39e+01 .
+
+pi:YM-1-6-TOT pt:Al 1.1022e+01 ;
+    pt:Al_Int 5.44213e+01 ;
+    pt:As 4.615385e-01,
+        2.4e+00 ;
+    pt:As_Int 9.1e-03 ;
+    pt:As_PPM 2.4e+00 ;
+    pt:CF 1.1e+01 ;
+    pt:Ca 3.03e+00,
+        3.36e+00,
+        "N.A." ;
+    pt:Ca_Int 1.58728e+01,
+        4.75684e+01,
+        4.75713e+01 ;
+    pt:Co 5.647059e-01,
+        9.6e+00 ;
+    pt:Co_Int 2.56e-02 ;
+    pt:Co_PPM 9.6e+00 ;
+    pt:Cr 5.714286e-01,
+        5.6e+01 ;
+    pt:Cr_Int 8.38e-02 ;
+    pt:Cr_PPM 5.6e+01 ;
+    pt:Cu 2.630435e-01,
+        1.21e+01 ;
+    pt:Cu_Int 1.22e-01 ;
+    pt:Cu_PPM 1.21e+01 ;
+    pt:Date 4.424286e+04,
+        4.424287e+04,
+        4.424417e+04,
+        4.424418e+04,
+        4.424419e+04 ;
+    pt:Fe 3.643e+00,
+        4.35e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 4.35e+04 ;
+    pt:Fe2O3_tot 4.35e+00 ;
+    pt:Fe_Int 1.796453e+02,
+        1.830031e+02,
+        1.834948e+02 ;
+    pt:Hg_Int 1.285e-01,
+        4.325e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.288e+00 ;
+    pt:K_Int 3.7153e+01 ;
+    pt:Mg 1.383e+00 ;
+    pt:Mg_Int 1.15606e+01 ;
+    pt:Mn 6.4e-02,
+        "N.A." ;
+    pt:Mn_Int 3.8156e+00,
+        3.8488e+00 ;
+    pt:Na 3.153e+00 ;
+    pt:Na_Int 1.00005e+01 ;
+    pt:Nb 2.7e+00 ;
+    pt:Nb_Int 5.69e-02 ;
+    pt:Nb_PPM 2.7e+00 ;
+    pt:Ni 3.953488e-01,
+        1.7e+01 ;
+    pt:Ni_Int 2.812e-01 ;
+    pt:Ni_PPM 1.7e+01 ;
+    pt:P 1.24e-01 ;
+    pt:PLI 6.627982e-01 ;
+    pt:P_Int 5.163e-01 ;
+    pt:Pb 2.14e+00,
+        2.14e+01 ;
+    pt:Pb_Int 1.02e-01,
+        1.948e-01 ;
+    pt:Pb_PPM 1.56e+01,
+        2.14e+01 ;
+    pt:Rb 6.14e+01 ;
+    pt:Rb_Int 1.4089e+00 ;
+    pt:Rb_PPM 6.14e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.657e-01,
+        2.015e-01,
+        2.11279e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.051e-01 ;
+    pt:Si 5.6677e+01,
+        5.884e+01,
+        "N.A." ;
+    pt:Si_Int 1.535945e+02,
+        2.355777e+02,
+        2.443262e+02 ;
+    pt:Sr 3.136538e+00,
+        6.524e+02 ;
+    pt:Sr_Int 1.26089e+01 ;
+    pt:Sr_PPM 6.524e+02 ;
+    pt:Ti 3.2e-01,
+        3.4e-01 ;
+    pt:Ti_Int 4.4845e+00,
+        4.5055e+00 ;
+    pt:V 6.587719e-01,
+        7.51e+01 ;
+    pt:V_Int 5.28e-02 ;
+    pt:V_PPM 7.51e+01 ;
+    pt:Y 1.59e+01 ;
+    pt:Y_Int 6.639e-01 ;
+    pt:Y_PPM 1.59e+01 ;
+    pt:Zn 3.604396e-01,
+        3.28e+01 ;
+    pt:Zn_Int 1.956e-01 ;
+    pt:Zn_PPM 3.28e+01 ;
+    pt:Zr 7.32e+01 ;
+    pt:Zr_Int 3.1856e+00 ;
+    pt:Zr_PPM 7.32e+01 ;
+    pt:пробы 1.1e+01 .
+
+pi:YM-1-7-100 pt:Al 2.1497e+01 ;
+    pt:Al_Int 4.75986e+01 ;
+    pt:Ca 7.45e+00,
+        8.61e+00 ;
+    pt:Ca_Int 1.026571e+02,
+        1.02988e+02 ;
+    pt:Co 2.66e+01 ;
+    pt:Co_Int 5.68e-02 ;
+    pt:Co_PPM 2.66e+01 ;
+    pt:Cr 1.784e+02 ;
+    pt:Cr_Int 2.178e-01 ;
+    pt:Cr_PPM 1.784e+02 ;
+    pt:Date 4.42437e+04,
+        4.42437e+04 ;
+    pt:Fe 9.93e+00,
+        1.0203e+01 ;
+    pt:Fe2O3_tot 9.93e+00 ;
+    pt:Fe_Int 4.946856e+02,
+        5.085696e+02 ;
+    pt:K 1.316e+00 ;
+    pt:K_Int 2.20443e+01 ;
+    pt:Mg 6.353e+00 ;
+    pt:Mg_Int 2.59679e+01 ;
+    pt:Mn 2.4e-01,
+        "N.A." ;
+    pt:Mn_Int 1.46374e+01,
+        1.48141e+01 ;
+    pt:Na 4.452e+00 ;
+    pt:Na_Int 6.7544e+00 ;
+    pt:P 4.01e-01 ;
+    pt:P_Int 1.8777e+00 ;
+    pt:Rh_Int 2.336e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.658e-01 ;
+    pt:Si 4.9e+01,
+        5.0575e+01 ;
+    pt:Si_Int 2.055637e+02,
+        2.115303e+02 ;
+    pt:Ti 2.508e+00,
+        2.529e+00 ;
+    pt:Ti_Int 3.22591e+01,
+        3.2351e+01 ;
+    pt:V 2.39e+02 ;
+    pt:V_Int 1.911e-01 ;
+    pt:V_PPM 2.39e+02 .
+
+pi:YM-1-7-TOT pt:Al 1.263e+01 ;
+    pt:Al_Int 5.33916e+01 ;
+    pt:As 5.769231e-02,
+        3e-01,
+        1.4e+00 ;
+    pt:As_Int 8e-03 ;
+    pt:As_PPM 1.4e+00 ;
+    pt:CF 1.2e+01 ;
+    pt:Ca 5.52e+00,
+        5.96e+00,
+        "N.A." ;
+    pt:Ca_Int 2.07453e+01,
+        8.2738e+01,
+        8.28338e+01 ;
+    pt:Co 9.294118e-01,
+        1.58e+01 ;
+    pt:Co_Int 3.95e-02 ;
+    pt:Co_PPM 1.58e+01 ;
+    pt:Cr 1.040816e+00,
+        1.02e+02 ;
+    pt:Cr_Int 1.447e-01 ;
+    pt:Cr_PPM 1.02e+02 ;
+    pt:Cu 3.434783e-01,
+        1.58e+01 ;
+    pt:Cu_Int 1.282e-01 ;
+    pt:Cu_PPM 1.58e+01 ;
+    pt:Date 4.424288e+04,
+        4.424289e+04,
+        4.42442e+04,
+        4.424421e+04,
+        4.424422e+04 ;
+    pt:Fe 6.447e+00,
+        7.41e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 7.41e+04 ;
+    pt:Fe2O3_tot 7.41e+00 ;
+    pt:Fe_Int 3.02502e+02,
+        3.162719e+02,
+        3.232471e+02 ;
+    pt:Hg_Int 1.048e-01,
+        3.921e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.839e+00 ;
+    pt:K_Int 3.04579e+01 ;
+    pt:Mg 2.844e+00 ;
+    pt:Mg_Int 1.79955e+01 ;
+    pt:Mn 1.17e-01,
+        "N.A." ;
+    pt:Mn_Int 7.1187e+00,
+        7.1693e+00 ;
+    pt:Na 3.612e+00 ;
+    pt:Na_Int 8.9653e+00 ;
+    pt:Nb 6e+00 ;
+    pt:Nb_Int 1.077e-01 ;
+    pt:Nb_PPM 6e+00 ;
+    pt:Ni 7.534884e-01,
+        3.24e+01 ;
+    pt:Ni_Int 4.031e-01 ;
+    pt:Ni_PPM 3.24e+01 ;
+    pt:P 1.95e-01 ;
+    pt:PLI 7.214728e-01 ;
+    pt:P_Int 8.539e-01 ;
+    pt:Pb 1.71e+00,
+        1.71e+01 ;
+    pt:Pb_Int 8.3e-02,
+        1.533e-01 ;
+    pt:Pb_PPM 9.8e+00,
+        1.71e+01 ;
+    pt:Rb 4.47e+01 ;
+    pt:Rb_Int 8.631e-01 ;
+    pt:Rb_PPM 4.47e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 2.003e-01,
+        2.221e-01,
+        1.90444e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 9.47e-02 ;
+    pt:Si 5.701e+01,
+        5.7239e+01,
+        "N.A." ;
+    pt:Si_Int 1.592447e+02,
+        2.259336e+02,
+        2.336926e+02 ;
+    pt:Sr 3.435096e+00,
+        7.145e+02 ;
+    pt:Sr_Int 1.14517e+01 ;
+    pt:Sr_PPM 7.145e+02 ;
+    pt:Ti 6.34e-01,
+        6.63e-01 ;
+    pt:Ti_Int 8.6551e+00,
+        8.6879e+00 ;
+    pt:V 1.240351e+00,
+        1.414e+02 ;
+    pt:V_Int 9.58e-02 ;
+    pt:V_PPM 1.414e+02 ;
+    pt:Y 2.38e+01 ;
+    pt:Y_Int 7.334e-01 ;
+    pt:Y_PPM 2.38e+01 ;
+    pt:Zn 5.032967e-01,
+        4.58e+01 ;
+    pt:Zn_Int 2.422e-01 ;
+    pt:Zn_PPM 4.58e+01 ;
+    pt:Zr 8.18e+01 ;
+    pt:Zr_Int 3.0357e+00 ;
+    pt:Zr_PPM 8.18e+01 ;
+    pt:пробы 1.2e+01 .
+
+pi:YM-1-8-100 pt:Al 1.3626e+01 ;
+    pt:Al_Int 5.04815e+01 ;
+    pt:Ca 5.87e+00,
+        6.13e+00 ;
+    pt:Ca_Int 8.45807e+01,
+        8.50322e+01 ;
+    pt:Co 2.03e+01 ;
+    pt:Co_Int 4.78e-02 ;
+    pt:Co_PPM 2.03e+01 ;
+    pt:Cr 1.276e+02 ;
+    pt:Cr_Int 1.759e-01 ;
+    pt:Cr_PPM 1.276e+02 ;
+    pt:Cu 1.41e+01 ;
+    pt:Cu_Int 1.102e-01 ;
+    pt:Cu_PPM 1.41e+01 ;
+    pt:Date 4.424373e+04,
+        4.424374e+04,
+        4.424374e+04 ;
+    pt:Fe 7.668e+00,
+        8.542e+00 ;
+    pt:Fe2O3_tot 8.542e+00 ;
+    pt:Fe_Int 3.76958e+02,
+        3.84722e+02 ;
+    pt:Hg_Int 3.603e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.58e+00 ;
+    pt:K_Int 2.61981e+01 ;
+    pt:Mg 4.637e+00 ;
+    pt:Mg_Int 2.51129e+01 ;
+    pt:Mn 1.56e-01,
+        "N.A." ;
+    pt:Mn_Int 9.607e+00,
+        9.7447e+00 ;
+    pt:Na 3.824e+00 ;
+    pt:Na_Int 7.7833e+00 ;
+    pt:Ni 4.07e+01 ;
+    pt:Ni_Int 4.68e-01 ;
+    pt:Ni_PPM 4.07e+01 ;
+    pt:P 2.63e-01 ;
+    pt:P_Int 1.1662e+00 ;
+    pt:Pb 1.45e+01 ;
+    pt:Pb_Int 1.277e-01 ;
+    pt:Pb_PPM 1.45e+01 ;
+    pt:Rh_Int 2.351e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.571e-01 ;
+    pt:Si 5.4136e+01,
+        5.575e+01 ;
+    pt:Si_Int 2.214846e+02,
+        2.282045e+02 ;
+    pt:Ti 9.22e-01,
+        9.43e-01 ;
+    pt:Ti_Int 1.22879e+01,
+        1.23855e+01 ;
+    pt:V 1.724e+02 ;
+    pt:V_Int 1.2e-01 ;
+    pt:V_PPM 1.724e+02 ;
+    pt:Zn 7.12e+01 ;
+    pt:Zn_Int 3.659e-01 ;
+    pt:Zn_PPM 7.12e+01 .
+
+pi:YM-1-8-TOT pt:Al 1.0496e+01 ;
+    pt:Al_Int 5.35091e+01 ;
+    pt:As 4.615385e-01,
+        2.4e+00 ;
+    pt:As_Int 9.1e-03 ;
+    pt:As_PPM 2.4e+00 ;
+    pt:CF 1.3e+01 ;
+    pt:Ca 2.54e+00,
+        2.82e+00,
+        "N.A." ;
+    pt:Ca_Int 1.49826e+01,
+        4.00875e+01,
+        4.0226e+01 ;
+    pt:Co 4.176471e-01,
+        7.1e+00 ;
+    pt:Co_Int 1.95e-02 ;
+    pt:Co_PPM 7.1e+00 ;
+    pt:Cr 4.510204e-01,
+        4.42e+01 ;
+    pt:Cr_Int 6.72e-02 ;
+    pt:Cr_PPM 4.42e+01 ;
+    pt:Cu 2.347826e-01,
+        1.08e+01 ;
+    pt:Cu_Int 1.172e-01 ;
+    pt:Cu_PPM 1.08e+01 ;
+    pt:Date 4.42429e+04,
+        4.424291e+04,
+        4.424423e+04,
+        4.424424e+04,
+        4.424424e+04 ;
+    pt:Fe 2.87e+00,
+        3.43e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 3.43e+04 ;
+    pt:Fe2O3_tot 3.43e+00 ;
+    pt:Fe_Int 1.39752e+02,
+        1.406241e+02,
+        1.44236e+02 ;
+    pt:Hg_Int 1.106e-01,
+        4.707e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.466e+00 ;
+    pt:K_Int 3.98761e+01 ;
+    pt:Mg 9.92e-01 ;
+    pt:Mg_Int 9.4823e+00 ;
+    pt:Mn 5.2e-02,
+        "N.A." ;
+    pt:Mn_Int 3.0517e+00,
+        3.0842e+00 ;
+    pt:Na 2.92e+00 ;
+    pt:Na_Int 1.00898e+01 ;
+    pt:Nb 3e-01,
+        1.2e+00 ;
+    pt:Nb_Int 1.83e-02 ;
+    pt:Nb_PPM 1.2e+00 ;
+    pt:Ni 3.139535e-01,
+        1.35e+01 ;
+    pt:Ni_Int 2.433e-01 ;
+    pt:Ni_PPM 1.35e+01 ;
+    pt:P 1.01e-01 ;
+    pt:PLI 5.821452e-01 ;
+    pt:P_Int 4.194e-01 ;
+    pt:Pb 2.33e+00,
+        2.33e+01 ;
+    pt:Pb_Int 1.116e-01,
+        2.132e-01 ;
+    pt:Pb_PPM 1.89e+01,
+        2.33e+01 ;
+    pt:Rb 6.86e+01 ;
+    pt:Rb_Int 1.6638e+00 ;
+    pt:Rb_PPM 6.86e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.695e-01,
+        2.068e-01,
+        2.17598e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.179e-01 ;
+    pt:Si 5.5228e+01,
+        5.926e+01,
+        "N.A." ;
+    pt:Si_Int 1.843474e+02,
+        2.381122e+02,
+        2.454892e+02 ;
+    pt:Sr 3.133173e+00,
+        6.517e+02 ;
+    pt:Sr_Int 1.34358e+01 ;
+    pt:Sr_PPM 6.517e+02 ;
+    pt:Ti 2.54e-01,
+        2.67e-01 ;
+    pt:Ti_Int 3.5451e+00,
+        3.5653e+00 ;
+    pt:V 5.491228e-01,
+        6.26e+01 ;
+    pt:V_Int 4.4e-02 ;
+    pt:V_PPM 6.26e+01 ;
+    pt:Y 1.39e+01 ;
+    pt:Y_Int 6.52e-01 ;
+    pt:Y_PPM 1.39e+01 ;
+    pt:Zn 2.989011e-01,
+        2.72e+01 ;
+    pt:Zn_Int 1.677e-01 ;
+    pt:Zn_PPM 2.72e+01 ;
+    pt:Zr 7.01e+01 ;
+    pt:Zr_Int 3.2703e+00 ;
+    pt:Zr_PPM 7.01e+01 ;
+    pt:пробы 1.3e+01 .
+
+pi:YM-1-9-100 pt:Al 1.6216e+01 ;
+    pt:Al_Int 4.83201e+01 ;
+    pt:Ca 6.54e+00,
+        6.66e+00 ;
+    pt:Ca_Int 8.95697e+01,
+        8.98398e+01 ;
+    pt:Co 2.17e+01 ;
+    pt:Co_Int 4.99e-02 ;
+    pt:Co_PPM 2.17e+01 ;
+    pt:Cr 1.391e+02 ;
+    pt:Cr_Int 1.838e-01 ;
+    pt:Cr_PPM 1.391e+02 ;
+    pt:Cu 1.52e+01 ;
+    pt:Cu_Int 1.118e-01 ;
+    pt:Cu_PPM 1.52e+01 ;
+    pt:Date 4.424376e+04,
+        4.424376e+04,
+        4.424377e+04 ;
+    pt:Fe 8.577e+00,
+        8.983e+00 ;
+    pt:Fe2O3_tot 8.983e+00 ;
+    pt:Fe_Int 4.135483e+02,
+        4.300353e+02 ;
+    pt:Hg_Int 3.673e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.479e+00 ;
+    pt:K_Int 2.45928e+01 ;
+    pt:Mg 4.879e+00 ;
+    pt:Mg_Int 2.37025e+01 ;
+    pt:Mn 1.87e-01,
+        "N.A." ;
+    pt:Mn_Int 1.15842e+01,
+        1.16301e+01 ;
+    pt:Na 3.976e+00 ;
+    pt:Na_Int 7.4051e+00 ;
+    pt:Ni 4.14e+01 ;
+    pt:Ni_Int 4.482e-01 ;
+    pt:Ni_PPM 4.14e+01 ;
+    pt:P 3.05e-01 ;
+    pt:P_Int 1.3728e+00 ;
+    pt:Pb 1.39e+01 ;
+    pt:Pb_Int 1.215e-01 ;
+    pt:Pb_PPM 1.39e+01 ;
+    pt:Rh_Int 2.257e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.724e-01 ;
+    pt:Si 5.2861e+01,
+        5.391e+01 ;
+    pt:Si_Int 2.183848e+02,
+        2.247776e+02 ;
+    pt:Ti 1.464e+00,
+        1.508e+00 ;
+    pt:Ti_Int 1.94993e+01,
+        1.95754e+01 ;
+    pt:V 1.948e+02 ;
+    pt:V_Int 1.452e-01 ;
+    pt:V_PPM 1.948e+02 ;
+    pt:Zn 7.67e+01 ;
+    pt:Zn_Int 3.831e-01 ;
+    pt:Zn_PPM 7.67e+01 .
+
+pi:YM-1-9-TOT pt:Al 1.0894e+01 ;
+    pt:Al_Int 5.20628e+01 ;
+    pt:As 7.115385e-01,
+        3.7e+00 ;
+    pt:As_Int 1.04e-02 ;
+    pt:As_PPM 3.7e+00 ;
+    pt:CF 1.4e+01 ;
+    pt:Ca 3.52e+00,
+        3.89e+00,
+        "N.A." ;
+    pt:Ca_Int 1.63226e+01,
+        5.46631e+01,
+        5.48477e+01 ;
+    pt:Co 6.058824e-01,
+        1.03e+01 ;
+    pt:Co_Int 2.75e-02 ;
+    pt:Co_PPM 1.03e+01 ;
+    pt:Cr 6.653061e-01,
+        6.52e+01 ;
+    pt:Cr_Int 9.67e-02 ;
+    pt:Cr_PPM 6.52e+01 ;
+    pt:Cu 2.891304e-01,
+        1.33e+01 ;
+    pt:Cu_Int 1.281e-01 ;
+    pt:Cu_PPM 1.33e+01 ;
+    pt:Date 4.424291e+04,
+        4.424292e+04,
+        4.424426e+04,
+        4.424426e+04,
+        4.424427e+04 ;
+    pt:Fe 4.185e+00,
+        4.953e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 4.953e+04 ;
+    pt:Fe2O3_tot 4.953e+00 ;
+    pt:Fe_Int 2.002481e+02,
+        2.057105e+02,
+        2.104772e+02 ;
+    pt:Hg_Int 1.089e-01,
+        4.463e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.145e+00 ;
+    pt:K_Int 3.49604e+01 ;
+    pt:Mg 1.581e+00 ;
+    pt:Mg_Int 1.20157e+01 ;
+    pt:Mn 7.4e-02,
+        "N.A." ;
+    pt:Mn_Int 4.457e+00,
+        4.4745e+00 ;
+    pt:Na 3.014e+00 ;
+    pt:Na_Int 9.508e+00 ;
+    pt:Nb 3.6e+00 ;
+    pt:Nb_Int 7.11e-02 ;
+    pt:Nb_PPM 3.6e+00 ;
+    pt:Ni 4.674419e-01,
+        2.01e+01 ;
+    pt:Ni_Int 3.129e-01 ;
+    pt:Ni_PPM 2.01e+01 ;
+    pt:P 1.26e-01 ;
+    pt:PLI 7.463278e-01 ;
+    pt:P_Int 5.302e-01 ;
+    pt:Pb 1.98e+00,
+        1.98e+01 ;
+    pt:Pb_Int 1.002e-01,
+        1.797e-01 ;
+    pt:Pb_PPM 1.51e+01,
+        1.98e+01 ;
+    pt:Rb 6.02e+01 ;
+    pt:Rb_Int 1.293e+00 ;
+    pt:Rb_PPM 6.02e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.678e-01,
+        1.977e-01,
+        2.03009e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.087e-01 ;
+    pt:Si 5.5889e+01,
+        5.91e+01,
+        "N.A." ;
+    pt:Si_Int 1.690159e+02,
+        2.359167e+02,
+        2.445332e+02 ;
+    pt:Sr 3.29375e+00,
+        6.851e+02 ;
+    pt:Sr_Int 1.22407e+01 ;
+    pt:Sr_PPM 6.851e+02 ;
+    pt:Ti 3.66e-01,
+        3.83e-01 ;
+    pt:Ti_Int 5.072e+00,
+        5.1396e+00 ;
+    pt:V 7.719298e-01,
+        8.8e+01 ;
+    pt:V_Int 6.1e-02 ;
+    pt:V_PPM 8.8e+01 ;
+    pt:Y 1.76e+01 ;
+    pt:Y_Int 6.712e-01 ;
+    pt:Y_PPM 1.76e+01 ;
+    pt:Zn 3.681319e-01,
+        3.35e+01 ;
+    pt:Zn_Int 1.946e-01 ;
+    pt:Zn_PPM 3.35e+01 ;
+    pt:Zr 7.25e+01 ;
+    pt:Zr_Int 3.0397e+00 ;
+    pt:Zr_PPM 7.25e+01 ;
+    pt:пробы 1.4e+01 .
+
+pi:YO-1-100 pt:Al 1.9377e+01 ;
+    pt:Al_Int 7.73456e+01 ;
+    pt:As 8.461538e-01,
+        4.4e+00 ;
+    pt:As_Int 1.12e-02 ;
+    pt:As_PPM 4.4e+00 ;
+    pt:CF 5e+00 ;
+    pt:Ca 2.61e+00,
+        2.73e+00,
+        "N.A." ;
+    pt:Ca_Int 1.36735e+01,
+        3.79734e+01,
+        3.79895e+01 ;
+    pt:Co 2.352941e+00,
+        4e+01 ;
+    pt:Co_Int 7.41e-02 ;
+    pt:Co_PPM 4e+01 ;
+    pt:Cr 9.908163e-01,
+        9.71e+01 ;
+    pt:Cr_Int 1.361e-01 ;
+    pt:Cr_PPM 9.71e+01 ;
+    pt:Cu 4.326087e-01,
+        1.99e+01 ;
+    pt:Cu_Int 1.366e-01 ;
+    pt:Cu_PPM 1.99e+01 ;
+    pt:Date 4.424272e+04,
+        4.424273e+04,
+        4.424378e+04,
+        4.424379e+04,
+        4.42438e+04 ;
+    pt:Fe 1.104e+01,
+        1.1236e+01,
+        "N.A." ;
+    pt:Fe2O3_ppm 1.1236e+05 ;
+    pt:Fe2O3_tot 1.1236e+01 ;
+    pt:Fe_Int 4.811746e+02,
+        5.127955e+02,
+        5.321518e+02 ;
+    pt:Hg_Int 1.069e-01,
+        4.758e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 1.984e+00 ;
+    pt:K_Int 3.20491e+01 ;
+    pt:Mg 1.954e+00 ;
+    pt:Mg_Int 9.0904e+00 ;
+    pt:Mn 2.22e-01,
+        "N.A." ;
+    pt:Mn_Int 1.24856e+01,
+        1.25129e+01 ;
+    pt:Na 3.822e+00 ;
+    pt:Na_Int 4.294e+00 ;
+    pt:Nb 3.86e+01 ;
+    pt:Nb_Int 7.522e-01 ;
+    pt:Nb_PPM 3.86e+01 ;
+    pt:Ni 7.093023e-01,
+        3.05e+01 ;
+    pt:Ni_Int 3.158e-01 ;
+    pt:Ni_PPM 3.05e+01 ;
+    pt:P 6.44e-01 ;
+    pt:PLI 1.222054e+00 ;
+    pt:P_Int 3.2253e+00 ;
+    pt:Pb 2.29e+00,
+        2.29e+01 ;
+    pt:Pb_Int 1.038e-01,
+        1.87e-01 ;
+    pt:Pb_PPM 1.57e+01,
+        2.29e+01 ;
+    pt:Rb 9.78e+01 ;
+    pt:Rb_Int 1.9067e+00 ;
+    pt:Rb_PPM 9.78e+01 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.766e-01,
+        2.018e-01,
+        1.87147e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 5.4e-02 ;
+    pt:S_Int 6.438e-01 ;
+    pt:Si 2.9135e+01,
+        4.394e+01,
+        "N.A." ;
+    pt:Si_Int 1.302276e+02,
+        1.706066e+02,
+        1.750485e+02 ;
+    pt:Sr 2.994231e+00,
+        6.228e+02 ;
+    pt:Sr_Int 9.719e+00 ;
+    pt:Sr_PPM 6.228e+02 ;
+    pt:Ti 1.088e+00,
+        1.155e+00 ;
+    pt:Ti_Int 1.335e+01,
+        1.34127e+01 ;
+    pt:V 1.269298e+00,
+        1.447e+02 ;
+    pt:V_Int 1.107e-01 ;
+    pt:V_PPM 1.447e+02 ;
+    pt:Y 3.63e+01 ;
+    pt:Y_Int 1.2005e+00 ;
+    pt:Y_PPM 3.63e+01 ;
+    pt:Zn 1.153846e+00,
+        1.05e+02 ;
+    pt:Zn_Int 5.298e-01 ;
+    pt:Zn_PPM 1.05e+02 ;
+    pt:Zr 6.385e+02 ;
+    pt:Zr_Int 1.46864e+01 ;
+    pt:Zr_PPM 6.385e+02 ;
+    pt:пробы 5e+00 .
+
+pi:YO-1-TOT pt:Al 1.0324e+01 ;
+    pt:Al_Int 5.51421e+01 ;
+    pt:As 5.769231e-02,
+        3e-01 ;
+    pt:As_Int 7.5e-03 ;
+    pt:As_PPM 9e-01 ;
+    pt:CF 1.5e+01 ;
+    pt:Ca 1.82e+00,
+        2.15e+00,
+        "N.A." ;
+    pt:Ca_Int 1.28487e+01,
+        2.89242e+01,
+        2.90443e+01 ;
+    pt:Co 3.588235e-01,
+        6.1e+00 ;
+    pt:Co_Int 1.91e-02 ;
+    pt:Co_PPM 6.1e+00 ;
+    pt:Cr 1.897959e-01,
+        1.86e+01 ;
+    pt:Cr_Int 2.92e-02 ;
+    pt:Cr_PPM 1.86e+01 ;
+    pt:Cu 1.804348e-01,
+        8.3e+00 ;
+    pt:Cu_Int 9.61e-02 ;
+    pt:Cu_PPM 8.3e+00 ;
+    pt:Date 4.424293e+04,
+        4.424294e+04,
+        4.424429e+04,
+        4.424429e+04,
+        4.42443e+04 ;
+    pt:Fe 2.087e+00,
+        2.585e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 2.585e+04 ;
+    pt:Fe2O3_tot 2.585e+00 ;
+    pt:Fe_Int 1.060841e+02,
+        1.066864e+02,
+        1.083145e+02 ;
+    pt:Hg_Int 1.261e-01,
+        4.539e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 3.96e+00 ;
+    pt:K_Int 6.36442e+01 ;
+    pt:Mg 6.59e-01 ;
+    pt:Mg_Int 4.7213e+00 ;
+    pt:Mn 6.3e-02,
+        "N.A." ;
+    pt:Mn_Int 3.8489e+00,
+        3.886e+00 ;
+    pt:Na 2.839e+00 ;
+    pt:Na_Int 8.747e+00 ;
+    pt:Nb 1.4e+01 ;
+    pt:Nb_Int 4.027e-01 ;
+    pt:Nb_PPM 1.4e+01 ;
+    pt:Ni 1.372093e-01,
+        5.9e+00 ;
+    pt:Ni_Int 1.21e-01 ;
+    pt:Ni_PPM 5.9e+00 ;
+    pt:P 1.51e-01 ;
+    pt:PLI 3.62166e-01 ;
+    pt:P_Int 5.821e-01 ;
+    pt:Pb 2.55e+00,
+        2.55e+01 ;
+    pt:Pb_Int 1.287e-01,
+        2.363e-01 ;
+    pt:Pb_PPM 2.43e+01,
+        2.55e+01 ;
+    pt:Rb 1.263e+02 ;
+    pt:Rb_Int 3.0381e+00 ;
+    pt:Rb_PPM 1.263e+02 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.644e-01,
+        1.978e-01,
+        2.15652e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 6.63e-02 ;
+    pt:Si 5.4283e+01,
+        6.82e+01,
+        "N.A." ;
+    pt:Si_Int 2.033132e+02,
+        2.758354e+02,
+        2.869449e+02 ;
+    pt:Sr 4.394231e+00,
+        9.14e+02 ;
+    pt:Sr_Int 1.84628e+01 ;
+    pt:Sr_PPM 9.14e+02 ;
+    pt:Ti 2.07e-01,
+        2.41e-01 ;
+    pt:Ti_Int 3.3173e+00,
+        3.3633e+00 ;
+    pt:V 2.736842e-01,
+        3.12e+01 ;
+    pt:V_Int 2.53e-02 ;
+    pt:V_PPM 3.12e+01 ;
+    pt:Y 2.08e+01 ;
+    pt:Y_Int 1.0937e+00 ;
+    pt:Y_PPM 2.08e+01 ;
+    pt:Zn 3.593407e-01,
+        3.27e+01 ;
+    pt:Zn_Int 2.108e-01 ;
+    pt:Zn_PPM 3.27e+01 ;
+    pt:Zr 1.304e+02 ;
+    pt:Zr_Int 5.3255e+00 ;
+    pt:Zr_PPM 1.304e+02 ;
+    pt:пробы 1.5e+01 .
+
+pi:YO-2-100 pt:Al 1.1763e+01 ;
+    pt:Al_Int 4.94901e+01 ;
+    pt:Ca 2.68e+00,
+        2.69e+00 ;
+    pt:Ca_Int 4.03877e+01,
+        4.09331e+01 ;
+    pt:Co 1.17e+01 ;
+    pt:Co_Int 2.63e-02 ;
+    pt:Co_PPM 1.17e+01 ;
+    pt:Cr 5.43e+01 ;
+    pt:Cr_Int 8.07e-02 ;
+    pt:Cr_PPM 5.43e+01 ;
+    pt:Cu 1.43e+01 ;
+    pt:Cu_Int 1.354e-01 ;
+    pt:Cu_PPM 1.43e+01 ;
+    pt:Date 4.424384e+04,
+        4.424385e+04,
+        4.424385e+04 ;
+    pt:Fe 4.563e+00,
+        5.069e+00 ;
+    pt:Fe2O3_tot 5.069e+00 ;
+    pt:Fe_Int 2.128508e+02,
+        2.214818e+02 ;
+    pt:Hg_Int 9.516e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 2.99e+00 ;
+    pt:K_Int 4.83507e+01 ;
+    pt:Mg 4.92e-01 ;
+    pt:Mg_Int 5.7778e+00 ;
+    pt:Mn 8e-02,
+        "N.A." ;
+    pt:Mn_Int 4.4602e+00,
+        4.5317e+00 ;
+    pt:Na 6.169e+00 ;
+    pt:Na_Int 8.1379e+00 ;
+    pt:Ni 1.11e+01 ;
+    pt:Ni_Int 1.688e-01 ;
+    pt:Ni_PPM 1.11e+01 ;
+    pt:P 5.3e-01 ;
+    pt:P_Int 2.3572e+00 ;
+    pt:Pb 2.42e+01 ;
+    pt:Pb_Int 2.147e-01 ;
+    pt:Pb_PPM 2.42e+01 ;
+    pt:Rh_Int 3.073e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 5.8e-02 ;
+    pt:S_Int 6.409e-01 ;
+    pt:Si 3.8064e+01,
+        4.694e+01 ;
+    pt:Si_Int 1.886123e+02,
+        1.944873e+02 ;
+    pt:Ti 5.87e-01,
+        6.01e-01 ;
+    pt:Ti_Int 7.3336e+00,
+        7.3499e+00 ;
+    pt:V 8.1e+01 ;
+    pt:V_Int 6.14e-02 ;
+    pt:V_PPM 8.1e+01 ;
+    pt:Zn 3.32e+01 ;
+    pt:Zn_Int 1.953e-01 ;
+    pt:Zn_PPM 3.32e+01 .
+
+pi:YO-2-TOT pt:Al 1.031e+01 ;
+    pt:Al_Int 5.84571e+01 ;
+    pt:As 5.769231e-02,
+        3e-01 ;
+    pt:As_Int 7.6e-03 ;
+    pt:As_PPM 1e+00 ;
+    pt:CF 1.6e+01 ;
+    pt:Ca 1.51e+00,
+        1.77e+00,
+        "N.A." ;
+    pt:Ca_Int 1.22485e+01,
+        2.4038e+01,
+        2.44194e+01 ;
+    pt:Co 1.529412e-01,
+        2.6e+00 ;
+    pt:Co_Int 8.9e-03 ;
+    pt:Co_PPM 2.6e+00 ;
+    pt:Cr 1.244898e-01,
+        1.22e+01 ;
+    pt:Cr_Int 1.92e-02 ;
+    pt:Cr_PPM 1.22e+01 ;
+    pt:Cu 1.652174e-01,
+        7.6e+00 ;
+    pt:Cu_Int 9.52e-02 ;
+    pt:Cu_PPM 7.6e+00 ;
+    pt:Date 4.424295e+04,
+        4.424296e+04,
+        4.424431e+04,
+        4.424432e+04,
+        4.424433e+04 ;
+    pt:Fe 1.267e+00,
+        1.634e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 1.634e+04 ;
+    pt:Fe2O3_tot 1.634e+00 ;
+    pt:Fe_Int 6.52695e+01,
+        6.59265e+01,
+        6.6062e+01 ;
+    pt:Hg_Int 1.386e-01,
+        4.575e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 4.814e+00 ;
+    pt:K_Int 7.71721e+01 ;
+    pt:Mg 1.94e-01 ;
+    pt:Mg_Int 2.7362e+00 ;
+    pt:Mn 2.6e-02,
+        "N.A." ;
+    pt:Mn_Int 1.5526e+00,
+        1.5841e+00 ;
+    pt:Na 2.617e+00 ;
+    pt:Na_Int 9.311e+00 ;
+    pt:Nb 5.3e+00 ;
+    pt:Nb_Int 1.706e-01 ;
+    pt:Nb_PPM 5.3e+00 ;
+    pt:Ni 1.023256e-01,
+        4.4e+00 ;
+    pt:Ni_Int 1.014e-01 ;
+    pt:Ni_PPM 4.4e+00 ;
+    pt:P 1.08e-01 ;
+    pt:PLI 2.669876e-01 ;
+    pt:P_Int 4.142e-01 ;
+    pt:Pb 2.93e+00,
+        2.93e+01 ;
+    pt:Pb_Int 1.406e-01,
+        2.743e-01 ;
+    pt:Pb_PPM 2.84e+01,
+        2.93e+01 ;
+    pt:Rb 1.505e+02 ;
+    pt:Rb_Int 3.968e+00 ;
+    pt:Rb_PPM 1.505e+02 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 1.821e-01,
+        1.992e-01,
+        2.25885e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 6.03e-02 ;
+    pt:Si 5.4641e+01,
+        6.777e+01,
+        "N.A." ;
+    pt:Si_Int 2.299665e+02,
+        2.745238e+02,
+        2.85346e+02 ;
+    pt:Sr 4.575481e+00,
+        9.517e+02 ;
+    pt:Sr_Int 2.14992e+01 ;
+    pt:Sr_PPM 9.517e+02 ;
+    pt:Ti 1.14e-01,
+        1.31e-01 ;
+    pt:Ti_Int 1.8165e+00,
+        1.8177e+00 ;
+    pt:V 1.464912e-01,
+        1.67e+01 ;
+    pt:V_Int 1.36e-02 ;
+    pt:V_PPM 1.67e+01 ;
+    pt:Y 1.24e+01 ;
+    pt:Y_Int 1.0695e+00 ;
+    pt:Y_PPM 1.24e+01 ;
+    pt:Zn 1.89011e-01,
+        1.72e+01 ;
+    pt:Zn_Int 1.135e-01 ;
+    pt:Zn_PPM 1.72e+01 ;
+    pt:Zr 8.54e+01 ;
+    pt:Zr_Int 4.6751e+00 ;
+    pt:Zr_PPM 8.54e+01 ;
+    pt:пробы 1.6e+01 .
+
+pi:YO-3-100 pt:Al 1.9599e+01 ;
+    pt:Al_Int 2.90089e+01 ;
+    pt:Ca 3.21e+00,
+        3.66e+00 ;
+    pt:Ca_Int 4.1772e+01,
+        4.19666e+01 ;
+    pt:Co 1.285e+02 ;
+    pt:Co_Int 2.02e-01 ;
+    pt:Co_PPM 1.285e+02 ;
+    pt:Cr 3.32e+02 ;
+    pt:Cr_Int 4.118e-01 ;
+    pt:Cr_PPM 3.32e+02 ;
+    pt:Cu 1.49e+01 ;
+    pt:Cu_Int 5.93e-02 ;
+    pt:Cu_PPM 1.49e+01 ;
+    pt:Date 4.424387e+04,
+        4.424387e+04,
+        4.424388e+04 ;
+    pt:Fe 2.5789e+01,
+        2.8451e+01 ;
+    pt:Fe2O3_tot 2.5789e+01 ;
+    pt:Fe_Int 1.273512e+03,
+        1.337928e+03 ;
+    pt:Hg_Int 2.276e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 9.72e-01 ;
+    pt:K_Int 1.57305e+01 ;
+    pt:Mg 1.773e+00 ;
+    pt:Mg_Int 8.6532e+00 ;
+    pt:Mn 2.26e-01,
+        "N.A." ;
+    pt:Mn_Int 1.23818e+01,
+        1.24421e+01 ;
+    pt:Na 1.968e+00 ;
+    pt:Na_Int 4.7531e+00 ;
+    pt:Ni 3.63e+01 ;
+    pt:Ni_Int 2.029e-01 ;
+    pt:Ni_PPM 3.63e+01 ;
+    pt:P 1.96e-01 ;
+    pt:P_Int 1.5145e+00 ;
+    pt:Pb 8.5e+00 ;
+    pt:Pb_Int 5.61e-02 ;
+    pt:Pb_PPM 8.5e+00 ;
+    pt:Rh_Int 2.592e-01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 1.851e-01 ;
+    pt:Si 3.23e+01,
+        3.2778e+01 ;
+    pt:Si_Int 1.157979e+02,
+        1.186627e+02 ;
+    pt:Ti 2.774e+00,
+        3.119e+00 ;
+    pt:Ti_Int 3.1834e+01,
+        3.19931e+01 ;
+    pt:V 7.636e+02 ;
+    pt:V_Int 5.133e-01 ;
+    pt:V_PPM 7.636e+02 ;
+    pt:Zn 9.29e+01 ;
+    pt:Zn_Int 3.357e-01 ;
+    pt:Zn_PPM 9.29e+01 .
+
+pi:YO-3-TOT pt:Al 1.2885e+01 ;
+    pt:Al_Int 7.21045e+01 ;
+    pt:As 7.884615e-01,
+        4.1e+00 ;
+    pt:As_Int 1.09e-02 ;
+    pt:As_PPM 4.1e+00 ;
+    pt:CF 1.7e+01 ;
+    pt:Ca 1.42e+00,
+        1.62e+00,
+        "N.A." ;
+    pt:Ca_Int 1.23043e+01,
+        2.26215e+01,
+        2.28625e+01 ;
+    pt:Co 2e-01,
+        3.4e+00 ;
+    pt:Co_Int 1.06e-02 ;
+    pt:Co_PPM 3.4e+00 ;
+    pt:Cr 2.071429e-01,
+        2.03e+01 ;
+    pt:Cr_Int 3.16e-02 ;
+    pt:Cr_PPM 2.03e+01 ;
+    pt:Cu 1.891304e-01,
+        8.7e+00 ;
+    pt:Cu_Int 1.079e-01 ;
+    pt:Cu_PPM 8.7e+00 ;
+    pt:Date 4.424296e+04,
+        4.424297e+04,
+        4.424434e+04,
+        4.424435e+04,
+        4.424436e+04 ;
+    pt:Fe 1.471e+00,
+        1.803e+00,
+        "N.A." ;
+    pt:Fe2O3_ppm 1.803e+04 ;
+    pt:Fe2O3_tot 1.803e+00 ;
+    pt:Fe_Int 7.30008e+01,
+        7.48616e+01,
+        7.86109e+01 ;
+    pt:Hg_Int 1.185e-01,
+        4.645e-01 ;
+    pt:Hg_PPM "N.A." ;
+    pt:K 5.244e+00 ;
+    pt:K_Int 8.39785e+01 ;
+    pt:Mg 0e+00 ;
+    pt:Mg_Int 3.803e+00 ;
+    pt:Mn 2.5e-02,
+        "N.A." ;
+    pt:Mn_Int 1.4926e+00,
+        1.5133e+00 ;
+    pt:Na 3.55e+00 ;
+    pt:Na_Int 1.30425e+01 ;
+    pt:Nb 4.6e+00 ;
+    pt:Nb_Int 1.296e-01 ;
+    pt:Nb_PPM 4.6e+00 ;
+    pt:Ni 1.372093e-01,
+        5.9e+00 ;
+    pt:Ni_Int 1.306e-01 ;
+    pt:Ni_PPM 5.9e+00 ;
+    pt:P 9.6e-02 ;
+    pt:PLI 4.379505e-01 ;
+    pt:P_Int 3.736e-01 ;
+    pt:Pb 3.16e+00,
+        3.16e+01 ;
+    pt:Pb_Int 1.501e-01,
+        2.95e-01 ;
+    pt:Pb_PPM 3.16e+01 ;
+    pt:Rb 1.572e+02 ;
+    pt:Rb_Int 3.9909e+00 ;
+    pt:Rb_PPM 1.572e+02 ;
+    pt:Rh "N.A." ;
+    pt:Rh_Int 2.057e-01,
+        2.584e-01,
+        2.21586e+01 ;
+    pt:Rh_PPM "N.A." ;
+    pt:S 0e+00 ;
+    pt:S_Int 5.24e-02 ;
+    pt:Si 6.414e+01,
+        7.0859e+01,
+        "N.A." ;
+    pt:Si_Int 2.031618e+02,
+        2.598471e+02,
+        2.707979e+02 ;
+    pt:Sr 4.671154e+00,
+        9.716e+02 ;
+    pt:Sr_Int 2.09094e+01 ;
+    pt:Sr_PPM 9.716e+02 ;
+    pt:Ti 1.52e-01,
+        1.68e-01 ;
+    pt:Ti_Int 2.2947e+00,
+        2.3006e+00 ;
+    pt:V 2.210526e-01,
+        2.52e+01 ;
+    pt:V_Int 1.97e-02 ;
+    pt:V_PPM 2.52e+01 ;
+    pt:Y 1.43e+01 ;
+    pt:Y_Int 1.1119e+00 ;
+    pt:Y_PPM 1.43e+01 ;
+    pt:Zn 2.142857e-01,
+        1.95e+01 ;
+    pt:Zn_Int 1.285e-01 ;
+    pt:Zn_PPM 1.95e+01 ;
+    pt:Zr 8.24e+01 ;
+    pt:Zr_Int 4.465e+00 ;
+    pt:Zr_PPM 8.24e+01 ;
+    pt:пробы 1.7e+01 .
+
