@@ -1,9 +1,10 @@
 # import pandas as pd
 import xlrd
-from rdflib import Graph, Namespace, FOAF, XSD, RDF, RDFS, URIRef, Literal
+from rdflib import Graph, Namespace, FOAF, XSD, RDF, RDFS, URIRef, Literal, BNode
 import os.path
 import unicodedata
 from enum import Enum
+import re
 
 ONTODIR = "./iec/"
 SUBDIR = "./iec/pollutions/"
@@ -24,10 +25,27 @@ GMT = Graph(bind_namespaces="rdflib")
 GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
 GS = [G, GMT]
 
+ELRE = re.compile(r'^([A-Z][a-z]{,3})(.*)$')
+
 for _ in GS:
     _.bind('pt', PT)
     _.bind('pi', P)
     _.bind('mt', MT)
+
+ElToIRI = {}
+GeoSample = PT.GeologicalSample
+GeoMeasure = PT.Measurement
+samplerel = PT.sample
+PPM = PT.PPM
+Percent = PT.Percent
+
+G.add((PT.PPM, RDFS.label, Literal('Грам/Моль', lang='ru')))
+G.add((PT.Percent, RDFS.label, Literal('Процент', lang='ru')))
+
+for el in GMT.subjects(RDF.type, MT.Element):
+    ElToIRI[el.fragment] = MT[el]
+
+# print(ElToIRI)
 
 def normURI(s):
     r = ""
@@ -40,6 +58,11 @@ def normURI(s):
     return r.rstrip('_')
 
 
+def elem(name):
+    # import pudb; pu.db
+    return ElToIRI.get(name, None)
+
+
 class State(Enum):
     NONE = 0
     CLASS = 1
@@ -47,10 +70,11 @@ class State(Enum):
     DATA = 3
     IGNORE = 4
     LOCATION = 5
+    DETLIM = 6
 
 
 class ImpState:
-    _sample_iri_ = PT['sample']
+    _sample_iri_ = samplerel
     _belongs_iri_ = PT['location']
 
     def __init__(self, graph, datasetIRI, locations=None):
@@ -65,6 +89,29 @@ class ImpState:
         self.sample_col = None
         self.proc_locs(locations)
         self.loc_fence = len(self.locations)
+
+    def proc_comp(self, name, value):
+        name = name.strip()
+        mo = ELRE.match(name)
+        add = self.g.add
+        rel = PT[normURI(name)]
+        if mo is None:
+            add((self.sample, rel, Literal(value)))
+            return
+        el = mo.group(1)
+        eliri = elem(el)
+        if eliri is None:
+            add((self.sample, rel, Literal(value)))
+            return
+        # print(eliri)
+        rest = mo.group(2)
+        el = elem(el)
+        m = BNode()
+        add((self.sample, PT.measure, m))
+        add((m, RDF.type, GeoMeasure))
+        add((m, MT.element, el))
+        add((m, PT.value, Literal(value)))
+        add((m, PT.unit, PPM))
 
     def proc_locs(self, locations):
         if locations is None:
@@ -90,7 +137,7 @@ class ImpState:
             else:
                 return  # None to belong to
         add = self.g.add
-        print(self.locations)
+        # print(self.locations)
         add((obj, self._belongs_iri_, location))
 
     def data(self):
@@ -141,6 +188,8 @@ class ImpState:
                     loc = cell.value.strip()
                     self.proc_loc(loc)
 
+        # TODO: DETLIM
+
     def c(self, cell, row, col):
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
@@ -155,9 +204,10 @@ class ImpState:
         if field == self._sample_iri_:
             self.sample = P[cell.value.replace(' ','')]
             add((ds, self._sample_iri_, self.sample))
+            add((self.sample, RDF.type, GeoSample))
             self.belongs(self.sample)
         elif self.sample is not None:
-            add((self.sample, PT[field], Literal(cell.value)))
+            self.proc_comp(field, cell.value)
         else:
             print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(cell, row, col, self.header))
             quit()
