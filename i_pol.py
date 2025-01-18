@@ -39,16 +39,21 @@ def normURI(s):
             r+='_'
     return r.rstrip('_')
 
+
 class State(Enum):
     NONE = 0
     CLASS = 1
     HEADER = 2
     DATA = 3
     IGNORE = 4
+    LOCATION = 5
+
 
 class ImpState:
     _sample_iri_ = PT['sample']
-    def __init__(self, graph, datasetIRI):
+    _belongs_iri_ = PT['location']
+
+    def __init__(self, graph, datasetIRI, locations=None):
         self.state = State.NONE
         self.instr = False
         self.cls = {}
@@ -56,10 +61,41 @@ class ImpState:
         self.dsiri = datasetIRI
         self.g = graph
         self.sample = None
+        self.locations = []
         self.sample_col = None
+        self.proc_locs(locations)
+        self.loc_fence = len(self.locations)
+
+    def proc_locs(self, locations):
+        if locations is None:
+            return
+        for loc in locations:
+            self.proc_loc(loc)
+
+    def proc_loc(self, location):
+        location = location.strip()
+        uriloc = P[normURI(location)]
+        locs = self.locations
+        if locs:
+            prev = locs[-1]
+            self.belongs(uriloc, prev)
+        add = self.g.add
+        add((uriloc, RDFS.label, Literal(location, lang='ru')))
+        self.locations.append(uriloc)
+
+    def belongs(self, obj, location=None):
+        if location is None:
+            if len(self.locations) > 0:
+                location = self.locations[-1]
+            else:
+                return  # None to belong to
+        add = self.g.add
+        print(self.locations)
+        add((obj, self._belongs_iri_, location))
 
     def data(self):
         return self.state == State.DATA
+
     def ign(self):
         return self.state == State.IGNORE
 
@@ -80,10 +116,10 @@ class ImpState:
                     print("#! ERROR Key: {}".format(k))
                     quit()
                 self.instr = True
-        if self.ign():
+        if self.ign() or self.instr:
             return
 
-        if self.data() and not self.instr:
+        if self.data():
             # print("DT: {}".format(row))
             if self.sample is None:
                 # print(self.header)
@@ -92,11 +128,18 @@ class ImpState:
                 self.c(cell, rx, i)
             return
 
-        if self.state == State.HEADER and not self.instr:
+        if self.state == State.HEADER:
             for i, cell in enumerate(row):
                 self.h(cell, rx, i)
             return
 
+        if self.state == State.LOCATION:
+            for cell in row:
+                if cell.ctype == xlrd.XL_CELL_TEXT:
+                    if len(self.locations) > self.loc_fence:
+                        self.locations.pop()
+                    loc = cell.value.strip()
+                    self.proc_loc(loc)
 
     def c(self, cell, row, col):
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
@@ -112,6 +155,7 @@ class ImpState:
         if field == self._sample_iri_:
             self.sample = P[cell.value.replace(' ','')]
             add((ds, self._sample_iri_, self.sample))
+            self.belongs(self.sample)
         elif self.sample is not None:
             add((self.sample, PT[field], Literal(cell.value)))
         else:
@@ -142,19 +186,21 @@ class Khuzhir(Kharantsy):
     pass
 
 
-FILES = { 'Данные бар Ярки Сев Байкал.xls': Yarki,
-          'Данные Харанцы Ольхон.xls': Kharantsy,
-          'Данные Хужир Ольхон.xls': Khuzhir }
+FILES = {'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкл', 'Ярки']),
+         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
+         'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
+         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир'])}
 
 
-def parse_sheet(sh, sheetIRI, constr):
+def parse_sheet(sh, sheetIRI, comp):
     # print("Cell D30 is {0}".format(sh.cell_value(rowx=29, colx=3)))
-    st = constr(G, sheetIRI)
+    constr, locs = comp
+    st = constr(G, sheetIRI, locations=locs)
     for rx in range(sh.nrows):
         st.r(sh.row(rx), rx)
 
 
-def parse_xl(file, constr):
+def parse_xl(file, comp):
     print("# FILE: {} at {}".format(file, SUBDIR))
     pathfile = os.path.join(SUBDIR, file)
     # df = pd.read_excel(pathfile)
@@ -165,12 +211,12 @@ def parse_xl(file, constr):
         sh = wb.sheet_by_name(sheet)
         sheetname = normURI(file+"_"+sheet)
         print("{0} {1} {2}".format(sh.name, sh.nrows, sh.ncols))
-        parse_sheet(sh, P[sheetname], constr)
+        parse_sheet(sh, P[sheetname], comp)
 
 
 if __name__=="__main__":
-    for file, constr in FILES.items():
-        parse_xl(file, constr)
+    for file, comp in FILES.items():
+        parse_xl(file, comp)
     with open(TARGET, "w") as o:
         o.write(G.serialize(format='turtle'))
     with open(TARGETMT, "w") as o:

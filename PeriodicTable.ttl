@@ -1727,11 +1727,11 @@ mt:group_18 a mt:Group ;
 
 mt:Period a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty mt:number ],
-        [ a owl:Restriction ;
             owl:allValuesFrom mt:Element ;
-            owl:onProperty mt:element ] .
+            owl:onProperty mt:element ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty mt:number ] .
 
 mt:Semi-metallic a mt:Classification .
 
@@ -1841,11 +1841,11 @@ mt:Non-metallic a mt:Classification .
 
 mt:Group a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty mt:number ],
-        [ a owl:Restriction ;
             owl:allValuesFrom mt:Element ;
             owl:onProperty mt:element ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty mt:number ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty mt:name ] .
@@ -1932,36 +1932,6 @@ mt:solid a mt:StandardState .
 
 mt:Element a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty mt:symbol ],
-        [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty mt:period ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom mt:Group ;
-            owl:onProperty mt:group ],
-        [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty mt:atomicNumber ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:float ;
-            owl:onProperty mt:atomicWeight ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty mt:color ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom mt:Block ;
-            owl:onProperty mt:block ],
-        [ a owl:Restriction ;
-            owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty mt:group ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom mt:Classification ;
-            owl:onProperty mt:classification ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom mt:Period ;
-            owl:onProperty mt:period ],
-        [ a owl:Restriction ;
             owl:allValuesFrom xsd:integer ;
             owl:onProperty mt:atomicNumber ],
         [ a owl:Restriction ;
@@ -1969,17 +1939,47 @@ mt:Element a owl:Class ;
             owl:onProperty mt:symbol ],
         [ a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty mt:name ],
+            owl:onProperty mt:atomicNumber ],
         [ a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty mt:group ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
             owl:onProperty mt:atomicWeight ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty mt:name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom mt:Classification ;
+            owl:onProperty mt:classification ],
         [ a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
             owl:onProperty mt:block ],
         [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty mt:name ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty mt:period ],
+        [ a owl:Restriction ;
             owl:allValuesFrom mt:StandardState ;
             owl:onProperty mt:standardState ],
         [ a owl:Restriction ;
+            owl:allValuesFrom mt:Group ;
+            owl:onProperty mt:group ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty mt:atomicWeight ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom mt:Period ;
+            owl:onProperty mt:period ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom mt:Block ;
+            owl:onProperty mt:block ],
+        [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty mt:name ] .
+            owl:onProperty mt:color ],
+        [ a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty mt:symbol ] .
 
