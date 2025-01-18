@@ -25,7 +25,20 @@ GMT = Graph(bind_namespaces="rdflib")
 GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
 GS = [G, GMT]
 
-ELRE = re.compile(r'^([A-Z][a-z]{,3})(.*)$')
+COMPRE = re.compile(r'^(([A-Z][a-z]{,2}\d{,2})+)(.*?)$')
+COMPELRE = re.compile(r'[A-Z][a-z]{,2}\d{,2}')
+# r'([A-Z][a-z]*)(\d+(?:\.\d+)?)?'
+ELRE = re.compile(r'^([A-Z][a-z]{,2})+(.*)$')
+
+# spl = COMPELRE.findall("C2H5W8K9OH")
+# print(spl)
+# spl = COMPELRE.findall("OH")
+# print(spl)
+# spl = COMPELRE.findall("SiO2")
+# print(spl)
+# # quit()
+
+COMPOUNDS = {}
 
 for _ in GS:
     _.bind('pt', PT)
@@ -43,7 +56,7 @@ G.add((PT.PPM, RDFS.label, Literal('Грам/Моль', lang='ru')))
 G.add((PT.Percent, RDFS.label, Literal('Процент', lang='ru')))
 
 for el in GMT.subjects(RDF.type, MT.Element):
-    ElToIRI[el.fragment] = MT[el]
+    ElToIRI[el.fragment] = el
 
 # print(ElToIRI)
 
@@ -90,28 +103,62 @@ class ImpState:
         self.proc_locs(locations)
         self.loc_fence = len(self.locations)
 
-    def proc_comp(self, name, value):
+    def proc_comp(self, names, value):
+        name, fieldname = names
         name = name.strip()
-        mo = ELRE.match(name)
+        mo = COMPRE.match(name)
         add = self.g.add
         rel = PT[normURI(name)]
+
         if mo is None:
             add((self.sample, rel, Literal(value)))
             return
-        el = mo.group(1)
+
+        comp = mo.group(1)
+        rest = mo.group(3)
+        print(name, comp, rest, mo.groups(), fieldname)
+        rc = COMPELRE.findall(comp)
+        el1 = rc[0]
+        el = ELRE.match(el1).group(1)
         eliri = elem(el)
-        if eliri is None:
+
+        if eliri is None:  # This is not a compound
             add((self.sample, rel, Literal(value)))
             return
-        # print(eliri)
-        rest = mo.group(2)
-        el = elem(el)
+
         m = BNode()
         add((self.sample, PT.measure, m))
         add((m, RDF.type, GeoMeasure))
-        add((m, MT.element, el))
         add((m, PT.value, Literal(value)))
-        add((m, PT.unit, PPM))
+        rupper = rest.upper()
+        if 'PPM' in rupper:
+            add((m, PT.unit, PPM))
+        elif '%' in fieldname:
+            add((m, PT.unit, Percent))
+        else:
+            add((m, PT.unit, P.UnknowUnit))
+        add((m, PT.rest, Literal(rest)))
+
+        if len(rc) > 1 or el1 != el:  # Compound, e.g. oxide
+            compname = 'compound-'+normURI(comp)
+            cb = COMPOUNDS.get(compname, None)
+            if cb is None:
+                cb = PT[compname]
+                add((cb, RDF.type, PT.Compound))
+                add((cb, PT.Formula, Literal(comp)))
+                add((cb, RDFS.label, Literal(comp)))
+                COMPOUNDS[compname] = cb
+            add((m, PT.compound, cb))
+        elif len(rc) == 1 and el1 == el and eliri is not None:
+            add((m, MT.element, eliri))
+        else:
+            print("!# ERROR unknown combination of {}, and {}=?={}: {}.".format(rc,
+                                                                                el1,
+                                                                                el,
+                                                                                eliri))
+            quit()
+        if "TOT" in rupper or "ОБЩ" in rupper:
+            add((m, PT.total, Literal(True)))
 
     def proc_locs(self, locations):
         if locations is None:
@@ -170,6 +217,7 @@ class ImpState:
             # print("DT: {}".format(row))
             if self.sample is None:
                 # print(self.header)
+                # print(self.sample_col, rx, row)
                 self.c(row[self.sample_col], rx, self.sample_col)
             for i, cell in enumerate(row):
                 self.c(cell, rx, i)
@@ -194,20 +242,22 @@ class ImpState:
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
         try:
-            field = self.header[col]
+            field, fieldname = self.header[col]
         except KeyError as k:
-            print("#! ERROR header key {} not in {}".format(k, self.header))
+            print("#! ERROR header key {} not in {} row: {}".format(k, self.header, row))
             # quit()
             return
         add = self.g.add
         ds = self.dsiri
         if field == self._sample_iri_:
-            self.sample = P[cell.value.replace(' ','')]
+            name = str(cell.value).replace(' ', '')
+            # print(value)
+            self.sample = P[name]
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
             self.belongs(self.sample)
         elif self.sample is not None:
-            self.proc_comp(field, cell.value)
+            self.proc_comp((field, fieldname), cell.value)
         else:
             print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(cell, row, col, self.header))
             quit()
@@ -217,17 +267,19 @@ class ImpState:
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
 
-        name = normURI(str(cell.value))
+        # name = normURI(str(cell.value))
+        orig = str(cell.value)
+        name = normURI(orig)
         add = self.g.add
         ds = self.dsiri
         if name in self._sample_names_:
             name = self._sample_iri_
             self.sample_col = col
 
-        self.header[col] = name
+        self.header[col] = (name, orig)
 
 class Yarki(ImpState):
-    _sample_names_ = ['Sample', 'Полевой']
+    _sample_names_ = ['Sample', 'Полевой', 'sample']
 
 class Kharantsy(ImpState):
     _sample_names_ = ['Номер_пробы']
@@ -236,10 +288,12 @@ class Khuzhir(Kharantsy):
     pass
 
 
-FILES = {'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкл', 'Ярки']),
-         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
+FILES = {
+         'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкл', 'Ярки']),
          'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
-         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир'])}
+         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
+         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
+        }
 
 
 def parse_sheet(sh, sheetIRI, comp):
@@ -264,10 +318,11 @@ def parse_xl(file, comp):
         parse_sheet(sh, P[sheetname], comp)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     for file, comp in FILES.items():
         parse_xl(file, comp)
     with open(TARGET, "w") as o:
         o.write(G.serialize(format='turtle'))
     with open(TARGETMT, "w") as o:
         o.write(GMT.serialize(format='turtle'))
+    print("!#INFO: Normal exit")
