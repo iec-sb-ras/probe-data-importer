@@ -103,48 +103,77 @@ class ImpState:
         self.sample_col = None
         self.proc_locs(locations)
         self.loc_fence = len(self.locations)
+        self.dlims = {}
 
-    def proc_comp(self, names, value):
+    def proc_comp(self, names, value, delim=False):
         uvalue = str(value).upper()
         if 'N.A.' in uvalue:
             return
-
+        dl = None
+        if "<" in uvalue:
+            # import pudb; pu.db
+            dl = value.lstrip("<").strip()
+            value = "ERROR"
         name, fieldname = names
         name = name.strip()
         mo = COMPRE.match(name)
         add = self.g.add
         rel = PT[normURI(name)]
 
+        def finish():
+            if self.sample and not delim:
+                add((self.sample, rel, Literal(value)))
+
         if mo is None:
-            add((self.sample, rel, Literal(value)))
+            finish()
             return
 
         comp = mo.group(1)
         rest = mo.group(3)
-        print(name, comp, rest, mo.groups(), fieldname)
+        # print(name, comp, rest, mo.groups(), fieldname)
         rc = COMPELRE.findall(comp)
         el1 = rc[0]
         el = ELRE.match(el1).group(1)
         eliri = elem(el)
 
         if eliri is None:  # This is not a compound
-            add((self.sample, rel, Literal(value)))
+            finish()
             return
 
-        m = BNode()
-        add((self.sample, PT.measure, m))
+        m = None
+        if self.sample and not delim:
+            m = BNode()
+            add((self.sample, PT.measure, m))
+        if delim:
+            m = BNode()
+            add((self.dsiri, PT.detectionLimit, m))
+            add((m, RDF.type, PT.DetectionLimit))
         add((m, RDF.type, GeoMeasure))
-        add((m, PT.value, Literal(value)))
+
         rupper = rest.upper()
-        if 'PPM' in rupper:
-            add((m, PT.unit, PPM))
-        elif 'INT' in rupper:
-            add((m, PT.unit, P.Int))
-        elif '%' in fieldname:
-            add((m, PT.unit, Percent))
-        else:
-            add((m, PT.unit, P.UnknowUnit))
-        add((m, PT.rest, Literal(rest)))
+        # add((m, PT.rest, Literal(rest)))
+
+        if dl is None:
+            add((m, PT.value, Literal(value)))
+            if 'PPM' in rupper:
+                add((m, PT.unit, PPM))
+            elif 'INT' in rupper:
+                add((m, PT.unit, P.Int))
+            elif '%' in fieldname:
+                add((m, PT.unit, Percent))
+            else:
+                add((m, PT.unit, P.UnknowUnit))
+
+        def finish_dl(e):
+            if delim:
+                self.dlims[e] = m
+            if dl is not None:
+                dlm = self.dlims.get(e, None)
+                if dlm is not None:
+                    add((m, PT.value, dlm))
+                else:
+                    print("#!ERROR: cannot import DETLIM for {}".format(e))
+                    # quit()
 
         if len(rc) > 1 or el1 != el:  # Compound, e.g. oxide
             compname = 'compound-'+normURI(comp)
@@ -156,8 +185,14 @@ class ImpState:
                 add((cb, RDFS.label, Literal(comp)))
                 COMPOUNDS[compname] = cb
             add((m, PT.compound, cb))
+
+            finish_dl(comp)
+
         elif len(rc) == 1 and el1 == el and eliri is not None:
             add((m, MT.element, eliri))
+            if delim:
+                self.dlims[el] = m
+            finish_dl(el)
         else:
             print("!# ERROR unknown combination of {}, and {}=?={}: {}.".format(rc,
                                                                                 el1,
@@ -220,14 +255,12 @@ class ImpState:
         if self.ign() or self.instr:
             return
 
-        if self.data():
-            # print("DT: {}".format(row))
+        detlim = self.state == State.DETLIM
+        if self.data() or detlim:
             if self.sample is None:
-                # print(self.header)
-                # print(self.sample_col, rx, row)
-                self.c(row[self.sample_col], rx, self.sample_col)
+                self.c(row[self.sample_col], rx, self.sample_col, detlim)
             for i, cell in enumerate(row):
-                self.c(cell, rx, i)
+                self.c(cell, rx, i, detlim)
             return
 
         if self.state == State.HEADER:
@@ -249,9 +282,8 @@ class ImpState:
                     loc = cell.value.strip()
                     self.proc_loc(loc)
 
-        # TODO: DETLIM
 
-    def c(self, cell, row, col):
+    def c(self, cell, row, col, detlim=False):
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
         try:
@@ -260,6 +292,15 @@ class ImpState:
             print("#! ERROR header key {} not in {} row: {}".format(k, self.header, row))
             # quit()
             return
+
+        prt = self.cls.get(col, '')
+        if '%' in prt and 'PPM' not in field:
+            prt = '_%'
+        elif 'PPM' in prt and '%' not in field:
+            prt = '_PPM'
+        else:
+            prt = ''
+
         add = self.g.add
         ds = self.dsiri
         if field == self._sample_iri_:
@@ -270,16 +311,14 @@ class ImpState:
             add((self.sample, RDF.type, GeoSample))
             self.belongs(self.sample)
         elif self.sample is not None:
-            prt = self.cls.get(col, '')
-            if '%' in prt and 'PPM' not in field:
-                prt = '_%'
-            elif 'PPM' in prt and '%' not in field:
-                prt = '_PPM'
-            else:
-                prt = ''
             self.proc_comp((field+prt, fieldname+prt), cell.value)
+        elif detlim:
+            self.proc_comp((field+prt, fieldname+prt), cell.value, detlim)
         else:
-            print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(cell, row, col, self.header))
+            print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(cell,
+                                                                         row,
+                                                                         col,
+                                                                         self.header))
             quit()
 
     def h(self, cell, row, col):
