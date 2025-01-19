@@ -52,7 +52,7 @@ samplerel = PT.sample
 PPM = PT.PPM
 Percent = PT.Percent
 
-G.add((PT.PPM, RDFS.label, Literal('Грам/Моль', lang='ru')))
+G.add((PT.PPM, RDFS.label, Literal('мг/кг', lang='ru')))
 G.add((PT.Percent, RDFS.label, Literal('Процент', lang='ru')))
 
 for el in GMT.subjects(RDF.type, MT.Element):
@@ -93,6 +93,7 @@ class ImpState:
     def __init__(self, graph, datasetIRI, locations=None):
         self.state = State.NONE
         self.instr = False
+        self.prev_class = None
         self.cls = {}
         self.header = {}
         self.dsiri = datasetIRI
@@ -104,6 +105,10 @@ class ImpState:
         self.loc_fence = len(self.locations)
 
     def proc_comp(self, names, value):
+        uvalue = str(value).upper()
+        if 'N.A.' in uvalue:
+            return
+
         name, fieldname = names
         name = name.strip()
         mo = COMPRE.match(name)
@@ -133,6 +138,8 @@ class ImpState:
         rupper = rest.upper()
         if 'PPM' in rupper:
             add((m, PT.unit, PPM))
+        elif 'INT' in rupper:
+            add((m, PT.unit, P.Int))
         elif '%' in fieldname:
             add((m, PT.unit, Percent))
         else:
@@ -228,6 +235,12 @@ class ImpState:
                 self.h(cell, rx, i)
             return
 
+        if self.state == State.CLASS:
+            self.prev_class = None
+            for i, cell in enumerate(row):
+                self.hc(cell, rx, i)
+            return
+
         if self.state == State.LOCATION:
             for cell in row:
                 if cell.ctype == xlrd.XL_CELL_TEXT:
@@ -257,26 +270,38 @@ class ImpState:
             add((self.sample, RDF.type, GeoSample))
             self.belongs(self.sample)
         elif self.sample is not None:
-            self.proc_comp((field, fieldname), cell.value)
+            prt = self.cls.get(col, '')
+            if '%' in prt and 'PPM' not in field:
+                prt = '_%'
+            elif 'PPM' in prt and '%' not in field:
+                prt = '_PPM'
+            else:
+                prt = ''
+            self.proc_comp((field+prt, fieldname+prt), cell.value)
         else:
             print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(cell, row, col, self.header))
             quit()
 
     def h(self, cell, row, col):
-        # print(cell, col)
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
-
-        # name = normURI(str(cell.value))
         orig = str(cell.value)
         name = normURI(orig)
-        add = self.g.add
-        ds = self.dsiri
         if name in self._sample_names_:
             name = self._sample_iri_
             self.sample_col = col
-
         self.header[col] = (name, orig)
+
+    def hc(self, cell, row, col):
+        if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
+            if self.prev_class is None:
+                return
+            orig, name = self.prev_class
+        else:
+            orig = str(cell.value).replace('мг/кг', 'PPM')
+            name = normURI(orig)
+        self.cls[col] = orig
+        self.prev_class = orig, name
 
 class Yarki(ImpState):
     _sample_names_ = ['Sample', 'Полевой', 'sample']
@@ -289,9 +314,9 @@ class Khuzhir(Kharantsy):
 
 
 FILES = {
-         'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкл', 'Ярки']),
-         'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
-         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
+#         'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкал', 'Ярки']),
+#         'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
+#         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
          'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
         }
 
