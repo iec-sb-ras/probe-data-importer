@@ -110,10 +110,11 @@ class ImpState:
         if 'N.A.' in uvalue:
             return
         dl = None
+        ovalue = value  # Original value
         if "<" in uvalue:
             # import pudb; pu.db
             dl = value.lstrip("<").strip()
-            value = "ERROR"
+            value = dl
         name, fieldname = names
         name = name.strip()
         mo = COMPRE.match(name)
@@ -122,7 +123,7 @@ class ImpState:
 
         def finish():
             if self.sample and not delim:
-                add((self.sample, rel, Literal(value)))
+                add((self.sample, rel, Literal(ovalue)))
 
         if mo is None:
             finish()
@@ -140,21 +141,28 @@ class ImpState:
             finish()
             return
 
-        m = None
-        if self.sample and not delim:
-            m = BNode()
-            add((self.sample, PT.measure, m))
-        if delim:
+        def make_detlim():
             m = BNode()
             add((self.dsiri, PT.detectionLimit, m))
             add((m, RDF.type, PT.DetectionLimit))
-        add((m, RDF.type, GeoMeasure))
+            return m
+
+        m = None
+        # import pudb; pu.db
+        # if name == 'Sn_PPM':
+        #     print(name, value)
+        #     import pudb; pu.db
+
+        if self.sample and not delim:
+            m = BNode()
+            add((self.sample, PT.measure, m))
+            add((m, RDF.type, GeoMeasure))
+        if delim:
+            m = make_detlim()
 
         rupper = rest.upper()
-        # add((m, PT.rest, Literal(rest)))
 
-        if dl is None:
-            add((m, PT.value, Literal(value)))
+        def unit(m):
             if 'PPM' in rupper:
                 add((m, PT.unit, PPM))
             elif 'INT' in rupper:
@@ -164,7 +172,11 @@ class ImpState:
             else:
                 add((m, PT.unit, P.UnknowUnit))
 
-        def finish_dl(e):
+        if dl is None:
+            add((m, PT.value, Literal(value)))
+            unit(m)
+
+        def finish_dl(e, m):
             if delim:
                 self.dlims[e] = m
             if dl is not None:
@@ -172,8 +184,13 @@ class ImpState:
                 if dlm is not None:
                     add((m, PT.value, dlm))
                 else:
-                    print("#!ERROR: cannot import DETLIM for {}".format(e))
-                    # quit()
+                    # m is description, connected to a sample
+                    md = make_detlim()
+                    add((md, PT.value, Literal(value)))
+                    add((md, RDF.type, GeoMeasure))
+                    unit(md)
+                    self.dlims[e] = md
+                    add((m, PT.value, md))
 
         if len(rc) > 1 or el1 != el:  # Compound, e.g. oxide
             compname = 'compound-'+normURI(comp)
@@ -186,13 +203,11 @@ class ImpState:
                 COMPOUNDS[compname] = cb
             add((m, PT.compound, cb))
 
-            finish_dl(comp)
+            finish_dl(comp, m)
 
         elif len(rc) == 1 and el1 == el and eliri is not None:
             add((m, MT.element, eliri))
-            if delim:
-                self.dlims[el] = m
-            finish_dl(el)
+            finish_dl(el, m)
         else:
             print("!# ERROR unknown combination of {}, and {}=?={}: {}.".format(rc,
                                                                                 el1,
@@ -355,8 +370,8 @@ class Khuzhir(Kharantsy):
 FILES = {
 #         'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкал', 'Ярки']),
 #         'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
-#         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
-         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
+         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
+#         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
         }
 
 
