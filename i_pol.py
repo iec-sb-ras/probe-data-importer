@@ -107,6 +107,8 @@ class ImpState:
 
     def proc_comp(self, names, value, delim=False):
         uvalue = str(value).upper()
+        if isinstance(value, str):
+            value = value.strip()
         if 'N.A.' in uvalue:
             return
         dl = None
@@ -123,6 +125,8 @@ class ImpState:
 
         def finish():
             if self.sample and not delim:
+                print(type(ovalue))
+                print("->{}->{}".format(rel, repr(ovalue)))
                 add((self.sample, rel, Literal(ovalue)))
 
         if mo is None:
