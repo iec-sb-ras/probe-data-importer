@@ -209,7 +209,7 @@ class ImpState:
             add((m, MT.element, eliri))
             finish_dl(el, m)
         else:
-            print("!# ERROR unknown combination of {}, and {}=?={}: {}.".format(rc,
+            print("#!ERROR unknown combination of {}, and {}=?={}: {}.".format(rc,
                                                                                 el1,
                                                                                 el,
                                                                                 eliri))
@@ -368,10 +368,10 @@ class Khuzhir(Kharantsy):
 
 
 FILES = {
-#         'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкал', 'Ярки']),
-#         'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
+         'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкал', 'Ярки']),
+         'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
          'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
-#         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
+         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь № 70']),
         }
 
 
@@ -404,4 +404,4 @@ if __name__ == "__main__":
         o.write(G.serialize(format='turtle'))
     with open(TARGETMT, "w") as o:
         o.write(GMT.serialize(format='turtle'))
-    print("!#INFO: Normal exit")
+    print("#!INFO: Normal exit")
