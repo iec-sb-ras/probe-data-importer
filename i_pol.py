@@ -125,8 +125,8 @@ class ImpState:
 
         def finish():
             if self.sample and not delim:
-                print(type(ovalue))
-                print("->{}->{}".format(rel, repr(ovalue)))
+                # print(type(ovalue))
+                # print("->{}->{}".format(rel, repr(ovalue)))
                 add((self.sample, rel, Literal(ovalue)))
 
         if mo is None:
