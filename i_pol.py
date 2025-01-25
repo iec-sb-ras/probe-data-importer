@@ -30,6 +30,14 @@ COMPELRE = re.compile(r'[A-Z][a-z]{,2}\d{,2}')
 # r'([A-Z][a-z]*)(\d+(?:\.\d+)?)?'
 ELRE = re.compile(r'^([A-Z][a-z]{,2})+(.*)$')
 
+DEGRE = re.compile(r'^(\d{,3})(\D)(\d{,2})(\D)(\d{,2}(\.\d{,2})?)(\D)(.*)$')
+# 107°25'28.48"В
+# m = DEGRE.match('107°25\'28.48"В')
+# print(m, m.groups())
+# m = DEGRE.match('107°25\'28"В')
+# print(m, m.groups())
+# quit()
+
 # spl = COMPELRE.findall("C2H5W8K9OH")
 # print(spl)
 # spl = COMPELRE.findall("OH")
@@ -59,6 +67,7 @@ for el in GMT.subjects(RDF.type, MT.Element):
     ElToIRI[el.fragment] = el
 
 # print(ElToIRI)
+
 
 def normURI(s):
     r = ""
@@ -106,7 +115,7 @@ class ImpState:
         self.dlims = {}
 
     def proc_comp(self, names, value, delim=False):
-        uvalue = str(value).upper()
+        uvalue = str(value).upper().strip()
         if isinstance(value, str):
             value = value.strip()
         if 'N.A.' in uvalue:
@@ -129,7 +138,26 @@ class ImpState:
                 # print("->{}->{}".format(rel, repr(ovalue)))
                 add((self.sample, rel, Literal(ovalue)))
 
+        def degs(v):
+            if isinstance(v, float):
+                return v
+            # 107°25'28.48"В
+            m = DEGRE.match(v)
+            if m is None:
+                return v
+            d,_,m,_,s,_,_,dir = m.groups()
+            d,m,s = [float(v) for v in [d,m,s]]
+            d += m/60.
+            d += s/3600.
+            return d
+
         if mo is None:
+            if name == 'с_ш':
+                rel = PT.lat
+                ovalue = degs(ovalue)
+            if name == 'в_д':
+                rel = PT.lon
+                ovalue = degs(ovalue)
             finish()
             return
 
