@@ -65,7 +65,7 @@ Percent = PT.Percent
 SpatialThing = WGS.SpatialThing
 Long = WGS.long
 Lat = WGS.lat
-IngnitionLosses = PT.IngnitionLosses
+IgnitionLosses = PT.IgnitionLosses
 
 G.add((PT.PPM, RDFS.label, Literal('мг/кг', lang='ru')))
 G.add((PT.Percent, RDFS.label, Literal('Процент', lang='ru')))
@@ -174,7 +174,7 @@ class ImpState:
             add((self.sample, PT.measure, m))
             add((m, PT.value, Literal(value)))
             add((m, RDF.type, GeoMeasure))
-            add((m, RDF.type, IngnitionLosses))
+            add((m, RDF.type, IgnitionLosses))
             u = name.upper()
             unit(m, u)
             return
@@ -349,7 +349,6 @@ class ImpState:
                     loc = cell.value.strip()
                     self.proc_loc(loc)
 
-
     def c(self, cell, row, col, detlim=False):
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
@@ -371,8 +370,17 @@ class ImpState:
         add = self.g.add
         ds = self.dsiri
         if field == self._sample_iri_:
-            name = str(cell.value).replace(' ', '')
-            # print(value)
+            val = cell.value
+            if isinstance(val, str):
+                name = val.replace(' ', '')
+            else:
+                if isinstance(val, float):
+                    if val.is_integer():
+                        name = str(int(val))
+                    else:
+                        name = "{}".format(val)
+                else:
+                    name = "{}".format(val)
             self.sample = P[name]
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
