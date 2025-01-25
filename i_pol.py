@@ -167,7 +167,8 @@ class ImpState:
                 add((m, PT.unit, Percent))
             else:
                 add((m, PT.unit, P.UnknowUnit))
-
+        if isinstance(value, float) and value.is_integer():
+            value = int(value)
         if name in ['ППП', 'ппп']:
             rel = PT.il  # ignition losses
             m = BNode()
@@ -188,6 +189,8 @@ class ImpState:
                 ovalue = degs(ovalue)
             if name in ['sku', 'номер']:
                 rel = SDO.sku
+                if isinstance(ovalue, float):
+                    ovalue=int(ovalue)
             finish()
             return
         else:
