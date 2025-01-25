@@ -1,6 +1,7 @@
 # import pandas as pd
 import xlrd
 from rdflib import Graph, Namespace, FOAF, XSD, RDF, RDFS, URIRef, Literal, BNode
+from rdflib.namespace import WGS, SDO
 import os.path
 import unicodedata
 from enum import Enum
@@ -19,6 +20,7 @@ EQUIPMENT_TYPE = "X-Ray fluorescence analysis"
 PT = Namespace('https://crust.irk.ru/ontology/pollution/terms/1.0/')
 P = Namespace('https://crust.irk.ru/ontology/pollution/1.0/')
 MT = Namespace('http://www.daml.org/2003/01/periodictable/PeriodicTable#')
+# GEO = Namespace('http://www.w3.org/2003/01/geo/wgs84_pos#')
 
 G = Graph(bind_namespaces="rdflib")
 GMT = Graph(bind_namespaces="rdflib")
@@ -52,6 +54,7 @@ for _ in GS:
     _.bind('pt', PT)
     _.bind('pi', P)
     _.bind('mt', MT)
+    # _.bind('geo', GEO)
 
 ElToIRI = {}
 GeoSample = PT.GeologicalSample
@@ -59,6 +62,10 @@ GeoMeasure = PT.Measurement
 samplerel = PT.sample
 PPM = PT.PPM
 Percent = PT.Percent
+SpatialThing = WGS.SpatialThing
+Long = WGS.long
+Lat = WGS.lat
+IngnitionLosses = PT.IngnitionLosses
 
 G.add((PT.PPM, RDFS.label, Literal('мг/кг', lang='ru')))
 G.add((PT.Percent, RDFS.label, Literal('Процент', lang='ru')))
@@ -151,23 +158,46 @@ class ImpState:
             d += s/3600.
             return d
 
-        if mo is None:
-            if name == 'с_ш':
-                rel = PT.lat
-                ovalue = degs(ovalue)
-            if name == 'в_д':
-                rel = PT.lon
-                ovalue = degs(ovalue)
-            finish()
+        def unit(m, rupper):
+            if 'PPM' in rupper:
+                add((m, PT.unit, PPM))
+            elif 'INT' in rupper:
+                add((m, PT.unit, P.Int))
+            elif '%' in fieldname:
+                add((m, PT.unit, Percent))
+            else:
+                add((m, PT.unit, P.UnknowUnit))
+
+        if name in ['ППП', 'ппп']:
+            rel = PT.il  # ignition losses
+            m = BNode()
+            add((self.sample, PT.measure, m))
+            add((m, PT.value, Literal(value)))
+            add((m, RDF.type, GeoMeasure))
+            add((m, RDF.type, IngnitionLosses))
+            u = name.upper()
+            unit(m, u)
             return
 
-        comp = mo.group(1)
-        rest = mo.group(3)
-        # print(name, comp, rest, mo.groups(), fieldname)
-        rc = COMPELRE.findall(comp)
-        el1 = rc[0]
-        el = ELRE.match(el1).group(1)
-        eliri = elem(el)
+        if mo is None:
+            if name == 'с_ш':
+                rel = Lat
+                ovalue = degs(ovalue)
+            if name == 'в_д':
+                rel = Long
+                ovalue = degs(ovalue)
+            if name in ['sku', 'номер']:
+                rel = SDO.sku
+            finish()
+            return
+        else:
+            comp = mo.group(1)
+            rest = mo.group(3)
+            # print(name, comp, rest, mo.groups(), fieldname)
+            rc = COMPELRE.findall(comp)
+            el1 = rc[0]
+            el = ELRE.match(el1).group(1)
+            eliri = elem(el)
 
         if eliri is None:  # This is not a compound
             finish()
@@ -194,19 +224,9 @@ class ImpState:
 
         rupper = rest.upper()
 
-        def unit(m):
-            if 'PPM' in rupper:
-                add((m, PT.unit, PPM))
-            elif 'INT' in rupper:
-                add((m, PT.unit, P.Int))
-            elif '%' in fieldname:
-                add((m, PT.unit, Percent))
-            else:
-                add((m, PT.unit, P.UnknowUnit))
-
         if dl is None:
             add((m, PT.value, Literal(value)))
-            unit(m)
+            unit(m, rupper)
 
         def finish_dl(e, m):
             if delim:
@@ -220,7 +240,7 @@ class ImpState:
                     md = make_detlim()
                     add((md, PT.value, Literal(value)))
                     add((md, RDF.type, GeoMeasure))
-                    unit(md)
+                    unit(md, rupper)
                     self.dlims[e] = md
                     add((m, PT.value, md))
 
@@ -356,6 +376,7 @@ class ImpState:
             self.sample = P[name]
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
+            add((self.sample, RDF.type, SpatialThing))
             self.belongs(self.sample)
         elif self.sample is not None:
             self.proc_comp((field+prt, fieldname+prt), cell.value)
