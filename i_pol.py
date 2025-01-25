@@ -17,8 +17,8 @@ TARGETMT = 'PeriodicTable.ttl'
 EQUIPMENT = "S8 Tiger"
 EQUIPMENT_TYPE = "X-Ray fluorescence analysis"
 
-PT = Namespace('https://crust.irk.ru/ontology/pollution/terms/1.0/')
-P = Namespace('https://crust.irk.ru/ontology/pollution/1.0/')
+PT = Namespace('http://crust.irk.ru/ontology/pollution/terms/1.0/')
+P = Namespace('http://crust.irk.ru/ontology/pollution/1.0/')
 MT = Namespace('http://www.daml.org/2003/01/periodictable/PeriodicTable#')
 # GEO = Namespace('http://www.w3.org/2003/01/geo/wgs84_pos#')
 
