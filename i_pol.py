@@ -287,6 +287,7 @@ class ImpState:
             self.belongs(uriloc, prev)
         add = self.g.add
         add((uriloc, RDFS.label, Literal(location, lang='ru')))
+        add((uriloc, RDF.type, GeoSite))
         self.locations.append(uriloc)
 
     def belongs(self, obj, location=None):
