@@ -470,6 +470,7 @@ if __name__ == "__main__":
     for file, comp in FILES.items():
         parse_xl(file, comp)
     with open(TARGET, "w") as o:
+        # TODO: Shift location to a BNode using SPARQL.
         o.write(G.serialize(format='turtle'))
     with open(TARGETMT, "w") as o:
         o.write(GMT.serialize(format='turtle'))
