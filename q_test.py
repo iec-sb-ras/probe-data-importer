@@ -1,8 +1,9 @@
-from SPARQLWrapper import SPARQLWrapper, POST
+from SPARQLWrapper import SPARQLWrapper, POST, JSON
 
 sparql = SPARQLWrapper("http://ktulhu.isclan.ru:8890/sparql")
 # sparql.setCredentials("some-login", "some-password") # if required
 sparql.setMethod(POST) # this is the crucial option
+sparql.setReturnFormat(JSON)
 
 sparql.setQuery("""
     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -13,4 +14,5 @@ sparql.setQuery("""
 )
 
 results = sparql.query()
-print(results.response.read().decode('utf-8'))
+# print(results.response.read().decode('utf-8'))
+results.print_results()

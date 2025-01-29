@@ -20,7 +20,6 @@ EQUIPMENT_TYPE = "X-Ray fluorescence analysis"
 PT = Namespace('http://crust.irk.ru/ontology/pollution/terms/1.0/')
 P = Namespace('http://crust.irk.ru/ontology/pollution/1.0/')
 MT = Namespace('http://www.daml.org/2003/01/periodictable/PeriodicTable#')
-# GEO = Namespace('http://www.w3.org/2003/01/geo/wgs84_pos#')
 
 G = Graph(bind_namespaces="rdflib")
 GMT = Graph(bind_namespaces="rdflib")
@@ -57,6 +56,7 @@ for _ in GS:
     # _.bind('geo', GEO)
 
 ElToIRI = {}
+GeoSite = PT.GelologicalSite
 GeoSample = PT.GeologicalSample
 GeoMeasure = PT.Measurement
 samplerel = PT.sample
@@ -112,7 +112,7 @@ class ImpState:
         self.prev_class = None
         self.cls = {}
         self.header = {}
-        self.dsiri = datasetIRI
+        self.dsiri = datasetIRI  # TODO: Add type GelologicalSite!!
         self.g = graph
         self.sample = None
         self.locations = []
@@ -440,10 +440,13 @@ FILES = {
         }
 
 
-def parse_sheet(sh, sheetIRI, comp):
+def parse_sheet(sh, sheetIRI, sheetName, comp):
     # print("Cell D30 is {0}".format(sh.cell_value(rowx=29, colx=3)))
     constr, locs = comp
     st = constr(G, sheetIRI, locations=locs)
+    G.add((sheetIRI, RDF.type, GeoSite))
+    sheetName = sheetName.replace('.xls_', ', ')
+    G.add((sheetIRI, RDFS.label, Literal(sheetName)))
     for rx in range(sh.nrows):
         st.r(sh.row(rx), rx)
 
@@ -459,7 +462,7 @@ def parse_xl(file, comp):
         sh = wb.sheet_by_name(sheet)
         sheetname = normURI(file+"_"+sheet)
         print("{0} {1} {2}".format(sh.name, sh.nrows, sh.ncols))
-        parse_sheet(sh, P[sheetname], comp)
+        parse_sheet(sh, P[sheetname], file+"_"+sheet, comp)
 
 
 if __name__ == "__main__":
