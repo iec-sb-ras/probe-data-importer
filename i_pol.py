@@ -9,6 +9,19 @@ import re
 import requests as rq
 from requests.auth import HTTPBasicAuth
 import base64
+import os
+
+try:
+    del os.environ["HTTP_PROXY"]
+    del os.environ["HTTPS_PROXY"]
+except KeyError:
+    pass
+try:
+    del os.environ["http_proxy"]
+    del os.environ["https_proxy"]
+except KeyError:
+    pass
+
 
 ONTODIR = "./iec/"
 SUBDIR = "./iec/pollutions/"
@@ -26,7 +39,7 @@ MT = Namespace('http://www.daml.org/2003/01/periodictable/PeriodicTable#')
 
 G = Graph(bind_namespaces="rdflib")
 GMT = Graph(bind_namespaces="rdflib")
-GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
+# GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
 GS = [G, GMT]
 
 COMPRE = re.compile(r'^(([A-Z][a-z]{,2}\d{,2})+)(.*?)$')
@@ -59,8 +72,8 @@ for _ in GS:
     # _.bind('geo', GEO)
 
 ElToIRI = {}
-GeoSite = PT.GelologicalSite
-GeoSample = PT.GeologicalSample
+GeoSite = PT.Site
+GeoSample = PT.Sample
 GeoMeasure = PT.Measurement
 samplerel = PT.sample
 PPM = PT.PPM
