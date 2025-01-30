@@ -466,11 +466,53 @@ def parse_xl(file, comp):
         parse_sheet(sh, P[sheetname], file+"_"+sheet, comp)
 
 
+def update(g):
+    # qres=g.query('''
+    # PREFIX pt: <http://crust.irk.ru/ontology/pollution/terms/1.0/>
+    # PREFIX p: <http://crust.irk.ru/ontology/pollution/1.0/>
+    # PREFIX mt: <http://www.daml.org/2003/01/periodictable/PeriodicTable#>
+    # PREFIX wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#>
+    # SELECT ?sample
+    # WHERE {
+    #     ?sample a pt:GeologicalSample .
+    #     ?sample wgs:long ?long .
+    #     ?sample wgs:lat ?lat .
+    # }
+    # ''')
+    # for row in qres:
+    #     print(row)
+
+    g.update('''
+    PREFIX pt: <http://crust.irk.ru/ontology/pollution/terms/1.0/>
+    PREFIX p: <http://crust.irk.ru/ontology/pollution/1.0/>
+    PREFIX mt: <http://www.daml.org/2003/01/periodictable/PeriodicTable#>
+    PREFIX wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#>
+    DELETE {
+        ?sample a wgs:SpatialThing .
+        ?sample wgs:long ?long .
+        ?sample wgs:lat ?lat .
+    }
+    INSERT {
+        ?sample wgs:location _:l .
+        _:l a wgs:Point .
+        _:l wgs:long ?long .
+        _:l wgs:lat ?lat .
+    }
+    WHERE {
+        ?sample a pt:GeologicalSample .
+        ?sample wgs:long ?long .
+        ?sample wgs:lat ?lat .
+    }
+    ''')
+
+
 if __name__ == "__main__":
     for file, comp in FILES.items():
         parse_xl(file, comp)
+    update(G)
     with open(TARGET, "w") as o:
         # TODO: Shift location to a BNode using SPARQL.
+        # o.write(G.serialize(format='turtle'))
         o.write(G.serialize(format='turtle'))
     with open(TARGETMT, "w") as o:
         o.write(GMT.serialize(format='turtle'))
