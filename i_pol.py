@@ -6,6 +6,9 @@ import os.path
 import unicodedata
 from enum import Enum
 import re
+import requests as rq
+from requests.auth import HTTPBasicAuth
+import base64
 
 ONTODIR = "./iec/"
 SUBDIR = "./iec/pollutions/"
@@ -506,14 +509,47 @@ def update(g):
     ''')
 
 
+PUTURL = "http://ktulhu.isclan.ru:8890/DAV/home/{user}/rdf_sink/{filename}"
+USER = base64.b64decode("bG9hZGVyCg==").decode('utf8').strip()
+CRED = base64.b64decode("bG9hZGVyMzEyCg==").decode('utf8').strip()
+
+def upload(filename):
+    with open(filename, "rb") as inp:
+        basic = HTTPBasicAuth(USER, CRED)
+        URL = PUTURL.format(user=USER, filename=filename)
+        print("URL:{}".format(URL))
+        # files = {"file": (filename, inp, "text/turtle")}
+        rc = rq.put(URL,
+                    # files=files,
+                    data=inp.read(),
+                    auth=basic
+                    )
+        print("RC:", rc)
+        return
+
+        sg = str(P.samples)
+        print("URL:", sg)
+        data={'new_name':sg,
+              'graph_name':'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl'},
+        files = {'new_name':(None, sg),
+                 'graph_name':(None, 'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl')
+                 }
+        rc = rq.post('http://ktulhu.isclan.ru:8890/conductor/graphs_page.vspx?page=1',
+                     files=files,
+                     # auth=basic
+                     )
+        print('RC:', rc)
+
 if __name__ == "__main__":
-    for file, comp in FILES.items():
-        parse_xl(file, comp)
-    update(G)
-    with open(TARGET, "w") as o:
-        # TODO: Shift location to a BNode using SPARQL.
-        # o.write(G.serialize(format='turtle'))
-        o.write(G.serialize(format='turtle'))
+    if 0:
+        for file, comp in FILES.items():
+            parse_xl(file, comp)
+            update(G)
+        with open(TARGET, "w") as o:
+            # TODO: Shift location to a BNode using SPARQL.
+            # o.write(G.serialize(format='turtle'))
+            o.write(G.serialize(format='turtle'))
+    upload(TARGET)
     with open(TARGETMT, "w") as o:
         o.write(GMT.serialize(format='turtle'))
     print("#!INFO: Normal exit")
