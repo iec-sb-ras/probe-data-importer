@@ -6,7 +6,7 @@
 @prefix wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-pi:Данные_Харанцы_Ольхон_xls_Лист1 a pt:GelologicalSite ;
+pi:Данные_Харанцы_Ольхон_xls_Лист1 a pt:Site ;
     rdfs:label "Данные Харанцы Ольхон, Лист1" ;
     pt:sample pi:AGS-0084,
         pi:AGS-0085,
@@ -35,7 +35,7 @@ pi:Данные_Харанцы_Ольхон_xls_Лист1 a pt:GelologicalSite ;
         pi:AGS-0109,
         pi:AGS-0110 .
 
-pi:Данные_Хужир_Ольхон_xls_Лист1 a pt:GelologicalSite ;
+pi:Данные_Хужир_Ольхон_xls_Лист1 a pt:Site ;
     rdfs:label "Данные Хужир Ольхон, Лист1" ;
     pt:detectionLimit _:N2640430e4c5a494e97aabb2acdfd7c48,
         _:N3fbd40a6231243608dda6a64f1512760,
@@ -90,7 +90,7 @@ pi:Данные_Хужир_Ольхон_xls_Лист1 a pt:GelologicalSite ;
         pi:UGS-0270,
         pi:UGW-0264 .
 
-pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист1 a pt:GelologicalSite ;
+pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист1 a pt:Site ;
     rdfs:label "Данные бар Ярки Сев Байкал, Лист1" ;
     pt:sample pi:CHK-1-TOT,
         pi:CHK-2-TOT,
@@ -130,7 +130,7 @@ pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист1 a pt:Gelologic
         pi:YO-3-100,
         pi:YO-3-TOT .
 
-pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист2 a pt:GelologicalSite ;
+pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист2 a pt:Site ;
     rdfs:label "Данные бар Ярки Сев Байкал, Лист2" ;
     pt:sample pi:YM-1-1-100,
         pi:YM-1-1-TOT,
@@ -157,7 +157,7 @@ pi:Данные_бар_Ярки_Сев_Байкал_xls_Лист2 a pt:Gelologic
         pi:YO-3-100,
         pi:YO-3-TOT .
 
-pi:Сводная_таблица_РФА_2022_Усть_Кут_xls_Лист1 a pt:GelologicalSite ;
+pi:Сводная_таблица_РФА_2022_Усть_Кут_xls_Лист1 a pt:Site ;
     rdfs:label "Сводная таблица РФА-2022 Усть-Кут, Лист1" ;
     pt:detectionLimit _:N059dcf32618e456abcfb44f826425cca,
         _:N142285be3424437d905d0f31507df57c,
@@ -236,7 +236,7 @@ pi:Сводная_таблица_РФА_2022_Усть_Кут_xls_Лист1 a pt:
         pi:2239,
         pi:Спред\(detectionlimit\) .
 
-pi:Сводная_таблица_РФА_Бураевская_площадь_70_2024_xls_Лист1 a pt:GelologicalSite ;
+pi:Сводная_таблица_РФА_Бураевская_площадь_70_2024_xls_Лист1 a pt:Site ;
     rdfs:label "Сводная таблица РФА_Бураевская площадь № 70-2024, Лист1" ;
     pt:detectionLimit _:N133441745ee544b8abfc31be9bafa0e5,
         [ a pt:DetectionLimit ;
@@ -375,7 +375,7 @@ pi:Сводная_таблица_РФА_Бураевская_площадь_70_2
         pi:2462-1,
         pi:2464-1 .
 
-pi:2202 a pt:GeologicalSample,
+pi:2202 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -437,7 +437,7 @@ pi:2202 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku 1 .
 
-pi:2203 a pt:GeologicalSample,
+pi:2203 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -499,7 +499,7 @@ pi:2203 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 2 .
 
-pi:2204 a pt:GeologicalSample,
+pi:2204 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -561,7 +561,7 @@ pi:2204 a pt:GeologicalSample,
             mt:element mt:Nd ] ;
     schema:sku 3 .
 
-pi:2205 a pt:GeologicalSample,
+pi:2205 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -623,7 +623,7 @@ pi:2205 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku 4 .
 
-pi:2206 a pt:GeologicalSample,
+pi:2206 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -685,7 +685,7 @@ pi:2206 a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku 5 .
 
-pi:2207 a pt:GeologicalSample,
+pi:2207 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -747,7 +747,7 @@ pi:2207 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 6 .
 
-pi:2208 a pt:GeologicalSample,
+pi:2208 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -809,7 +809,7 @@ pi:2208 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 7 .
 
-pi:2209 a pt:GeologicalSample,
+pi:2209 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -871,7 +871,7 @@ pi:2209 a pt:GeologicalSample,
             mt:element mt:Ni ] ;
     schema:sku 8 .
 
-pi:2210 a pt:GeologicalSample,
+pi:2210 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -933,7 +933,7 @@ pi:2210 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 9 .
 
-pi:22104 a pt:GeologicalSample,
+pi:22104 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -995,7 +995,7 @@ pi:22104 a pt:GeologicalSample,
             mt:element mt:S ] ;
     schema:sku 39 .
 
-pi:22105 a pt:GeologicalSample,
+pi:22105 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1056,7 +1056,7 @@ pi:22105 a pt:GeologicalSample,
             mt:element mt:Br ] ;
     schema:sku 40 .
 
-pi:22106 a pt:GeologicalSample,
+pi:22106 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1117,7 +1117,7 @@ pi:22106 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 41 .
 
-pi:22107 a pt:GeologicalSample,
+pi:22107 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1179,7 +1179,7 @@ pi:22107 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 42 .
 
-pi:22108 a pt:GeologicalSample,
+pi:22108 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1241,7 +1241,7 @@ pi:22108 a pt:GeologicalSample,
             mt:element mt:Br ] ;
     schema:sku 43 .
 
-pi:22109 a pt:GeologicalSample,
+pi:22109 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1303,7 +1303,7 @@ pi:22109 a pt:GeologicalSample,
             mt:element mt:S ] ;
     schema:sku 44 .
 
-pi:2211 a pt:GeologicalSample,
+pi:2211 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1364,7 +1364,7 @@ pi:2211 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku 10 .
 
-pi:22110 a pt:GeologicalSample,
+pi:22110 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1484,7 +1484,7 @@ pi:22110 a pt:GeologicalSample,
     schema:sku 45,
         46 .
 
-pi:22111_Д1 a pt:GeologicalSample,
+pi:22111_Д1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1546,7 +1546,7 @@ pi:22111_Д1 a pt:GeologicalSample,
             mt:element mt:Ni ] ;
     schema:sku 47 .
 
-pi:22111_Д2 a pt:GeologicalSample,
+pi:22111_Д2 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1608,7 +1608,7 @@ pi:22111_Д2 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 48 .
 
-pi:22112 a pt:GeologicalSample,
+pi:22112 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1669,7 +1669,7 @@ pi:22112 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 49 .
 
-pi:22113 a pt:GeologicalSample,
+pi:22113 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1731,7 +1731,7 @@ pi:22113 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 50 .
 
-pi:22114 a pt:GeologicalSample,
+pi:22114 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1793,7 +1793,7 @@ pi:22114 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku 51 .
 
-pi:22115 a pt:GeologicalSample,
+pi:22115 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1911,7 +1911,7 @@ pi:22115 a pt:GeologicalSample,
     schema:sku 52,
         53 .
 
-pi:22116 a pt:GeologicalSample,
+pi:22116 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -1970,7 +1970,7 @@ pi:22116 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku 54 .
 
-pi:22117 a pt:GeologicalSample,
+pi:22117 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2029,7 +2029,7 @@ pi:22117 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 55 .
 
-pi:22118 a pt:GeologicalSample,
+pi:22118 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2089,7 +2089,7 @@ pi:22118 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku 56 .
 
-pi:22119 a pt:GeologicalSample,
+pi:22119 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2147,7 +2147,7 @@ pi:22119 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 57 .
 
-pi:2212 a pt:GeologicalSample,
+pi:2212 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2209,7 +2209,7 @@ pi:2212 a pt:GeologicalSample,
             mt:element mt:S ] ;
     schema:sku 11 .
 
-pi:22120 a pt:GeologicalSample,
+pi:22120 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2270,7 +2270,7 @@ pi:22120 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku 58 .
 
-pi:22121 a pt:GeologicalSample,
+pi:22121 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2331,7 +2331,7 @@ pi:22121 a pt:GeologicalSample,
             mt:element mt:S ] ;
     schema:sku 59 .
 
-pi:22122 a pt:GeologicalSample,
+pi:22122 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2392,7 +2392,7 @@ pi:22122 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku 60 .
 
-pi:22123 a pt:GeologicalSample,
+pi:22123 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2453,7 +2453,7 @@ pi:22123 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 61 .
 
-pi:22124 a pt:GeologicalSample,
+pi:22124 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2514,7 +2514,7 @@ pi:22124 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 62 .
 
-pi:22125 a pt:GeologicalSample,
+pi:22125 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2576,7 +2576,7 @@ pi:22125 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 63 .
 
-pi:22126 a pt:GeologicalSample,
+pi:22126 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2638,7 +2638,7 @@ pi:22126 a pt:GeologicalSample,
             mt:element mt:Br ] ;
     schema:sku 64 .
 
-pi:22127 a pt:GeologicalSample,
+pi:22127 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2700,7 +2700,7 @@ pi:22127 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 65 .
 
-pi:22128 a pt:GeologicalSample,
+pi:22128 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2762,7 +2762,7 @@ pi:22128 a pt:GeologicalSample,
             mt:element mt:Br ] ;
     schema:sku 66 .
 
-pi:22129 a pt:GeologicalSample,
+pi:22129 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2823,7 +2823,7 @@ pi:22129 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 67 .
 
-pi:2213 a pt:GeologicalSample,
+pi:2213 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2885,7 +2885,7 @@ pi:2213 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 12 .
 
-pi:22130 a pt:GeologicalSample,
+pi:22130 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -2946,7 +2946,7 @@ pi:22130 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku 68 .
 
-pi:22131 a pt:GeologicalSample,
+pi:22131 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3002,7 +3002,7 @@ pi:22131 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 69 .
 
-pi:22132 a pt:GeologicalSample,
+pi:22132 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3061,7 +3061,7 @@ pi:22132 a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku 70 .
 
-pi:2214 a pt:GeologicalSample,
+pi:2214 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3123,7 +3123,7 @@ pi:2214 a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku 13 .
 
-pi:2215 a pt:GeologicalSample,
+pi:2215 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3185,7 +3185,7 @@ pi:2215 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 14 .
 
-pi:2216 a pt:GeologicalSample,
+pi:2216 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3247,7 +3247,7 @@ pi:2216 a pt:GeologicalSample,
             mt:element mt:Ni ] ;
     schema:sku 15 .
 
-pi:2217 a pt:GeologicalSample,
+pi:2217 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3309,7 +3309,7 @@ pi:2217 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku 16 .
 
-pi:2218 a pt:GeologicalSample,
+pi:2218 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3371,7 +3371,7 @@ pi:2218 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku 17 .
 
-pi:2219 a pt:GeologicalSample,
+pi:2219 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3433,7 +3433,7 @@ pi:2219 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 18 .
 
-pi:2220 a pt:GeologicalSample,
+pi:2220 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3495,7 +3495,7 @@ pi:2220 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 19 .
 
-pi:2221 a pt:GeologicalSample,
+pi:2221 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3557,7 +3557,7 @@ pi:2221 a pt:GeologicalSample,
             mt:element mt:S ] ;
     schema:sku 20 .
 
-pi:2222 a pt:GeologicalSample,
+pi:2222 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3619,7 +3619,7 @@ pi:2222 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku 21 .
 
-pi:2223 a pt:GeologicalSample,
+pi:2223 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3681,7 +3681,7 @@ pi:2223 a pt:GeologicalSample,
             mt:element mt:Ni ] ;
     schema:sku 22 .
 
-pi:2224 a pt:GeologicalSample,
+pi:2224 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3743,7 +3743,7 @@ pi:2224 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 23 .
 
-pi:2225 a pt:GeologicalSample,
+pi:2225 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3805,7 +3805,7 @@ pi:2225 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 24 .
 
-pi:2226 a pt:GeologicalSample,
+pi:2226 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3867,7 +3867,7 @@ pi:2226 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 25 .
 
-pi:2227 a pt:GeologicalSample,
+pi:2227 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3929,7 +3929,7 @@ pi:2227 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 26 .
 
-pi:2228 a pt:GeologicalSample,
+pi:2228 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -3990,7 +3990,7 @@ pi:2228 a pt:GeologicalSample,
             mt:element mt:Cu ] ;
     schema:sku 27 .
 
-pi:2229 a pt:GeologicalSample,
+pi:2229 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -4051,7 +4051,7 @@ pi:2229 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku 28 .
 
-pi:2230 a pt:GeologicalSample,
+pi:2230 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -4113,7 +4113,7 @@ pi:2230 a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku 29 .
 
-pi:2231 a pt:GeologicalSample,
+pi:2231 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -4175,7 +4175,7 @@ pi:2231 a pt:GeologicalSample,
             mt:element mt:Nd ] ;
     schema:sku 30 .
 
-pi:2232 a pt:GeologicalSample,
+pi:2232 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Турука ;
     pt:measure [ a pt:Measurement ;
@@ -4237,7 +4237,7 @@ pi:2232 a pt:GeologicalSample,
             mt:element mt:Cl ] ;
     schema:sku 31 .
 
-pi:2233 a pt:GeologicalSample,
+pi:2233 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Кутский ;
     pt:measure [ a pt:Measurement ;
@@ -4298,7 +4298,7 @@ pi:2233 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 32 .
 
-pi:2234 a pt:GeologicalSample,
+pi:2234 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Кутский ;
     pt:measure [ a pt:Measurement ;
@@ -4359,7 +4359,7 @@ pi:2234 a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku 33 .
 
-pi:2235 a pt:GeologicalSample,
+pi:2235 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Кутский ;
     pt:measure [ a pt:Measurement ;
@@ -4420,7 +4420,7 @@ pi:2235 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 34 .
 
-pi:2236 a pt:GeologicalSample,
+pi:2236 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Кутский ;
     pt:measure [ a pt:Measurement ;
@@ -4481,7 +4481,7 @@ pi:2236 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku 35 .
 
-pi:2237 a pt:GeologicalSample,
+pi:2237 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Кутский ;
     pt:measure [ a pt:Measurement ;
@@ -4541,7 +4541,7 @@ pi:2237 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku 36 .
 
-pi:2238 a pt:GeologicalSample,
+pi:2238 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Кутский ;
     pt:measure [ a pt:Measurement ;
@@ -4603,7 +4603,7 @@ pi:2238 a pt:GeologicalSample,
             mt:element mt:Nd ] ;
     schema:sku 37 .
 
-pi:2239 a pt:GeologicalSample,
+pi:2239 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Кутский ;
     pt:measure [ a pt:Measurement ;
@@ -4664,7 +4664,7 @@ pi:2239 a pt:GeologicalSample,
             mt:element mt:Cl ] ;
     schema:sku 38 .
 
-pi:2401 a pt:GeologicalSample,
+pi:2401 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -4792,7 +4792,7 @@ pi:2401 a pt:GeologicalSample,
             mt:element mt:Zr ] ;
     schema:sku "P1" .
 
-pi:2402 a pt:GeologicalSample,
+pi:2402 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -4925,7 +4925,7 @@ pi:2402 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku "P2" .
 
-pi:2402-1 a pt:GeologicalSample,
+pi:2402-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -5056,7 +5056,7 @@ pi:2402-1 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku "P3" .
 
-pi:2403-1 a pt:GeologicalSample,
+pi:2403-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:IgnitionLosses,
@@ -5187,7 +5187,7 @@ pi:2403-1 a pt:GeologicalSample,
             pt:value 5.56e+00 ] ;
     schema:sku "P4" .
 
-pi:2403-2-1 a pt:GeologicalSample,
+pi:2403-2-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -5309,7 +5309,7 @@ pi:2403-2-1 a pt:GeologicalSample,
             pt:value 1.45e-01 ] ;
     schema:sku "P5" .
 
-pi:2403-2-2 a pt:GeologicalSample,
+pi:2403-2-2 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -5434,7 +5434,7 @@ pi:2403-2-2 a pt:GeologicalSample,
             pt:value 8.28e-01 ] ;
     schema:sku "P6" .
 
-pi:2403-2-3 a pt:GeologicalSample,
+pi:2403-2-3 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -5564,7 +5564,7 @@ pi:2403-2-3 a pt:GeologicalSample,
             mt:element mt:Ni ] ;
     schema:sku "P7" .
 
-pi:2403-2-4 a pt:GeologicalSample,
+pi:2403-2-4 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -5685,7 +5685,7 @@ pi:2403-2-4 a pt:GeologicalSample,
             pt:value 1e-02 ] ;
     schema:sku "P8" .
 
-pi:2403-2-5 a pt:GeologicalSample,
+pi:2403-2-5 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -5806,7 +5806,7 @@ pi:2403-2-5 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku "P9" .
 
-pi:2403-2-6 a pt:GeologicalSample,
+pi:2403-2-6 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -5935,7 +5935,7 @@ pi:2403-2-6 a pt:GeologicalSample,
             mt:element mt:Nd ] ;
     schema:sku "P10" .
 
-pi:2403-2-7 a pt:GeologicalSample,
+pi:2403-2-7 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6057,7 +6057,7 @@ pi:2403-2-7 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku "P11" .
 
-pi:2403-2-8 a pt:GeologicalSample,
+pi:2403-2-8 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6179,7 +6179,7 @@ pi:2403-2-8 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku "P12" .
 
-pi:2403-2-9 a pt:GeologicalSample,
+pi:2403-2-9 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6306,7 +6306,7 @@ pi:2403-2-9 a pt:GeologicalSample,
             mt:element mt:S ] ;
     schema:sku "P13" .
 
-pi:2403-3 a pt:GeologicalSample,
+pi:2403-3 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6436,7 +6436,7 @@ pi:2403-3 a pt:GeologicalSample,
             pt:value 2.396e+00 ] ;
     schema:sku "P14" .
 
-pi:2403-4 a pt:GeologicalSample,
+pi:2403-4 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6566,7 +6566,7 @@ pi:2403-4 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku "P15" .
 
-pi:2403-5 a pt:GeologicalSample,
+pi:2403-5 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6696,7 +6696,7 @@ pi:2403-5 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku "P16" .
 
-pi:2403-6 a pt:GeologicalSample,
+pi:2403-6 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6826,7 +6826,7 @@ pi:2403-6 a pt:GeologicalSample,
             pt:value 3.71e+00 ] ;
     schema:sku "P17" .
 
-pi:2403-7 a pt:GeologicalSample,
+pi:2403-7 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -6956,7 +6956,7 @@ pi:2403-7 a pt:GeologicalSample,
             pt:value 3.3e-02 ] ;
     schema:sku "P18" .
 
-pi:2404-1 a pt:GeologicalSample,
+pi:2404-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -7088,7 +7088,7 @@ pi:2404-1 a pt:GeologicalSample,
             mt:element mt:Cl ] ;
     schema:sku "P19" .
 
-pi:2404-10 a pt:GeologicalSample,
+pi:2404-10 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -7219,7 +7219,7 @@ pi:2404-10 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku "P26" .
 
-pi:2404-2 a pt:GeologicalSample,
+pi:2404-2 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -7350,7 +7350,7 @@ pi:2404-2 a pt:GeologicalSample,
             mt:element mt:S ] ;
     schema:sku "P20" .
 
-pi:2404-3 a pt:GeologicalSample,
+pi:2404-3 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -7482,7 +7482,7 @@ pi:2404-3 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku "P21" .
 
-pi:2404-4 a pt:GeologicalSample,
+pi:2404-4 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -7612,7 +7612,7 @@ pi:2404-4 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku "P22" .
 
-pi:2404-5 a pt:GeologicalSample,
+pi:2404-5 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -7744,7 +7744,7 @@ pi:2404-5 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku "P23" .
 
-pi:2404-8 a pt:GeologicalSample,
+pi:2404-8 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -7875,7 +7875,7 @@ pi:2404-8 a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku "P24" .
 
-pi:2404-9 a pt:GeologicalSample,
+pi:2404-9 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Хужир_мр ;
     pt:measure [ a pt:Measurement ;
@@ -8005,7 +8005,7 @@ pi:2404-9 a pt:GeologicalSample,
             mt:element mt:Sb ] ;
     schema:sku "P25" .
 
-pi:2411 a pt:GeologicalSample,
+pi:2411 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -8141,7 +8141,7 @@ pi:2411 a pt:GeologicalSample,
             pt:value 1.4e-01 ] ;
     schema:sku "P62" .
 
-pi:2412 a pt:GeologicalSample,
+pi:2412 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -8276,7 +8276,7 @@ pi:2412 a pt:GeologicalSample,
             pt:value 4.88e-01 ] ;
     schema:sku "P63" .
 
-pi:2413 a pt:GeologicalSample,
+pi:2413 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -8411,7 +8411,7 @@ pi:2413 a pt:GeologicalSample,
             mt:element mt:Rb ] ;
     schema:sku "P64" .
 
-pi:2414 a pt:GeologicalSample,
+pi:2414 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -8545,7 +8545,7 @@ pi:2414 a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku "P65" .
 
-pi:2415 a pt:GeologicalSample,
+pi:2415 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -8680,7 +8680,7 @@ pi:2415 a pt:GeologicalSample,
             mt:element mt:Cu ] ;
     schema:sku "P66" .
 
-pi:2416 a pt:GeologicalSample,
+pi:2416 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -8815,7 +8815,7 @@ pi:2416 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku "P67" .
 
-pi:2417 a pt:GeologicalSample,
+pi:2417 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -8949,7 +8949,7 @@ pi:2417 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku "P68" .
 
-pi:2418 a pt:GeologicalSample,
+pi:2418 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -9083,7 +9083,7 @@ pi:2418 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku "P69" .
 
-pi:2420 a pt:GeologicalSample,
+pi:2420 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -9218,7 +9218,7 @@ pi:2420 a pt:GeologicalSample,
             pt:value 2.513e+00 ] ;
     schema:sku "P27" .
 
-pi:2421 a pt:GeologicalSample,
+pi:2421 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -9349,7 +9349,7 @@ pi:2421 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku "P28" .
 
-pi:2422 a pt:GeologicalSample,
+pi:2422 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:IgnitionLosses,
@@ -9480,7 +9480,7 @@ pi:2422 a pt:GeologicalSample,
             pt:value 1.019e+00 ] ;
     schema:sku "P29" .
 
-pi:2423 a pt:GeologicalSample,
+pi:2423 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -9612,7 +9612,7 @@ pi:2423 a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku "P30" .
 
-pi:2424 a pt:GeologicalSample,
+pi:2424 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -9746,7 +9746,7 @@ pi:2424 a pt:GeologicalSample,
             mt:element mt:Rb ] ;
     schema:sku "P31" .
 
-pi:2425 a pt:GeologicalSample,
+pi:2425 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Грязнушка ;
     pt:measure [ a pt:Measurement ;
@@ -9877,7 +9877,7 @@ pi:2425 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku "P32" .
 
-pi:2426 a pt:GeologicalSample,
+pi:2426 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Грязнушка ;
     pt:measure [ a pt:Measurement ;
@@ -10005,7 +10005,7 @@ pi:2426 a pt:GeologicalSample,
             pt:value 2.092e+01 ] ;
     schema:sku "P33" .
 
-pi:2427 a pt:GeologicalSample,
+pi:2427 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -10135,7 +10135,7 @@ pi:2427 a pt:GeologicalSample,
             pt:value 1.3101e+01 ] ;
     schema:sku "P34" .
 
-pi:2428 a pt:GeologicalSample,
+pi:2428 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Дундай ;
     pt:measure [ a pt:Measurement ;
@@ -10272,7 +10272,7 @@ pi:2428 a pt:GeologicalSample,
             pt:value 3.658e+00 ] ;
     schema:sku "P70" .
 
-pi:2429 a pt:GeologicalSample,
+pi:2429 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -10407,7 +10407,7 @@ pi:2429 a pt:GeologicalSample,
             mt:element mt:Rb ] ;
     schema:sku "P35" .
 
-pi:2430 a pt:GeologicalSample,
+pi:2430 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -10543,7 +10543,7 @@ pi:2430 a pt:GeologicalSample,
             mt:element mt:Cl ] ;
     schema:sku "P36" .
 
-pi:2431 a pt:GeologicalSample,
+pi:2431 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -10675,7 +10675,7 @@ pi:2431 a pt:GeologicalSample,
             mt:element mt:Cu ] ;
     schema:sku "P37" .
 
-pi:2432 a pt:GeologicalSample,
+pi:2432 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -10807,7 +10807,7 @@ pi:2432 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku "P38" .
 
-pi:2433 a pt:GeologicalSample,
+pi:2433 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -10941,7 +10941,7 @@ pi:2433 a pt:GeologicalSample,
             mt:element mt:Zr ] ;
     schema:sku "P39" .
 
-pi:2434 a pt:GeologicalSample,
+pi:2434 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -11071,7 +11071,7 @@ pi:2434 a pt:GeologicalSample,
             pt:value 8.12e-01 ] ;
     schema:sku "P40" .
 
-pi:2435 a pt:GeologicalSample,
+pi:2435 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Муринский ;
     pt:measure [ a pt:Measurement ;
@@ -11201,7 +11201,7 @@ pi:2435 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku "P41" .
 
-pi:2440-1 a pt:GeologicalSample,
+pi:2440-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -11325,7 +11325,7 @@ pi:2440-1 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku "P42" .
 
-pi:2441-1 a pt:GeologicalSample,
+pi:2441-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -11447,7 +11447,7 @@ pi:2441-1 a pt:GeologicalSample,
             mt:element mt:Nb ] ;
     schema:sku "P43" .
 
-pi:2442-1 a pt:GeologicalSample,
+pi:2442-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -11570,7 +11570,7 @@ pi:2442-1 a pt:GeologicalSample,
             mt:element mt:Zr ] ;
     schema:sku "P44" .
 
-pi:2443-1 a pt:GeologicalSample,
+pi:2443-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -11696,7 +11696,7 @@ pi:2443-1 a pt:GeologicalSample,
             pt:value 1.3e-01 ] ;
     schema:sku "P45" .
 
-pi:2444-1 a pt:GeologicalSample,
+pi:2444-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -11821,7 +11821,7 @@ pi:2444-1 a pt:GeologicalSample,
             mt:element mt:Cl ] ;
     schema:sku "P46" .
 
-pi:2451-1 a pt:GeologicalSample,
+pi:2451-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -11946,7 +11946,7 @@ pi:2451-1 a pt:GeologicalSample,
             mt:element mt:Sr ] ;
     schema:sku "P47" .
 
-pi:2452-1 a pt:GeologicalSample,
+pi:2452-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -12070,7 +12070,7 @@ pi:2452-1 a pt:GeologicalSample,
             mt:element mt:Ni ] ;
     schema:sku "P48" .
 
-pi:2453-1 a pt:GeologicalSample,
+pi:2453-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -12192,7 +12192,7 @@ pi:2453-1 a pt:GeologicalSample,
             mt:element mt:Ce ] ;
     schema:sku "P49" .
 
-pi:2454-1 a pt:GeologicalSample,
+pi:2454-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:IgnitionLosses,
@@ -12314,7 +12314,7 @@ pi:2454-1 a pt:GeologicalSample,
             mt:element mt:Cu ] ;
     schema:sku "P50" .
 
-pi:2455-1 a pt:GeologicalSample,
+pi:2455-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -12437,7 +12437,7 @@ pi:2455-1 a pt:GeologicalSample,
             mt:element mt:Sb ] ;
     schema:sku "P51" .
 
-pi:2455-2 a pt:GeologicalSample,
+pi:2455-2 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -12560,7 +12560,7 @@ pi:2455-2 a pt:GeologicalSample,
             mt:element mt:Ba ] ;
     schema:sku "P52" .
 
-pi:2455-3 a pt:GeologicalSample,
+pi:2455-3 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -12685,7 +12685,7 @@ pi:2455-3 a pt:GeologicalSample,
             pt:value 3.2e-02 ] ;
     schema:sku "P53" .
 
-pi:2455-4 a pt:GeologicalSample,
+pi:2455-4 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -12809,7 +12809,7 @@ pi:2455-4 a pt:GeologicalSample,
             pt:value 7.24e+00 ] ;
     schema:sku "P54" .
 
-pi:2455-5 a pt:GeologicalSample,
+pi:2455-5 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -12934,7 +12934,7 @@ pi:2455-5 a pt:GeologicalSample,
             pt:value 3.573e+01 ] ;
     schema:sku "P55" .
 
-pi:2455-6 a pt:GeologicalSample,
+pi:2455-6 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -13059,7 +13059,7 @@ pi:2455-6 a pt:GeologicalSample,
             pt:value 1.491e+00 ] ;
     schema:sku "P56" .
 
-pi:2455-7 a pt:GeologicalSample,
+pi:2455-7 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -13182,7 +13182,7 @@ pi:2455-7 a pt:GeologicalSample,
             mt:element mt:Zn ] ;
     schema:sku "P57" .
 
-pi:2460-1 a pt:GeologicalSample,
+pi:2460-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -13306,7 +13306,7 @@ pi:2460-1 a pt:GeologicalSample,
             mt:element mt:La ] ;
     schema:sku "P58" .
 
-pi:2461-1 a pt:GeologicalSample,
+pi:2461-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -13432,7 +13432,7 @@ pi:2461-1 a pt:GeologicalSample,
             pt:value _:Nc3f88a1f4d014c708c690732ec8f56ce ] ;
     schema:sku "P59" .
 
-pi:2462-1 a pt:GeologicalSample,
+pi:2462-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -13558,7 +13558,7 @@ pi:2462-1 a pt:GeologicalSample,
             mt:element mt:Nd ] ;
     schema:sku "P60" .
 
-pi:2464-1 a pt:GeologicalSample,
+pi:2464-1 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ивановский ;
     pt:measure [ a pt:Measurement ;
@@ -13681,7 +13681,7 @@ pi:2464-1 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku "P61" .
 
-pi:AGS-0084 a pt:GeologicalSample ;
+pi:AGS-0084 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -13827,7 +13827,7 @@ pi:AGS-0084 a pt:GeologicalSample ;
             wgs:lat 5.321207e+01 ;
             wgs:long 1.074254e+02 ] .
 
-pi:AGS-0085 a pt:GeologicalSample ;
+pi:AGS-0085 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -13973,7 +13973,7 @@ pi:AGS-0085 a pt:GeologicalSample ;
             wgs:lat 5.32161e+01 ;
             wgs:long 1.074481e+02 ] .
 
-pi:AGS-0086 a pt:GeologicalSample ;
+pi:AGS-0086 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:Percent ;
@@ -14115,7 +14115,7 @@ pi:AGS-0086 a pt:GeologicalSample ;
             wgs:lat 5.320619e+01 ;
             wgs:long 1.074924e+02 ] .
 
-pi:AGS-0087 a pt:GeologicalSample ;
+pi:AGS-0087 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -14261,7 +14261,7 @@ pi:AGS-0087 a pt:GeologicalSample ;
             wgs:lat 5.320651e+01 ;
             wgs:long 1.074775e+02 ] .
 
-pi:AGS-0088 a pt:GeologicalSample ;
+pi:AGS-0088 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:Percent ;
@@ -14407,7 +14407,7 @@ pi:AGS-0088 a pt:GeologicalSample ;
             wgs:lat 5.319784e+01 ;
             wgs:long 1.07462e+02 ] .
 
-pi:AGS-0089 a pt:GeologicalSample ;
+pi:AGS-0089 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -14553,7 +14553,7 @@ pi:AGS-0089 a pt:GeologicalSample ;
             wgs:lat 5.31935e+01 ;
             wgs:long 1.074543e+02 ] .
 
-pi:AGS-0090 a pt:GeologicalSample ;
+pi:AGS-0090 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:Percent ;
@@ -14699,7 +14699,7 @@ pi:AGS-0090 a pt:GeologicalSample ;
             wgs:lat 5.318886e+01 ;
             wgs:long 1.074615e+02 ] .
 
-pi:AGS-0091 a pt:GeologicalSample ;
+pi:AGS-0091 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -14845,7 +14845,7 @@ pi:AGS-0091 a pt:GeologicalSample ;
             wgs:lat 5.318452e+01 ;
             wgs:long 1.074538e+02 ] .
 
-pi:AGS-0092 a pt:GeologicalSample ;
+pi:AGS-0092 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -14991,7 +14991,7 @@ pi:AGS-0092 a pt:GeologicalSample ;
             wgs:lat 5.317988e+01 ;
             wgs:long 1.07461e+02 ] .
 
-pi:AGS-0093 a pt:GeologicalSample ;
+pi:AGS-0093 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -15137,7 +15137,7 @@ pi:AGS-0093 a pt:GeologicalSample ;
             wgs:lat 5.317988e+01 ;
             wgs:long 1.07461e+02 ] .
 
-pi:AGS-0094 a pt:GeologicalSample ;
+pi:AGS-0094 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -15283,7 +15283,7 @@ pi:AGS-0094 a pt:GeologicalSample ;
             wgs:lat 5.319381e+01 ;
             wgs:long 1.074393e+02 ] .
 
-pi:AGS-0095 a pt:GeologicalSample ;
+pi:AGS-0095 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -15429,7 +15429,7 @@ pi:AGS-0095 a pt:GeologicalSample ;
             wgs:lat 5.319845e+01 ;
             wgs:long 1.074321e+02 ] .
 
-pi:AGS-0096 a pt:GeologicalSample ;
+pi:AGS-0096 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -15575,7 +15575,7 @@ pi:AGS-0096 a pt:GeologicalSample ;
             wgs:lat 5.321439e+01 ;
             wgs:long 1.074218e+02 ] .
 
-pi:AGS-0097 a pt:GeologicalSample ;
+pi:AGS-0097 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:Percent ;
@@ -15721,7 +15721,7 @@ pi:AGS-0097 a pt:GeologicalSample ;
             wgs:lat 5.321207e+01 ;
             wgs:long 1.074254e+02 ] .
 
-pi:AGS-0098 a pt:GeologicalSample ;
+pi:AGS-0098 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -15867,7 +15867,7 @@ pi:AGS-0098 a pt:GeologicalSample ;
             wgs:lat 5.320217e+01 ;
             wgs:long 1.074697e+02 ] .
 
-pi:AGS-0099 a pt:GeologicalSample ;
+pi:AGS-0099 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -16013,7 +16013,7 @@ pi:AGS-0099 a pt:GeologicalSample ;
             wgs:lat 5.320681e+01 ;
             wgs:long 1.074625e+02 ] .
 
-pi:AGS-0100 a pt:GeologicalSample ;
+pi:AGS-0100 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -16159,7 +16159,7 @@ pi:AGS-0100 a pt:GeologicalSample ;
             wgs:lat 5.320712e+01 ;
             wgs:long 1.074476e+02 ] .
 
-pi:AGS-0101 a pt:GeologicalSample ;
+pi:AGS-0101 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:Percent ;
@@ -16305,7 +16305,7 @@ pi:AGS-0101 a pt:GeologicalSample ;
             wgs:lat 5.321176e+01 ;
             wgs:long 1.074403e+02 ] .
 
-pi:AGS-0102 a pt:GeologicalSample ;
+pi:AGS-0102 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -16451,7 +16451,7 @@ pi:AGS-0102 a pt:GeologicalSample ;
             wgs:lat 5.321621e+01 ;
             wgs:long 1.07425e+02 ] .
 
-pi:AGS-0103 a pt:GeologicalSample ;
+pi:AGS-0103 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -16597,7 +16597,7 @@ pi:AGS-0103 a pt:GeologicalSample ;
             wgs:lat 5.321672e+01 ;
             wgs:long 1.074246e+02 ] .
 
-pi:AGS-0104 a pt:GeologicalSample ;
+pi:AGS-0104 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -16743,7 +16743,7 @@ pi:AGS-0104 a pt:GeologicalSample ;
             wgs:lat 5.321984e+01 ;
             wgs:long 1.074288e+02 ] .
 
-pi:AGS-0105 a pt:GeologicalSample ;
+pi:AGS-0105 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -16889,7 +16889,7 @@ pi:AGS-0105 a pt:GeologicalSample ;
             wgs:lat 5.322093e+01 ;
             wgs:long 1.074258e+02 ] .
 
-pi:AGS-0106 a pt:GeologicalSample ;
+pi:AGS-0106 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -17035,7 +17035,7 @@ pi:AGS-0106 a pt:GeologicalSample ;
             wgs:lat 5.322265e+01 ;
             wgs:long 1.074224e+02 ] .
 
-pi:AGS-0107 a pt:GeologicalSample ;
+pi:AGS-0107 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:Percent ;
@@ -17181,7 +17181,7 @@ pi:AGS-0107 a pt:GeologicalSample ;
             wgs:lat 5.322539e+01 ;
             wgs:long 1.074179e+02 ] .
 
-pi:AGS-0109 a pt:GeologicalSample ;
+pi:AGS-0109 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -17327,7 +17327,7 @@ pi:AGS-0109 a pt:GeologicalSample ;
             wgs:lat 5.322807e+01 ;
             wgs:long 1.074135e+02 ] .
 
-pi:AGS-0110 a pt:GeologicalSample ;
+pi:AGS-0110 a pt:Sample ;
     pt:location pi:Харанцы ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -17473,7 +17473,7 @@ pi:AGS-0110 a pt:GeologicalSample ;
             wgs:lat 5.321875e+01 ;
             wgs:long 1.074201e+02 ] .
 
-pi:CHK-1-TOT a pt:GeologicalSample,
+pi:CHK-1-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -17557,7 +17557,7 @@ pi:CHK-1-TOT a pt:GeologicalSample,
             pt:value 21 ;
             mt:element mt:Y ] .
 
-pi:CHK-2-TOT a pt:GeologicalSample,
+pi:CHK-2-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -17641,7 +17641,7 @@ pi:CHK-2-TOT a pt:GeologicalSample,
             pt:value 5.153e-01 ;
             mt:element mt:Y ] .
 
-pi:CHK-3 a pt:GeologicalSample,
+pi:CHK-3 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -17833,7 +17833,7 @@ pi:CHK-3 a pt:GeologicalSample,
             pt:value 3.34e-02 ;
             mt:element mt:Co ] .
 
-pi:CHK-3-TOT a pt:GeologicalSample,
+pi:CHK-3-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -17917,7 +17917,7 @@ pi:CHK-3-TOT a pt:GeologicalSample,
             pt:value 1.8274e+03 ;
             mt:element mt:Sr ] .
 
-pi:HAK-1-TOT a pt:GeologicalSample,
+pi:HAK-1-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -18001,7 +18001,7 @@ pi:HAK-1-TOT a pt:GeologicalSample,
             pt:value 1.04e-02 ;
             mt:element mt:As ] .
 
-pi:HAK-2-TOT a pt:GeologicalSample,
+pi:HAK-2-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -18085,7 +18085,7 @@ pi:HAK-2-TOT a pt:GeologicalSample,
             pt:value 9.4e-03 ;
             mt:element mt:As ] .
 
-pi:HAK-3-TOT a pt:GeologicalSample,
+pi:HAK-3-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -18169,7 +18169,7 @@ pi:HAK-3-TOT a pt:GeologicalSample,
             pt:value 1.1445e+01 ;
             mt:element mt:Ca ] .
 
-pi:SB-1-1-100 a pt:GeologicalSample,
+pi:SB-1-1-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -18361,7 +18361,7 @@ pi:SB-1-1-100 a pt:GeologicalSample,
             pt:value 4.44654e+01 ;
             mt:element mt:Al ] .
 
-pi:SB-1-1-TOT a pt:GeologicalSample,
+pi:SB-1-1-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -18633,7 +18633,7 @@ pi:SB-1-1-TOT a pt:GeologicalSample,
             pt:value 61 ;
             mt:element mt:Zn ] .
 
-pi:SB-1-2-100 a pt:GeologicalSample,
+pi:SB-1-2-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -18825,7 +18825,7 @@ pi:SB-1-2-100 a pt:GeologicalSample,
             pt:value 4.92593e+01 ;
             mt:element mt:Ca ] .
 
-pi:SB-1-2-TOT a pt:GeologicalSample,
+pi:SB-1-2-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -19097,7 +19097,7 @@ pi:SB-1-2-TOT a pt:GeologicalSample,
             pt:value 1.74452e+01 ;
             mt:element mt:Mg ] .
 
-pi:SB-1-3-100 a pt:GeologicalSample,
+pi:SB-1-3-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -19289,7 +19289,7 @@ pi:SB-1-3-100 a pt:GeologicalSample,
             pt:value 4.61e+00 ;
             mt:element mt:Ca ] .
 
-pi:SB-1-3-TOT a pt:GeologicalSample,
+pi:SB-1-3-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -19373,7 +19373,7 @@ pi:SB-1-3-TOT a pt:GeologicalSample,
             pt:value 6.683e-01 ;
             mt:element mt:Nb ] .
 
-pi:UGS-0211 a pt:GeologicalSample ;
+pi:UGS-0211 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:N91102826c48d4a10bbd6f4f059e8a020 ;
@@ -19515,7 +19515,7 @@ pi:UGS-0211 a pt:GeologicalSample ;
             wgs:lat 5.314953e+01 ;
             wgs:long 1.074069e+02 ] .
 
-pi:UGS-0212 a pt:GeologicalSample ;
+pi:UGS-0212 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:N3fbd40a6231243608dda6a64f1512760 ;
@@ -19657,7 +19657,7 @@ pi:UGS-0212 a pt:GeologicalSample ;
             wgs:lat 5.315851e+01 ;
             wgs:long 1.074074e+02 ] .
 
-pi:UGS-0214 a pt:GeologicalSample ;
+pi:UGS-0214 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-TiO2 ;
@@ -19797,7 +19797,7 @@ pi:UGS-0214 a pt:GeologicalSample ;
             wgs:lat 5.315881e+01 ;
             wgs:long 1.073925e+02 ] .
 
-pi:UGS-0215 a pt:GeologicalSample ;
+pi:UGS-0215 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-Na2O ;
@@ -19938,7 +19938,7 @@ pi:UGS-0215 a pt:GeologicalSample ;
             wgs:lat 5.315417e+01 ;
             wgs:long 1.073997e+02 ] .
 
-pi:UGS-0216 a pt:GeologicalSample ;
+pi:UGS-0216 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-Na2O ;
@@ -20079,7 +20079,7 @@ pi:UGS-0216 a pt:GeologicalSample ;
             wgs:lat 5.314983e+01 ;
             wgs:long 1.07392e+02 ] .
 
-pi:UGS-0217 a pt:GeologicalSample ;
+pi:UGS-0217 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-K2O ;
@@ -20220,7 +20220,7 @@ pi:UGS-0217 a pt:GeologicalSample ;
             wgs:lat 5.315447e+01 ;
             wgs:long 1.073848e+02 ] .
 
-pi:UGS-0218 a pt:GeologicalSample ;
+pi:UGS-0218 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -20361,7 +20361,7 @@ pi:UGS-0218 a pt:GeologicalSample ;
             wgs:lat 5.316345e+01 ;
             wgs:long 1.073853e+02 ] .
 
-pi:UGS-0219 a pt:GeologicalSample ;
+pi:UGS-0219 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -20501,7 +20501,7 @@ pi:UGS-0219 a pt:GeologicalSample ;
             wgs:lat 5.316809e+01 ;
             wgs:long 1.07378e+02 ] .
 
-pi:UGS-0220 a pt:GeologicalSample ;
+pi:UGS-0220 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -20642,7 +20642,7 @@ pi:UGS-0220 a pt:GeologicalSample ;
             wgs:lat 5.315911e+01 ;
             wgs:long 1.073775e+02 ] .
 
-pi:UGS-0221 a pt:GeologicalSample ;
+pi:UGS-0221 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:N91102826c48d4a10bbd6f4f059e8a020 ;
@@ -20784,7 +20784,7 @@ pi:UGS-0221 a pt:GeologicalSample ;
             wgs:lat 5.314085e+01 ;
             wgs:long 1.073915e+02 ] .
 
-pi:UGS-0222 a pt:GeologicalSample ;
+pi:UGS-0222 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:N588def9e2db342c7a88022011cd3a692 ;
@@ -20926,7 +20926,7 @@ pi:UGS-0222 a pt:GeologicalSample ;
             wgs:lat 5.314519e+01 ;
             wgs:long 1.073992e+02 ] .
 
-pi:UGS-0224 a pt:GeologicalSample ;
+pi:UGS-0224 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -21068,7 +21068,7 @@ pi:UGS-0224 a pt:GeologicalSample ;
             wgs:lat 5.315387e+01 ;
             wgs:long 1.074146e+02 ] .
 
-pi:UGS-0225 a pt:GeologicalSample ;
+pi:UGS-0225 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-SiO2 ;
@@ -21209,7 +21209,7 @@ pi:UGS-0225 a pt:GeologicalSample ;
             wgs:lat 5.314489e+01 ;
             wgs:long 1.074141e+02 ] .
 
-pi:UGS-0227 a pt:GeologicalSample ;
+pi:UGS-0227 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -21351,7 +21351,7 @@ pi:UGS-0227 a pt:GeologicalSample ;
             wgs:lat 5.313591e+01 ;
             wgs:long 1.074136e+02 ] .
 
-pi:UGS-0228 a pt:GeologicalSample ;
+pi:UGS-0228 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -21494,7 +21494,7 @@ pi:UGS-0228 a pt:GeologicalSample ;
             wgs:lat 5.313158e+01 ;
             wgs:long 1.074059e+02 ] .
 
-pi:UGS-0229 a pt:GeologicalSample ;
+pi:UGS-0229 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-MgO ;
@@ -21635,7 +21635,7 @@ pi:UGS-0229 a pt:GeologicalSample ;
             wgs:lat 5.31226e+01 ;
             wgs:long 1.074054e+02 ] .
 
-pi:UGS-0230 a pt:GeologicalSample ;
+pi:UGS-0230 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -21776,7 +21776,7 @@ pi:UGS-0230 a pt:GeologicalSample ;
             wgs:lat 5.312724e+01 ;
             wgs:long 1.073982e+02 ] .
 
-pi:UGS-0231 a pt:GeologicalSample ;
+pi:UGS-0231 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -21918,7 +21918,7 @@ pi:UGS-0231 a pt:GeologicalSample ;
             wgs:lat 5.313188e+01 ;
             wgs:long 1.07391e+02 ] .
 
-pi:UGS-0233 a pt:GeologicalSample ;
+pi:UGS-0233 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:Nb6fbfcf3aaea4ae6b6f6816b0a85ae8e ;
@@ -22059,7 +22059,7 @@ pi:UGS-0233 a pt:GeologicalSample ;
             wgs:lat 5.314055e+01 ;
             wgs:long 1.074064e+02 ] .
 
-pi:UGS-0234 a pt:GeologicalSample ;
+pi:UGS-0234 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-CaO ;
@@ -22201,7 +22201,7 @@ pi:UGS-0234 a pt:GeologicalSample ;
             wgs:lat 5.311826e+01 ;
             wgs:long 1.073977e+02 ] .
 
-pi:UGS-0235 a pt:GeologicalSample ;
+pi:UGS-0235 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -22343,7 +22343,7 @@ pi:UGS-0235 a pt:GeologicalSample ;
             wgs:lat 5.31229e+01 ;
             wgs:long 1.073905e+02 ] .
 
-pi:UGS-0237 a pt:GeologicalSample ;
+pi:UGS-0237 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-Al2O3 ;
@@ -22484,7 +22484,7 @@ pi:UGS-0237 a pt:GeologicalSample ;
             wgs:lat 5.31232e+01 ;
             wgs:long 1.073756e+02 ] .
 
-pi:UGS-0238 a pt:GeologicalSample ;
+pi:UGS-0238 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:total true ;
@@ -22626,7 +22626,7 @@ pi:UGS-0238 a pt:GeologicalSample ;
             wgs:lat 5.312754e+01 ;
             wgs:long 1.073833e+02 ] .
 
-pi:UGS-0239 a pt:GeologicalSample ;
+pi:UGS-0239 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -22769,7 +22769,7 @@ pi:UGS-0239 a pt:GeologicalSample ;
             wgs:lat 5.316375e+01 ;
             wgs:long 1.073703e+02 ] .
 
-pi:UGS-0240 a pt:GeologicalSample ;
+pi:UGS-0240 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -22908,7 +22908,7 @@ pi:UGS-0240 a pt:GeologicalSample ;
             wgs:lat 5.317272e+01 ;
             wgs:long 1.073708e+02 ] .
 
-pi:UGS-0241 a pt:GeologicalSample ;
+pi:UGS-0241 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-Fe2O3 ;
@@ -23047,7 +23047,7 @@ pi:UGS-0241 a pt:GeologicalSample ;
             wgs:lat 5.317736e+01 ;
             wgs:long 1.073636e+02 ] .
 
-pi:UGS-0242 a pt:GeologicalSample ;
+pi:UGS-0242 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -23188,7 +23188,7 @@ pi:UGS-0242 a pt:GeologicalSample ;
             wgs:lat 5.3182e+01 ;
             wgs:long 1.073564e+02 ] .
 
-pi:UGS-0243 a pt:GeologicalSample ;
+pi:UGS-0243 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -23327,7 +23327,7 @@ pi:UGS-0243 a pt:GeologicalSample ;
             wgs:lat 5.318664e+01 ;
             wgs:long 1.073491e+02 ] .
 
-pi:UGS-0244 a pt:GeologicalSample ;
+pi:UGS-0244 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -23468,7 +23468,7 @@ pi:UGS-0244 a pt:GeologicalSample ;
             wgs:lat 5.315565e+01 ;
             wgs:long 1.07325e+02 ] .
 
-pi:UGS-0246 a pt:GeologicalSample ;
+pi:UGS-0246 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -23609,7 +23609,7 @@ pi:UGS-0246 a pt:GeologicalSample ;
             wgs:lat 5.316029e+01 ;
             wgs:long 1.073178e+02 ] .
 
-pi:UGS-0247 a pt:GeologicalSample ;
+pi:UGS-0247 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:N91102826c48d4a10bbd6f4f059e8a020 ;
@@ -23752,7 +23752,7 @@ pi:UGS-0247 a pt:GeologicalSample ;
             wgs:lat 5.316927e+01 ;
             wgs:long 1.073183e+02 ] .
 
-pi:UGS-0249 a pt:GeologicalSample ;
+pi:UGS-0249 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-K2O ;
@@ -23891,7 +23891,7 @@ pi:UGS-0249 a pt:GeologicalSample ;
             wgs:lat 5.317795e+01 ;
             wgs:long 1.073337e+02 ] .
 
-pi:UGS-0250 a pt:GeologicalSample ;
+pi:UGS-0250 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-Al2O3 ;
@@ -24033,7 +24033,7 @@ pi:UGS-0250 a pt:GeologicalSample ;
             wgs:lat 5.315043e+01 ;
             wgs:long 1.073621e+02 ] .
 
-pi:UGS-0251 a pt:GeologicalSample ;
+pi:UGS-0251 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-Al2O3 ;
@@ -24174,7 +24174,7 @@ pi:UGS-0251 a pt:GeologicalSample ;
             wgs:lat 5.315506e+01 ;
             wgs:long 1.073549e+02 ] .
 
-pi:UGS-0252 a pt:GeologicalSample ;
+pi:UGS-0252 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -24316,7 +24316,7 @@ pi:UGS-0252 a pt:GeologicalSample ;
             wgs:lat 5.315013e+01 ;
             wgs:long 1.07377e+02 ] .
 
-pi:UGS-0255 a pt:GeologicalSample ;
+pi:UGS-0255 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:Nb6fbfcf3aaea4ae6b6f6816b0a85ae8e ;
@@ -24456,7 +24456,7 @@ pi:UGS-0255 a pt:GeologicalSample ;
             wgs:lat 5.316838e+01 ;
             wgs:long 1.073631e+02 ] .
 
-pi:UGS-0256 a pt:GeologicalSample ;
+pi:UGS-0256 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -24596,7 +24596,7 @@ pi:UGS-0256 a pt:GeologicalSample ;
             wgs:lat 5.317302e+01 ;
             wgs:long 1.073559e+02 ] .
 
-pi:UGS-0258 a pt:GeologicalSample ;
+pi:UGS-0258 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -24736,7 +24736,7 @@ pi:UGS-0258 a pt:GeologicalSample ;
             wgs:lat 5.318229e+01 ;
             wgs:long 1.073414e+02 ] .
 
-pi:UGS-0260 a pt:GeologicalSample ;
+pi:UGS-0260 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-MnO ;
@@ -24878,7 +24878,7 @@ pi:UGS-0260 a pt:GeologicalSample ;
             wgs:lat 5.315102e+01 ;
             wgs:long 1.073322e+02 ] .
 
-pi:UGS-0262 a pt:GeologicalSample ;
+pi:UGS-0262 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:value _:N2640430e4c5a494e97aabb2acdfd7c48 ;
@@ -25019,7 +25019,7 @@ pi:UGS-0262 a pt:GeologicalSample ;
             wgs:lat 5.317331e+01 ;
             wgs:long 1.073409e+02 ] .
 
-pi:UGS-0266 a pt:GeologicalSample ;
+pi:UGS-0266 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -25160,7 +25160,7 @@ pi:UGS-0266 a pt:GeologicalSample ;
             wgs:lat 5.314667e+01 ;
             wgs:long 1.073245e+02 ] .
 
-pi:UGS-0267 a pt:GeologicalSample ;
+pi:UGS-0267 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -25302,7 +25302,7 @@ pi:UGS-0267 a pt:GeologicalSample ;
             wgs:lat 5.314638e+01 ;
             wgs:long 1.073395e+02 ] .
 
-pi:UGS-0268 a pt:GeologicalSample ;
+pi:UGS-0268 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:compound pt:compound-Al2O3 ;
@@ -25443,7 +25443,7 @@ pi:UGS-0268 a pt:GeologicalSample ;
             wgs:lat 5.315536e+01 ;
             wgs:long 1.0734e+02 ] .
 
-pi:UGS-0269 a pt:GeologicalSample ;
+pi:UGS-0269 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -25585,7 +25585,7 @@ pi:UGS-0269 a pt:GeologicalSample ;
             wgs:lat 5.31597e+01 ;
             wgs:long 1.073477e+02 ] .
 
-pi:UGS-0270 a pt:GeologicalSample ;
+pi:UGS-0270 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -25726,7 +25726,7 @@ pi:UGS-0270 a pt:GeologicalSample ;
             wgs:lat 5.316868e+01 ;
             wgs:long 1.073482e+02 ] .
 
-pi:UGW-0264 a pt:GeologicalSample ;
+pi:UGW-0264 a pt:Sample ;
     pt:location pi:Хужир ;
     pt:measure [ a pt:Measurement ;
             pt:unit pt:PPM ;
@@ -25867,10 +25867,10 @@ pi:UGW-0264 a pt:GeologicalSample ;
             wgs:lat 5.315506e+01 ;
             wgs:long 1.073549e+02 ] .
 
-pi:Северный_Байкал a pt:GelologicalSite ;
+pi:Северный_Байкал a pt:Site ;
     rdfs:label "Северный Байкал"@ru .
 
-pi:Спред\(detectionlimit\) a pt:GeologicalSample,
+pi:Спред\(detectionlimit\) a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Усть_Кутская_площадь ;
     pt:measure [ a pt:Measurement ;
@@ -25927,7 +25927,7 @@ pi:Спред\(detectionlimit\) a pt:GeologicalSample,
             pt:value 40 ;
             mt:element mt:S ] .
 
-pi:YM-1-1-100 a pt:GeologicalSample,
+pi:YM-1-1-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -26354,7 +26354,7 @@ pi:YM-1-1-100 a pt:GeologicalSample,
             mt:element mt:Co ] ;
     schema:sku 1 .
 
-pi:YM-1-1-TOT a pt:GeologicalSample,
+pi:YM-1-1-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -26781,7 +26781,7 @@ pi:YM-1-1-TOT a pt:GeologicalSample,
             mt:element mt:Ca ] ;
     schema:sku 6 .
 
-pi:YM-1-2-100 a pt:GeologicalSample,
+pi:YM-1-2-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -27208,7 +27208,7 @@ pi:YM-1-2-100 a pt:GeologicalSample,
             pt:value 7.52e+00 ] ;
     schema:sku 2 .
 
-pi:YM-1-2-TOT a pt:GeologicalSample,
+pi:YM-1-2-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -27635,7 +27635,7 @@ pi:YM-1-2-TOT a pt:GeologicalSample,
             mt:element mt:As ] ;
     schema:sku 7 .
 
-pi:YM-1-3-100 a pt:GeologicalSample,
+pi:YM-1-3-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -28062,7 +28062,7 @@ pi:YM-1-3-100 a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 3 .
 
-pi:YM-1-3-TOT a pt:GeologicalSample,
+pi:YM-1-3-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -28489,7 +28489,7 @@ pi:YM-1-3-TOT a pt:GeologicalSample,
             mt:element mt:Ti ] ;
     schema:sku 8 .
 
-pi:YM-1-4-100 a pt:GeologicalSample,
+pi:YM-1-4-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -28916,7 +28916,7 @@ pi:YM-1-4-100 a pt:GeologicalSample,
             mt:element mt:P ] ;
     schema:sku 4 .
 
-pi:YM-1-4-TOT a pt:GeologicalSample,
+pi:YM-1-4-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -29343,7 +29343,7 @@ pi:YM-1-4-TOT a pt:GeologicalSample,
             mt:element mt:Ni ] ;
     schema:sku 9 .
 
-pi:YM-1-5-100 a pt:GeologicalSample,
+pi:YM-1-5-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -29608,7 +29608,7 @@ pi:YM-1-5-100 a pt:GeologicalSample,
             pt:value 9.5042e+00 ;
             mt:element mt:Mn ] .
 
-pi:YM-1-5-TOT a pt:GeologicalSample,
+pi:YM-1-5-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -30035,7 +30035,7 @@ pi:YM-1-5-TOT a pt:GeologicalSample,
             mt:element mt:Rb ] ;
     schema:sku 10 .
 
-pi:YM-1-6-100 a pt:GeologicalSample,
+pi:YM-1-6-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -30300,7 +30300,7 @@ pi:YM-1-6-100 a pt:GeologicalSample,
             pt:value 1e-03 ;
             mt:element mt:S ] .
 
-pi:YM-1-6-TOT a pt:GeologicalSample,
+pi:YM-1-6-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -30727,7 +30727,7 @@ pi:YM-1-6-TOT a pt:GeologicalSample,
             mt:element mt:Si ] ;
     schema:sku 11 .
 
-pi:YM-1-7-100 a pt:GeologicalSample,
+pi:YM-1-7-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -30940,7 +30940,7 @@ pi:YM-1-7-100 a pt:GeologicalSample,
             pt:value 2.336e-01 ;
             mt:element mt:Rh ] .
 
-pi:YM-1-7-TOT a pt:GeologicalSample,
+pi:YM-1-7-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -31367,7 +31367,7 @@ pi:YM-1-7-TOT a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 12 .
 
-pi:YM-1-8-100 a pt:GeologicalSample,
+pi:YM-1-8-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -31632,7 +31632,7 @@ pi:YM-1-8-100 a pt:GeologicalSample,
             pt:value 3.824e+00 ;
             mt:element mt:Na ] .
 
-pi:YM-1-8-TOT a pt:GeologicalSample,
+pi:YM-1-8-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -32059,7 +32059,7 @@ pi:YM-1-8-TOT a pt:GeologicalSample,
             mt:element mt:Fe ] ;
     schema:sku 13 .
 
-pi:YM-1-9-100 a pt:GeologicalSample,
+pi:YM-1-9-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -32324,7 +32324,7 @@ pi:YM-1-9-100 a pt:GeologicalSample,
             pt:value 1.452e-01 ;
             mt:element mt:V ] .
 
-pi:YM-1-9-TOT a pt:GeologicalSample,
+pi:YM-1-9-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -32751,7 +32751,7 @@ pi:YM-1-9-TOT a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 14 .
 
-pi:YO-1-100 a pt:GeologicalSample,
+pi:YO-1-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -33178,7 +33178,7 @@ pi:YO-1-100 a pt:GeologicalSample,
             mt:element mt:Pb ] ;
     schema:sku 5 .
 
-pi:YO-1-TOT a pt:GeologicalSample,
+pi:YO-1-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -33605,7 +33605,7 @@ pi:YO-1-TOT a pt:GeologicalSample,
             mt:element mt:Cr ] ;
     schema:sku 15 .
 
-pi:YO-2-100 a pt:GeologicalSample,
+pi:YO-2-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -33870,7 +33870,7 @@ pi:YO-2-100 a pt:GeologicalSample,
             pt:value 3.073e-01 ;
             mt:element mt:Rh ] .
 
-pi:YO-2-TOT a pt:GeologicalSample,
+pi:YO-2-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -34297,7 +34297,7 @@ pi:YO-2-TOT a pt:GeologicalSample,
             mt:element mt:V ] ;
     schema:sku 16 .
 
-pi:YO-3-100 a pt:GeologicalSample,
+pi:YO-3-100 a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -34562,7 +34562,7 @@ pi:YO-3-100 a pt:GeologicalSample,
             pt:value 3.23e+01 ;
             mt:element mt:Si ] .
 
-pi:YO-3-TOT a pt:GeologicalSample,
+pi:YO-3-TOT a pt:Sample,
         wgs:SpatialThing ;
     pt:location pi:Ярки ;
     pt:measure [ a pt:Measurement ;
@@ -34989,52 +34989,52 @@ pi:YO-3-TOT a pt:GeologicalSample,
             mt:element mt:Ca ] ;
     schema:sku 17 .
 
-pi:Грязнушка a pt:GelologicalSite ;
+pi:Грязнушка a pt:Site ;
     rdfs:label "Грязнушка"@ru ;
     pt:location pi:Бураевская_площадь .
 
-pi:Ольхон a pt:GelologicalSite ;
+pi:Ольхон a pt:Site ;
     rdfs:label "Ольхон"@ru .
 
-pi:Усть_Кутская_площадь a pt:GelologicalSite ;
+pi:Усть_Кутская_площадь a pt:Site ;
     rdfs:label "Усть-Кутская площадь"@ru .
 
-pi:Бураевская_площадь a pt:GelologicalSite ;
+pi:Бураевская_площадь a pt:Site ;
     rdfs:label "Бураевская площадь"@ru .
 
-pi:Кутский a pt:GelologicalSite ;
+pi:Кутский a pt:Site ;
     rdfs:label "Кутский"@ru ;
     pt:location pi:Усть_Кутская_площадь .
 
-pi:Муринский a pt:GelologicalSite ;
+pi:Муринский a pt:Site ;
     rdfs:label "Муринский"@ru ;
     pt:location pi:Бураевская_площадь .
 
-pi:Дундай a pt:GelologicalSite ;
+pi:Дундай a pt:Site ;
     rdfs:label "Дундай"@ru ;
     pt:location pi:Бураевская_площадь .
 
-pi:Ивановский a pt:GelologicalSite ;
+pi:Ивановский a pt:Site ;
     rdfs:label "Ивановский"@ru ;
     pt:location pi:Бураевская_площадь .
 
-pi:Харанцы a pt:GelologicalSite ;
+pi:Харанцы a pt:Site ;
     rdfs:label "Харанцы"@ru ;
     pt:location pi:Ольхон .
 
-pi:Хужир_мр a pt:GelologicalSite ;
+pi:Хужир_мр a pt:Site ;
     rdfs:label "Хужир мр"@ru ;
     pt:location pi:Бураевская_площадь .
 
-pi:Ярки a pt:GelologicalSite ;
+pi:Ярки a pt:Site ;
     rdfs:label "Ярки"@ru ;
     pt:location pi:Северный_Байкал .
 
-pi:Хужир a pt:GelologicalSite ;
+pi:Хужир a pt:Site ;
     rdfs:label "Хужир"@ru ;
     pt:location pi:Ольхон .
 
-pi:Турука a pt:GelologicalSite ;
+pi:Турука a pt:Site ;
     rdfs:label "Турука"@ru ;
     pt:location pi:Усть_Кутская_площадь .
 
@@ -35252,4 +35252,3 @@ _:N3a88bca74ace44cfbb5c06f59a2427e4 a pt:DetectionLimit ;
     pt:unit pt:PPM ;
     pt:value 4 ;
     mt:element mt:Sb .
-
