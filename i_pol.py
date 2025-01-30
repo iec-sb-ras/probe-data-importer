@@ -391,6 +391,7 @@ class ImpState:
             self.sample = P[name]
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
+            add((self.sample, RDFS.label, Literal(name)))
             add((self.sample, RDF.type, SpatialThing))
             self.belongs(self.sample)
         elif self.sample is not None:
@@ -541,7 +542,7 @@ def upload(filename):
         print('RC:', rc)
 
 if __name__ == "__main__":
-    if 0:
+    if 1:
         for file, comp in FILES.items():
             parse_xl(file, comp)
             update(G)
