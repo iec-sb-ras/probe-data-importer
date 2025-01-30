@@ -14,7 +14,7 @@ except KeyError:
     pass
 
 ENDPOINT = "http://ktulhu.isclan.ru:8890/sparql"
-SAMPLEGRAPH = "http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl"
+SAMPLEGRAPH = "http://localhost:8890/DAV/home/loader/rdf_sink/samples.ttl"
 
 PREFIXES = """
     PREFIX pt: <http://crust.irk.ru/ontology/pollution/terms/1.0/>
