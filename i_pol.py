@@ -405,7 +405,7 @@ class ImpState:
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
             add((self.sample, RDFS.label, Literal(name)))
-            add((self.sample, RDF.type, SpatialThing))
+            # add((self.sample, RDF.type, SpatialThing))
             self.belongs(self.sample)
         elif self.sample is not None:
             self.proc_comp((field+prt, fieldname+prt), cell.value)
@@ -516,21 +516,23 @@ def update(g):
         _:l wgs:lat ?lat .
     }
     WHERE {
-        ?sample a pt:GeologicalSample .
+        ?sample a pt:Sample .
         ?sample wgs:long ?long .
         ?sample wgs:lat ?lat .
     }
     ''')
 
 
-PUTURL = "http://ktulhu.isclan.ru:8890/DAV/home/{user}/rdf_sink/{filename}"
+PUTURL = "http://ktulhu.isclan.ru:8890/DAV/home/{user}/rdf_sink/{name}"
 USER = base64.b64decode("bG9hZGVyCg==").decode('utf8').strip()
 CRED = base64.b64decode("bG9hZGVyMzEyCg==").decode('utf8').strip()
 
-def upload(filename):
+def upload(filename, name=None):
+    if name is None:
+        name = filename
     with open(filename, "rb") as inp:
         basic = HTTPBasicAuth(USER, CRED)
-        URL = PUTURL.format(user=USER, filename=filename)
+        URL = PUTURL.format(user=USER, filename=filename, name=name)
         print("URL:{}".format(URL))
         # files = {"file": (filename, inp, "text/turtle")}
         rc = rq.put(URL,
@@ -558,12 +560,13 @@ if __name__ == "__main__":
     if 1:
         for file, comp in FILES.items():
             parse_xl(file, comp)
-            update(G)
+        update(G)
         with open(TARGET, "w") as o:
             # TODO: Shift location to a BNode using SPARQL.
             # o.write(G.serialize(format='turtle'))
             o.write(G.serialize(format='turtle'))
-    upload(TARGET)
-    with open(TARGETMT, "w") as o:
-        o.write(GMT.serialize(format='turtle'))
+    upload(TARGET, 'samples.ttl')
+    if 0:
+        with open(TARGETMT, "w") as o:
+            o.write(GMT.serialize(format='turtle'))
     print("#!INFO: Normal exit")
