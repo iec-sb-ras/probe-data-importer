@@ -10,6 +10,7 @@ import requests as rq
 from requests.auth import HTTPBasicAuth
 import base64
 import os
+from namespace import PT, P, MT
 
 try:
     del os.environ["HTTP_PROXY"]
@@ -31,13 +32,9 @@ TARGETMT = "PeriodicTable.ttl"
 EQUIPMENT = "S8 Tiger"
 EQUIPMENT_TYPE = "X-Ray fluorescence analysis"
 
-PT = Namespace("http://crust.irk.ru/ontology/pollution/terms/1.0/")
-P = Namespace("http://crust.irk.ru/ontology/pollution/1.0/")
-MT = Namespace("http://www.daml.org/2003/01/periodictable/PeriodicTable#")
-
 G = Graph(bind_namespaces="rdflib")
 GMT = Graph(bind_namespaces="rdflib")
-# GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
+GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
 GS = [G, GMT]
 
 COMPRE = re.compile(r"^(([A-Z][a-z]{,2}\d{,2})+)(.*?)$")
@@ -156,7 +153,7 @@ class ImpState:
         def finish():
             if self.sample and not delim:
                 # print(type(ovalue))
-                # print("->{}->{}".format(rel, repr(ovalue)))
+                print("->{}->{}".format(rel, repr(ovalue)))
                 add((self.sample, rel, Literal(ovalue)))
 
         def degs(v):
@@ -187,7 +184,7 @@ class ImpState:
         if name in ["ППП", "ппп"]:
             rel = PT.il  # ignition losses
             m = BNode()
-            add((self.sample, PT.measure, m))
+            add((self.sample, PT.measurement, m))
             add((m, PT.value, Literal(value)))
             add((m, RDF.type, GeoMeasure))
             add((m, RDF.type, IgnitionLosses))
@@ -235,7 +232,7 @@ class ImpState:
 
         if self.sample and not delim:
             m = BNode()
-            add((self.sample, PT.measure, m))
+            add((self.sample, PT.measurement, m))
             add((m, RDF.type, GeoMeasure))
         if delim:
             m = make_detlim()
