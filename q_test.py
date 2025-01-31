@@ -33,7 +33,7 @@ QUERY = PREFIXES + """
 
 sparql = SPARQLWrapper(ENDPOINT)
 # sparql.setCredentials("some-login", "some-password") # if required
-sparql.setMethod(POST) # this is the crucial option
+sparql.setMethod(POST)  # this is the crucial option
 sparql.setReturnFormat(JSON)
 
 # sparql.setQuery(QUERY)
@@ -57,12 +57,12 @@ def pollution_data(site):
     }}
     """
 
-
     print(samples)
 
     sparql.setQuery(samples)
     results = sparql.query()
     results.print_results()
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     pollution_data("Харанцы")

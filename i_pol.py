@@ -22,10 +22,8 @@ try:
 except KeyError:
     pass
 
-
 ONTODIR = "./iec/"
 SUBDIR = "./iec/pollutions/"
-
 
 TARGET = 'import.ttl'
 TARGETMT = 'PeriodicTable.ttl'
@@ -96,10 +94,10 @@ def normURI(s):
     r = ""
     for c in s:
         d = unicodedata.category(c)
-        if d[0] in ['L','N']:
-            r+=c
-        elif len(r)>0 and r[-1]!='_':
-            r+='_'
+        if d[0] in ['L', 'N']:
+            r += c
+        elif len(r) > 0 and r[-1] != '_':
+            r += '_'
     return r.rstrip('_')
 
 
@@ -168,10 +166,10 @@ class ImpState:
             m = DEGRE.match(v)
             if m is None:
                 return v
-            d,_,m,_,s,_,_,dir = m.groups()
-            d,m,s = [float(v) for v in [d,m,s]]
-            d += m/60.
-            d += s/3600.
+            d, _, m, _, s, _, _, dir = m.groups()
+            d, m, s = [float(v) for v in [d, m, s]]
+            d += m / 60.
+            d += s / 3600.
             return d
 
         def unit(m, rupper):
@@ -183,6 +181,7 @@ class ImpState:
                 add((m, PT.unit, Percent))
             else:
                 add((m, PT.unit, P.UnknowUnit))
+
         if isinstance(value, float) and value.is_integer():
             value = int(value)
         if name in ['ППП', 'ппп']:
@@ -206,7 +205,7 @@ class ImpState:
             if name in ['sku', 'номер']:
                 rel = SDO.sku
                 if isinstance(ovalue, float):
-                    ovalue=int(ovalue)
+                    ovalue = int(ovalue)
             finish()
             return
         else:
@@ -264,7 +263,7 @@ class ImpState:
                     add((m, PT.value, md))
 
         if len(rc) > 1 or el1 != el:  # Compound, e.g. oxide
-            compname = 'compound-'+normURI(comp)
+            compname = 'compound-' + normURI(comp)
             cb = COMPOUNDS.get(compname, None)
             if cb is None:
                 cb = PT[compname]
@@ -280,10 +279,8 @@ class ImpState:
             add((m, MT.element, eliri))
             finish_dl(el, m)
         else:
-            print("#!ERROR unknown combination of {}, and {}=?={}: {}.".format(rc,
-                                                                                el1,
-                                                                                el,
-                                                                                eliri))
+            print("#!ERROR unknown combination of {}, and {}=?={}: {}.".format(
+                rc, el1, el, eliri))
             quit()
         if "TOT" in rupper or "ОБЩ" in rupper:
             add((m, PT.total, Literal(True)))
@@ -375,7 +372,8 @@ class ImpState:
         try:
             field, fieldname = self.header[col]
         except KeyError as k:
-            print("#! ERROR header key {} not in {} row: {}".format(k, self.header, row))
+            print("#! ERROR header key {} not in {} row: {}".format(
+                k, self.header, row))
             # quit()
             return
 
@@ -408,14 +406,12 @@ class ImpState:
             # add((self.sample, RDF.type, SpatialThing))
             self.belongs(self.sample)
         elif self.sample is not None:
-            self.proc_comp((field+prt, fieldname+prt), cell.value)
+            self.proc_comp((field + prt, fieldname + prt), cell.value)
         elif detlim:
-            self.proc_comp((field+prt, fieldname+prt), cell.value, detlim)
+            self.proc_comp((field + prt, fieldname + prt), cell.value, detlim)
         else:
-            print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(cell,
-                                                                         row,
-                                                                         col,
-                                                                         self.header))
+            print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(
+                cell, row, col, self.header))
             quit()
 
     def h(self, cell, row, col):
@@ -439,23 +435,27 @@ class ImpState:
         self.cls[col] = orig
         self.prev_class = orig, name
 
+
 class Yarki(ImpState):
     _sample_names_ = ['Sample', 'Полевой', 'sample']
 
+
 class Kharantsy(ImpState):
     _sample_names_ = ['Номер_пробы']
+
 
 class Khuzhir(Kharantsy):
     pass
 
 
 FILES = {
-         'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкал', 'Ярки']),
-         'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
-         'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
-         'Сводная таблица РФА_Бураевская площадь № 70-2024.xls': (Yarki, ['Бураевская площадь']),
-         'Сводная таблица РФА-2022 Усть-Кут.xls': (Yarki, ['Усть-Кутская площадь']),
-        }
+    'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкал', 'Ярки']),
+    'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
+    'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
+    'Сводная таблица РФА_Бураевская площадь № 70-2024.xls':
+    (Yarki, ['Бураевская площадь']),
+    'Сводная таблица РФА-2022 Усть-Кут.xls': (Yarki, ['Усть-Кутская площадь']),
+}
 
 
 def parse_sheet(sh, sheetIRI, sheetName, comp):
@@ -476,11 +476,11 @@ def parse_xl(file, comp):
     wb = xlrd.open_workbook(pathfile)
     print("# Sheet names: {}".format(wb.sheet_names()))
     for sheet in wb.sheet_names():
-        print("# Wb: {}, sheet: {}". format(file, sheet))
+        print("# Wb: {}, sheet: {}".format(file, sheet))
         sh = wb.sheet_by_name(sheet)
-        sheetname = normURI(file+"_"+sheet)
+        sheetname = normURI(file + "_" + sheet)
         print("{0} {1} {2}".format(sh.name, sh.nrows, sh.ncols))
-        parse_sheet(sh, P[sheetname], file+"_"+sheet, comp)
+        parse_sheet(sh, P[sheetname], file + "_" + sheet, comp)
 
 
 def update(g):
@@ -527,6 +527,7 @@ PUTURL = "http://ktulhu.isclan.ru:8890/DAV/home/{user}/rdf_sink/{name}"
 USER = base64.b64decode("bG9hZGVyCg==").decode('utf8').strip()
 CRED = base64.b64decode("bG9hZGVyMzEyCg==").decode('utf8').strip()
 
+
 def upload(filename, name=None):
     if name is None:
         name = filename
@@ -535,26 +536,34 @@ def upload(filename, name=None):
         URL = PUTURL.format(user=USER, filename=filename, name=name)
         print("URL:{}".format(URL))
         # files = {"file": (filename, inp, "text/turtle")}
-        rc = rq.put(URL,
-                    # files=files,
-                    data=inp.read(),
-                    auth=basic
-                    )
+        rc = rq.put(
+            URL,
+            # files=files,
+            data=inp.read(),
+            auth=basic)
         print("RC:", rc)
         return
 
         sg = str(P.samples)
         print("URL:", sg)
-        data={'new_name':sg,
-              'graph_name':'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl'},
-        files = {'new_name':(None, sg),
-                 'graph_name':(None, 'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl')
-                 }
-        rc = rq.post('http://ktulhu.isclan.ru:8890/conductor/graphs_page.vspx?page=1',
-                     files=files,
-                     # auth=basic
-                     )
+        data = {
+            'new_name':
+            sg,
+            'graph_name':
+            'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl'
+        },
+        files = {
+            'new_name': (None, sg),
+            'graph_name':
+            (None, 'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl')
+        }
+        rc = rq.post(
+            'http://ktulhu.isclan.ru:8890/conductor/graphs_page.vspx?page=1',
+            files=files,
+            # auth=basic
+        )
         print('RC:', rc)
+
 
 if __name__ == "__main__":
     if 1:
