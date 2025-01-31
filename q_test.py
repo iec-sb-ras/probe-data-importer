@@ -6,7 +6,7 @@ from collections import namedtuple
 def pollution_data(site, element):
     samples = """
     # SELECT *
-    SELECT ?uri, ?long, ?lat, ?value, ?unitid, ?unit
+    SELECT ?uri, ?sample_name, ?long, ?lat, ?value, ?unitid, ?unit
     FROM <{graph}>
     WHERE {{
        ?site rdfs:label ?site_name .
