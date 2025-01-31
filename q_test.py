@@ -1,6 +1,8 @@
-from SPARQLWrapper import SPARQLWrapper, POST, JSON
+from SPARQLWrapper import ( SPARQLWrapper, POST, JSON, CSV, RDF, RDFXML,
+                            N3, JSONLD, XML )
 import requests as rq
 import os
+import pprint
 
 try:
     del os.environ["HTTP_PROXY"]
@@ -38,6 +40,7 @@ sparql = SPARQLWrapper(ENDPOINT)
 # sparql.setCredentials("some-login", "some-password") # if required
 sparql.setMethod(POST)  # this is the crucial option
 sparql.setReturnFormat(JSON)
+# sparql.setReturnFormat(XML)
 
 # sparql.setQuery(QUERY)
 
@@ -46,29 +49,55 @@ sparql.setReturnFormat(JSON)
 # results.print_results()
 
 
+class Query:
+
+    _prefixes_ = PREFIXES
+    _endpoint_ = ENDPOINT
+
+    def __init__(self, query, graphIRI, endpoint=None, **args):
+        self.query = query
+        self.graphIRI = graphIRI
+        self.args = args
+        if endpoint is None:
+            endpoint = self._endpoint_
+        self.endpoint = endpoint
+
+    def results(self):
+        q = self.query.format(graph=self.graphIRI, **self.args)
+        q = self._prefixes_+"\n\n"+q
+        sparql = SPARQLWrapper(self.endpoint)
+        sparql.setQuery(q)
+        sparql.setMethod(POST)
+        sparql.setReturnFormat(JSON)
+        results = sparql.query()
+        return conv(results)
+
+
 def pollution_data(site):
     samples = (
-        PREFIXES
-        + f"""
+        """
     SELECT *
-    FROM <{SAMPLEGRAPH}>
-    WHERE {{
+    FROM <{graph}>
+    WHERE {
        ?site rdfs:label ?site_name .
        ?site a pt:Site  .
        FILTER (?site_name = "{site}"@ru)
        ?sample pt:location ?site .
        ?sample a pt:Sample .
        ?sample rdfs:label ?sample_name .
-    }}
+    }
     """
     )
 
     print(samples)
+    q = Query(samples, SAMPLEGRAPH, site=site)
+    pprint.pprint(q.results())
 
-    sparql.setQuery(samples)
-    results = sparql.query()
-    results.print_results()
-
+def conv(results):
+    header = results['head']['vars']
+    binds = results['results']['bindings']
+    rc = [{k: v['value'] for k, v in e.items()} for e in binds]
+    return rc, header
 
 if __name__ == "__main__":
     pollution_data("Харанцы")
