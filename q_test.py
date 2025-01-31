@@ -25,11 +25,14 @@ PREFIXES = """
 
 """
 
-QUERY = PREFIXES + """
+QUERY = (
+    PREFIXES
+    + """
     select distinct ?Name
     from <http://www.daml.org/2003/01/periodictable/PeriodicTable#>
     where {[] rdfs:label ?Name} LIMIT 100
     """
+)
 
 sparql = SPARQLWrapper(ENDPOINT)
 # sparql.setCredentials("some-login", "some-password") # if required
@@ -44,7 +47,9 @@ sparql.setReturnFormat(JSON)
 
 
 def pollution_data(site):
-    samples = PREFIXES + f"""
+    samples = (
+        PREFIXES
+        + f"""
     SELECT *
     FROM <{SAMPLEGRAPH}>
     WHERE {{
@@ -56,6 +61,7 @@ def pollution_data(site):
        ?sample rdfs:label ?sample_name .
     }}
     """
+    )
 
     print(samples)
 

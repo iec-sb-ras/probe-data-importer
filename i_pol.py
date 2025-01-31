@@ -25,27 +25,27 @@ except KeyError:
 ONTODIR = "./iec/"
 SUBDIR = "./iec/pollutions/"
 
-TARGET = 'import.ttl'
-TARGETMT = 'PeriodicTable.ttl'
+TARGET = "import.ttl"
+TARGETMT = "PeriodicTable.ttl"
 
 EQUIPMENT = "S8 Tiger"
 EQUIPMENT_TYPE = "X-Ray fluorescence analysis"
 
-PT = Namespace('http://crust.irk.ru/ontology/pollution/terms/1.0/')
-P = Namespace('http://crust.irk.ru/ontology/pollution/1.0/')
-MT = Namespace('http://www.daml.org/2003/01/periodictable/PeriodicTable#')
+PT = Namespace("http://crust.irk.ru/ontology/pollution/terms/1.0/")
+P = Namespace("http://crust.irk.ru/ontology/pollution/1.0/")
+MT = Namespace("http://www.daml.org/2003/01/periodictable/PeriodicTable#")
 
 G = Graph(bind_namespaces="rdflib")
 GMT = Graph(bind_namespaces="rdflib")
 # GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
 GS = [G, GMT]
 
-COMPRE = re.compile(r'^(([A-Z][a-z]{,2}\d{,2})+)(.*?)$')
-COMPELRE = re.compile(r'[A-Z][a-z]{,2}\d{,2}')
+COMPRE = re.compile(r"^(([A-Z][a-z]{,2}\d{,2})+)(.*?)$")
+COMPELRE = re.compile(r"[A-Z][a-z]{,2}\d{,2}")
 # r'([A-Z][a-z]*)(\d+(?:\.\d+)?)?'
-ELRE = re.compile(r'^([A-Z][a-z]{,2})+(.*)$')
+ELRE = re.compile(r"^([A-Z][a-z]{,2})+(.*)$")
 
-DEGRE = re.compile(r'^(\d{,3})(\D)(\d{,2})(\D)(\d{,2}(\.\d{,2})?)(\D)(.*)$')
+DEGRE = re.compile(r"^(\d{,3})(\D)(\d{,2})(\D)(\d{,2}(\.\d{,2})?)(\D)(.*)$")
 # 107°25'28.48"В
 # m = DEGRE.match('107°25\'28.48"В')
 # print(m, m.groups())
@@ -64,9 +64,9 @@ DEGRE = re.compile(r'^(\d{,3})(\D)(\d{,2})(\D)(\d{,2}(\.\d{,2})?)(\D)(.*)$')
 COMPOUNDS = {}
 
 for _ in GS:
-    _.bind('pt', PT)
-    _.bind('pi', P)
-    _.bind('mt', MT)
+    _.bind("pt", PT)
+    _.bind("pi", P)
+    _.bind("mt", MT)
     # _.bind('geo', GEO)
 
 ElToIRI = {}
@@ -81,8 +81,8 @@ Long = WGS.long
 Lat = WGS.lat
 IgnitionLosses = PT.IgnitionLosses
 
-G.add((PT.PPM, RDFS.label, Literal('мг/кг', lang='ru')))
-G.add((PT.Percent, RDFS.label, Literal('Процент', lang='ru')))
+G.add((PT.PPM, RDFS.label, Literal("мг/кг", lang="ru")))
+G.add((PT.Percent, RDFS.label, Literal("Процент", lang="ru")))
 
 for el in GMT.subjects(RDF.type, MT.Element):
     ElToIRI[el.fragment] = el
@@ -94,11 +94,11 @@ def normURI(s):
     r = ""
     for c in s:
         d = unicodedata.category(c)
-        if d[0] in ['L', 'N']:
+        if d[0] in ["L", "N"]:
             r += c
-        elif len(r) > 0 and r[-1] != '_':
-            r += '_'
-    return r.rstrip('_')
+        elif len(r) > 0 and r[-1] != "_":
+            r += "_"
+    return r.rstrip("_")
 
 
 def elem(name):
@@ -118,7 +118,7 @@ class State(Enum):
 
 class ImpState:
     _sample_iri_ = samplerel
-    _belongs_iri_ = PT['location']
+    _belongs_iri_ = PT["location"]
 
     def __init__(self, graph, datasetIRI, locations=None):
         self.state = State.NONE
@@ -139,7 +139,7 @@ class ImpState:
         uvalue = str(value).upper().strip()
         if isinstance(value, str):
             value = value.strip()
-        if 'N.A.' in uvalue:
+        if "N.A." in uvalue:
             return
         dl = None
         ovalue = value  # Original value
@@ -168,23 +168,23 @@ class ImpState:
                 return v
             d, _, m, _, s, _, _, dir = m.groups()
             d, m, s = [float(v) for v in [d, m, s]]
-            d += m / 60.
-            d += s / 3600.
+            d += m / 60.0
+            d += s / 3600.0
             return d
 
         def unit(m, rupper):
-            if 'PPM' in rupper:
+            if "PPM" in rupper:
                 add((m, PT.unit, PPM))
-            elif 'INT' in rupper:
+            elif "INT" in rupper:
                 add((m, PT.unit, P.Int))
-            elif '%' in fieldname:
+            elif "%" in fieldname:
                 add((m, PT.unit, Percent))
             else:
                 add((m, PT.unit, P.UnknowUnit))
 
         if isinstance(value, float) and value.is_integer():
             value = int(value)
-        if name in ['ППП', 'ппп']:
+        if name in ["ППП", "ппп"]:
             rel = PT.il  # ignition losses
             m = BNode()
             add((self.sample, PT.measure, m))
@@ -196,13 +196,13 @@ class ImpState:
             return
 
         if mo is None:
-            if name == 'с_ш':
+            if name == "с_ш":
                 rel = Lat
                 ovalue = degs(ovalue)
-            if name == 'в_д':
+            if name == "в_д":
                 rel = Long
                 ovalue = degs(ovalue)
-            if name in ['sku', 'номер']:
+            if name in ["sku", "номер"]:
                 rel = SDO.sku
                 if isinstance(ovalue, float):
                     ovalue = int(ovalue)
@@ -263,7 +263,7 @@ class ImpState:
                     add((m, PT.value, md))
 
         if len(rc) > 1 or el1 != el:  # Compound, e.g. oxide
-            compname = 'compound-' + normURI(comp)
+            compname = "compound-" + normURI(comp)
             cb = COMPOUNDS.get(compname, None)
             if cb is None:
                 cb = PT[compname]
@@ -279,8 +279,11 @@ class ImpState:
             add((m, MT.element, eliri))
             finish_dl(el, m)
         else:
-            print("#!ERROR unknown combination of {}, and {}=?={}: {}.".format(
-                rc, el1, el, eliri))
+            print(
+                "#!ERROR unknown combination of {}, and {}=?={}: {}.".format(
+                    rc, el1, el, eliri
+                )
+            )
             quit()
         if "TOT" in rupper or "ОБЩ" in rupper:
             add((m, PT.total, Literal(True)))
@@ -299,7 +302,7 @@ class ImpState:
             prev = locs[-1]
             self.belongs(uriloc, prev)
         add = self.g.add
-        add((uriloc, RDFS.label, Literal(location, lang='ru')))
+        add((uriloc, RDFS.label, Literal(location, lang="ru")))
         add((uriloc, RDF.type, GeoSite))
         self.locations.append(uriloc)
 
@@ -372,25 +375,26 @@ class ImpState:
         try:
             field, fieldname = self.header[col]
         except KeyError as k:
-            print("#! ERROR header key {} not in {} row: {}".format(
-                k, self.header, row))
+            print(
+                "#! ERROR header key {} not in {} row: {}".format(k, self.header, row)
+            )
             # quit()
             return
 
-        prt = self.cls.get(col, '')
-        if '%' in prt and 'PPM' not in field:
-            prt = '_%'
-        elif 'PPM' in prt and '%' not in field:
-            prt = '_PPM'
+        prt = self.cls.get(col, "")
+        if "%" in prt and "PPM" not in field:
+            prt = "_%"
+        elif "PPM" in prt and "%" not in field:
+            prt = "_PPM"
         else:
-            prt = ''
+            prt = ""
 
         add = self.g.add
         ds = self.dsiri
         if field == self._sample_iri_:
             val = cell.value
             if isinstance(val, str):
-                name = val.replace(' ', '')
+                name = val.replace(" ", "")
             else:
                 if isinstance(val, float):
                     if val.is_integer():
@@ -410,8 +414,11 @@ class ImpState:
         elif detlim:
             self.proc_comp((field + prt, fieldname + prt), cell.value, detlim)
         else:
-            print('#! ERROR: nowhere to store {} R:{} C:{}\n#!{}'.format(
-                cell, row, col, self.header))
+            print(
+                "#! ERROR: nowhere to store {} R:{} C:{}\n#!{}".format(
+                    cell, row, col, self.header
+                )
+            )
             quit()
 
     def h(self, cell, row, col):
@@ -430,18 +437,18 @@ class ImpState:
                 return
             orig, name = self.prev_class
         else:
-            orig = str(cell.value).replace('мг/кг', 'PPM')
+            orig = str(cell.value).replace("мг/кг", "PPM")
             name = normURI(orig)
         self.cls[col] = orig
         self.prev_class = orig, name
 
 
 class Yarki(ImpState):
-    _sample_names_ = ['Sample', 'Полевой', 'sample']
+    _sample_names_ = ["Sample", "Полевой", "sample"]
 
 
 class Kharantsy(ImpState):
-    _sample_names_ = ['Номер_пробы']
+    _sample_names_ = ["Номер_пробы"]
 
 
 class Khuzhir(Kharantsy):
@@ -449,12 +456,14 @@ class Khuzhir(Kharantsy):
 
 
 FILES = {
-    'Данные бар Ярки Сев Байкал.xls': (Yarki, ['Северный Байкал', 'Ярки']),
-    'Данные Харанцы Ольхон.xls': (Kharantsy, ['Ольхон', 'Харанцы']),
-    'Данные Хужир Ольхон.xls': (Khuzhir, ['Ольхон', 'Хужир']),
-    'Сводная таблица РФА_Бураевская площадь № 70-2024.xls':
-    (Yarki, ['Бураевская площадь']),
-    'Сводная таблица РФА-2022 Усть-Кут.xls': (Yarki, ['Усть-Кутская площадь']),
+    "Данные бар Ярки Сев Байкал.xls": (Yarki, ["Северный Байкал", "Ярки"]),
+    "Данные Харанцы Ольхон.xls": (Kharantsy, ["Ольхон", "Харанцы"]),
+    "Данные Хужир Ольхон.xls": (Khuzhir, ["Ольхон", "Хужир"]),
+    "Сводная таблица РФА_Бураевская площадь № 70-2024.xls": (
+        Yarki,
+        ["Бураевская площадь"],
+    ),
+    "Сводная таблица РФА-2022 Усть-Кут.xls": (Yarki, ["Усть-Кутская площадь"]),
 }
 
 
@@ -463,7 +472,7 @@ def parse_sheet(sh, sheetIRI, sheetName, comp):
     constr, locs = comp
     st = constr(G, sheetIRI, locations=locs)
     G.add((sheetIRI, RDF.type, GeoSite))
-    sheetName = sheetName.replace('.xls_', ', ')
+    sheetName = sheetName.replace(".xls_", ", ")
     G.add((sheetIRI, RDFS.label, Literal(sheetName)))
     for rx in range(sh.nrows):
         st.r(sh.row(rx), rx)
@@ -499,7 +508,8 @@ def update(g):
     # for row in qres:
     #     print(row)
 
-    g.update('''
+    g.update(
+        """
     PREFIX pt: <http://crust.irk.ru/ontology/pollution/terms/1.0/>
     PREFIX p: <http://crust.irk.ru/ontology/pollution/1.0/>
     PREFIX mt: <http://www.daml.org/2003/01/periodictable/PeriodicTable#>
@@ -520,12 +530,13 @@ def update(g):
         ?sample wgs:long ?long .
         ?sample wgs:lat ?lat .
     }
-    ''')
+    """
+    )
 
 
 PUTURL = "http://ktulhu.isclan.ru:8890/DAV/home/{user}/rdf_sink/{name}"
-USER = base64.b64decode("bG9hZGVyCg==").decode('utf8').strip()
-CRED = base64.b64decode("bG9hZGVyMzEyCg==").decode('utf8').strip()
+USER = base64.b64decode("bG9hZGVyCg==").decode("utf8").strip()
+CRED = base64.b64decode("bG9hZGVyMzEyCg==").decode("utf8").strip()
 
 
 def upload(filename, name=None):
@@ -540,29 +551,32 @@ def upload(filename, name=None):
             URL,
             # files=files,
             data=inp.read(),
-            auth=basic)
+            auth=basic,
+        )
         print("RC:", rc)
         return
 
         sg = str(P.samples)
         print("URL:", sg)
-        data = {
-            'new_name':
-            sg,
-            'graph_name':
-            'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl'
-        },
+        data = (
+            {
+                "new_name": sg,
+                "graph_name": "http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl",
+            },
+        )
         files = {
-            'new_name': (None, sg),
-            'graph_name':
-            (None, 'http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl')
+            "new_name": (None, sg),
+            "graph_name": (
+                None,
+                "http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl",
+            ),
         }
         rc = rq.post(
-            'http://ktulhu.isclan.ru:8890/conductor/graphs_page.vspx?page=1',
+            "http://ktulhu.isclan.ru:8890/conductor/graphs_page.vspx?page=1",
             files=files,
             # auth=basic
         )
-        print('RC:', rc)
+        print("RC:", rc)
 
 
 if __name__ == "__main__":
@@ -573,9 +587,9 @@ if __name__ == "__main__":
         with open(TARGET, "w") as o:
             # TODO: Shift location to a BNode using SPARQL.
             # o.write(G.serialize(format='turtle'))
-            o.write(G.serialize(format='turtle'))
-    upload(TARGET, 'samples.ttl')
+            o.write(G.serialize(format="turtle"))
+    upload(TARGET, "samples.ttl")
     if 0:
         with open(TARGETMT, "w") as o:
-            o.write(GMT.serialize(format='turtle'))
+            o.write(GMT.serialize(format="turtle"))
     print("#!INFO: Normal exit")
