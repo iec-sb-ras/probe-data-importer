@@ -24,6 +24,7 @@ PREFIXES = """
     PREFIX mt: <http://www.daml.org/2003/01/periodictable/PeriodicTable#>
     PREFIX wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX g: <{graph}>
 
 """
 
@@ -62,15 +63,19 @@ class Query:
             endpoint = self._endpoint_
         self.endpoint = endpoint
 
-    def results(self):
-        q = self.query.format(graph=self.graphIRI, **self.args)
-        q = self._prefixes_+"\n\n"+q
+    def results(self, debug=False):
+        # import pudb; pu.db
+
+        q = self._prefixes_+"\n\n"+self.query
+        q = q.format(graph=self.graphIRI, **self.args)
+        if debug:
+            print(q)
         sparql = SPARQLWrapper(self.endpoint)
         sparql.setQuery(q)
         sparql.setMethod(POST)
         sparql.setReturnFormat(JSON)
         results = sparql.query()
-        return conv(results)
+        return conv(results.convert())
 
 
 def pollution_data(site):
@@ -78,20 +83,20 @@ def pollution_data(site):
         """
     SELECT *
     FROM <{graph}>
-    WHERE {
+    WHERE {{
        ?site rdfs:label ?site_name .
        ?site a pt:Site  .
        FILTER (?site_name = "{site}"@ru)
        ?sample pt:location ?site .
        ?sample a pt:Sample .
        ?sample rdfs:label ?sample_name .
-    }
+    }}
     """
     )
 
-    print(samples)
     q = Query(samples, SAMPLEGRAPH, site=site)
-    pprint.pprint(q.results())
+    rc = q.results()
+    pprint.pprint(rc)
 
 def conv(results):
     header = results['head']['vars']
