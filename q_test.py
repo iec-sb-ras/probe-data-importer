@@ -2,10 +2,11 @@ from common import NTQuery, SAMPLEGRAPH, quicktest
 from namespace import PT, P, MT
 from collections import namedtuple
 
+
 def pollution_data(site, element):
     samples = """
     # SELECT *
-    SELECT ?uri, ?long, ?lat
+    SELECT ?uri, ?long, ?lat, ?value, ?unitid, ?unit
     FROM <{graph}>
     WHERE {{
        ?site rdfs:label ?site_name .
@@ -17,37 +18,20 @@ def pollution_data(site, element):
        ?uri wgs:location ?loc .
        ?loc wgs:lat ?lat .
        ?loc wgs:long ?long .
+       ?uri pt:measurement ?m .
+       ?m mt:element {element} .
+       ?m pt:value ?value .
+       ?m pt:unit ?unitid .
+       OPTIONAL {{
+          ?unitid rdfs:label ?unit .
+       }}
     }}
     """
 
-    qs = NTQuery(samples, SAMPLEGRAPH, site=site)
+    qs = NTQuery(samples, SAMPLEGRAPH, site=site, element=element.n3())
 
-    element_data = """
-    SELECT ?value, ?unit
-    FROM <{graph}>
-    WHERE {{
-        <{sample}> a pt:Sample .
-        <{sample}> pt:measurement ?m .
-        ?m mt:element {element} .
-        ?m pt:value ?value .
-        ?m pt:unit ?u .
-        OPTIONAL {{
-           ?u rdfs:label ?unit .
-        }}
-    }}
-    """
-
-    qs.print()
-    for sample in qs.results():
-        qe = NTQuery(element_data, SAMPLEGRAPH, sample=sample.uri,
-                     element=element.n3())
-        for el in qe.results():
-            row = namedtuple('Row', 'sample measurement')
-            yield row(sample, measurement=el)
-    #     else:
-    #         print("No measurements for {} in sample {}".format(site, sample))
-    # else:
-    #     print("No samples for {}".format(site))
+    # qs.print()
+    return qs.results()
 
 
 # quicktest("""
