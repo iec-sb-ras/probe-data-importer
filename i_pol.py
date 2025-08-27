@@ -34,7 +34,10 @@ EQUIPMENT_TYPE = "X-Ray fluorescence analysis"
 
 G = Graph(bind_namespaces="rdflib")
 GMT = Graph(bind_namespaces="rdflib")
-GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
+try:
+    GMT.parse(location=os.path.join(ONTODIR, 'PeriodicTable.owl'))
+except FileNotFoundError:
+    pass
 GS = [G, GMT]
 
 COMPRE = re.compile(r"^(([A-Z][a-z]{,2}\d{,2})+)(.*?)$")
@@ -577,7 +580,7 @@ def upload(filename, name=None):
 
 
 if __name__ == "__main__":
-    if 1:
+    if 0:
         for file, comp in FILES.items():
             parse_xl(file, comp)
         update(G)

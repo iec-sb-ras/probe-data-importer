@@ -70,8 +70,11 @@ class Query:
         self.endpoint = endpoint
         self.header = []
 
-    def results(self, debug=False):
+    def results(self, debug=None):
         # import pudb; pu.db
+
+        if debug is None:
+            debug = self.args.get("debug", False)
 
         q = self._prefixes_ + "\n\n" + self.query
         if debug:
