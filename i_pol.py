@@ -41,7 +41,7 @@
 
 # import pandas as pd
 import xlrd
-from rdflib import Graph, Namespace, FOAF, XSD, RDF, RDFS, URIRef, Literal, BNode
+from rdflib import Graph, Namespace, FOAF, XSD, RDF, RDFS, URIRef, Literal, BNode, DCTERMS
 from rdflib.namespace import WGS, SDO
 import os.path
 import unicodedata
@@ -64,10 +64,10 @@ try:
 except KeyError:
     pass
 
-ONTODIR = "./iec/"
-SUBDIR = "./iec/pollutions/"
+ONTODIR = "./data/kg"
+SUBDIR = "../data/xenolites/"
 
-TARGET = "import.ttl"
+TARGET = "alrosa.ttl"
 TARGETMT = "PeriodicTable.ttl"
 
 EQUIPMENT = "S8 Tiger"
@@ -81,10 +81,10 @@ except FileNotFoundError:
     pass
 GS = [G, GMT]
 
-COMPRE = re.compile(r"^(([A-Z][a-z]{,2}\d{,2})+)(.*?)$")
-COMPELRE = re.compile(r"[A-Z][a-z]{,2}\d{,2}")
+COMPRE = re.compile(r"^(([A-Z][A-Za-z]{,2}\d{,2})+)(.*?)$")
+COMPELRE = re.compile(r"[A-Z][A-Za-z]{,2}\d{,2}")
 # r'([A-Z][a-z]*)(\d+(?:\.\d+)?)?'
-ELRE = re.compile(r"^([A-Z][a-z]{,2})+(.*)$")
+ELRE = re.compile(r"^([A-Z][A-Za-z]{,2})+(.*)$")
 
 DEGRE = re.compile(r"^(\d{,3})(\D)(\d{,2})(\D)(\d{,2}(\.\d{,2})?)(\D)(.*)$")
 # 107°25'28.48"В
@@ -112,6 +112,7 @@ for _ in GS:
 
 ElToIRI = {}
 GeoSite = PT.Site
+DataSheet = PT.DataSheet
 GeoSample = PT.Sample
 GeoMeasure = PT.Measurement
 samplerel = PT.sample
@@ -164,7 +165,10 @@ def elem(name):
     """
 
     # import pudb; pu.db
-    return ElToIRI.get(name, None)
+    p1,p2=name[:1],name[1:]
+    p1=p1.upper()
+    p2=p2.lower()
+    return ElToIRI.get(p1+p2, None)
 
 
 class State(Enum):
@@ -223,9 +227,10 @@ class ImpState:
 
     _sample_iri_ = samplerel
     _belongs_iri_ = PT["location"]
+    _start_state_ = None
 
-    def __init__(self, graph, datasetIRI, locations=None):
-        self.state = State.NONE
+    def __init__(self, graph, datasetIRI, locations=None, **kwargs):
+        self.state = self._start_state_
         self.instr = False
         self.prev_class = None
         self.cls = {}
@@ -238,6 +243,16 @@ class ImpState:
         self.proc_locs(locations)
         self.loc_fence = len(self.locations)
         self.dlims = {}
+        self.kwargs = kwargs
+
+    def proc_value(self, value):
+        if isinstance(value, str):
+            sv = value.strip()
+            return sv
+        sn = value
+        if isinstance(sn, float) and sn.is_integer():
+            return int(sn)
+        return sn
 
     def proc_comp(self, names, value, delim=False):
         """
@@ -331,7 +346,14 @@ class ImpState:
             eliri = elem(el)
 
         if eliri is None:  # This is not a compound
-            finish()
+            if self._field_map_ is not None:
+                f = self._field_map_.get(fieldname, None)
+                if f is None:
+                    f = self._field_map_.get(name, None)
+                if f is None:
+                    finish()
+                else:
+                    f(self, value, names=names, delim=delim)
             return
 
         def make_detlim():
@@ -435,7 +457,7 @@ class ImpState:
     def ign(self):
         return self.state == State.IGNORE
 
-    def r(self, row, rx):
+    def row(self, row, rx):
         self.instr = False
         self.sample = None
 
@@ -564,33 +586,114 @@ class Yarki(ImpState):
 class Kharantsy(ImpState):
     _sample_names_ = ["Номер_пробы"]
 
-
 class Khuzhir(Kharantsy):
     pass
 
+class Alrosa(ImpState):
+
+    _start_state_ = State.HEADER
+    _sample_names_= ['SAMPLE_NAME']
+    _sheet_names_ = [1]
+
+    def row(self, row, rx):
+        self.instr = False
+        self.sample = None
+        if self.state == State.HEADER:
+            for i, cell in enumerate(row):
+                self.h(cell, rx, i)
+            self.state = State.DATA
+            return
+        # pu.db
+        if self.state == State.DATA:
+            if self.sample is None and self.sample_col is not None:
+                self.c(row[self.sample_col],
+                       rx, self.sample_col)
+            for i, cell in enumerate(row):
+                if i == self.sample_col:
+                    continue
+                self.c(cell, rx, i)
+
+    def c(self, cell, row, col, detlim=False):
+        if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
+            return
+        try:
+            field, fieldname = self.header[col]
+        except KeyError as k:
+            print(
+                "#! ERROR header key {} not in {} row: {}".format(k, self.header, row)
+            )
+            # quit()
+            return
+
+        # prt = self.cls.get(col, "")
+        prt = ""
+        if "%" in prt and "PPM" not in field:
+            prt = "_%"
+        elif "PPM" in prt and "%" not in field:
+            prt = "_PPM"
+        else:
+            prt = ""
+
+        add = self.g.add
+        ds = self.dsiri
+        # pu.db
+        if field == self._sample_iri_:
+            val = cell.value
+            if isinstance(val, str):
+                name = val.replace(" ", "")
+            else:
+                if isinstance(val, float):
+                    if val.is_integer():
+                        name = str(int(val))
+                    else:
+                        name = "{}".format(val)
+                else:
+                    name = "{}".format(val)
+            self.sample = P[name]
+            add((ds, self._sample_iri_, self.sample))
+            add((self.sample, RDF.type, GeoSample))
+            add((self.sample, RDFS.label, Literal(name)))
+            # add((self.sample, RDF.type, SpatialThing))
+            self.belongs(self.sample)
+        elif self.sample is not None:
+            self.proc_comp((field + prt, fieldname + prt), cell.value)
+        elif detlim:
+            self.proc_comp((field + prt, fieldname + prt), cell.value, detlim)
+        else:
+            value = self.proc_value(cell.value)
+            if value is not None and self.kwargs['sheetName']!='References':
+                print(
+                    "#! ERROR: nowhere to store {} R:{} C:{}\n#!{}".format(
+                        cell, row, col, self.header
+                    )
+                )
+                quit()
+            pu.db
+
+    def fCITATION(self, value, **kw):
+        add = self.g.add
+
+        add((self.sample, DCTERMS.bibliographicCitation, Literal(value)))
+
+    _field_map_ = {
+        'CITATION': fCITATION,
+        }
 
 FILES = {
-    "Данные бар Ярки Сев Байкал.xls": (Yarki, ["Северный Байкал", "Ярки"]),
-    "Данные Харанцы Ольхон.xls": (Kharantsy, ["Ольхон", "Харанцы"]),
-    "Данные Хужир Ольхон.xls": (Khuzhir, ["Ольхон", "Хужир"]),
-    "Сводная таблица РФА_Бураевская площадь № 70-2024.xls": (
-        Yarki,
-        ["Бураевская площадь"],
-    ),
-    "Сводная таблица РФА-2022 Усть-Кут.xls": (Yarki, ["Усть-Кутская площадь"]),
+    'БД georock corr_MVG.xls':(Alrosa, {'pages':(0,1)}),
+    'БД гранаты из ксенолитов.xls':(Alrosa, {'pages':[]})
 }
 
 
 def parse_sheet(sh, sheetIRI, sheetName, comp):
     # print("Cell D30 is {0}".format(sh.cell_value(rowx=29, colx=3)))
     constr, locs = comp
-    st = constr(G, sheetIRI, locations=locs)
-    G.add((sheetIRI, RDF.type, GeoSite))
+    st = constr(G, sheetIRI, locations=locs, sheetName=sheetName, sheet=sh)
+    G.add((sheetIRI, RDF.type, DataSheet))
     sheetName = sheetName.replace(".xls_", ", ")
     G.add((sheetIRI, RDFS.label, Literal(sheetName)))
     for rx in range(sh.nrows):
-        st.r(sh.row(rx), rx)
-
+        st.row(sh.row(rx), rx)
 
 def parse_xl(file, comp):
     """
@@ -606,12 +709,20 @@ def parse_xl(file, comp):
     # df = pd.read_excel(pathfile)
     wb = xlrd.open_workbook(pathfile)
     print("# Sheet names: {}".format(wb.sheet_names()))
-    for sheet in wb.sheet_names():
+    for sheet_no, sheet in enumerate(wb.sheet_names()):
         print("# Wb: {}, sheet: {}".format(file, sheet))
         sh = wb.sheet_by_name(sheet)
         sheetname = normURI(file + "_" + sheet)
         print("{0} {1} {2}".format(sh.name, sh.nrows, sh.ncols))
-        parse_sheet(sh, P[sheetname], file + "_" + sheet, comp)
+        constr, _ = comp
+        whole_name = file + "_" + sheet
+        if hasattr(constr, '_sheet_names_'):
+            if sheet in constr._sheet_names_:
+                parse_sheet(sh, P[sheetname], whole_name, comp)
+            elif sheet_no in constr._sheet_names_:
+                parse_sheet(sh, P[sheetname], whole_name, comp)
+        else:
+            parse_sheet(sh, P[sheetname], whole_name, comp)
 
 
 def update(g):
@@ -709,16 +820,18 @@ def upload(filename, name=None):
 
 
 if __name__ == "__main__":
-    if 0:
+    if 1:
+        import pudb
         for file, comp in FILES.items():
             parse_xl(file, comp)
-        update(G)
+        # update(G)
         with open(TARGET, "w") as o:
+
             # TODO: Shift location to a BNode using SPARQL.
             # o.write(G.serialize(format='turtle'))
             o.write(G.serialize(format="turtle"))
-    upload(TARGET, "samples.ttl")
-    if 0:
+    # upload(TARGET, "samples.ttl")
+    if 1:
         with open(TARGETMT, "w") as o:
             o.write(GMT.serialize(format="turtle"))
     print("#!INFO: Normal exit")
