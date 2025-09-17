@@ -1,0 +1,6 @@
+rdflib
+sparqlwrapper
+requests
+xlrd
+lxml
+pandas
