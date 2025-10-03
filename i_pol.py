@@ -1068,32 +1068,15 @@ class Alrosa(ImpState):
             self._process_inclusion_type(val)
 
         elif field == "DRILLING_DEPTH_MAX":
-            # Обработка максимальной глубины сверления
-            val = float(val)
-            add((self.sample, PT.drillnigDepthMax, Literal(val)))
-
+            self._process_drilling_depth_max(val)
         elif field == "GRAIN_SIZE":
-            # Обработка максимальной глубины сверления
-            val = float(val)
-            add((self.analysis, PT.grainSize, Literal(val)))
-
+            self._process_grain_size(val)
         elif field == "SPOT":
-            # Обработка максимальной глубины сверления
-            add((self.analysis, PT.spotDiameter, Literal(val)))
-
+            self._process_spot(val)
         elif field == "CRYSTAL":
-            # Обработка максимальной глубины сверления
-            add((self.analysis, PT.crystal, Literal(val)))
-
-        elif field == 'RIM_CORE_MINERAL_GRAINS':
-            # Обработка максимальной глубины сверления
-            val = val.strip().upper()
-            if val == "INTERMEDIATE ZONE":
-                val = "Mantle"
-            else:
-                val = val.capitalize()
-            add((self.analysis, PT.analysisSpot, PT[val]))
-
+            self._process_crystal(val)
+        elif field == "RIM_CORE_MINERAL_GRAINS":
+            self._process_rim_core_mineral_grains(val)
         # Обработка химических данных (существующий код)
         elif self.sample is not None:
             self.proc_comp((field + prt, fieldname + prt), cell.value)
@@ -1106,6 +1089,36 @@ class Alrosa(ImpState):
                     cell, row, col, self.header))
                 quit()
 
+    def _process_primary_secondary(self, val):
+        """Process PRIMARY_SECONDARY field"""
+        self._process_inclusion_type(val)
+
+    def _process_drilling_depth_max(self, val):
+        """Process DRILLING_DEPTH_MAX field"""
+        val = float(val)
+        self.add((self.sample, PT.drillnigDepthMax, Literal(val)))
+
+    def _process_grain_size(self, val):
+        """Process GRAIN_SIZE field"""
+        val = float(val)
+        self.add((self.analysis, PT.grainSize, Literal(val)))
+
+    def _process_spot(self, val):
+        """Process SPOT field"""
+        self.add((self.analysis, PT.spotDiameter, Literal(val)))
+
+    def _process_crystal(self, val):
+        """Process CRYSTAL field"""
+        self.add((self.analysis, PT.crystal, Literal(val)))
+
+    def _process_rim_core_mineral_grains(self, val):
+        """Process RIM_CORE_MINERAL_GRAINS field"""
+        val = val.strip().upper()
+        if val == "INTERMEDIATE ZONE":
+            val = "Mantle"
+        else:
+            val = val.capitalize()
+        self.add((self.analysis, PT.analysisSpot, PT[val]))
     def _add_location_metadata(self, location_bnode, row):
         """Добавляет метаданные локации в BNode"""
         add = self.add
