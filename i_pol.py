@@ -560,6 +560,22 @@ class ImpState:
                 add((self.analysis, rel, Literal(ovalue)))
 
         def degs(v):
+            """
+            Преобразует строку с географическими координатами в формате градусов, минут и секунд в десятичные градусы.
+
+            Аргументы:
+                v (str или float): Строка с координатами в формате "градусы°минуты'секунды\"направление"
+                                  или число float, которое возвращается без изменений.
+
+            Возвращает:
+                float: Координата в десятичных градусах.
+
+            Примеры:
+                >>> degs("107°25'28.48\"В")
+                107.42457777777778
+                >>> degs(45.5)
+                45.5
+            """
             if isinstance(v, float):
                 return v
             # 107°25'28.48"В
@@ -1119,6 +1135,7 @@ class Alrosa(ImpState):
         else:
             val = val.capitalize()
         self.add((self.analysis, PT.analysisSpot, PT[val]))
+
     def _add_location_metadata(self, location_bnode, row):
         """Добавляет метаданные локации в BNode"""
         add = self.add
