@@ -53,6 +53,7 @@ from requests.auth import HTTPBasicAuth
 import base64
 import os
 from namespace import PT, P, SCHEMA, BIBO, MT, GS, CGI, DBP, DBP_OWL
+from pprint import pprint
 
 import pudb
 
@@ -67,7 +68,7 @@ try:
 except KeyError:
     pass
 
-ONTODIR = "./data/kg"
+ONTODIR = "../data/kg"
 SUBDIR = "../data/xenolites/"
 
 TARGET = "alrosa.ttl"
@@ -116,6 +117,7 @@ for _ in GS:
     _.bind("cgi", CGI)
     _.bind("dbp", DBP)
     _.bind("dbp_owl", DBP_OWL)
+    _.bind("wgs", WGS)
     # _.bind('geo', GEO)
 
 ElToIRI = {}
@@ -285,7 +287,6 @@ def elem(name):
         URIRef: IRI элемента, или None, если не найден.
     """
 
-    # import pudb; pu.db
     p1, p2 = name[:1], name[1:]
     p1 = p1.upper()
     p2 = p2.lower()
@@ -497,6 +498,9 @@ class ImpState:
         self.loc_fence = len(self.locations)
         self.dlims = {}
         self.kwargs = kwargs
+        self.non_iso = {}
+        self.measurements = {}
+        self.analysis = None
 
     def proc_value(self, value):
         if isinstance(value, str):
@@ -529,7 +533,6 @@ class ImpState:
         dl = None
         ovalue = value  # Original value
         if "<" in uvalue:
-            # import pudb; pu.db
             dl = value.lstrip("<").strip()
             value = dl
         name, fieldname = names
@@ -540,10 +543,10 @@ class ImpState:
         rel = PT[normURI(name)]
 
         def finish():
-            if self.sample and not delim:
+            if self.analysis and not delim:
                 # print(type(ovalue))
                 ### print("->{}->{}".format(rel, repr(ovalue)))
-                add((self.sample, rel, Literal(ovalue)))
+                add((self.analysis, rel, Literal(ovalue)))
 
         def degs(v):
             if isinstance(v, float):
@@ -573,7 +576,7 @@ class ImpState:
         if name in ["ППП", "ппп"]:
             rel = PT.il  # ignition losses
             m = BNode()
-            add((self.sample, PT.measurement, m))
+            add((self.analysis, PT.measurement, m))
             add((m, PT.value, Literal(value)))
             add((m, RDF.type, GeoMeasure))
             add((m, RDF.type, IgnitionLosses))
@@ -621,14 +624,10 @@ class ImpState:
             return m
 
         m = None
-        # import pudb; pu.db
-        # if name == 'Sn_PPM':
-        #     print(name, value)
-        #     import pudb; pu.db
 
-        if self.sample and not delim:
+        if self.analysis and not delim:
             m = BNode()
-            add((self.sample, PT.measurement, m))
+            add((self.analysis, PT.measurement, m))
             add((m, RDF.type, GeoMeasure))
         if delim:
             m = make_detlim()
@@ -792,7 +791,6 @@ class ImpState:
                         name = "{}".format(val)
                 else:
                     name = "{}".format(val)
-            self.sample = P['sample-'+name]
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
             add((self.sample, RDFS.label, Literal(name)))
@@ -862,16 +860,15 @@ class Alrosa(ImpState):
         return refURI, reference
 
     def row(self, row, rx):
-        #        pu.db
         self.instr = False
         self.sample = None
+        self.analysis = None
         if self.state == State.HEADER:
             for i, cell in enumerate(row):
                 self.h(cell, rx, i)
             self.state = State.DATA
             print("HEADER:{}".format(self.header))
             return
-        # pu.db
         c0 = row[0]
         v0 = str(c0.value).strip()
         if v0.startswith("#REFERENCES"):
@@ -912,7 +909,6 @@ class Alrosa(ImpState):
 
         add = self.add
         ds = self.dsiri
-        # pu.db
         val = cell.value
         if field == self._sample_iri_:
             if isinstance(val, str):
@@ -925,18 +921,34 @@ class Alrosa(ImpState):
                         name = "{}".format(val)
                 else:
                     name = "{}".format(val)
+            name = name.strip().lstrip('samp.')
+            name_orig = name
             name = name.replace("^A", "")
             name = name.replace("^D", "")
             name = name.replace("^M", "")
             name = name.replace("/", "-sl-")
             name = name.replace("?", "-q-")
             name = name.strip(" ")
-            name = name.lstrip('samp.')
             name = name.lstrip()
-            self.sample = P[name]
+            if name_orig!=name:
+                # print("PROBLEMATIC:{} ({})".format(name, name_orig))
+                ns = self.non_iso.setdefault(name, [])
+                ns.append(name_orig)
+            samplename = 'sample-'+name
+            sample_iri = P[samplename]
+            meas = self.measurements
+            mlist = meas.setdefault(sample_iri, [])
+            self.analysis = P['analysis-{}-{}'.format(len(mlist)+1, samplename)]
+            mlist.append(self.analysis)
+            # if (sample_iri, RDF.type, PT.GeoSample) in self.g:
+            #     print("Double: {} \n ROW:{}".format())
+            #     quit
+            self.sample = sample_iri
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
             add((self.sample, RDFS.label, Literal(name)))
+            add((self.sample, PT.hasAnalysis, self.analysis))
+
             # add((self.sample, RDF.type, SpatialThing))
             self.belongs(self.sample)
         elif field == "CITATION":
@@ -1155,7 +1167,7 @@ class Alrosa(ImpState):
 
     def _process_mineral(self, value):
         """Обработка минерала"""
-        if not hasattr(self, 'sample') or self.sample is None:
+        if not hasattr(self, 'sample') or self.analysis is None:
             return
 
         if isinstance(value, str) and value.strip():
@@ -1165,7 +1177,7 @@ class Alrosa(ImpState):
                     mineral_iri = PT[normURI(mineral)]
                     self.add((mineral_iri, RDF.type, PT.Mineral))
                     self.add((mineral_iri, RDFS.label, Literal(mineral.capitalize())))
-                    self.add((self.sample, PT.mineral, mineral_iri))
+                    self.add((self.analysis, PT.mineral, mineral_iri))
 
     def _process_inclusion_type(self, value):
         """Обработка типа включения"""
@@ -1231,6 +1243,8 @@ def parse_sheet(sh, sheetIRI, sheetName, comp):
     print("Parsing sheet: {}".format(sheetName))
     for rx in range(sh.nrows):
         st.row(sh.row(rx), rx)
+    print("PROBLEMATICS:")
+    pprint(st.non_iso)
 
 
 def parse_xl(file, comp):
@@ -1248,7 +1262,6 @@ def parse_xl(file, comp):
     wb = xlrd.open_workbook(pathfile)
     print("# Sheet names: {}".format(wb.sheet_names()))
     for sheet_no, sheet in enumerate(wb.sheet_names()):
-        #        pu.db
         print("# Wb: {}, sheet: {}".format(file, sheet))
         sh = wb.sheet_by_name(sheet)
         sheetname = normURI(file + "_" + sheet)
@@ -1362,14 +1375,16 @@ if __name__ == "__main__":
             parse_xl(file, comp)
             break
         # update(G)
-        with open(TARGET, "w") as o:
+        target = os.path.join(ONTODIR,TARGET)
+        with open(target, "w") as o:
 
             # TODO: Shift location to a BNode using SPARQL.
             # o.write(G.serialize(format='turtle'))
             o.write(G.serialize(format="turtle"))
-            print("WROTE: {}".format(TARGET))
+            print("WROTE: {}".format(target))
     # upload(TARGET, "samples.ttl")
     if 0:
-        with open(TARGETMT, "w") as o:
+        targetmt = os.path.join(ONTODIR, TARGETMT)
+        with open(targetmt, "w") as o:
             o.write(GMT.serialize(format="turtle"))
     print("#!INFO: Normal exit")

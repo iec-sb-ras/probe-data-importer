@@ -1,8 +1,14 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix schema: <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix pi: <http://crust.irk.ru/ontology/contents/1.0/> .
+@prefix mt: <http://www.daml.org/2003/01/periodictable/PeriodicTable#> .
 @prefix gs: <http://www.geosciml.org/ontologies/202311/> .
 @prefix cgi: <http://resource.geosciml.org/classifier/cgi/> .
-@prefix dbp: <http://dbpedia.org/resource/> .
 @prefix dbp-owl: <http://dbpedia.org/ontology/> .
 @prefix : <http://crust.irk.ru/ontology/contents/terms/1.0/> .
 
