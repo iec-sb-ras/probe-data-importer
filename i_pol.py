@@ -41,7 +41,8 @@
 
 # import pandas as pd
 import xlrd
-from rdflib import Graph, Namespace, FOAF, XSD, RDF, RDFS, URIRef, Literal, BNode, DCTERMS
+from rdflib import (Graph, Namespace, FOAF, XSD, RDF, RDFS, DCTERMS, URIRef,
+                    Literal, BNode)
 from rdflib.namespace import WGS, SDO
 import os.path
 import unicodedata
@@ -51,7 +52,9 @@ import requests as rq
 from requests.auth import HTTPBasicAuth
 import base64
 import os
-from namespace import PT, P, MT
+from namespace import PT, P, SCHEMA, BIBO, MT, GS, CGI, DBP, DBP_OWL
+
+import pudb
 
 try:
     del os.environ["HTTP_PROXY"]
@@ -108,6 +111,11 @@ for _ in GS:
     _.bind("pt", PT)
     _.bind("pi", P)
     _.bind("mt", MT)
+    _.bind("bibo", BIBO)
+    _.bind("gs", GS)
+    _.bind("cgi", CGI)
+    _.bind("dbp", DBP)
+    _.bind("dbp_owl", DBP_OWL)
     # _.bind('geo', GEO)
 
 ElToIRI = {}
@@ -130,6 +138,119 @@ for el in GMT.subjects(RDF.type, MT.Element):
     ElToIRI[el.fragment] = el
 
 # print(ElToIRI)
+
+
+def load_lithology_ontology(graph=None,
+                            ttl_file="lithology.ttl",
+                            ontodir="./"):
+    """
+    Загружает онтологию литологии из TTL-файла в RDF-граф.
+
+    Args:
+        graph (Graph): RDF-граф для загрузки онтологии. Если None, создается новый.
+        ttl_file (str): Имя TTL-файла с онтологией литологии.
+        ontodir (str): Директория с онтологическими файлами.
+
+    Returns:
+        Graph: Граф с загруженной онтологией литологии.
+    """
+    if graph is None:
+        graph = Graph(bind_namespaces="rdflib")
+
+    # Определяем полный путь к файлу
+    ttl_path = os.path.join(ontodir, ttl_file)
+
+    try:
+        # Загружаем онтологию литологии
+        graph.parse(location=ttl_path, format="turtle")
+        print(f"✓ Онтология литологии загружена из: {ttl_path}")
+        print(f"✓ Триплетов в графе после загрузки: {len(graph)}")
+
+        # Проверяем основные классы онтологии
+        check_ontology_classes(graph)
+
+    except FileNotFoundError:
+        print(f"⚠ Файл онтологии не найден: {ttl_path}")
+        print("  Создайте файл lithology.ttl с онтологией литологии")
+    except Exception as e:
+        print(f"✗ Ошибка загрузки онтологии: {e}")
+
+    return graph
+
+
+load_lithology_ontology(G)
+
+def snake_to_camel(snake_str: str, capitalize_first: bool = False) -> str:
+    """
+    Convert snake_case string to camelCase.
+
+    Args:
+        snake_str: The snake_case string to convert
+        capitalize_first: If True, returns UpperCamelCase (PascalCase),
+                         if False, returns lowerCamelCase (default)
+
+    Returns:
+        The converted camelCase string
+    """
+    if not snake_str:
+        return snake_str
+
+    # Split by underscore and capitalize each word except first one
+    parts = snake_str.split('_')
+
+    if capitalize_first:
+        # UpperCamelCase (PascalCase) - capitalize all words
+        return ''.join(part.capitalize() for part in parts)
+    else:
+        # lowerCamelCase - capitalize all words except first
+        return parts[0] + ''.join(part.capitalize() for part in parts[1:])
+
+def capitalize(words):
+    orig = " ".join(words.lower().split())
+    orig = orig.capitalize()
+    return orig
+
+def check_ontology_classes(graph):
+    """
+    Проверяет наличие основных классов онтологии литологии в графе.
+
+    Args:
+        graph (Graph): RDF-граф для проверки.
+    """
+    # Определяем namespace для литологии (предполагаем, что он используется в TTL)
+    LITHO = Namespace("http://example.org/geology/")
+    graph.bind("litho", LITHO)
+
+    # Проверяем основные классы
+    core_classes = {
+        "RockType": "Тип горной породы",
+        "Mineral": "Минерал",
+        "GeologicStructure": "Геологическая структура",
+        "UltramaficRock": "Ультрамафическая порода",
+        "MetamorphicRock": "Метаморфическая порода"
+    }
+
+    print("\n=== ПРОВЕРКА КЛАССОВ ОНТОЛОГИИ ===")
+
+    for class_name, description in core_classes.items():
+        # Проверяем в разных namespace'ах
+        class_iris = [
+            LITHO[class_name],
+            URIRef(f"http://example.org/geology/{class_name}"),
+            URIRef(
+                f"http://crust.irk.ru/ontology/pollution/terms/1.0/{class_name}"
+            )
+        ]
+
+        found = False
+        for class_iri in class_iris:
+            if (class_iri, RDF.type, RDFS.Class) in graph:
+                print(f"✓ Найден класс: {class_name} ({description})")
+                found = True
+                break
+
+        if not found:
+            print(f"⚠ Класс не найден: {class_name}")
 
 
 def normURI(s):
@@ -165,10 +286,121 @@ def elem(name):
     """
 
     # import pudb; pu.db
-    p1,p2=name[:1],name[1:]
-    p1=p1.upper()
-    p2=p2.lower()
-    return ElToIRI.get(p1+p2, None)
+    p1, p2 = name[:1], name[1:]
+    p1 = p1.upper()
+    p2 = p2.lower()
+    return ElToIRI.get(p1 + p2, None)
+
+
+# Словарь для отображения текстур на IRI онтологии
+ROCK_TEXTURE_MAPPING = {
+    # Основные текстуры
+    'COARSE': PT.CoarseGrainedTexture,
+    'COARSE-GRAINED': PT.CoarseGrainedTexture,
+    'MEDIUM-GRAINED': PT.MediumGrainedTexture,
+    'FINE-GRAINED': PT.FineGrainedTexture,
+    'FINE': PT.FineGrainedTexture,
+
+    # Породные текстуры
+    'GRANOBLASTIC': PT.GranoblasticTexture,
+    'PORPHYROCLASTIC': PT.PorphyroclasticTexture,
+    'PORPHYRITIC': PT.PorphyriticTexture,
+    'CUMULATE': PT.CumulateTexture,
+    'MEGACRYSTALLINE': PT.MegacrystallineTexture,
+    'MEGACRYSTIC': PT.MegacrystallineTexture,
+    'GRANULAR': PT.GranularTexture,
+    'MOSAIC': PT.MosaicTexture,
+    'EQUIGRANULAR': PT.EquigranularTexture,
+    'SHEARED': PT.ShearedTexture,
+    'FOLIATED': PT.FoliatedTexture,
+    'FLUIDAL': PT.FluidalTexture,
+    'BANDED': PT.BandedTexture,
+    'LAMINAR': PT.LaminatedTexture,
+    'LAMINATED': PT.LaminatedTexture,
+
+    # Комбинированные текстуры
+    'COARSE PORPHYRITIC': PT.CoarsePorphyriticTexture,
+    'FINE PORPHYRITIC': PT.FinePorphyriticTexture,
+    'COARSE-PORPHYRIC': PT.CoarsePorphyriticTexture,
+    'COARSE PORPHYROCLASTIC': PT.CoarsePorphyroclasticTexture,
+    'FINE-GRAINED PORPHYROCLASTIC': PT.FineGrainedPorphyroclasticTexture,
+    'FINE PORPHYROCLASTIC': PT.FineGrainedPorphyroclasticTexture,
+    'MOSAIC-PORPHYROCLASTIC': PT.MosaicPorphyroclasticTexture,
+    'GRANOBLASTIC, BANDED': PT.GranoblasticBandedTexture,
+    'COARSE GRANOBLASTIC': PT.CoarseGranoblasticTexture,
+    'COARSE EQUANT': PT.CoarseEquantTexture,
+    'COARSE-EQUANT': PT.CoarseEquantTexture,
+    'COARSE TABULAR': PT.CoarseTabularTexture,
+    'COARSE-TABULAR': PT.CoarseTabularTexture,
+    'MEDIUM- TO COARSE-GRAINED': PT.MediumToCoarseGrainedTexture,
+    'FINE- TO MEDIUM-GRAINED': PT.FineToMediumGrainedTexture,
+    'FINE- TO COARSE-GRAINED': PT.FineToMediumGrainedTexture,
+    'HETEROGRANULAR': PT.HeterogeneousTexture,
+    'ALLOTRIOMORPHIC GRANULAR': PT.AllotriomorphicGranularTexture,
+    'XENOMORPHIC GRANULAR': PT.XenomorphicGranularTexture,
+    'INTERLOCKING': PT.InterlockingTexture,
+    'DEFORMED': PT.DeformedTexture,
+    'TRANSITIONAL': PT.TransitionalTexture,
+    'MYLONITIC': PT.MyloniticTexture,
+    'FLUIDAL MOSAIC': PT.FluidalMosaicTexture,
+
+    # Специфичные текстуры
+    'COARSE LAMELLAR': PT.CoarseLamellarTexture,
+    'COARSE PROTOGRANULAR': PT.CoarseProtogranularTexture,
+    'PROTOGRANULAR': PT.ProtogranularTexture,
+
+    # Сложные комбинированные текстуры
+    'LAYERED AND DISRUPTED MOSAIC PORPHYROCLASTIC': PT.LayeredDisruptedMosaicPorphyroclasticTexture,
+    'FLUIDAL MOSAIC PORPHYROCLASTIC': PT.FluidalMosaicTexture,
+    'MOSAIC-TABULAR TO EQUIGRANULAR': PT.MosaicTexture,
+    'HYPAUTOMORPHIC, OPHITIC WITH TRANSITION TO GRANO-LAPIDOBLASTIC': PT.HypautomorphicOphiticTexture,
+    'FASCICULATE': PT.FasciculateTexture,
+    'POLYGONAL GRANOBLASTIC': PT.PolygonalGranoblasticTexture,
+
+    # Порфиробластические текстуры
+    'PORPHYROBLASTIC': PT.PorphyroclasticTexture,
+
+    # Упрощенные маппинги для сложных комбинаций
+    'COARSE-PORPHYRIC, PORPHYROCLASTIC, WEAKLY LAMINAR': PT.ComplexTexture,
+    'COARSE GRANULAR': PT.CoarseGrainedTexture,
+    'COARSE-GRANULAR': PT.CoarseGrainedTexture,
+    'MEDIUM-EQUANT': PT.EquigranularTexture,
+    'MEDIUM-TABULAR': PT.MediumGrainedTexture,
+    'COARSE-EQUANT/TABULAR FOLIATED': PT.CoarseEquantTexture,
+    'COARSE-TABULAR FOLIATED': PT.CoarseTabularTexture,
+
+    # Обработка опечаток
+    'COASRSE': PT.CoarseGrainedTexture,
+    'GRANULOBLASTIC': PT.GranoblasticTexture
+}
+
+def get_texture_iri(texture_string):
+    """
+    Преобразует строку с описанием текстуры в IRI онтологии.
+
+    Args:
+        texture_string (str): Строка с описанием текстуры горной породы
+
+    Returns:
+        URIRef: IRI соответствующего класса текстуры или PT.ComplexTexture если не найдено
+    """
+    if not texture_string:
+        return None
+
+    # Нормализация строки: верхний регистр и удаление лишних пробелов
+    normalized = ' '.join(texture_string.upper().split())
+
+    # Прямое соответствие
+    if normalized in ROCK_TEXTURE_MAPPING:
+        return ROCK_TEXTURE_MAPPING[normalized]
+
+    # Попытка найти частичное соответствие для сложных описаний
+    for key, value in ROCK_TEXTURE_MAPPING.items():
+        if key in normalized:
+            return value
+
+    # Возвращаем общий класс для неизвестных текстур
+    return PT.ComplexTexture
 
 
 class State(Enum):
@@ -179,6 +411,7 @@ class State(Enum):
     IGNORE = 4
     LOCATION = 5
     DETLIM = 6
+    REFERENCES = 7
 
 
 class ImpState:
@@ -254,6 +487,10 @@ class ImpState:
             return int(sn)
         return sn
 
+    def add(self, triple):
+        # print("T:{}".format(triple))
+        self.g.add(triple)
+
     def proc_comp(self, names, value, delim=False):
         """
         Обрабатывает химическое соединение или элемент.
@@ -278,13 +515,14 @@ class ImpState:
         name, fieldname = names
         name = name.strip()
         mo = COMPRE.match(name)
-        add = self.g.add
+        add = self.add
+
         rel = PT[normURI(name)]
 
         def finish():
             if self.sample and not delim:
                 # print(type(ovalue))
-                print("->{}->{}".format(rel, repr(ovalue)))
+                ### print("->{}->{}".format(rel, repr(ovalue)))
                 add((self.sample, rel, Literal(ovalue)))
 
         def degs(v):
@@ -414,11 +652,8 @@ class ImpState:
             add((m, MT.element, eliri))
             finish_dl(el, m)
         else:
-            print(
-                "#!ERROR unknown combination of {}, and {}=?={}: {}.".format(
-                    rc, el1, el, eliri
-                )
-            )
+            print("#!ERROR unknown combination of {}, and {}=?={}: {}.".format(
+                rc, el1, el, eliri))
             quit()
         if "TOT" in rupper or "ОБЩ" in rupper:
             add((m, PT.total, Literal(True)))
@@ -436,7 +671,7 @@ class ImpState:
         if locs:
             prev = locs[-1]
             self.belongs(uriloc, prev)
-        add = self.g.add
+        add = self.add
         add((uriloc, RDFS.label, Literal(location, lang="ru")))
         add((uriloc, RDF.type, GeoSite))
         self.locations.append(uriloc)
@@ -447,7 +682,7 @@ class ImpState:
                 location = self.locations[-1]
             else:
                 return  # None to belong to
-        add = self.g.add
+        add = self.add
         # print(self.locations)
         add((obj, self._belongs_iri_, location))
 
@@ -510,9 +745,8 @@ class ImpState:
         try:
             field, fieldname = self.header[col]
         except KeyError as k:
-            print(
-                "#! ERROR header key {} not in {} row: {}".format(k, self.header, row)
-            )
+            print("#! ERROR header key {} not in {} row: {}".format(
+                k, self.header, row))
             # quit()
             return
 
@@ -524,10 +758,10 @@ class ImpState:
         else:
             prt = ""
 
-        add = self.g.add
+        add = self.add
         ds = self.dsiri
+        val = cell.value
         if field == self._sample_iri_:
-            val = cell.value
             if isinstance(val, str):
                 name = val.replace(" ", "")
             else:
@@ -549,11 +783,8 @@ class ImpState:
         elif detlim:
             self.proc_comp((field + prt, fieldname + prt), cell.value, detlim)
         else:
-            print(
-                "#! ERROR: nowhere to store {} R:{} C:{}\n#!{}".format(
-                    cell, row, col, self.header
-                )
-            )
+            print("#! ERROR: nowhere to store {} R:{} C:{}\n#!{}".format(
+                cell, row, col, self.header))
             quit()
 
     def h(self, cell, row, col):
@@ -586,32 +817,58 @@ class Yarki(ImpState):
 class Kharantsy(ImpState):
     _sample_names_ = ["Номер_пробы"]
 
+
 class Khuzhir(Kharantsy):
     pass
+
 
 class Alrosa(ImpState):
 
     _start_state_ = State.HEADER
-    _sample_names_= ['SAMPLE_NAME']
-    _sheet_names_ = [1]
+    _sample_names_ = ['SAMPLE_NAME']
+    _sheet_names_ = [0]
+
+    def reffield(self, value):
+        try:
+            cnum, reference = value.split(maxsplit=1)
+        except ValueError:
+            cnum = value.strip()
+            reference = ""
+        num = cnum.strip().lstrip("[").rstrip("]")
+        refURI = P["ref-{}".format(num)]
+        reference = reference.strip()
+        if not reference:
+            reference = None
+        return refURI, reference
 
     def row(self, row, rx):
+        #        pu.db
         self.instr = False
         self.sample = None
         if self.state == State.HEADER:
             for i, cell in enumerate(row):
                 self.h(cell, rx, i)
             self.state = State.DATA
+            print("HEADER:{}".format(self.header))
             return
         # pu.db
+        c0 = row[0]
+        v0 = str(c0.value).strip()
+        if v0.startswith("#REFERENCES"):
+            self.state = State.REFERENCES
+            return
         if self.state == State.DATA:
             if self.sample is None and self.sample_col is not None:
-                self.c(row[self.sample_col],
-                       rx, self.sample_col)
+                self.c(row[self.sample_col], rx, self.sample_col)
             for i, cell in enumerate(row):
                 if i == self.sample_col:
                     continue
                 self.c(cell, rx, i)
+        if self.state == State.REFERENCES:
+            refURI, reference = self.reffield(v0)
+            assert (reference is not None)
+            self.add((refURI, RDF.type, BIBO["AcademicArticle"]))
+            self.add((refURI, RDFS.label, Literal(reference)))
 
     def c(self, cell, row, col, detlim=False):
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
@@ -619,9 +876,8 @@ class Alrosa(ImpState):
         try:
             field, fieldname = self.header[col]
         except KeyError as k:
-            print(
-                "#! ERROR header key {} not in {} row: {}".format(k, self.header, row)
-            )
+            print("#! ERROR header key {} not in {} row: {}".format(
+                k, self.header, row))
             # quit()
             return
 
@@ -634,11 +890,11 @@ class Alrosa(ImpState):
         else:
             prt = ""
 
-        add = self.g.add
+        add = self.add
         ds = self.dsiri
         # pu.db
+        val = cell.value
         if field == self._sample_iri_:
-            val = cell.value
             if isinstance(val, str):
                 name = val.replace(" ", "")
             else:
@@ -649,39 +905,115 @@ class Alrosa(ImpState):
                         name = "{}".format(val)
                 else:
                     name = "{}".format(val)
+            name = name.replace("^A", "")
+            name = name.replace("^D", "")
+            name = name.replace("^M", "")
+            name = name.replace("/", "-sl-")
+            name = name.replace("?", "-q-")
+            name = name.strip(" ")
+            name = name.lstrip('samp.')
+            name = name.lstrip()
             self.sample = P[name]
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
             add((self.sample, RDFS.label, Literal(name)))
             # add((self.sample, RDF.type, SpatialThing))
             self.belongs(self.sample)
+        elif field == "CITATION":
+            assert isinstance(val, str)
+            refURI, reference = self.reffield(val)
+            add((self.sample, BIBO.cites, refURI))
+        elif field == "LOCATION":
+            assert isinstance(val, str)
+            locations = val.split("/")
+            locations = [l.strip() for l in locations]
+            locids = [normURI(l.lower()) for l in locations]
+            for locationid, location in zip(locids, locations):
+                locationIRI = PT[locationid]
+                add((locationIRI, RDF.type, SCHEMA['Place']))
+                add((locationIRI, RDFS.label, Literal(location)))
+                add((self.sample, SCHEMA.fromLocation, locationIRI))
+        elif field == "TECTONIC_SETTING":
+            assert isinstance(val, str)
+            orig = capitalize(val)
+            val = val.strip().lower()
+            valIRI = normURI(val)
+            _ = PT[valIRI]
+            add((_, RDF.type, PT['TectonicSetting']))
+            add((_, RDFS.label, Literal(orig)))
+            add((self.sample, PT.tectonicSetting, _))
+        elif field == "MINERAL":
+            assert isinstance(val, str)
+            val = val.strip().lower()
+            valIRI = normURI(val)
+            _ = PT[valIRI]
+            # add((_, RDF.type, PT['Mineral']))
+            # add((_, RDFS.label, Literal(val)))
+            add((self.sample, PT.mineral, _))
+        elif field == "PRIMARY_SECONDARY":
+            assert isinstance(val, str)
+            val = val.strip()
+            val = val = "primary"
+            val = "Primary" if val else "Secondary"
+            add((self.sample, P.inclusion, PT[val]))
+        elif field == "ROCK_NAME":
+            assert isinstance(val, str)
+            rocks = [v.strip().lower() for v in val.split(",")]
+            for r in rocks:
+                if r in ['xenolith']:
+                    add((self.sample, PT.geologicalStructure, PT[r]))
+                elif r in ['megacryst']:
+                    add((self.sample, PT.geologicUnit, PT[r]))
+                elif r in [
+                        "garnet", "spinel", "olivine", "clinopyroxene",
+                        "orthopyroxene", "ilmenite", "phlogopite", "amphibole",
+                        "biotite", "chromite", "kyanite", "diamond",
+                        "graphite", "corundum", "sanidine", "enstatite",
+                        "fassaite"
+                ]:
+                    add((self.sample, PT.mineral, PT[r]))
+                else:
+                    add((self.sample, PT.rockType, PT[r]))
+        elif field == "ROCK_TEXTURE":
+            assert isinstance(val, str)
+            texture_iri = get_texture_iri(val)
+            if texture_iri:
+                self.add((self.sample, PT.rockTexture, texture_iri))
         elif self.sample is not None:
             self.proc_comp((field + prt, fieldname + prt), cell.value)
         elif detlim:
             self.proc_comp((field + prt, fieldname + prt), cell.value, detlim)
         else:
             value = self.proc_value(cell.value)
-            if value is not None and self.kwargs['sheetName']!='References':
-                print(
-                    "#! ERROR: nowhere to store {} R:{} C:{}\n#!{}".format(
-                        cell, row, col, self.header
-                    )
-                )
+            if value is not None and self.kwargs['sheetName'] != 'References':
+                print("#! ERROR: nowhere to store {} R:{} C:{}\n#!{}".format(
+                    cell, row, col, self.header))
                 quit()
-            pu.db
+
+
+#            pu.db
 
     def fCITATION(self, value, **kw):
-        add = self.g.add
+        add = self.add
 
         add((self.sample, DCTERMS.bibliographicCitation, Literal(value)))
 
     _field_map_ = {
         'CITATION': fCITATION,
-        }
+    }
+
+
+class Alrosa_Xenolites(Alrosa):
+    pass
+
 
 FILES = {
-    'БД georock corr_MVG.xls':(Alrosa, {'pages':(0,1)}),
-    'БД гранаты из ксенолитов.xls':(Alrosa, {'pages':[]})
+    'БД georock corr_MVG.xls': (Alrosa_Xenolites, {
+        'pages': (0, 1)
+    }),
+    'БД гранаты из ксенолитов.xls': (Alrosa_Xenolites, {
+        'pages': []
+    })
 }
 
 
@@ -692,8 +1024,10 @@ def parse_sheet(sh, sheetIRI, sheetName, comp):
     G.add((sheetIRI, RDF.type, DataSheet))
     sheetName = sheetName.replace(".xls_", ", ")
     G.add((sheetIRI, RDFS.label, Literal(sheetName)))
+    print("Parsing sheet: {}".format(sheetName))
     for rx in range(sh.nrows):
         st.row(sh.row(rx), rx)
+
 
 def parse_xl(file, comp):
     """
@@ -710,6 +1044,7 @@ def parse_xl(file, comp):
     wb = xlrd.open_workbook(pathfile)
     print("# Sheet names: {}".format(wb.sheet_names()))
     for sheet_no, sheet in enumerate(wb.sheet_names()):
+        #        pu.db
         print("# Wb: {}, sheet: {}".format(file, sheet))
         sh = wb.sheet_by_name(sheet)
         sheetname = normURI(file + "_" + sheet)
@@ -741,8 +1076,7 @@ def update(g):
     # for row in qres:
     #     print(row)
 
-    g.update(
-        """
+    g.update("""
     PREFIX pt: <http://crust.irk.ru/ontology/pollution/terms/1.0/>
     PREFIX p: <http://crust.irk.ru/ontology/pollution/1.0/>
     PREFIX mt: <http://www.daml.org/2003/01/periodictable/PeriodicTable#>
@@ -763,8 +1097,7 @@ def update(g):
         ?sample wgs:long ?long .
         ?sample wgs:lat ?lat .
     }
-    """
-    )
+    """)
 
 
 PUTURL = "http://ktulhu.isclan.ru:8890/DAV/home/{user}/rdf_sink/{name}"
@@ -798,12 +1131,12 @@ def upload(filename, name=None):
 
         sg = str(P.samples)
         print("URL:", sg)
-        data = (
-            {
-                "new_name": sg,
-                "graph_name": "http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl",
-            },
-        )
+        data = ({
+            "new_name":
+            sg,
+            "graph_name":
+            "http://localhost:8890/DAV/home/loader/rdf_sink/import.ttl",
+        }, )
         files = {
             "new_name": (None, sg),
             "graph_name": (
@@ -821,17 +1154,18 @@ def upload(filename, name=None):
 
 if __name__ == "__main__":
     if 1:
-        import pudb
         for file, comp in FILES.items():
             parse_xl(file, comp)
+            break
         # update(G)
         with open(TARGET, "w") as o:
 
             # TODO: Shift location to a BNode using SPARQL.
             # o.write(G.serialize(format='turtle'))
             o.write(G.serialize(format="turtle"))
+            print("WROTE: {}".format(TARGET))
     # upload(TARGET, "samples.ttl")
-    if 1:
+    if 0:
         with open(TARGETMT, "w") as o:
             o.write(GMT.serialize(format="turtle"))
     print("#!INFO: Normal exit")

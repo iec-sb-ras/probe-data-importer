@@ -1,0 +1,305 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix gs: <http://www.geosciml.org/ontologies/202311/> .
+@prefix cgi: <http://resource.geosciml.org/classifier/cgi/> .
+@prefix dbp: <http://dbpedia.org/resource/> .
+@prefix dbp-owl: <http://dbpedia.org/ontology/> .
+@prefix : <http://crust.irk.ru/ontology/contents/terms/1.0/> .
+
+### КЛАССЫ ДЛЯ ТИПОВ ГОРНЫХ ПОРОД (LITHOLOGY) ###
+
+:lherzolite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Lherzolite" ;
+    rdfs:subClassOf gs:UltramaficRock ;
+    gs:prototype :LherzolitePrototype .
+
+:harzburgite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Harzburgite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:peridotite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Peridotite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:wehrlite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Wehrlite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:dunite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Dunite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:websterite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Websterite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:clinopyroxenite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Clinopyroxenite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:orthopyroxenite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Orthopyroxenite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:pyroxenite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Pyroxenite" ;
+    rdfs:subClassOf gs:UltramaficRock .
+
+:eclogite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Eclogite" ;
+    rdfs:subClassOf gs:MetamorphicRock .
+
+### КЛАСС ДЛЯ СТРУКТУРНОГО ТЕРМИНА (XENOLITH) ###
+
+:xenolith a gs:GeologicStructure, dbp-owl:RockFormation ;
+    rdfs:label "Xenolith" ;
+    rdfs:comment "A rock fragment which becomes enveloped in a larger rock during the latter's development and hardening." .
+
+### КЛАСС ДЛЯ МИНЕРАЛОВ (GARNET, SPINEL, etc.) ###
+
+:garnet a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Garnet" .
+
+:spinel a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Spinel" .
+
+:olivine a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Olivine" .
+
+:clinopyroxene a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Clinopyroxene" .
+
+:orthopyroxene a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Orthopyroxene" .
+
+:ilmenite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Ilmenite" .
+
+:phlogopite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Phlogopite" .
+
+:amphibole a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Amphibole" .
+
+:biotite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Biotite" .
+
+:chromite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Chromite" .
+
+:kyanite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Kyanite" .
+
+:diamond a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Diamond" .
+
+:graphite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Graphite" .
+
+:corundum a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Corundum" .
+
+:sanidine a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Sanidine" .
+
+:enstatite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Enstatite" .
+
+:fassaite a gs:Mineral, dbp-owl:Mineral ;
+    rdfs:label "Fassaite" .
+
+### КЛАСС ДЛЯ ОСОБОГО ТИПА ОБРАЗЦА (MEGACRYST) ###
+
+:megacryst a gs:GeologicUnit ;
+    rdfs:label "Megacryst" ;
+    rdfs:comment "An exceptionally large crystal, typically found in igneous rocks as a phenocryst." .
+
+
+### ВИДЫ ИНКЛЮЗИЙ ###
+
+:Primary a gs:Inclusion ;
+    rdfs:label "Primary" .
+
+:Secondary a gs:Secondary ;
+    rdfs:label "Secondary" .
+
+### КЛАССЫ ДЛЯ ТЕКСТУР ГОРНЫХ ПОРОД (ROCK TEXTURE) ###
+
+# Основные категории текстур
+:RockTexture a rdfs:Class ;
+    rdfs:label "Rock Texture" ;
+    rdfs:subClassOf gs:GeologicStructure .
+
+# Породообразующие текстуры
+:CoarseGrainedTexture a :RockTexture ;
+    rdfs:label "Coarse-Grained" .
+
+:MediumGrainedTexture a :RockTexture ;
+    rdfs:label "Medium-Grained" .
+
+:FineGrainedTexture a :RockTexture ;
+    rdfs:label "Fine-Grained" .
+
+# Породные текстуры
+:GranoblasticTexture a :RockTexture ;
+    rdfs:label "Granoblastic" ;
+    rdfs:subClassOf gs:MetamorphicTexture .
+
+:PorphyroclasticTexture a :RockTexture ;
+    rdfs:label "Porphyroclastic" ;
+    rdfs:subClassOf gs:MetamorphicTexture .
+
+:PorphyriticTexture a :RockTexture ;
+    rdfs:label "Porphyritic" ;
+    rdfs:subClassOf gs:IgneousTexture .
+
+:CumulateTexture a :RockTexture ;
+    rdfs:label "Cumulate" ;
+    rdfs:subClassOf gs:IgneousTexture .
+
+:MegacrystallineTexture a :RockTexture ;
+    rdfs:label "Megacrystalline" ;
+    rdfs:subClassOf gs:IgneousTexture .
+
+:GranularTexture a :RockTexture ;
+    rdfs:label "Granular" .
+
+:MosaicTexture a :RockTexture ;
+    rdfs:label "Mosaic" .
+
+:EquigranularTexture a :RockTexture ;
+    rdfs:label "Equigranular" .
+
+:ShearedTexture a :RockTexture ;
+    rdfs:label "Sheared" ;
+    rdfs:subClassOf gs:DeformationalTexture .
+
+:FoliatedTexture a :RockTexture ;
+    rdfs:label "Foliated" ;
+    rdfs:subClassOf gs:MetamorphicTexture .
+
+:FluidalTexture a :RockTexture ;
+    rdfs:label "Fluidal" .
+
+:BandedTexture a :RockTexture ;
+    rdfs:label "Banded" .
+
+:LaminatedTexture a :RockTexture ;
+    rdfs:label "Laminated" .
+
+# Комбинированные текстуры
+:CoarsePorphyriticTexture a :RockTexture ;
+    rdfs:label "Coarse Porphyritic" ;
+    rdfs:subClassOf :CoarseGrainedTexture, :PorphyriticTexture .
+
+:FinePorphyriticTexture a :RockTexture ;
+    rdfs:label "Fine Porphyritic" ;
+    rdfs:subClassOf :FineGrainedTexture, :PorphyriticTexture .
+
+:CoarsePorphyroclasticTexture a :RockTexture ;
+    rdfs:label "Coarse Porphyroclastic" ;
+    rdfs:subClassOf :CoarseGrainedTexture, :PorphyroclasticTexture .
+
+:FineGrainedPorphyroclasticTexture a :RockTexture ;
+    rdfs:label "Fine-Grained Porphyroclastic" ;
+    rdfs:subClassOf :FineGrainedTexture, :PorphyroclasticTexture .
+
+:MosaicPorphyroclasticTexture a :RockTexture ;
+    rdfs:label "Mosaic-Porphyroclastic" ;
+    rdfs:subClassOf :MosaicTexture, :PorphyroclasticTexture .
+
+:GranoblasticBandedTexture a :RockTexture ;
+    rdfs:label "Granoblastic, Banded" ;
+    rdfs:subClassOf :GranoblasticTexture, :BandedTexture .
+
+:CoarseGranoblasticTexture a :RockTexture ;
+    rdfs:label "Coarse Granoblastic" ;
+    rdfs:subClassOf :CoarseGrainedTexture, :GranoblasticTexture .
+
+:CoarseEquantTexture a :RockTexture ;
+    rdfs:label "Coarse Equant" ;
+    rdfs:subClassOf :CoarseGrainedTexture, :EquigranularTexture .
+
+:CoarseTabularTexture a :RockTexture ;
+    rdfs:label "Coarse-Tabular" ;
+    rdfs:subClassOf :CoarseGrainedTexture .
+
+:MediumToCoarseGrainedTexture a :RockTexture ;
+    rdfs:label "Medium- to Coarse-Grained" ;
+    rdfs:subClassOf :MediumGrainedTexture, :CoarseGrainedTexture .
+
+:FineToMediumGrainedTexture a :RockTexture ;
+    rdfs:label "Fine- to Medium-Grained" ;
+    rdfs:subClassOf :FineGrainedTexture, :MediumGrainedTexture .
+
+:HeterogeneousTexture a :RockTexture ;
+    rdfs:label "Heterogeneous" .
+
+:AllotriomorphicGranularTexture a :RockTexture ;
+    rdfs:label "Allotriomorphic Granular" ;
+    rdfs:subClassOf :GranularTexture .
+
+:XenomorphicGranularTexture a :RockTexture ;
+    rdfs:label "Xenomorphic Granular" ;
+    rdfs:subClassOf :GranularTexture .
+
+:InterlockingTexture a :RockTexture ;
+    rdfs:label "Interlocking" .
+
+:DeformedTexture a :RockTexture ;
+    rdfs:label "Deformed" ;
+    rdfs:subClassOf gs:DeformationalTexture .
+
+:TransitionalTexture a :RockTexture ;
+    rdfs:label "Transitional" .
+
+:MyloniticTexture a :RockTexture ;
+    rdfs:label "Mylonitic" ;
+    rdfs:subClassOf gs:DeformationalTexture .
+
+:FluidalMosaicTexture a :RockTexture ;
+    rdfs:label "Fluidal Mosaic" ;
+    rdfs:subClassOf :FluidalTexture, :MosaicTexture .
+
+:LayeredDisruptedMosaicPorphyroclasticTexture a :RockTexture ;
+    rdfs:label "Layered and Disrupted Mosaic Porphyroclastic" ;
+    rdfs:subClassOf :MosaicPorphyroclasticTexture .
+
+# Специфичные текстуры для ультрамафитов
+:ProtogranularTexture a :RockTexture ;
+    rdfs:label "Protogranular" ;
+    rdfs:subClassOf :GranularTexture .
+
+:CoarseProtogranularTexture a :RockTexture ;
+    rdfs:label "Coarse Protogranular" ;
+    rdfs:subClassOf :CoarseGrainedTexture, :ProtogranularTexture .
+
+:CoarseLamellarTexture a :RockTexture ;
+    rdfs:label "Coarse Lamellar" ;
+    rdfs:subClassOf :CoarseGrainedTexture .
+
+# Сложные комбинированные текстуры
+:ComplexTexture a :RockTexture ;
+    rdfs:label "Complex Texture" .
+
+:HypautomorphicOphiticTexture a :RockTexture ;
+    rdfs:label "Hypautomorphic, Ophitic with Transition to Grano-lapidoblastic" .
+
+:FasciculateTexture a :RockTexture ;
+    rdfs:label "Fasciculate" .
+
+:PolygonalGranoblasticTexture a :RockTexture ;
+    rdfs:label "Polygonal Granoblastic" ;
+    rdfs:subClassOf :GranoblasticTexture .
+
+### СВОЙСТВА ДЛЯ СВЯЗЕЙ ###
+
+:hasTexture a rdf:Property ;
+    rdfs:label "has texture" ;
+    rdfs:domain gs:RockType ;
+    rdfs:range :RockTexture .
+
+:textureDescription a rdf:Property ;
+    rdfs:label "texture description" ;
+    rdfs:domain :RockTexture ;
+    rdfs:range rdfs:Literal .
