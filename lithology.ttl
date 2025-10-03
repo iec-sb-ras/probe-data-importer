@@ -653,3 +653,215 @@
     :chemicalFormula "Ca(Mg,Fe,Al)(Si,Al)2O6" ;
     :hardness "5.0-6.0" ;
     :density "3.2-3.5" .
+
+### ЗОНАЛЬНЫЕ МИНЕРАЛЫ (RIM/CORE MINERAL GRAINS) ###
+
+:ZonedMineral a gs:GeologicUnit ;
+    rdfs:label "Zoned Mineral" ;
+    rdfs:comment "A mineral crystal showing compositional zoning with distinct core and rim regions resulting from changing conditions during crystal growth." .
+
+:MineralZoning a gs:MineralTexture ;
+    rdfs:label "Mineral Zoning" ;
+    rdfs:comment "Textural pattern where minerals exhibit core-rim compositional variations, typically reflecting evolutionary changes in magma composition or P-T conditions." .
+
+:ZoningPattern a rdfs:Class ;
+    rdfs:label "Zoning Pattern" .
+
+:Core a :ZoningPattern ;
+    rdfs:label "Core" ;
+    rdfs:comment "The central part of a zoned mineral crystal, typically representing early-stage crystallization."@en ;
+    rdfs:comment "Основные минеральные зерна."@ru .
+
+:Rim a :ZoningPattern ;
+    rdfs:label "Rim" ;
+    rdfs:comment "The outer part of a zoned mineral crystal, typically representing late-stage crystallization."@en ;
+    rdfs:comment "Ободок из минеральных зерен."@ru .
+
+:Mantle a :ZoningPattern ;
+    rdfs:label "Mantle" ;
+    rdfs:comment "Intermediate zone between core and rim in complex zoned crystals." .
+
+:OscillatoryZoning a :ZoningPattern ;
+    rdfs:label "Oscillatory Zoning" ;
+    rdfs:comment "Concentric zoning pattern with multiple alternating layers." .
+
+:SectorZoning a :ZoningPattern ;
+    rdfs:label "Sector Zoning" ;
+    rdfs:comment "Zoning pattern following crystal faces and growth sectors." .
+
+# Свойства для работы с зональностью
+:hasZoning a rdf:Property ;
+    rdfs:label "has zoning" ;
+    rdfs:domain :Mineral ;
+    rdfs:range :ZonedMineral .
+
+:zoningType a rdf:Property ;
+    rdfs:label "zoning type" ;
+    rdfs:domain :ZonedMineral ;
+    rdfs:range :ZoningPattern .
+
+:zoningWidth a rdf:Property ;
+    rdfs:label "zoning width" ;
+    rdfs:domain :ZonedMineral ;
+    rdfs:range xsd:decimal .
+
+:zoningWidthUnit a rdf:Property ;
+    rdfs:label "zoning width unit" ;
+    rdfs:domain :ZonedMineral ;
+    rdfs:range :LengthUnit .
+
+:Micrometer a :LengthUnit ;
+    rdfs:label "Micrometer" .
+
+# Свойства для точечного микроанализа
+:MicroprobeAnalysis a gs:GeologicAnalysis ;
+    rdfs:label "Microprobe Analysis" ;
+    rdfs:comment "Chemical analysis of specific spots within mineral grains using electron microprobe." .
+
+:hasAnalysisSpot a rdf:Property ;
+    rdfs:label "has analysis spot" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :AnalysisSpot .
+
+:AnalysisSpot a gs:GeologicUnit ;
+    rdfs:label "Analysis Spot" ;
+    rdfs:comment "Specific location within a mineral grain where chemical analysis was performed." .
+
+:spotLocation a rdf:Property ;
+    rdfs:label "spot location" ;
+    rdfs:domain :AnalysisSpot ;
+    rdfs:range :ZoningPosition .
+
+:ZoningPosition a rdfs:Class ;
+    rdfs:label "Zoning Position" .
+
+:spotDiameter a rdf:Property ;
+    rdfs:label "spot diameter" ;
+    rdfs:domain :AnalysisSpot ;
+    rdfs:range xsd:decimal .
+
+:MicroprobeAnalysis a gs:GeologicAnalysis ;
+    rdfs:label "Microprobe Analysis" ;
+    rdfs:comment "Chemical analysis of specific spots within mineral grains using electron microprobe." .
+
+:analysisSpot a rdf:Property ;
+    rdfs:label "analysis spot" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :ZoningPosition .
+
+:spotDiameter a rdf:Property ;
+    rdfs:label "spot diameter" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range xsd:decimal .
+
+:analysisMethod a rdf:Property ;
+    rdfs:label "analysis method" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :AnalyticalMethod .
+
+:ElectronMicroprobe a :AnalyticalMethod ;
+    rdfs:label "Electron Microprobe" .
+
+# Пример - теперь гораздо проще!
+# :analysis-10-sample-106-sl-664 a :MicroprobeAnalysis ;
+#     :analysisSpot :Core ;
+#     :spotDiameter 5.0 ;
+#     :analysisMethod :ElectronMicroprobe ;
+#     :mineral :garnet ;
+#     :AL2O3 1.815e+01 ;
+#     :CAO 5.866e+00 ;
+#     :CR2O3 6.372e+00 .
+
+### ЕДИНИЦЫ ИЗМЕРЕНИЯ В ГЕОХИМИИ ###
+
+:ConcentrationUnit a rdfs:Class ;
+    rdfs:label "Concentration Unit" .
+
+## Основные единицы концентрации:
+
+:Percent a :ConcentrationUnit ;
+    rdfs:label "percent" ;
+    rdfs:comment "Parts per hundred (%)" ;
+    :conversionFactor "1.0"^^xsd:decimal .
+
+:PerMil a :ConcentrationUnit ;
+    rdfs:label "per mil" ;
+    rdfs:comment "Parts per thousand (‰), 1‰ = 0.1%" ;
+    :conversionFactor "0.001"^^xsd:decimal .
+
+:PPM a :ConcentrationUnit ;
+    rdfs:label "parts per million" ;
+    rdfs:comment "Parts per million (ppm), 1 ppm = 0.0001%" ;
+    :conversionFactor "0.000001"^^xsd:decimal .
+
+:PPB a :ConcentrationUnit ;
+    rdfs:label "parts per billion" ;
+    rdfs:comment "Parts per billion (ppb), 1 ppb = 0.0000001%" ;
+    :conversionFactor "0.000000001"^^xsd:decimal .
+
+:PPT a :ConcentrationUnit ;
+    rdfs:label "parts per trillion" ;
+    rdfs:comment "Parts per trillion (ppt)" ;
+    :conversionFactor "0.000000000001"^^xsd:decimal .
+
+## Специализированные геохимические единицы:
+
+:MgPerGram a :ConcentrationUnit ;
+    rdfs:label "micrograms per gram" ;
+    rdfs:comment "μg/g, equivalent to ppm" .
+
+:MgPerKg a :ConcentrationUnit ;
+    rdfs:label "milligrams per kilogram" ;
+    rdfs:comment "mg/kg, equivalent to ppm" .
+
+:GramPerTon a :ConcentrationUnit ;
+    rdfs:label "grams per ton" ;
+    rdfs:comment "g/t, commonly used for precious metals" .
+
+## Для изотопной геохимии:
+
+:DeltaUnit a :ConcentrationUnit ;
+    rdfs:label "delta unit" ;
+    rdfs:comment "δ notation for isotope ratios" .
+
+:PermilVSMOW a :DeltaUnit ;
+    rdfs:label "per mil vs VSMOW" ;
+    rdfs:comment "‰ relative to VSMOW standard for oxygen/hydrogen" .
+
+:PermilVPDB a :DeltaUnit ;
+    rdfs:label "per mil vs VPDB" ;
+    rdfs:comment "‰ relative to VPDB standard for carbon" .
+
+:PermilVCDT a :DeltaUnit ;
+    rdfs:label "per mil vs VCDT" ;
+    rdfs:comment "‰ relative to VCDT standard for sulfur" .
+
+## Единицы для газовой геохимии:
+
+:CCMSTP a :ConcentrationUnit ;
+    rdfs:label "cubic centimeters at STP" ;
+    rdfs:comment "cm³ at standard temperature and pressure" .
+
+:MolPerGram a :ConcentrationUnit ;
+    rdfs:label "moles per gram" ;
+    rdfs:comment "mol/g for noble gas concentrations" .
+
+### СВОЙСТВА ДЛЯ СВЯЗЕЙ ###
+
+:unit a rdf:Property ;
+    rdfs:label "unit" ;
+    rdfs:domain :Measurement ;
+    rdfs:range :ConcentrationUnit .
+
+:conversionFactor a rdf:Property ;
+    rdfs:label "conversion factor" ;
+    rdfs:domain :ConcentrationUnit ;
+    rdfs:range xsd:decimal .
+
+:hasConversionTo a rdf:Property ;
+    rdfs:label "converts to" ;
+    rdfs:domain :ConcentrationUnit ;
+    rdfs:range :ConcentrationUnit .
+
+:PPM :hasConversionTo :Percent ;
+     :conversionFactor "0.0001"^^xsd:decimal .

@@ -977,6 +977,7 @@ class Alrosa(ImpState):
             add((self.sample, RDF.type, GeoSample))
             add((self.sample, RDFS.label, Literal(name)))
             add((self.sample, PT.hasAnalysis, self.analysis))
+            add((self.analysis, RDF.type, PT["MicroprobeAnalysis"]))
 
             # add((self.sample, RDF.type, SpatialThing))
             self.belongs(self.sample)
@@ -1043,6 +1044,33 @@ class Alrosa(ImpState):
         elif field == "PRIMARY_SECONDARY":
             # Обработка типа включения
             self._process_inclusion_type(val)
+
+        elif field == "DRILLING_DEPTH_MAX":
+            # Обработка максимальной глубины сверления
+            val = float(val)
+            add((self.sample, PT.drillnigDepthMax, Literal(val)))
+
+        elif field == "GRAIN_SIZE":
+            # Обработка максимальной глубины сверления
+            val = float(val)
+            add((self.analysis, PT.grainSize, Literal(val)))
+
+        elif field == "SPOT":
+            # Обработка максимальной глубины сверления
+            add((self.analysis, PT.spotDiameter, Literal(val)))
+
+        elif field == "CRYSTAL":
+            # Обработка максимальной глубины сверления
+            add((self.analysis, PT.crystal, Literal(val)))
+
+        elif field == 'RIM_CORE_MINERAL_GRAINS':
+            # Обработка максимальной глубины сверления
+            val = val.strip().upper()
+            if val == "INTERMEDIATE ZONE":
+                val = "Mantle"
+            else:
+                val = val.capitalize()
+            add((self.analysis, PT.analysisSpot, PT[val]))
 
         # Обработка химических данных (существующий код)
         elif self.sample is not None:
