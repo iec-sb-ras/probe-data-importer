@@ -182,6 +182,7 @@ def load_lithology_ontology(graph=None,
 
 load_lithology_ontology(G)
 
+
 def snake_to_camel(snake_str: str, capitalize_first: bool = False) -> str:
     """
     Convert snake_case string to camelCase.
@@ -207,10 +208,12 @@ def snake_to_camel(snake_str: str, capitalize_first: bool = False) -> str:
         # lowerCamelCase - capitalize all words except first
         return parts[0] + ''.join(part.capitalize() for part in parts[1:])
 
+
 def capitalize(words):
     orig = " ".join(words.lower().split())
     orig = orig.capitalize()
     return orig
+
 
 def check_ontology_classes(graph):
     """
@@ -295,6 +298,7 @@ def elem(name):
 
 PPM_TO_PERCENT = 0.0001  # 1 PPM = 0.0001%
 
+
 def convert_units(value, from_unit, to_unit='%'):
     """
     Конвертирует значения между единицами измерения
@@ -312,6 +316,7 @@ def convert_units(value, from_unit, to_unit='%'):
         return value * factor
     else:
         return value  # Если конвертация невозможна, возвращаем исходное значение
+
 
 # Словарь для отображения текстур на IRI онтологии
 ROCK_TEXTURE_MAPPING = {
@@ -371,10 +376,12 @@ ROCK_TEXTURE_MAPPING = {
     'PROTOGRANULAR': PT.ProtogranularTexture,
 
     # Сложные комбинированные текстуры
-    'LAYERED AND DISRUPTED MOSAIC PORPHYROCLASTIC': PT.LayeredDisruptedMosaicPorphyroclasticTexture,
+    'LAYERED AND DISRUPTED MOSAIC PORPHYROCLASTIC':
+    PT.LayeredDisruptedMosaicPorphyroclasticTexture,
     'FLUIDAL MOSAIC PORPHYROCLASTIC': PT.FluidalMosaicTexture,
     'MOSAIC-TABULAR TO EQUIGRANULAR': PT.MosaicTexture,
-    'HYPAUTOMORPHIC, OPHITIC WITH TRANSITION TO GRANO-LAPIDOBLASTIC': PT.HypautomorphicOphiticTexture,
+    'HYPAUTOMORPHIC, OPHITIC WITH TRANSITION TO GRANO-LAPIDOBLASTIC':
+    PT.HypautomorphicOphiticTexture,
     'FASCICULATE': PT.FasciculateTexture,
     'POLYGONAL GRANOBLASTIC': PT.PolygonalGranoblasticTexture,
 
@@ -394,6 +401,7 @@ ROCK_TEXTURE_MAPPING = {
     'COASRSE': PT.CoarseGrainedTexture,
     'GRANULOBLASTIC': PT.GranoblasticTexture
 }
+
 
 def get_texture_iri(texture_string):
     """
@@ -574,7 +582,8 @@ class ImpState:
             else:
                 add((m, PT.unit, P.UnknowUnit))
 
-        def create_measurement_with_normalization(m, measurement_value, unit_type, rupper):
+        def create_measurement_with_normalization(m, measurement_value,
+                                                  unit_type, rupper):
             """Создает измерение с нормализованными значениями"""
             # Сохраняем оригинальное значение
             if dl is None:
@@ -678,7 +687,8 @@ class ImpState:
                     add((md, PT.value, Literal(value)))
                     add((md, RDF.type, GeoMeasure))
                     unit(md, rupper)
-                    create_measurement_with_normalization(md, value, unit_type, rupper)
+                    create_measurement_with_normalization(
+                        md, value, unit_type, rupper)
                     self.dlims[e] = md
                     add((m, PT.value, md))
 
@@ -763,7 +773,11 @@ class ImpState:
         detlim = self.state == State.DETLIM
         if self.data() or detlim:
             if self.sample is None:
-                self.c(row[self.sample_col], rx, self.sample_col, sheet_row = row, detlim=delim)
+                self.c(row[self.sample_col],
+                       rx,
+                       self.sample_col,
+                       sheet_row=row,
+                       detlim=delim)
             for i, cell in enumerate(row):
                 self.c(cell, rx, i, detlim=delim, sheet_row=row)
             return
@@ -905,7 +919,10 @@ class Alrosa(ImpState):
             return
         if self.state == State.DATA:
             if self.sample is None and self.sample_col is not None:
-                self.c(row[self.sample_col], rx, self.sample_col, sheet_row=row)
+                self.c(row[self.sample_col],
+                       rx,
+                       self.sample_col,
+                       sheet_row=row)
             for i, cell in enumerate(row):
                 if i == self.sample_col:
                     continue
@@ -959,15 +976,16 @@ class Alrosa(ImpState):
             name = name.replace("?", "-q-")
             name = name.strip(" ")
             name = name.lstrip()
-            if name_orig!=name:
+            if name_orig != name:
                 # print("PROBLEMATIC:{} ({})".format(name, name_orig))
                 ns = self.non_iso.setdefault(name, [])
                 ns.append(name_orig)
-            samplename = 'sample-'+name
+            samplename = 'sample-' + name
             sample_iri = P[samplename]
             meas = self.measurements
             mlist = meas.setdefault(sample_iri, [])
-            self.analysis = P['analysis-{}-{}'.format(len(mlist)+1, samplename)]
+            self.analysis = P['analysis-{}-{}'.format(
+                len(mlist) + 1, samplename)]
             mlist.append(self.analysis)
             # if (sample_iri, RDF.type, PT.GeoSample) in self.g:
             #     print("Double: {} \n ROW:{}".format())
@@ -992,7 +1010,8 @@ class Alrosa(ImpState):
 
             for location in locations:
                 if location not in self.fls:
-                    location_bnode = BNode()  # Создаем BNode для каждой локации
+                    location_bnode = BNode(
+                    )  # Создаем BNode для каждой локации
                     self.fls[location] = location_bnode
 
                     # Добавляем основную информацию о локации
@@ -1007,8 +1026,11 @@ class Alrosa(ImpState):
                 add((self.sample, SCHEMA.fromLocation, location_bnode))
 
         # 🔥 НОВОЕ: Обработка координатных данных
-        elif field in ["LATITUDE_MIN", "LATITUDE_MAX", "LONGITUDE_MIN", "LONGITUDE_MAX",
-                      "LOCATION_COMMENT", "LAND_SEA_SAMPLING", "ELEVATION_MIN", "ELEVATION_MAX"]:
+        elif field in [
+                "LATITUDE_MIN", "LATITUDE_MAX", "LONGITUDE_MIN",
+                "LONGITUDE_MAX", "LOCATION_COMMENT", "LAND_SEA_SAMPLING",
+                "ELEVATION_MIN", "ELEVATION_MAX"
+        ]:
             # Эти поля будут обработаны в _add_location_metadata
             pass
 
@@ -1101,16 +1123,20 @@ class Alrosa(ImpState):
             # 🔥 Координаты и географические данные
             if field == "LATITUDE_MIN":
                 location_data['lat_min'] = val
-                add((location_bnode, PT.latitudeMin, Literal(str(val), datatype=XSD.decimal)))
+                add((location_bnode, PT.latitudeMin,
+                     Literal(str(val), datatype=XSD.decimal)))
             elif field == "LATITUDE_MAX":
                 location_data['lat_max'] = val
-                add((location_bnode, PT.latitudeMax, Literal(str(val), datatype=XSD.decimal)))
+                add((location_bnode, PT.latitudeMax,
+                     Literal(str(val), datatype=XSD.decimal)))
             elif field == "LONGITUDE_MIN":
                 location_data['long_min'] = val
-                add((location_bnode, PT.longitudeMin, Literal(str(val), datatype=XSD.decimal)))
+                add((location_bnode, PT.longitudeMin,
+                     Literal(str(val), datatype=XSD.decimal)))
             elif field == "LONGITUDE_MAX":
                 location_data['long_max'] = val
-                add((location_bnode, PT.longitudeMax, Literal(str(val), datatype=XSD.decimal)))
+                add((location_bnode, PT.longitudeMax,
+                     Literal(str(val), datatype=XSD.decimal)))
             elif field == "LOCATION_COMMENT":
                 add((location_bnode, PT.locationComment, Literal(val)))
             elif field == "ELEVATION_MIN":
@@ -1129,14 +1155,16 @@ class Alrosa(ImpState):
         add((location_bnode, RDF.type, PT.GeoBounds))
 
         # Если есть и min и max координаты - создаем bounding box
-        if all(k in location_data for k in ['lat_min', 'lat_max', 'long_min', 'long_max']):
+        if all(k in location_data
+               for k in ['lat_min', 'lat_max', 'long_min', 'long_max']):
             bbox = BNode()
             add((location_bnode, SCHEMA.geo, bbox))
             add((bbox, RDF.type, SCHEMA.GeoShape))
-            add((bbox, SCHEMA.box, Literal(
-                f"{location_data['lat_min']} {location_data['long_min']} "
-                f"{location_data['lat_max']} {location_data['long_max']}"
-            )))
+            add((bbox, SCHEMA.box,
+                 Literal(
+                     f"{location_data['lat_min']} {location_data['long_min']} "
+                     f"{location_data['lat_max']} {location_data['long_max']}")
+                 ))
 
         # Если только одна пара координат - создаем точку
         elif 'lat_min' in location_data and 'long_min' in location_data:
@@ -1172,7 +1200,8 @@ class Alrosa(ImpState):
                     # 🔥 Создаем сущность AlterationType если не существует
                     if (alt_iri, RDF.type, PT.AlterationType) not in self.g:
                         self.add((alt_iri, RDF.type, PT.AlterationType))
-                        self.add((alt_iri, RDFS.label, Literal(alteration.capitalize())))
+                        self.add((alt_iri, RDFS.label,
+                                  Literal(alteration.capitalize())))
 
                     self.add((self.sample, PT.hasAlteration, alt_iri))
 
@@ -1199,7 +1228,8 @@ class Alrosa(ImpState):
             for rock in rocks:
                 if rock:
                     if rock in ['xenolith']:
-                        self.add((self.sample, PT.geologicalStructure, PT[rock]))
+                        self.add(
+                            (self.sample, PT.geologicalStructure, PT[rock]))
                     elif rock in ['megacryst']:
                         self.add((self.sample, PT.geologicUnit, PT[rock]))
                     elif rock in COMMON_MINERALS:  # Предопределенный список минералов
@@ -1208,7 +1238,8 @@ class Alrosa(ImpState):
                         # Предполагаем, что это тип породы
                         rock_iri = PT[normURI(rock)]
                         self.add((rock_iri, RDF.type, PT.RockType))
-                        self.add((rock_iri, RDFS.label, Literal(rock.capitalize())))
+                        self.add(
+                            (rock_iri, RDFS.label, Literal(rock.capitalize())))
                         self.add((self.sample, PT.rockType, rock_iri))
 
     def _process_tectonic_setting(self, value):
@@ -1231,12 +1262,15 @@ class Alrosa(ImpState):
             return
 
         if isinstance(value, str) and value.strip():
-            minerals = [mineral.strip().lower() for mineral in value.split(",")]
+            minerals = [
+                mineral.strip().lower() for mineral in value.split(",")
+            ]
             for mineral in minerals:
                 if mineral:
                     mineral_iri = PT[normURI(mineral)]
                     self.add((mineral_iri, RDF.type, PT.Mineral))
-                    self.add((mineral_iri, RDFS.label, Literal(mineral.capitalize())))
+                    self.add((mineral_iri, RDFS.label,
+                              Literal(mineral.capitalize())))
                     self.add((self.analysis, PT.mineral, mineral_iri))
 
     def _process_inclusion_type(self, value):
@@ -1268,9 +1302,8 @@ class Alrosa(ImpState):
 # 🔥 Предопределенные списки для классификации
 COMMON_MINERALS = {
     "garnet", "spinel", "olivine", "clinopyroxene", "orthopyroxene",
-    "ilmenite", "phlogopite", "amphibole", "biotite", "chromite",
-    "kyanite", "diamond", "graphite", "corundum", "sanidine",
-    "enstatite", "fassaite"
+    "ilmenite", "phlogopite", "amphibole", "biotite", "chromite", "kyanite",
+    "diamond", "graphite", "corundum", "sanidine", "enstatite", "fassaite"
 }
 
 COMMON_ROCK_TYPES = {
@@ -1437,7 +1470,7 @@ if __name__ == "__main__":
             parse_xl(file, comp)
             break
         # update(G)
-        target = os.path.join(ONTODIR,TARGET)
+        target = os.path.join(ONTODIR, TARGET)
         with open(target, "w") as o:
 
             # TODO: Shift location to a BNode using SPARQL.
