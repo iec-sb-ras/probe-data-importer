@@ -927,58 +927,60 @@ class Alrosa(ImpState):
             assert isinstance(val, str)
             locations = val.split("/")
             locations = [l.strip() for l in locations]
-            locids = [normURI(l.lower()) for l in locations]
-            for locationid, location in zip(locids, locations):
-                locationIRI = PT[locationid]
-                add((locationIRI, RDF.type, SCHEMA['Place']))
-                add((locationIRI, RDFS.label, Literal(location)))
-                add((self.sample, SCHEMA.fromLocation, locationIRI))
-        elif field == "TECTONIC_SETTING":
-            assert isinstance(val, str)
-            orig = capitalize(val)
-            val = val.strip().lower()
-            valIRI = normURI(val)
-            _ = PT[valIRI]
-            add((_, RDF.type, PT['TectonicSetting']))
-            add((_, RDFS.label, Literal(orig)))
-            add((self.sample, PT.tectonicSetting, _))
-        elif field == "MINERAL":
-            assert isinstance(val, str)
-            val = val.strip().lower()
-            valIRI = normURI(val)
-            _ = PT[valIRI]
-            # add((_, RDF.type, PT['Mineral']))
-            # add((_, RDFS.label, Literal(val)))
-            add((self.sample, PT.mineral, _))
-        elif field == "PRIMARY_SECONDARY":
-            assert isinstance(val, str)
-            val = val.strip()
-            val = val = "primary"
-            val = "Primary" if val else "Secondary"
-            add((self.sample, P.inclusion, PT[val]))
-        elif field == "ROCK_NAME":
-            assert isinstance(val, str)
-            rocks = [v.strip().lower() for v in val.split(",")]
-            for r in rocks:
-                if r in ['xenolith']:
-                    add((self.sample, PT.geologicalStructure, PT[r]))
-                elif r in ['megacryst']:
-                    add((self.sample, PT.geologicUnit, PT[r]))
-                elif r in [
-                        "garnet", "spinel", "olivine", "clinopyroxene",
-                        "orthopyroxene", "ilmenite", "phlogopite", "amphibole",
-                        "biotite", "chromite", "kyanite", "diamond",
-                        "graphite", "corundum", "sanidine", "enstatite",
-                        "fassaite"
-                ]:
-                    add((self.sample, PT.mineral, PT[r]))
-                else:
-                    add((self.sample, PT.rockType, PT[r]))
+
+            for location in locations:
+                location_bnode = BNode()  # Создаем BNode для каждой локации
+
+                # Добавляем основную информацию о локации
+                add((location_bnode, RDF.type, SCHEMA.Place))
+                add((location_bnode, RDFS.label, Literal(location)))
+
+                # 🔥 Добавляем географические координаты в BNode
+                self._add_location_metadata(location_bnode, row)
+
+                # Связываем образец с локацией
+                add((self.sample, SCHEMA.fromLocation, location_bnode))
+
+        # 🔥 НОВОЕ: Обработка координатных данных
+        elif field in ["LATITUDE_MIN", "LATITUDE_MAX", "LONGITUDE_MIN", "LONGITUDE_MAX",
+                      "LOCATION_COMMENT", "LAND_SEA_SAMPLING", "ELEVATION_MIN", "ELEVATION_MAX"]:
+            # Эти поля будут обработаны в _add_location_metadata
+            pass
+
+        # 🔥 НОВОЕ: Обработка текстовых свойств
+        elif field == "LOCATION_COMMENT":
+            # Сохраняем для последующего добавления в BNode локации
+            self._current_location_comment = val
+
+        elif field == "LAND_SEA_SAMPLING":
+            # Обработка типа отбора проб
+            self._process_sampling_type(val)
+
+        elif field == "ALTERATION":
+            # Обработка альтерации
+            self._process_alteration(val)
+
         elif field == "ROCK_TEXTURE":
-            assert isinstance(val, str)
-            texture_iri = get_texture_iri(val)
-            if texture_iri:
-                self.add((self.sample, PT.rockTexture, texture_iri))
+            # Обработка текстуры через нашу систему
+            self._process_rock_texture(val)
+
+        elif field == "ROCK_NAME":
+            # Обработка названия породы
+            self._process_rock_name(val)
+
+        elif field == "TECTONIC_SETTING":
+            # Обработка тектонической обстановки
+            self._process_tectonic_setting(val)
+
+        elif field == "MINERAL":
+            # Обработка минерала
+            self._process_mineral(val)
+
+        elif field == "PRIMARY_SECONDARY":
+            # Обработка типа включения
+            self._process_inclusion_type(val)
+
+        # Обработка химических данных (существующий код)
         elif self.sample is not None:
             self.proc_comp((field + prt, fieldname + prt), cell.value)
         elif detlim:
@@ -990,8 +992,163 @@ class Alrosa(ImpState):
                     cell, row, col, self.header))
                 quit()
 
+    def _add_location_metadata(self, location_bnode, row):
+        """Добавляет метаданные локации в BNode"""
+        add = self.add
 
-#            pu.db
+        # Собираем все координатные данные из строки
+        location_data = {}
+
+        for col, (field, fieldname) in self.header.items():
+            cell = row[col]
+            if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
+                continue
+
+            val = cell.value
+
+            # 🔥 Координаты и географические данные
+            if field == "LATITUDE_MIN":
+                location_data['lat_min'] = val
+                add((location_bnode, PT.latitudeMin, Literal(val)))
+            elif field == "LATITUDE_MAX":
+                location_data['lat_max'] = val
+                add((location_bnode, PT.latitudeMax, Literal(val)))
+            elif field == "LONGITUDE_MIN":
+                location_data['long_min'] = val
+                add((location_bnode, PT.longitudeMin, Literal(val)))
+            elif field == "LONGITUDE_MAX":
+                location_data['long_max'] = val
+                add((location_bnode, PT.longitudeMax, Literal(val)))
+            elif field == "LOCATION_COMMENT":
+                add((location_bnode, PT.locationComment, Literal(val)))
+            elif field == "ELEVATION_MIN":
+                add((location_bnode, PT.elevationMin, Literal(val)))
+            elif field == "ELEVATION_MAX":
+                add((location_bnode, PT.elevationMax, Literal(val)))
+
+        # 🔥 Создаем точку/полигон на основе координат
+        self._create_geometry(location_bnode, location_data)
+
+    def _create_geometry(self, location_bnode, location_data):
+        """Создает геометрический объект для локации"""
+        add = self.add
+
+        # Если есть и min и max координаты - создаем bounding box
+        if all(k in location_data for k in ['lat_min', 'lat_max', 'long_min', 'long_max']):
+            bbox = BNode()
+            add((location_bnode, SCHEMA.geo, bbox))
+            add((bbox, RDF.type, SCHEMA.GeoShape))
+            add((bbox, SCHEMA.box, Literal(
+                f"{location_data['lat_min']} {location_data['long_min']} "
+                f"{location_data['lat_max']} {location_data['long_max']}"
+            )))
+
+        # Если только одна пара координат - создаем точку
+        elif 'lat_min' in location_data and 'long_min' in location_data:
+            point = BNode()
+            add((location_bnode, WGS.location, point))
+            add((point, RDF.type, WGS.Point))
+            add((point, WGS.lat, Literal(location_data['lat_min'])))
+            add((point, WGS.long, Literal(location_data['long_min'])))
+
+    def _process_sampling_type(self, value):
+        """Обработка типа отбора проб"""
+        if not hasattr(self, 'sample') or self.sample is None:
+            return
+
+        value = str(value).strip().lower()
+        if value in ['subaerial', 'submarine', 'underground']:
+            self.add((self.sample, PT.samplingEnvironment, PT[value]))
+        else:
+            # Создаем литерал для неизвестных типов
+            self.add((self.sample, PT.samplingEnvironment, Literal(value)))
+
+    def _process_alteration(self, value):
+        """Обработка альтерации породы"""
+        if not hasattr(self, 'sample') or self.sample is None:
+            return
+
+        if isinstance(value, str) and value.strip():
+            alterations = [alt.strip().lower() for alt in value.split(",")]
+            for alteration in alterations:
+                if alteration:
+                    alt_iri = PT[normURI(alteration)]
+                    self.add((alt_iri, RDF.type, PT.AlterationType))
+                    self.add((alt_iri, RDFS.label, Literal(alteration.capitalize())))
+                    self.add((self.sample, PT.hasAlteration, alt_iri))
+
+    def _process_rock_texture(self, value):
+        """Обработка текстуры породы через нашу систему"""
+        if not hasattr(self, 'sample') or self.sample is None:
+            return
+
+        if isinstance(value, str) and value.strip():
+            texture_iri = get_texture_iri(value)
+            if texture_iri:
+                self.add((self.sample, PT.rockTexture, texture_iri))
+            else:
+                # Fallback: создаем литерал
+                self.add((self.sample, PT.rockTexture, Literal(value)))
+
+    def _process_rock_name(self, value):
+        """Обработка названия породы"""
+        if not hasattr(self, 'sample') or self.sample is None:
+            return
+
+        if isinstance(value, str) and value.strip():
+            rocks = [rock.strip().lower() for rock in value.split(",")]
+            for rock in rocks:
+                if rock:
+                    if rock in ['xenolith']:
+                        self.add((self.sample, PT.geologicalStructure, PT[rock]))
+                    elif rock in ['megacryst']:
+                        self.add((self.sample, PT.geologicUnit, PT[rock]))
+                    elif rock in COMMON_MINERALS:  # Предопределенный список минералов
+                        self.add((self.sample, PT.mineral, PT[rock]))
+                    else:
+                        # Предполагаем, что это тип породы
+                        rock_iri = PT[normURI(rock)]
+                        self.add((rock_iri, RDF.type, PT.RockType))
+                        self.add((rock_iri, RDFS.label, Literal(rock.capitalize())))
+                        self.add((self.sample, PT.rockType, rock_iri))
+
+    def _process_tectonic_setting(self, value):
+        """Обработка тектонической обстановки"""
+        if not hasattr(self, 'sample') or self.sample is None:
+            return
+
+        if isinstance(value, str) and value.strip():
+            orig = capitalize(value)
+            val_norm = value.strip().lower()
+            val_iri = normURI(val_norm)
+            setting_iri = PT[val_iri]
+            self.add((setting_iri, RDF.type, PT.TectonicSetting))
+            self.add((setting_iri, RDFS.label, Literal(orig)))
+            self.add((self.sample, PT.tectonicSetting, setting_iri))
+
+    def _process_mineral(self, value):
+        """Обработка минерала"""
+        if not hasattr(self, 'sample') or self.sample is None:
+            return
+
+        if isinstance(value, str) and value.strip():
+            minerals = [mineral.strip().lower() for mineral in value.split(",")]
+            for mineral in minerals:
+                if mineral:
+                    mineral_iri = PT[normURI(mineral)]
+                    self.add((mineral_iri, RDF.type, PT.Mineral))
+                    self.add((mineral_iri, RDFS.label, Literal(mineral.capitalize())))
+                    self.add((self.sample, PT.mineral, mineral_iri))
+
+    def _process_inclusion_type(self, value):
+        """Обработка типа включения"""
+        if not hasattr(self, 'sample') or self.sample is None:
+            return
+
+        if isinstance(value, str) and value.strip():
+            value = value.strip().lower()
+            inclusion_type = "primary" if "primary" in value else "secondary"
+            self.add((self.sample, PT.inclusion, PT[inclusion_type.capitalize()]))
 
     def fCITATION(self, value, **kw):
         add = self.add
@@ -1002,6 +1159,20 @@ class Alrosa(ImpState):
         'CITATION': fCITATION,
     }
 
+ # 🔥 Предопределенные списки для классификации
+COMMON_MINERALS = {
+    "garnet", "spinel", "olivine", "clinopyroxene", "orthopyroxene",
+    "ilmenite", "phlogopite", "amphibole", "biotite", "chromite",
+    "kyanite", "diamond", "graphite", "corundum", "sanidine",
+    "enstatite", "fassaite"
+}
+
+COMMON_ROCK_TYPES = {
+    "lherzolite", "harzburgite", "peridotite", "wehrlite", "dunite",
+    "websterite", "clinopyroxenite", "orthopyroxenite", "pyroxenite",
+    "eclogite"
+}
+#
 
 class Alrosa_Xenolites(Alrosa):
     pass

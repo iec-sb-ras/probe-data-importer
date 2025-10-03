@@ -303,3 +303,102 @@
     rdfs:label "texture description" ;
     rdfs:domain :RockTexture ;
     rdfs:range rdfs:Literal .
+
+### НОВЫЕ КЛАССЫ ДЛЯ МЕТАДАННЫХ ###
+
+# Типы альтерации
+:AlterationType a rdfs:Class ;
+    rdfs:label "Alteration Type" ;
+    rdfs:subClassOf gs:GeologicProcess .
+
+:Serpentinization a :AlterationType ;
+    rdfs:label "Serpentinization" .
+
+:Carbonatization a :AlterationType ;
+    rdfs:label "Carbonatization" .
+
+:Chloritization a :AlterationType ;
+    rdfs:label "Chloritization" .
+
+:Kaolinization a :AlterationType ;
+    rdfs:label "Kaolinization" .
+
+# Типы отбора проб
+:SamplingEnvironment a rdfs:Class ;
+    rdfs:label "Sampling Environment" .
+
+:Subaerial a :SamplingEnvironment ;
+    rdfs:label "Subaerial" .
+
+:Submarine a :SamplingEnvironment ;
+    rdfs:label "Submarine" .
+
+:Underground a :SamplingEnvironment ;
+    rdfs:label "Underground" .
+
+# Типы включений
+:InclusionType a rdfs:Class ;
+    rdfs:label "Inclusion Type" .
+
+:Primary a :InclusionType ;
+    rdfs:label "Primary" .
+
+:Secondary a :InclusionType ;
+    rdfs:label "Secondary" .
+
+# Геометрические объекты
+:GeoBounds a rdfs:Class ;
+    rdfs:label "Geographic Bounds" ;
+    rdfs:subClassOf wgs:SpatialThing .
+
+:latitudeMin a rdf:Property ;
+    rdfs:label "minimum latitude" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:decimal .
+
+:latitudeMax a rdf:Property ;
+    rdfs:label "maximum latitude" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:decimal .
+
+:longitudeMin a rdf:Property ;
+    rdfs:label "minimum longitude" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:decimal .
+
+:longitudeMax a rdf:Property ;
+    rdfs:label "maximum longitude" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:decimal .
+
+:elevationMin a rdf:Property ;
+    rdfs:label "minimum elevation" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:decimal .
+
+:elevationMax a rdf:Property ;
+    rdfs:label "maximum elevation" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:decimal .
+
+:locationComment a rdf:Property ;
+    rdfs:label "location comment" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:string .
+
+### СВОЙСТВА ДЛЯ СВЯЗЕЙ ###
+
+:hasAlteration a rdf:Property ;
+    rdfs:label "has alteration" ;
+    rdfs:domain gs:RockType ;
+    rdfs:range :AlterationType .
+
+:samplingEnvironment a rdf:Property ;
+    rdfs:label "sampling environment" ;
+    rdfs:domain :Sample ;
+    rdfs:range :SamplingEnvironment .
+
+:inclusion a rdf:Property ;
+    rdfs:label "inclusion type" ;
+    rdfs:domain :Sample ;
+    rdfs:range :InclusionType .
