@@ -501,6 +501,7 @@ class ImpState:
         self.non_iso = {}
         self.measurements = {}
         self.analysis = None
+        self.fls = {}
 
     def proc_value(self, value):
         if isinstance(value, str):
@@ -517,13 +518,14 @@ class ImpState:
 
     def proc_comp(self, names, value, delim=False):
         """
-        Обрабатывает химическое соединение или элемент.
+        Обрабатывает химическое соединение или элемент с 	сохранением оригинальных значений
+        и добавлением нормализованных (PPM -> %)
 
         Аргументы:
         - names: Кортеж (поле, имя_поля)
         - value: Значение ячейки
         - delim: Флаг предела обнаружения
-        """
+                """
 
         uvalue = str(value).upper().strip()
         if isinstance(value, str):
@@ -535,6 +537,7 @@ class ImpState:
         if "<" in uvalue:
             dl = value.lstrip("<").strip()
             value = dl
+
         name, fieldname = names
         name = name.strip()
         mo = COMPRE.match(name)
@@ -571,6 +574,27 @@ class ImpState:
             else:
                 add((m, PT.unit, P.UnknowUnit))
 
+        def create_measurement_with_normalization(m, measurement_value, unit_type, rupper):
+            """Создает измерение с нормализованными значениями"""
+            # Сохраняем оригинальное значение
+            if dl is None:
+                add((m, PT.value, Literal(measurement_value)))
+
+            # Определяем единицы измерения
+            if unit_type == 'PPM':
+                add((m, PT.unit, PPM))
+                # 🔥 ДОБАВЛЯЕМ НОРМАЛИЗОВАННОЕ ЗНАЧЕНИЕ (PPM -> %)
+                if not delim and isinstance(measurement_value, (int, float)):
+                    normalized_value = measurement_value * 0.0001  # PPM to %
+                    add((m, PT.normalizedValue, Literal(normalized_value)))
+                    add((m, PT.normalizedUnit, Percent))
+            elif unit_type == '%':
+                add((m, PT.unit, Percent))
+            elif unit_type == 'INT':
+                add((m, PT.unit, P.Int))
+            else:
+                add((m, PT.unit, P.UnknowUnit))
+
         if isinstance(value, float) and value.is_integer():
             value = int(value)
         if name in ["ППП", "ппп"]:
@@ -600,7 +624,6 @@ class ImpState:
         else:
             comp = mo.group(1)
             rest = mo.group(3)
-            # print(name, comp, rest, mo.groups(), fieldname)
             rc = COMPELRE.findall(comp)
             el1 = rc[0]
             el = ELRE.match(el1).group(1)
@@ -638,6 +661,9 @@ class ImpState:
             add((m, PT.value, Literal(value)))
             unit(m, rupper)
 
+        # 🔥 СОЗДАЕМ ИЗМЕРЕНИЕ С НОРМАЛИЗАЦИЕЙ
+        create_measurement_with_normalization(m, value, unit_type, rupper)
+
         def finish_dl(e, m):
             if delim:
                 self.dlims[e] = m
@@ -648,9 +674,11 @@ class ImpState:
                 else:
                     # m is description, connected to a sample
                     md = make_detlim()
+                    # Для пределов обнаружения тоже добавляем нормализацию
                     add((md, PT.value, Literal(value)))
                     add((md, RDF.type, GeoMeasure))
                     unit(md, rupper)
+                    create_measurement_with_normalization(md, value, unit_type, rupper)
                     self.dlims[e] = md
                     add((m, PT.value, md))
 
@@ -674,6 +702,7 @@ class ImpState:
             print("#!ERROR unknown combination of {}, and {}=?={}: {}.".format(
                 rc, el1, el, eliri))
             quit()
+
         if "TOT" in rupper or "ОБЩ" in rupper:
             add((m, PT.total, Literal(True)))
 
@@ -961,15 +990,18 @@ class Alrosa(ImpState):
             locations = [l.strip() for l in locations]
 
             for location in locations:
-                location_bnode = BNode()  # Создаем BNode для каждой локации
+                if location not in self.fls:
+                    location_bnode = BNode()  # Создаем BNode для каждой локации
+                    self.fls[location] = location_bnode
 
-                # Добавляем основную информацию о локации
-                add((location_bnode, RDF.type, SCHEMA.Place))
-                add((location_bnode, RDFS.label, Literal(location)))
+                    # Добавляем основную информацию о локации
+                    add((location_bnode, RDF.type, SCHEMA.Place))
+                    add((location_bnode, RDFS.label, Literal(location)))
 
-                # 🔥 Добавляем географические координаты в BNode
-                self._add_location_metadata(location_bnode, sheet_row)
-
+                    # 🔥 Добавляем географические координаты в BNode
+                    self._add_location_metadata(location_bnode, sheet_row)
+                else:
+                    location_bnode = self.fls[location]
                 # Связываем образец с локацией
                 add((self.sample, SCHEMA.fromLocation, location_bnode))
 
@@ -1243,8 +1275,8 @@ def parse_sheet(sh, sheetIRI, sheetName, comp):
     print("Parsing sheet: {}".format(sheetName))
     for rx in range(sh.nrows):
         st.row(sh.row(rx), rx)
-    print("PROBLEMATICS:")
-    pprint(st.non_iso)
+    #print("PROBLEMATICS:")
+    #pprint(st.non_iso)
 
 
 def parse_xl(file, comp):
