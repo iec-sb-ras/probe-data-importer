@@ -408,3 +408,248 @@
     rdfs:label "inclusion type" ;
     rdfs:domain :Sample ;
     rdfs:range :InclusionType .
+
+### КЛАСС ДЛЯ МИНЕРАЛОВ (GARNET, SPINEL, etc.) ###
+
+:Mineral a rdfs:Class ;
+    rdfs:label "Mineral" ;
+    rdfs:subClassOf gs:GeologicUnit .
+
+:MineralGroup a rdfs:Class ;
+    rdfs:label "Mineral Group" .
+
+:CrystalSystem a rdfs:Class ;
+    rdfs:label "Crystal System" .
+
+# Минеральные группы
+:Nesosilicate a :MineralGroup ;
+    rdfs:label "Nesosilicate" .
+
+:Inosilicate a :MineralGroup ;
+    rdfs:label "Inosilicate" .
+
+:Cylosilicate a :MineralGroup ;
+    rdfs:label "Cylosilicate" .
+
+:Phyllosilicate a :MineralGroup ;
+    rdfs:label "Phyllosilicate" .
+
+:Tectosilicate a :MineralGroup ;
+    rdfs:label "Tectosilicate" .
+
+:Oxide a :MineralGroup ;
+    rdfs:label "Oxide" .
+
+:Sulfide a :MineralGroup ;
+    rdfs:label "Sulfide" .
+
+:NativeElement a :MineralGroup ;
+    rdfs:label "Native Element" .
+
+# Кристальные системы
+:Cubic a :CrystalSystem ;
+    rdfs:label "Cubic" .
+
+:Hexagonal a :CrystalSystem ;
+    rdfs:label "Hexagonal" .
+
+:Trigonal a :CrystalSystem ;
+    rdfs:label "Trigonal" .
+
+:Orthorhombic a :CrystalSystem ;
+    rdfs:label "Orthorhombic" .
+
+:Monoclinic a :CrystalSystem ;
+    rdfs:label "Monoclinic" .
+
+:Triclinic a :CrystalSystem ;
+    rdfs:label "Triclinic" .
+
+# Свойства для минералов
+:mineralGroup a rdf:Property ;
+    rdfs:label "mineral group" ;
+    rdfs:domain :Mineral ;
+    rdfs:range :MineralGroup .
+
+:crystalSystem a rdf:Property ;
+    rdfs:label "crystal system" ;
+    rdfs:domain :Mineral ;
+    rdfs:range :CrystalSystem .
+
+:chemicalFormula a rdf:Property ;
+    rdfs:label "chemical formula" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+:hardness a rdf:Property ;
+    rdfs:label "hardness" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+:density a rdf:Property ;
+    rdfs:label "density" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+:color a rdf:Property ;
+    rdfs:label "color" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+:streak a rdf:Property ;
+    rdfs:label "streak" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+:luster a rdf:Property ;
+    rdfs:label "luster" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+:cleavage a rdf:Property ;
+    rdfs:label "cleavage" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+# Конкретные минералы с расширенными свойствами
+:garnet a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Garnet" ;
+    :mineralGroup :Nesosilicate ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "X3Y2(SiO4)3" ;
+    :hardness "6.5-7.5" ;
+    :density "3.5-4.3" ;
+    :color "red, brown, green, yellow, black" ;
+    :streak "white" ;
+    :luster "vitreous to resinous" .
+
+:spinel a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Spinel" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "MgAl2O4" ;
+    :hardness "7.5-8.0" ;
+    :density "3.5-4.1" ;
+    :color "red, blue, green, brown, black" ;
+    :streak "white" .
+
+:olivine a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Olivine" ;
+    :mineralGroup :Nesosilicate ;
+    :crystalSystem :Orthorhombic ;
+    :chemicalFormula "(Mg,Fe)2SiO4" ;
+    :hardness "6.5-7.0" ;
+    :density "3.2-4.4" ;
+    :color "green, yellow-green, brown" .
+
+:clinopyroxene a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Clinopyroxene" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "(Ca,Na)(Mg,Fe,Al)(Si,Al)2O6" ;
+    :hardness "5.0-6.0" ;
+    :density "3.2-3.6" .
+
+:orthopyroxene a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Orthopyroxene" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Orthorhombic ;
+    :chemicalFormula "(Mg,Fe)2Si2O6" ;
+    :hardness "5.0-6.0" ;
+    :density "3.2-3.9" .
+
+:ilmenite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Ilmenite" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Trigonal ;
+    :chemicalFormula "FeTiO3" ;
+    :hardness "5.0-6.0" ;
+    :density "4.7-4.8" .
+
+:phlogopite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Phlogopite" ;
+    :mineralGroup :Phyllosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "KMg3(AlSi3O10)(OH)2" ;
+    :hardness "2.5-3.0" ;
+    :density "2.8-2.9" .
+
+:amphibole a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Amphibole" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "NaCa2(Mg,Fe)4Al(Si6Al2)O22(OH)2" ;
+    :hardness "5.0-6.0" ;
+    :density "2.9-3.4" .
+
+:biotite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Biotite" ;
+    :mineralGroup :Phyllosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "K(Mg,Fe)3(AlSi3O10)(OH)2" ;
+    :hardness "2.5-3.0" ;
+    :density "2.7-3.3" .
+
+:chromite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Chromite" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "FeCr2O4" ;
+    :hardness "5.5" ;
+    :density "4.5-5.1" .
+
+:kyanite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Kyanite" ;
+    :mineralGroup :Nesosilicate ;
+    :crystalSystem :Triclinic ;
+    :chemicalFormula "Al2SiO5" ;
+    :hardness "4.5-7.0" ;
+    :density "3.5-3.7" .
+
+:diamond a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Diamond" ;
+    :mineralGroup :NativeElement ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "C" ;
+    :hardness "10.0" ;
+    :density "3.5-3.53" .
+
+:graphite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Graphite" ;
+    :mineralGroup :NativeElement ;
+    :crystalSystem :Hexagonal ;
+    :chemicalFormula "C" ;
+    :hardness "1.0-2.0" ;
+    :density "2.09-2.23" .
+
+:corundum a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Corundum" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Trigonal ;
+    :chemicalFormula "Al2O3" ;
+    :hardness "9.0" ;
+    :density "3.9-4.1" .
+
+:sanidine a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Sanidine" ;
+    :mineralGroup :Tectosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "K(AlSi3O8)" ;
+    :hardness "6.0" ;
+    :density "2.5-2.6" .
+
+:enstatite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Enstatite" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Orthorhombic ;
+    :chemicalFormula "Mg2Si2O6" ;
+    :hardness "5.0-6.0" ;
+    :density "3.2-3.9" .
+
+:fassaite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Fassaite" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "Ca(Mg,Fe,Al)(Si,Al)2O6" ;
+    :hardness "5.0-6.0" ;
+    :density "3.2-3.5" .
