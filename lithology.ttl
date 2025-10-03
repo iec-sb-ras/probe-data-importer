@@ -865,3 +865,476 @@
 
 :PPM :hasConversionTo :Percent ;
      :conversionFactor "0.0001"^^xsd:decimal .
+
+### БАЗОВАЯ ОНТОЛОГИЯ ГЕОХИМИЧЕСКИХ ДАННЫХ ###
+
+### МЕТАДАННЫЕ ОБРАЗЦОВ ###
+:TECTONIC_SETTING a rdf:Property ;
+    rdfs:label "tectonic setting" ;
+    rdfs:domain :Sample ;
+    rdfs:range xsd:string .
+
+:LOCATION_COMMENT a rdf:Property ;
+    rdfs:label "location comment" ;
+    rdfs:domain :GeoBounds ;
+    rdfs:range xsd:string .
+
+:LAND_SEA_SAMPLING a rdf:Property ;
+    rdfs:label "land/sea sampling" ;
+    rdfs:domain :Sample ;
+    rdfs:range :SamplingEnvironment .
+
+:DRILLING_DEPTH_MIN a rdf:Property ;
+    rdfs:label "drilling depth minimum" ;
+    rdfs:domain :Sample ;
+    rdfs:range xsd:decimal .
+
+:DRILLING_DEPTH_MAX a rdf:Property ;
+    rdfs:label "drilling depth maximum" ;
+    rdfs:domain :Sample ;
+    rdfs:range xsd:decimal .
+
+:ALTERATION a rdf:Property ;
+    rdfs:label "alteration" ;
+    rdfs:domain :Sample ;
+    rdfs:range :AlterationType .
+
+### СВОЙСТВА МИКРОАНАЛИЗА ###
+:SPOT a rdf:Property ;
+    rdfs:label "spot" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range xsd:string .
+
+:CRYSTAL a rdf:Property ;
+    rdfs:label "crystal" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range xsd:string .
+
+:RIM_CORE_MINERAL_GRAINS a rdf:Property ;
+    rdfs:label "rim/core position" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :ZoningPosition .
+
+:GRAIN_SIZE a rdf:Property ;
+    rdfs:label "grain size" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range xsd:decimal .
+
+### ОСНОВНЫЕ ОКСИДЫ ###
+:SIO2 a rdf:Property ;
+    rdfs:label "SiO₂" ;
+    rdfs:comment "Silicon dioxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:TIO2 a rdf:Property ;
+    rdfs:label "TiO₂" ;
+    rdfs:comment "Titanium dioxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:AL2O3 a rdf:Property ;
+    rdfs:label "Al₂O₃" ;
+    rdfs:comment "Aluminum oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:CR2O3 a rdf:Property ;
+    rdfs:label "Cr₂O₃" ;
+    rdfs:comment "Chromium oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:FE2O3T a rdf:Property ;
+    rdfs:label "Fe₂O₃ total" ;
+    rdfs:comment "Total iron as Fe₂O₃" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:FEO a rdf:Property ;
+    rdfs:label "FeO" ;
+    rdfs:comment "Iron(II) oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:CAO a rdf:Property ;
+    rdfs:label "CaO" ;
+    rdfs:comment "Calcium oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:MGO a rdf:Property ;
+    rdfs:label "MgO" ;
+    rdfs:comment "Magnesium oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:MNO a rdf:Property ;
+    rdfs:label "MnO" ;
+    rdfs:comment "Manganese oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:K2O a rdf:Property ;
+    rdfs:label "K₂O" ;
+    rdfs:comment "Potassium oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:NA2O a rdf:Property ;
+    rdfs:label "Na₂O" ;
+    rdfs:comment "Sodium oxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:P2O5 a rdf:Property ;
+    rdfs:label "P₂O₅" ;
+    rdfs:comment "Phosphorus pentoxide" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+### ЭЛЕМЕНТЫ В PPM ###
+:LI_PPM a rdf:Property ;
+    rdfs:label "Li" ;
+    rdfs:comment "Lithium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:BE_PPM a rdf:Property ;
+    rdfs:label "Be" ;
+    rdfs:comment "Beryllium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:B_PPM a rdf:Property ;
+    rdfs:label "B" ;
+    rdfs:comment "Boron concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:SC_PPM a rdf:Property ;
+    rdfs:label "Sc" ;
+    rdfs:comment "Scandium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:V_PPM a rdf:Property ;
+    rdfs:label "V" ;
+    rdfs:comment "Vanadium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:CO_PPM a rdf:Property ;
+    rdfs:label "Co" ;
+    rdfs:comment "Cobalt concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:NI_PPM a rdf:Property ;
+    rdfs:label "Ni" ;
+    rdfs:comment "Nickel concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:GA_PPM a rdf:Property ;
+    rdfs:label "Ga" ;
+    rdfs:comment "Gallium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:GE_PPM a rdf:Property ;
+    rdfs:label "Ge" ;
+    rdfs:comment "Germanium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:AS_PPM a rdf:Property ;
+    rdfs:label "As" ;
+    rdfs:comment "Arsenic concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:RB_PPM a rdf:Property ;
+    rdfs:label "Rb" ;
+    rdfs:comment "Rubidium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:SR_PPM a rdf:Property ;
+    rdfs:label "Sr" ;
+    rdfs:comment "Strontium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:Y_PPM a rdf:Property ;
+    rdfs:label "Y" ;
+    rdfs:comment "Yttrium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:ZR_PPM a rdf:Property ;
+    rdfs:label "Zr" ;
+    rdfs:comment "Zirconium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:NB_PPM a rdf:Property ;
+    rdfs:label "Nb" ;
+    rdfs:comment "Niobium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:MO_PPM a rdf:Property ;
+    rdfs:label "Mo" ;
+    rdfs:comment "Molybdenum concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:AG_PPM a rdf:Property ;
+    rdfs:label "Ag" ;
+    rdfs:comment "Silver concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:CD_PPM a rdf:Property ;
+    rdfs:label "Cd" ;
+    rdfs:comment "Cadmium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:IN_PPM a rdf:Property ;
+    rdfs:label "In" ;
+    rdfs:comment "Indium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:SN_PPM a rdf:Property ;
+    rdfs:label "Sn" ;
+    rdfs:comment "Tin concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:SB_PPM a rdf:Property ;
+    rdfs:label "Sb" ;
+    rdfs:comment "Antimony concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:CS_PPM a rdf:Property ;
+    rdfs:label "Cs" ;
+    rdfs:comment "Cesium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:BA_PPM a rdf:Property ;
+    rdfs:label "Ba" ;
+    rdfs:comment "Barium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+### РЕДКОЗЕМЕЛЬНЫЕ ЭЛЕМЕНТЫ ###
+:LA_PPM a rdf:Property ;
+    rdfs:label "La" ;
+    rdfs:comment "Lanthanum concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:CE_PPM a rdf:Property ;
+    rdfs:label "Ce" ;
+    rdfs:comment "Cerium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:PR_PPM a rdf:Property ;
+    rdfs:label "Pr" ;
+    rdfs:comment "Praseodymium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:ND_PPM a rdf:Property ;
+    rdfs:label "Nd" ;
+    rdfs:comment "Neodymium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:SM_PPM a rdf:Property ;
+    rdfs:label "Sm" ;
+    rdfs:comment "Samarium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:EU_PPM a rdf:Property ;
+    rdfs:label "Eu" ;
+    rdfs:comment "Europium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:GD_PPM a rdf:Property ;
+    rdfs:label "Gd" ;
+    rdfs:comment "Gadolinium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:TB_PPM a rdf:Property ;
+    rdfs:label "Tb" ;
+    rdfs:comment "Terbium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:DY_PPM a rdf:Property ;
+    rdfs:label "Dy" ;
+    rdfs:comment "Dysprosium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:HO_PPM a rdf:Property ;
+    rdfs:label "Ho" ;
+    rdfs:comment "Holmium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:ER_PPM a rdf:Property ;
+    rdfs:label "Er" ;
+    rdfs:comment "Erbium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:TM_PPM a rdf:Property ;
+    rdfs:label "Tm" ;
+    rdfs:comment "Thulium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:YB_PPM a rdf:Property ;
+    rdfs:label "Yb" ;
+    rdfs:comment "Ytterbium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:LU_PPM a rdf:Property ;
+    rdfs:label "Lu" ;
+    rdfs:comment "Lutetium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+### РАДИОГЕННЫЕ ИЗОТОПЫ ###
+:HF_PPM a rdf:Property ;
+    rdfs:label "Hf" ;
+    rdfs:comment "Hafnium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:TA_PPM a rdf:Property ;
+    rdfs:label "Ta" ;
+    rdfs:comment "Tantalum concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:W_PPM a rdf:Property ;
+    rdfs:label "W" ;
+    rdfs:comment "Tungsten concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:TL_PPM a rdf:Property ;
+    rdfs:label "Tl" ;
+    rdfs:comment "Thallium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:PB_PPM a rdf:Property ;
+    rdfs:label "Pb" ;
+    rdfs:comment "Lead concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:TH_PPM a rdf:Property ;
+    rdfs:label "Th" ;
+    rdfs:comment "Thorium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+:U_PPM a rdf:Property ;
+    rdfs:label "U" ;
+    rdfs:comment "Uranium concentration" ;
+    rdfs:domain :Measurement ;
+    rdfs:range xsd:decimal .
+
+### ИЗОТОПНЫЕ ОТНОШЕНИЯ ###
+:IsotopeRatio a rdfs:Class ;
+    rdfs:label "Isotope Ratio" .
+
+:ND143_ND144 a rdf:Property ;
+    rdfs:label "¹⁴³Nd/¹⁴⁴Nd" ;
+    rdfs:domain :IsotopeRatio ;
+    rdfs:range xsd:decimal .
+
+:SR87_SR86 a rdf:Property ;
+    rdfs:label "⁸⁷Sr/⁸⁶Sr" ;
+    rdfs:domain :IsotopeRatio ;
+    rdfs:range xsd:decimal .
+
+:PB206_PB204 a rdf:Property ;
+    rdfs:label "²⁰⁶Pb/²⁰⁴Pb" ;
+    rdfs:domain :IsotopeRatio ;
+    rdfs:range xsd:decimal .
+
+:PB207_PB204 a rdf:Property ;
+    rdfs:label "²⁰⁷Pb/²⁰⁴Pb" ;
+    rdfs:domain :IsotopeRatio ;
+    rdfs:range xsd:decimal .
+
+:PB208_PB204 a rdf:Property ;
+    rdfs:label "²⁰⁸Pb/²⁰⁴Pb" ;
+    rdfs:domain :IsotopeRatio ;
+    rdfs:range xsd:decimal .
+
+:HF176_HF177 a rdf:Property ;
+    rdfs:label "¹⁷⁶Hf/¹⁷⁷Hf" ;
+    rdfs:domain :IsotopeRatio ;
+    rdfs:range xsd:decimal .
+
+### МОЛЬНЫЕ ПРОЦЕНТЫ ГРАНАТОВ ###
+:GarnetComposition a rdfs:Class ;
+    rdfs:label "Garnet Composition" .
+
+:ANDRADITE_MOL a rdf:Property ;
+    rdfs:label "andradite mole %" ;
+    rdfs:domain :GarnetComposition ;
+    rdfs:range xsd:decimal .
+
+:GROSSULAR_MOL a rdf:Property ;
+    rdfs:label "grossular mole %" ;
+    rdfs:domain :GarnetComposition ;
+    rdfs:range xsd:decimal .
+
+:PYROPE_MOL a rdf:Property ;
+    rdfs:label "pyrope mole %" ;
+    rdfs:domain :GarnetComposition ;
+    rdfs:range xsd:decimal .
+
+:SPESSARTINE_MOL a rdf:Property ;
+    rdfs:label "spessartine mole %" ;
+    rdfs:domain :GarnetComposition ;
+    rdfs:range xsd:decimal .
+
+:UVAROVITE_MOL a rdf:Property ;
+    rdfs:label "uvarovite mole %" ;
+    rdfs:domain :GarnetComposition ;
+    rdfs:range xsd:decimal .
+
+:TI_ANDRADITE_MOL a rdf:Property ;
+    rdfs:label "Ti-andradite mole %" ;
+    rdfs:domain :GarnetComposition ;
+    rdfs:range xsd:decimal .
+
+### ГЕОХРОНОЛОГИЯ ###
+:AGE_MA a rdf:Property ;
+    rdfs:label "age in Ma" ;
+    rdfs:domain :Sample ;
+    rdfs:range xsd:decimal .
+
+:AGE_PB206_U238_MA a rdf:Property ;
+    rdfs:label "²⁰⁶Pb/²³⁸U age" ;
+    rdfs:domain :Sample ;
+    rdfs:range xsd:decimal .
