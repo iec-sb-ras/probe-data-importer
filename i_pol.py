@@ -1073,16 +1073,16 @@ class Alrosa(ImpState):
             # 🔥 Координаты и географические данные
             if field == "LATITUDE_MIN":
                 location_data['lat_min'] = val
-                add((location_bnode, PT.latitudeMin, Literal(val)))
+                add((location_bnode, PT.latitudeMin, Literal(str(val), datatype=XSD.decimal)))
             elif field == "LATITUDE_MAX":
                 location_data['lat_max'] = val
-                add((location_bnode, PT.latitudeMax, Literal(val)))
+                add((location_bnode, PT.latitudeMax, Literal(str(val), datatype=XSD.decimal)))
             elif field == "LONGITUDE_MIN":
                 location_data['long_min'] = val
-                add((location_bnode, PT.longitudeMin, Literal(val)))
+                add((location_bnode, PT.longitudeMin, Literal(str(val), datatype=XSD.decimal)))
             elif field == "LONGITUDE_MAX":
                 location_data['long_max'] = val
-                add((location_bnode, PT.longitudeMax, Literal(val)))
+                add((location_bnode, PT.longitudeMax, Literal(str(val), datatype=XSD.decimal)))
             elif field == "LOCATION_COMMENT":
                 add((location_bnode, PT.locationComment, Literal(val)))
             elif field == "ELEVATION_MIN":
@@ -1236,7 +1236,8 @@ class Alrosa(ImpState):
         'CITATION': fCITATION,
     }
 
- # 🔥 Предопределенные списки для классификации
+
+# 🔥 Предопределенные списки для классификации
 COMMON_MINERALS = {
     "garnet", "spinel", "olivine", "clinopyroxene", "orthopyroxene",
     "ilmenite", "phlogopite", "amphibole", "biotite", "chromite",
@@ -1250,6 +1251,7 @@ COMMON_ROCK_TYPES = {
     "eclogite"
 }
 #
+
 
 class Alrosa_Xenolites(Alrosa):
     pass
