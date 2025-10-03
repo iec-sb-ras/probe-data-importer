@@ -292,6 +292,26 @@ def elem(name):
     return ElToIRI.get(p1 + p2, None)
 
 
+PPM_TO_PERCENT = 0.0001  # 1 PPM = 0.0001%
+
+def convert_units(value, from_unit, to_unit='%'):
+    """
+    Конвертирует значения между единицами измерения
+    """
+    if from_unit == to_unit:
+        return value
+
+    conversion_factors = {
+        ('PPM', '%'): PPM_TO_PERCENT,
+        ('%', 'PPM'): 1 / PPM_TO_PERCENT,
+    }
+
+    factor = conversion_factors.get((from_unit, to_unit))
+    if factor:
+        return value * factor
+    else:
+        return value  # Если конвертация невозможна, возвращаем исходное значение
+
 # Словарь для отображения текстур на IRI онтологии
 ROCK_TEXTURE_MAPPING = {
     # Основные текстуры
@@ -715,9 +735,9 @@ class ImpState:
         detlim = self.state == State.DETLIM
         if self.data() or detlim:
             if self.sample is None:
-                self.c(row[self.sample_col], rx, self.sample_col, detlim)
+                self.c(row[self.sample_col], rx, self.sample_col, sheet_row = row, detlim=delim)
             for i, cell in enumerate(row):
-                self.c(cell, rx, i, detlim)
+                self.c(cell, rx, i, detlim=delim, sheet_row=row)
             return
 
         if self.state == State.HEADER:
@@ -739,7 +759,7 @@ class ImpState:
                     loc = cell.value.strip()
                     self.proc_loc(loc)
 
-    def c(self, cell, row, col, detlim=False):
+    def c(self, cell, row, col, sheet_row, detlim=False):
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
         try:
@@ -772,7 +792,7 @@ class ImpState:
                         name = "{}".format(val)
                 else:
                     name = "{}".format(val)
-            self.sample = P[name]
+            self.sample = P['sample-'+name]
             add((ds, self._sample_iri_, self.sample))
             add((self.sample, RDF.type, GeoSample))
             add((self.sample, RDFS.label, Literal(name)))
@@ -859,18 +879,18 @@ class Alrosa(ImpState):
             return
         if self.state == State.DATA:
             if self.sample is None and self.sample_col is not None:
-                self.c(row[self.sample_col], rx, self.sample_col)
+                self.c(row[self.sample_col], rx, self.sample_col, sheet_row=row)
             for i, cell in enumerate(row):
                 if i == self.sample_col:
                     continue
-                self.c(cell, rx, i)
+                self.c(cell, rx, i, sheet_row=row)
         if self.state == State.REFERENCES:
             refURI, reference = self.reffield(v0)
             assert (reference is not None)
             self.add((refURI, RDF.type, BIBO["AcademicArticle"]))
             self.add((refURI, RDFS.label, Literal(reference)))
 
-    def c(self, cell, row, col, detlim=False):
+    def c(self, cell, row, col, sheet_row, detlim=False):
         if cell.ctype in [xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK]:
             return
         try:
@@ -936,7 +956,7 @@ class Alrosa(ImpState):
                 add((location_bnode, RDFS.label, Literal(location)))
 
                 # 🔥 Добавляем географические координаты в BNode
-                self._add_location_metadata(location_bnode, row)
+                self._add_location_metadata(location_bnode, sheet_row)
 
                 # Связываем образец с локацией
                 add((self.sample, SCHEMA.fromLocation, location_bnode))
@@ -1030,8 +1050,11 @@ class Alrosa(ImpState):
         self._create_geometry(location_bnode, location_data)
 
     def _create_geometry(self, location_bnode, location_data):
-        """Создает геометрический объект для локации"""
+        """Создает геометрический объект для локации с правильной онтологией"""
         add = self.add
+
+        # 🔥 Указываем тип для BNode локации
+        add((location_bnode, RDF.type, PT.GeoBounds))
 
         # Если есть и min и max координаты - создаем bounding box
         if all(k in location_data for k in ['lat_min', 'lat_max', 'long_min', 'long_max']):
@@ -1064,7 +1087,7 @@ class Alrosa(ImpState):
             self.add((self.sample, PT.samplingEnvironment, Literal(value)))
 
     def _process_alteration(self, value):
-        """Обработка альтерации породы"""
+        """Обработка альтерации породы с созданием сущностей"""
         if not hasattr(self, 'sample') or self.sample is None:
             return
 
@@ -1073,8 +1096,12 @@ class Alrosa(ImpState):
             for alteration in alterations:
                 if alteration:
                     alt_iri = PT[normURI(alteration)]
-                    self.add((alt_iri, RDF.type, PT.AlterationType))
-                    self.add((alt_iri, RDFS.label, Literal(alteration.capitalize())))
+
+                    # 🔥 Создаем сущность AlterationType если не существует
+                    if (alt_iri, RDF.type, PT.AlterationType) not in self.g:
+                        self.add((alt_iri, RDF.type, PT.AlterationType))
+                        self.add((alt_iri, RDFS.label, Literal(alteration.capitalize())))
+
                     self.add((self.sample, PT.hasAlteration, alt_iri))
 
     def _process_rock_texture(self, value):
@@ -1147,8 +1174,14 @@ class Alrosa(ImpState):
 
         if isinstance(value, str) and value.strip():
             value = value.strip().lower()
-            inclusion_type = "primary" if "primary" in value else "secondary"
-            self.add((self.sample, PT.inclusion, PT[inclusion_type.capitalize()]))
+            if "primary" in value:
+                inclusion_type = "Primary"
+            elif "secondary" in value:
+                inclusion_type = "Secondary"
+            else:
+                inclusion_type = "Primary"  # значение по умолчанию
+
+            self.add((self.sample, PT.inclusion, PT[inclusion_type]))
 
     def fCITATION(self, value, **kw):
         add = self.add
