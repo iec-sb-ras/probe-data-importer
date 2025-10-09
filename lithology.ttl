@@ -1338,3 +1338,11 @@
     rdfs:label "²⁰⁶Pb/²³⁸U age" ;
     rdfs:domain :Sample ;
     rdfs:range xsd:decimal .
+
+### Исправления ошибок ###
+
+:hasAnalysis a rdf:Property ;
+    rdfs:label "has analysis" ;
+    rdfs:domain :Sample ;
+    rdfs:range :MicroprobeAnalysis ;
+    rdfs:comment "Links a sample to its microprobe analyses" .
