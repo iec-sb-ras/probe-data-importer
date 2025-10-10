@@ -1346,3 +1346,69 @@
     rdfs:domain :Sample ;
     rdfs:range :MicroprobeAnalysis ;
     rdfs:comment "Links a sample to its microprobe analyses" .
+
+# Добавьте в T-Box
+:DiamondIndicator a rdfs:Class ;
+    rdfs:label "Diamond Indicator Mineral" .
+
+:hasDiamondPotential a rdf:Property ;
+    rdfs:label "has diamond potential" ;
+    rdfs:domain gs:RockType ;
+    rdfs:range xsd:boolean .
+
+:indicatorMineral a rdf:Property ;
+    rdfs:label "indicator mineral" ;
+    rdfs:domain :DiamondIndicator ;
+    rdfs:range :Mineral .
+
+# Критические минералы-индикаторы
+:garnet :indicatorMineral :DiamondIndicator .
+:chromite :indicatorMineral :DiamondIndicator .
+:ilmenite :indicatorMineral :DiamondIndicator .
+
+:Paragenesis a rdfs:Class ;
+    rdfs:label "Mineral Paragenesis" .
+
+:hasParagenesis a rdf:Property ;
+    rdfs:label "has paragenesis" ;
+    rdfs:domain gs:RockType ;
+    rdfs:range :Paragenesis .
+
+:containsMineral a rdf:Property ;
+    rdfs:label "contains mineral" ;
+    rdfs:domain :Paragenesis ;
+    rdfs:range :Mineral .
+
+# Пример парагенезиса
+:PeridotiteParagenesis a :Paragenesis ;
+    :containsMineral :olivine, :orthopyroxene, :clinopyroxene, :garnet .
+
+:ClassificationModel a rdfs:Class ;
+    rdfs:label "Classification Model" .
+
+:hasTrainingFeature a rdf:Property ;
+    rdfs:label "has training feature" ;
+    rdfs:domain :ClassificationModel ;
+    rdfs:range rdf:Property .
+
+:usedForPrediction a rdf:Property ;
+    rdfs:label "used for prediction" ;
+    rdfs:domain :ClassificationModel ;
+    rdfs:range :Mineral .
+
+# Пример модели
+:GarnetClassification a :ClassificationModel ;
+    :hasTrainingFeature :CR2O3, :MGO, :CAO ;
+    :usedForPrediction :garnet .
+
+:kimberlite a gs:RockType ;
+    rdfs:label "Kimberlite" .
+
+:monticellite a :Mineral ;
+    rdfs:label "Monticellite" .
+
+:perovskite a :Mineral ;
+    rdfs:label "Perovskite" .
+
+:magnetite a :Mineral ;
+    rdfs:label "Magnetite" .
