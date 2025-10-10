@@ -735,10 +735,10 @@
 :ZoningPosition a rdfs:Class ;
     rdfs:label "Zoning Position" .
 
-:spotDiameter a rdf:Property ;
-    rdfs:label "spot diameter" ;
-    rdfs:domain :AnalysisSpot ;
-    rdfs:range xsd:decimal .
+# :spotDiameter a rdf:Property ;
+#     rdfs:label "spot diameter" ;
+#     rdfs:domain :AnalysisSpot ;
+#     rdfs:range xsd:decimal .
 
 :MicroprobeAnalysis a gs:GeologicAnalysis ;
     rdfs:label "Microprobe Analysis" ;
@@ -1412,3 +1412,57 @@
 
 :magnetite a :Mineral ;
     rdfs:label "Magnetite" .
+
+:hasCharacteristicMineral a rdf:Property ;
+    rdfs:label "has characteristic mineral" ;
+    rdfs:domain gs:RockType ;
+    rdfs:range :Mineral .
+
+:lherzolite :hasCharacteristicMineral :olivine, :orthopyroxene, :clinopyroxene, :garnet .
+:kimberlite :hasCharacteristicMineral :diamond, :garnet, :chromite, :ilmenite .
+
+:DiamondIndicatorMineral a rdfs:Class ;
+    rdfs:label "Diamond Indicator Mineral" ;
+    rdfs:subClassOf :Mineral .
+
+:garnet a :DiamondIndicatorMineral .
+:chromite a :DiamondIndicatorMineral .
+:ilmenite a :DiamondIndicatorMineral .
+
+:hasCr2O3Content a rdf:Property ;
+    rdfs:label "has Cr₂O₃ content" ;
+    rdfs:domain :garnet ;
+    rdfs:range xsd:decimal .
+:hasCaOContent a rdf:Property ;
+    rdfs:label "has CaO content" ;
+    rdfs:domain :garnet ;
+    rdfs:range xsd:decimal .
+:hasMgOContent a rdf:Property ;
+    rdfs:label "has MgO content" ;
+    rdfs:domain :garnet ;
+    rdfs:range xsd:decimal .
+
+:KimberliteFacies a rdfs:Class ;
+    rdfs:label "Kimberlite Facies" .
+:CraterFacies a :KimberliteFacies ;
+    rdfs:label "Crater Facies" .
+:DiatremeFacies a :KimberliteFacies ;
+    rdfs:label "Diatreme Facies" .
+:HypabyssalFacies a :KimberliteFacies ;
+    rdfs:label "Hypabyssal Facies" .
+:Lamproite a gs:RockType ;
+    rdfs:label "Lamproite" .
+
+:ParageneticStage a rdfs:Class ;
+    rdfs:label "Paragenetic Stage" .
+:ProtoStage a :ParageneticStage ;
+    rdfs:label "Protogenetic" .
+:SyngeneticStage a :ParageneticStage ;
+    rdfs:label "Syngenetic" .
+:EpigeneticStage a :ParageneticStage ;
+    rdfs:label "Epigenetic" .
+
+:parageneticStage a rdf:Property ;
+    rdfs:label "paragenetic stage" ;
+    rdfs:domain :Inclusion ;
+    rdfs:range :ParageneticStage .
