@@ -1,0 +1,389 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gs: <http://www.geosciml.org/ontologies/202311/> .
+@prefix dbp-owl: <http://dbpedia.org/ontology/> .
+@prefix : <http://crust.irk.ru/ontology/contents/terms/1.0/> .
+
+### БАЗОВЫЕ КЛАССЫ ###
+
+:Sample a rdfs:Class ;
+    rdfs:label "Sample" ;
+    rdfs:subClassOf gs:GeologicUnit .
+
+:MicroprobeAnalysis a gs:GeologicAnalysis ;
+    rdfs:label "Microprobe Analysis" ;
+    rdfs:comment "Chemical analysis of specific spots within mineral grains using electron microprobe." .
+
+:Measurement a rdfs:Class ;
+    rdfs:label "Measurement" ;
+    rdfs:comment "Container for all geochemical measurement results." .
+
+### СВЯЗИ МЕЖДУ КЛАССАМИ ###
+
+:hasAnalysis a rdf:Property ;
+    rdfs:label "has analysis" ;
+    rdfs:domain :Sample ;
+    rdfs:range :MicroprobeAnalysis .
+
+:hasMeasurement a rdf:Property ;
+    rdfs:label "has measurement" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :Measurement .
+
+### КЛАССЫ ГОРНЫХ ПОРОД ###
+
+:UltramaficRock a gs:RockType ;
+    rdfs:label "Ultramafic Rock" .
+
+:lherzolite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Lherzolite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:harzburgite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Harzburgite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:peridotite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Peridotite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:wehrlite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Wehrlite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:dunite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Dunite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:websterite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Websterite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:clinopyroxenite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Clinopyroxenite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:orthopyroxenite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Orthopyroxenite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:pyroxenite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Pyroxenite" ;
+    rdfs:subClassOf :UltramaficRock .
+
+:eclogite a gs:RockType, dbp-owl:Rock ;
+    rdfs:label "Eclogite" ;
+    rdfs:subClassOf gs:MetamorphicRock .
+
+:kimberlite a gs:RockType ;
+    rdfs:label "Kimberlite" .
+
+### СТРУКТУРНЫЕ ТЕРМИНЫ ###
+
+:xenolith a gs:GeologicStructure, dbp-owl:RockFormation ;
+    rdfs:label "Xenolith" ;
+    rdfs:comment "A rock fragment which becomes enveloped in a larger rock during the latter's development and hardening." .
+
+:megacryst a gs:GeologicUnit ;
+    rdfs:label "Megacryst" ;
+    rdfs:comment "An exceptionally large crystal, typically found in igneous rocks as a phenocryst." .
+
+### МИНЕРАЛЫ ###
+
+:Mineral a rdfs:Class ;
+    rdfs:label "Mineral" ;
+    rdfs:subClassOf gs:GeologicUnit .
+
+:MineralGroup a rdfs:Class ;
+    rdfs:label "Mineral Group" .
+
+:CrystalSystem a rdfs:Class ;
+    rdfs:label "Crystal System" .
+
+# Минеральные группы
+:Nesosilicate a :MineralGroup ; rdfs:label "Nesosilicate" .
+:Inosilicate a :MineralGroup ; rdfs:label "Inosilicate" .
+:Phyllosilicate a :MineralGroup ; rdfs:label "Phyllosilicate" .
+:Tectosilicate a :MineralGroup ; rdfs:label "Tectosilicate" .
+:Oxide a :MineralGroup ; rdfs:label "Oxide" .
+:Sulfide a :MineralGroup ; rdfs:label "Sulfide" .
+:NativeElement a :MineralGroup ; rdfs:label "Native Element" .
+
+# Кристальные системы
+:Cubic a :CrystalSystem ; rdfs:label "Cubic" .
+:Hexagonal a :CrystalSystem ; rdfs:label "Hexagonal" .
+:Trigonal a :CrystalSystem ; rdfs:label "Trigonal" .
+:Orthorhombic a :CrystalSystem ; rdfs:label "Orthorhombic" .
+:Monoclinic a :CrystalSystem ; rdfs:label "Monoclinic" .
+:Triclinic a :CrystalSystem ; rdfs:label "Triclinic" .
+
+# Свойства минералов
+:mineralGroup a rdf:Property ;
+    rdfs:label "mineral group" ;
+    rdfs:domain :Mineral ;
+    rdfs:range :MineralGroup .
+
+:crystalSystem a rdf:Property ;
+    rdfs:label "crystal system" ;
+    rdfs:domain :Mineral ;
+    rdfs:range :CrystalSystem .
+
+:chemicalFormula a rdf:Property ;
+    rdfs:label "chemical formula" ;
+    rdfs:domain :Mineral ;
+    rdfs:range xsd:string .
+
+# Конкретные минералы
+:garnet a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Garnet" ;
+    :mineralGroup :Nesosilicate ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "X3Y2(SiO4)3" .
+
+:spinel a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Spinel" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "MgAl2O4" .
+
+:olivine a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Olivine" ;
+    :mineralGroup :Nesosilicate ;
+    :crystalSystem :Orthorhombic ;
+    :chemicalFormula "(Mg,Fe)2SiO4" .
+
+:clinopyroxene a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Clinopyroxene" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "(Ca,Na)(Mg,Fe,Al)(Si,Al)2O6" .
+
+:orthopyroxene a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Orthopyroxene" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Orthorhombic ;
+    :chemicalFormula "(Mg,Fe)2Si2O6" .
+
+:ilmenite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Ilmenite" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Trigonal ;
+    :chemicalFormula "FeTiO3" .
+
+:phlogopite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Phlogopite" ;
+    :mineralGroup :Phyllosilicate ;
+    :crystalSystem :Monoclinic ;
+    :chemicalFormula "KMg3(AlSi3O10)(OH)2" .
+
+:amphibole a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Amphibole" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Monoclinic .
+
+:biotite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Biotite" ;
+    :mineralGroup :Phyllosilicate ;
+    :crystalSystem :Monoclinic .
+
+:chromite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Chromite" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "FeCr2O4" .
+
+:kyanite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Kyanite" ;
+    :mineralGroup :Nesosilicate ;
+    :crystalSystem :Triclinic ;
+    :chemicalFormula "Al2SiO5" .
+
+:diamond a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Diamond" ;
+    :mineralGroup :NativeElement ;
+    :crystalSystem :Cubic ;
+    :chemicalFormula "C" .
+
+:graphite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Graphite" ;
+    :mineralGroup :NativeElement ;
+    :crystalSystem :Hexagonal ;
+    :chemicalFormula "C" .
+
+:corundum a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Corundum" ;
+    :mineralGroup :Oxide ;
+    :crystalSystem :Trigonal ;
+    :chemicalFormula "Al2O3" .
+
+:sanidine a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Sanidine" ;
+    :mineralGroup :Tectosilicate ;
+    :crystalSystem :Monoclinic .
+
+:enstatite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Enstatite" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Orthorhombic .
+
+:fassaite a :Mineral, dbp-owl:Mineral ;
+    rdfs:label "Fassaite" ;
+    :mineralGroup :Inosilicate ;
+    :crystalSystem :Monoclinic .
+
+:monticellite a :Mineral ; rdfs:label "Monticellite" .
+:perovskite a :Mineral ; rdfs:label "Perovskite" .
+:magnetite a :Mineral ; rdfs:label "Magnetite" .
+
+### ЗОНАЛЬНОСТЬ МИНЕРАЛОВ ###
+
+:ZoningPosition a rdfs:Class ;
+    rdfs:label "Zoning Position" .
+
+:Core a :ZoningPosition ; rdfs:label "Core" .
+:Rim a :ZoningPosition ; rdfs:label "Rim" .
+:Mantle a :ZoningPosition ; rdfs:label "Mantle" .
+
+:AnalyticalMethod a rdfs:Class ;
+    rdfs:label "Analytical Method" .
+
+:ElectronMicroprobe a :AnalyticalMethod ;
+    rdfs:label "Electron Microprobe" .
+
+### СВОЙСТВА МИКРОАНАЛИЗА ###
+
+:analysisSpot a rdf:Property ;
+    rdfs:label "analysis spot" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :ZoningPosition .
+
+:spotDiameter a rdf:Property ;
+    rdfs:label "spot diameter" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range xsd:decimal .
+
+:analysisMethod a rdf:Property ;
+    rdfs:label "analysis method" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :AnalyticalMethod .
+
+:mineral a rdf:Property ;
+    rdfs:label "mineral" ;
+    rdfs:domain :MicroprobeAnalysis ;
+    rdfs:range :Mineral .
+
+### ЕДИНИЦЫ ИЗМЕРЕНИЯ ###
+
+:ConcentrationUnit a rdfs:Class ;
+    rdfs:label "Concentration Unit" .
+
+:Percent a :ConcentrationUnit ; rdfs:label "percent" .
+:PPM a :ConcentrationUnit ; rdfs:label "parts per million" .
+:PPB a :ConcentrationUnit ; rdfs:label "parts per billion" .
+
+:unit a rdf:Property ;
+    rdfs:label "unit" ;
+    rdfs:domain :Measurement ;
+    rdfs:range :ConcentrationUnit .
+
+### ГЕОХИМИЧЕСКИЕ СВОЙСТВА (только в Measurements) ###
+
+:SIO2 a rdf:Property ; rdfs:label "SiO₂"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:TIO2 a rdf:Property ; rdfs:label "TiO₂"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:AL2O3 a rdf:Property ; rdfs:label "Al₂O₃"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:CR2O3 a rdf:Property ; rdfs:label "Cr₂O₃"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:FE2O3T a rdf:Property ; rdfs:label "Fe₂O₃ total"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:FEO a rdf:Property ; rdfs:label "FeO"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:CAO a rdf:Property ; rdfs:label "CaO"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:MGO a rdf:Property ; rdfs:label "MgO"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:MNO a rdf:Property ; rdfs:label "MnO"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:K2O a rdf:Property ; rdfs:label "K₂O"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:NA2O a rdf:Property ; rdfs:label "Na₂O"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:P2O5 a rdf:Property ; rdfs:label "P₂O₅"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+
+# Элементы в ppm
+:LI_PPM a rdf:Property ; rdfs:label "Li"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:BE_PPM a rdf:Property ; rdfs:label "Be"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:SC_PPM a rdf:Property ; rdfs:label "Sc"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:V_PPM a rdf:Property ; rdfs:label "V"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:CO_PPM a rdf:Property ; rdfs:label "Co"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:NI_PPM a rdf:Property ; rdfs:label "Ni"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:RB_PPM a rdf:Property ; rdfs:label "Rb"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:SR_PPM a rdf:Property ; rdfs:label "Sr"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:Y_PPM a rdf:Property ; rdfs:label "Y"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:ZR_PPM a rdf:Property ; rdfs:label "Zr"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:NB_PPM a rdf:Property ; rdfs:label "Nb"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+
+# Редкоземельные элементы
+:LA_PPM a rdf:Property ; rdfs:label "La"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:CE_PPM a rdf:Property ; rdfs:label "Ce"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:ND_PPM a rdf:Property ; rdfs:label "Nd"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:SM_PPM a rdf:Property ; rdfs:label "Sm"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:EU_PPM a rdf:Property ; rdfs:label "Eu"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:GD_PPM a rdf:Property ; rdfs:label "Gd"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:DY_PPM a rdf:Property ; rdfs:label "Dy"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:ER_PPM a rdf:Property ; rdfs:label "Er"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:YB_PPM a rdf:Property ; rdfs:label "Yb"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:LU_PPM a rdf:Property ; rdfs:label "Lu"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+
+### МЕТАДАННЫЕ ОБРАЗЦОВ ###
+
+:lithology a rdf:Property ;
+    rdfs:label "lithology" ;
+    rdfs:domain :Sample ;
+    rdfs:range gs:RockType .
+
+:AlterationType a rdfs:Class ;
+    rdfs:label "Alteration Type" .
+
+:Serpentinization a :AlterationType ; rdfs:label "Serpentinization" .
+:Carbonatization a :AlterationType ; rdfs:label "Carbonatization" .
+
+:hasAlteration a rdf:Property ;
+    rdfs:label "has alteration" ;
+    rdfs:domain :Sample ;
+    rdfs:range :AlterationType .
+
+### СПЕЦИАЛЬНЫЕ КЛАССЫ ДЛЯ КЛАССИФИКАЦИИ ###
+
+:DiamondIndicator a rdfs:Class ;
+    rdfs:label "Diamond Indicator Mineral" .
+
+:hasDiamondPotential a rdf:Property ;
+    rdfs:label "has diamond potential" ;
+    rdfs:domain gs:RockType ;
+    rdfs:range xsd:boolean .
+
+:indicatorMineral a rdf:Property ;
+    rdfs:label "indicator mineral" ;
+    rdfs:domain :DiamondIndicator ;
+    rdfs:range :Mineral .
+
+:garnet :indicatorMineral :DiamondIndicator .
+:chromite :indicatorMineral :DiamondIndicator .
+:ilmenite :indicatorMineral :DiamondIndicator .
+
+### ПРИМЕР СТРУКТУРЫ ДАННЫХ ###
+
+# :sample-106 a :Sample ;
+#     rdfs:label "Sample 106" ;
+#     :lithology :lherzolite ;
+#     :hasAlteration :Serpentinization ;
+#     :hasAnalysis :analysis-106-garnet-core .
+
+# :analysis-106-garnet-core a :MicroprobeAnalysis ;
+#     :analysisSpot :Core ;
+#     :spotDiameter 5.0 ;
+#     :analysisMethod :ElectronMicroprobe ;
+#     :mineral :garnet ;
+#     :hasMeasurement [
+#         a :Measurement ;
+#         :SIO2 40.5 ;
+#         :AL2O3 22.1 ;
+#         :CR2O3 1.2 ;
+#         :MGO 15.8 ;
+#         :CAO 6.2 ;
+#         :unit :Percent
+#     ] .
