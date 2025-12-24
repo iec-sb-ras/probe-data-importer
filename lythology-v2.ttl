@@ -365,6 +365,361 @@
 :chromite :indicatorMineral :DiamondIndicator .
 :ilmenite :indicatorMineral :DiamondIndicator .
 
+### ДОПОЛНЕНИЯ К ОНТОЛОГИИ ###
+
+### ЦЕЛЕВЫЕ ПОКАЗАТЕЛИ ###
+
+:TargetIndicator a rdfs:Class ;
+    rdfs:label "Target Indicator" ;
+    rdfs:comment "Интегральный целевой показатель для оценки месторождения" .
+
+:indicatorName a rdf:Property ;
+    rdfs:label "indicator name" ;
+    rdfs:domain :TargetIndicator ;
+    rdfs:range xsd:string .
+
+:indicatorValue a rdf:Property ;
+    rdfs:label "indicator value" ;
+    rdfs:domain :TargetIndicator ;
+    rdfs:range xsd:string .
+
+:unitOfMeasure a rdf:Property ;
+    rdfs:label "unit of measure" ;
+    rdfs:domain :TargetIndicator ;
+    rdfs:range xsd:string .
+
+### ГЕОЛОГИЧЕСКИЕ ХАРАКТЕРИСТИКИ ###
+
+:GeologicalBody a rdfs:Class ;
+    rdfs:label "Geological Body" ;
+    rdfs:subClassOf gs:GeologicUnit .
+
+:BodyShape a rdfs:Class ;
+    rdfs:label "Body Shape" .
+
+:ExplosionPipe a :BodyShape ; rdfs:label "трубка взрыва" .
+:Dyke a :BodyShape ; rdfs:label "дайка" .
+:Sill a :BodyShape ; rdfs:label "сил" .
+
+:Overburden a rdfs:Class ;
+    rdfs:label "Overburden" .
+
+:NoOverburden a :Overburden ; rdfs:label "нет" .
+:WithOverburden a :Overburden ; rdfs:label "есть" .
+
+:hasShape a rdf:Property ;
+    rdfs:label "has shape" ;
+    rdfs:domain :GeologicalBody ;
+    rdfs:range :BodyShape .
+
+:ageMillionYears a rdf:Property ;
+    rdfs:label "age (million years)" ;
+    rdfs:domain :GeologicalBody ;
+    rdfs:range xsd:decimal .
+
+:hasOverburden a rdf:Property ;
+    rdfs:label "has overburden" ;
+    rdfs:domain :GeologicalBody ;
+    rdfs:range :Overburden .
+
+:sizeLength a rdf:Property ;
+    rdfs:label "size length" ;
+    rdfs:domain :GeologicalBody ;
+    rdfs:range xsd:decimal .
+
+:sizeWidth a rdf:Property ;
+    rdfs:label "size width" ;
+    rdfs:domain :GeologicalBody ;
+    rdfs:range xsd:decimal .
+
+:area a rdf:Property ;
+    rdfs:label "area" ;
+    rdfs:domain :GeologicalBody ;
+    rdfs:range xsd:decimal .
+
+### ПЕТРОГРАФИЯ ###
+
+:OlivineGeneration a rdfs:Class ;
+    rdfs:label "Olivine Generation" .
+
+:OlivineGeneration1 a :OlivineGeneration ; rdfs:label "Olivine I-генерации" .
+
+:grainSizeClass a rdfs:Class ;
+    rdfs:label "Grain Size Class" .
+
+:GrainSize1_2mm a :grainSizeClass ; rdfs:label "1-2 mm" .
+:GrainSize2_4mm a :grainSizeClass ; rdfs:label "2-4 mm" .
+:GrainSize4_8mm a :grainSizeClass ; rdfs:label "4-8 mm" .
+:GrainSize8_16mm a :grainSizeClass ; rdfs:label "8-16 mm" .
+
+:olivineContent a rdf:Property ;
+    rdfs:label "olivine content" ;
+    rdfs:domain :Sample ;
+    rdfs:range xsd:decimal .
+
+:hasOlivineGeneration a rdf:Property ;
+    rdfs:label "has olivine generation" ;
+    rdfs:domain :Sample ;
+    rdfs:range :OlivineGeneration .
+
+:hasGrainSizeClass a rdf:Property ;
+    rdfs:label "has grain size class" ;
+    rdfs:domain :Sample ;
+    rdfs:range :grainSizeClass .
+
+### ДОПОЛНИТЕЛЬНЫЕ СВОЙСТВА ДЛЯ ИЗМЕРЕНИЙ ###
+
+# Добавим отсутствующие свойства для полного охвата таблиц
+:F a rdf:Property ; rdfs:label "F"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:BaO a rdf:Property ; rdfs:label "BaO"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:SrO a rdf:Property ; rdfs:label "SrO"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:SO3 a rdf:Property ; rdfs:label "SO₃"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:Total a rdf:Property ; rdfs:label "Total"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+
+# Элементы для таблицы геохимии
+:As a rdf:Property ; rdfs:label "As"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+:Ba a rdf:Property ; rdfs:label "Ba"; rdfs:domain :Measurement ; rdfs:range xsd:decimal .
+
+### ИСТОЧНИКИ ДАННЫХ ###
+
+:DataSource a rdfs:Class ;
+    rdfs:label "Data Source" ;
+    rdfs:comment "Источник данных (публикация, автор)" .
+
+:hasDataSource a rdf:Property ;
+    rdfs:label "has data source" ;
+    rdfs:domain :Measurement ;
+    rdfs:range :DataSource .
+
+### ПЕТРОХИМИЧЕСКИЕ ДАННЫЕ ###
+
+:PetrochemistryDataset a rdfs:Class ;
+    rdfs:label "Petrochemistry Dataset" ;
+    rdfs:comment "Набор петрохимических данных для образца" .
+
+:Well a rdfs:Class ;
+    rdfs:label "Well" ;
+    rdfs:comment "Скважина" .
+
+:RockTypeCode a rdfs:Class ;
+    rdfs:label "Rock Type Code" ;
+    rdfs:comment "Код типа породы" .
+
+:PK a :RockTypeCode ; rdfs:label "ПК" .
+:KB a :RockTypeCode ; rdfs:label "КБ" .
+:AKB a :RockTypeCode ; rdfs:label "АКБ" .
+
+### ИЗОТОПНЫЙ СОСТАВ ###
+
+:IsotopicAnalysis a rdfs:Class ;
+    rdfs:label "Isotopic Analysis" ;
+    rdfs:subClassOf :Measurement .
+
+:Rb_ppm a rdf:Property ; rdfs:label "Rb (ppm)"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:Sr_ppm a rdf:Property ; rdfs:label "Sr (ppm)"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:Rb_Sr_ratio a rdf:Property ; rdfs:label "Rb/Sr"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:One_over_Sr a rdf:Property ; rdfs:label "1/Sr"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:Rb86_Sr86 a rdf:Property ; rdfs:label "87Rb/86Sr"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:Sr86_Sr86 a rdf:Property ; rdfs:label "87Sr/86Sr"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:Sr86_Sr86_initial a rdf:Property ; rdfs:label "(87Sr/86Sr)i"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:sigma_2 a rdf:Property ; rdfs:label "2σ"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:epsilon_Sr a rdf:Property ; rdfs:label "εSr"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+:age_Ma a rdf:Property ; rdfs:label "Age (Ma)"; rdfs:domain :IsotopicAnalysis ; rdfs:range xsd:decimal .
+
+### МИКРОАЛМАЗЫ ###
+
+:MicrodiamondAnalysis a rdfs:Class ;
+    rdfs:label "Microdiamond Analysis" ;
+    rdfs:comment "Анализ микроалмазов" .
+
+:originalWeight a rdf:Property ;
+    rdfs:label "original weight" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:decimal .
+
+:acidConcentrateYield a rdf:Property ;
+    rdfs:label "acid concentrate yield" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:decimal .
+
+:saltConcentrateYield a rdf:Property ;
+    rdfs:label "salt concentrate yield" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:decimal .
+
+:alkalineConcentrateYield a rdf:Property ;
+    rdfs:label "alkaline concentrate yield" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:decimal .
+
+:monocrystalCount a rdf:Property ;
+    rdfs:label "monocrystal count" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:integer .
+
+:fragmentCount a rdf:Property ;
+    rdfs:label "fragment count" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:integer .
+
+:grainsPerKg a rdf:Property ;
+    rdfs:label "grains per kg" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:decimal .
+
+### ГРАНУЛОМЕТРИЯ АЛМАЗОВ ###
+
+:GranulometryClass a rdfs:Class ;
+    rdfs:label "Granulometry Class" .
+
+:Granulometry1000_950 a :GranulometryClass ; rdfs:label "1000+950 µm" .
+:Granulometry950_900 a :GranulometryClass ; rdfs:label "950+900 µm" .
+# ... и так далее для всех классов гранулометрии
+
+:granulometryCount a rdf:Property ;
+    rdfs:label "granulometry count" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range xsd:integer .
+
+:hasGranulometryClass a rdf:Property ;
+    rdfs:label "has granulometry class" ;
+    rdfs:domain :MicrodiamondAnalysis ;
+    rdfs:range :GranulometryClass .
+
+### ИНТЕГРАЛЬНЫЕ ПОКАЗАТЕЛИ ###
+
+:IntegralIndicator a rdfs:Class ;
+    rdfs:label "Integral Indicator" ;
+    rdfs:comment "Интегральные показатели для оценки алмазоносности" .
+
+:diamondAssociationGar a rdf:Property ;
+    rdfs:label "diamond association gar %" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:G10_percent a rdf:Property ;
+    rdfs:label "G10 %" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:G10D_percent a rdf:Property ;
+    rdfs:label "G10D %" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:Cr2O3_gt_5_percent a rdf:Property ;
+    rdfs:label "Cr₂O₃ > 5 wt.% %" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:TiO2_peridotite a rdf:Property ;
+    rdfs:label "TiO₂ wt.% (peridotite)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:TiO2_highCr a rdf:Property ;
+    rdfs:label "TiO₂ wt.% (Cr₂O₃ > 5 wt.%)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:geothermalGradient_Cpx a rdf:Property ;
+    rdfs:label "geothermal gradient by Cpx (mW/m²)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:lithosphereThickness_Cpx a rdf:Property ;
+    rdfs:label "lithosphere thickness by Cpx (km)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:diamondStabilityThickness_Cpx a rdf:Property ;
+    rdfs:label "diamond stability thickness by Cpx (km)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:temperature_Gar a rdf:Property ;
+    rdfs:label "temperature by Garnet (°C)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:geothermalGradient_Gar a rdf:Property ;
+    rdfs:label "geothermal gradient by Garnet (mW/m²)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:lithosphereThickness_Gar a rdf:Property ;
+    rdfs:label "lithosphere thickness by Garnet (km)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:diamondWindowThickness_Gar a rdf:Property ;
+    rdfs:label "diamond window thickness by Garnet (km)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+:metasomatismThickness_Gar a rdf:Property ;
+    rdfs:label "metasomatism thickness by Garnet (km)" ;
+    rdfs:domain :IntegralIndicator ;
+    rdfs:range xsd:decimal .
+
+### ПРИМЕРЫ ДАННЫХ ###
+
+# # Пример целевого показателя
+# :targetIndicator_A a :TargetIndicator ;
+#     rdfs:label "Indicator A" ;
+#     :indicatorName "A" ;
+#     :indicatorValue "3,59" ;
+#     :unitOfMeasure "units" .
+
+# :targetIndicator_B a :TargetIndicator ;
+#     rdfs:label "Indicator B" ;
+#     :indicatorName "B" ;
+#     :indicatorValue "125,8" ;
+#     :unitOfMeasure "units" .
+
+# # Пример геологического тела
+# :geobody_1 a :GeologicalBody ;
+#     rdfs:label "Geological Body 1" ;
+#     :hasShape :ExplosionPipe ;
+#     :ageMillionYears 360 ;
+#     :hasOverburden :NoOverburden ;
+#     :sizeLength 490 ;
+#     :sizeWidth 320 ;
+#     :area 123300 .
+
+# # Пример петрографических данных
+# :sample_petrography a :Sample ;
+#     rdfs:label "Sample with olivine data" ;
+#     :hasOlivineGeneration :OlivineGeneration1 ;
+#     :olivineContent 65.19 ;
+#     :hasGrainSizeClass :GrainSize1_2mm .
+
+# # Пример данных по флогопиту
+# :analysis_phlogopite a :MicroprobeAnalysis ;
+#     rdfs:label "Phlogopite analysis 01-162k point 1" ;
+#     :analysisMethod :ElectronMicroprobe ;
+#     :mineral :phlogopite ;
+#     :hasMeasurement [
+#         a :Measurement ;
+#         :SIO2 41.08 ;
+#         :TIO2 2.46 ;
+#         :AL2O3 13.25 ;
+#         :CR2O3 0.49 ;
+#         :FEO 6.13 ;
+#         :MNO 0.03 ;
+#         :MGO 22.91 ;
+#         :CAO 0.00 ;
+#         :K2O 9.77 ;
+#         :NA2O 0.34 ;
+#         :P2O5 0.00 ;
+#         :F 0.00 ;
+#         :BaO 0.04 ;
+#         :SrO 0.00 ;
+#         :SO3 0.00 ;
+#         :Total 96.6 ;
+#         :unit :Percent
+#     ] .
+
 ### ПРИМЕР СТРУКТУРЫ ДАННЫХ ###
 
 # :sample-106 a :Sample ;
@@ -387,3 +742,5 @@
 #         :CAO 6.2 ;
 #         :unit :Percent
 #     ] .
+
+
