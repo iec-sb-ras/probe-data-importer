@@ -57,6 +57,7 @@ def save_dict_as_pickle(data_dict, filename="data.pkl"):
     """
     Сохраняет весь словарь целиком в pickle файл
     """
+    search_excel_to_root
     with open(filename, "wb") as f:
         pickle.dump(data_dict, f)
     print(f"Словарь сохранен в {filename}")
@@ -282,7 +283,7 @@ def import_excel_table_into_dict(workbook, sheet_name_or_index):
     matches = search_substring_on_sheet(sheet, 0, "НДС")
     if matches:
         print("This sheet is not a tube")
-        return None
+        return sheet, None
 
     data_dict = {}
 
@@ -344,10 +345,10 @@ def import_excel_table_into_dict(workbook, sheet_name_or_index):
 
     add_to_dict_if_not_none(data_dict, "frames", dfs)
 
-    return data_dict
+    return sheet, data_dict
 
 
-def search_excel_to_root(name):
+def search_file_to_root(name):
     """
     Search for an Excel file by name in the current directory and its parent directories.
 
@@ -378,12 +379,25 @@ def main():
     # Example usage
 
     file_path = "data/tubes.xlsx"
-    workbook = openpyxl.load_workbook(search_excel_to_root(file_path), data_only=True)
+    tubes_path = "tubes.pkl"
 
-    for sheet_number in [1]:
-        # for sheet_number in range(len(workbook.sheetnames)):
-        excel_data = import_excel_table_into_dict(workbook, sheet_number)
-        pprint(excel_data)
+    tubes_pn = search_file_to_root(tubes_path)
+    if tubes_pn is not None:
+        tubes = load_dict_from_pickle(tubes_pn)
+    else:
+        tubes = {}
+
+        workbook = openpyxl.load_workbook(
+            search_file_to_root(file_path), data_only=True
+        )
+
+        # for sheet_number in [1]:
+        for sheet_number in range(len(workbook.sheetnames)):
+            sheet, excel_data = import_excel_table_into_dict(workbook, sheet_number)
+            # pprint(excel_data)
+            tubes[sheet.title.strip()] = excel_data
+
+        save_dict_as_pickle(tubes, tubes_path)
 
 
 if __name__ == "__main__":
