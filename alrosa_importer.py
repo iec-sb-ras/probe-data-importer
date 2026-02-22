@@ -72,6 +72,10 @@ def clean_value_of_cell(cell):
     # Handle string values
     if isinstance(value, str):
         cleaned = value.strip()
+        lc = cleaned.lower()
+
+        if lc in ["н.д.", ""]:
+            return None
 
         # Try to convert to int or float if possible
         try:
@@ -87,6 +91,17 @@ def clean_value_of_cell(cell):
 
     # Return other types as-is (datetime, etc.)
     return value
+
+
+def append_features(a_dict, name_row, value_row):
+    """Append cleaned feature values from two rows to a dictionary."""
+    if name_row and value_row:
+        for name_cell, value_cell in zip(name_row, value_row):
+            if name_cell.value and value_cell.value:
+                key = str(name_cell.value).strip()
+                val = clean_value_of_cell(value_cell)
+                if val is not None:
+                    a_dict[key] = val
 
 
 def import_head_title_one_row_features(sheet, column_number, match_string) -> dict:
@@ -105,14 +120,12 @@ def import_head_title_one_row_features(sheet, column_number, match_string) -> di
     # Read row after that for feature values
     value_row = sheet[row_num + 2] if row_num + 2 <= sheet.max_row else None
 
-    if next_row and value_row:
-        for name_cell, value_cell in zip(next_row, value_row):
-            if name_cell.value and value_cell.value:
-                features[str(name_cell.value).strip()] = clean_value_of_cell(
-                    value_cell.value
-                )
+    append_features(features, next_row, value_row)
 
     return features
+
+def import_head_title_multirow_as_data_frame(sheet, column_number, match_string):
+    # Search analogous and start import as DF from next row as pandas DF
 
 
 def add_to_dict_if_not_none(main_dict, name, a_dict):
@@ -139,18 +152,37 @@ def import_excel_table_into_dict(workbook, sheet_name_or_index):
     else:
         sheet = workbook.worksheets[sheet_name_or_index]
 
+    # print sheet Name
+    print(f"Processing sheet: {sheet.title}")
+
     matches = search_substring_on_sheet(sheet, 0, "НДС")
-    pprint(matches)
     if matches:
+        print("This sheet is not a tube")
         return None
 
     data_dict = {}
 
-    tube_aimp_features = import_head_title_one_row_features(
+    features = {}
+
+    tube_aim_features = import_head_title_one_row_features(
         sheet, 1, "Целевой показатель"
     )
+    add_to_dict_if_not_none(features, "target", tube_aim_features)
 
-    add_to_dict_if_not_none(data_dict, "aim_features", tube_aimp_features)
+    geology_aim_features = import_head_title_one_row_features(sheet, 1, "Геология")
+    add_to_dict_if_not_none(features, "geology", geology_aim_features)
+
+    olivine_aim_features = import_head_title_one_row_features(
+        sheet, 1, "Оливины I-генерации"
+    )
+    add_to_dict_if_not_none(features, "olivine", olivine_aim_features)
+
+    aa_aim_features = import_head_title_one_row_features(
+        sheet, 1, "алмазная ассоциация"
+    )
+    add_to_dict_if_not_none(features, "assoc", aa_aim_features)
+
+    add_to_dict_if_not_none(data_dict, "features", features)
 
     return data_dict
 
@@ -188,8 +220,8 @@ def main():
     file_path = "data/tubes.xlsx"
     workbook = openpyxl.load_workbook(search_excel_to_root(file_path), data_only=True)
 
-    for sheet_number in [1]:
-        # for sheet_number in range(len(workbook.sheetnames)):
+    # for sheet_number in [1]:
+    for sheet_number in range(len(workbook.sheetnames)):
         excel_data = import_excel_table_into_dict(workbook, sheet_number)
         pprint(excel_data)
 
