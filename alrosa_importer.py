@@ -57,7 +57,6 @@ def save_dict_as_pickle(data_dict, filename="data.pkl"):
     """
     Сохраняет весь словарь целиком в pickle файл
     """
-    search_excel_to_root
     with open(filename, "wb") as f:
         pickle.dump(data_dict, f)
     print(f"Словарь сохранен в {filename}")
@@ -223,13 +222,17 @@ def import_transposed_table_as_data_frame(sheet, column_number, match_string):
     # First column contains parameter names, subsequent columns contain sample data
     headers = []
 
-    for row in data_rows:
+    for i, row in enumerate(data_rows):
         cell = row[0]
         if cell and str(cell).strip():
             headers.append(str(cell).strip())
+        else:
+            headers.append("val_{}".format(i + 1))
 
     df = pd.DataFrame()
 
+    # print(headers)
+    # print(data_rows[0])
     for i, row in enumerate(data_rows):
         dt = row[1:]
         dt = [clean_value_of_cell(c) for c in dt]
@@ -384,9 +387,9 @@ def main():
     tubes_pn = search_file_to_root(tubes_path)
     if tubes_pn is not None:
         tubes = load_dict_from_pickle(tubes_pn)
+        print("INFO: Load success!")
     else:
         tubes = {}
-
         workbook = openpyxl.load_workbook(
             search_file_to_root(file_path), data_only=True
         )
