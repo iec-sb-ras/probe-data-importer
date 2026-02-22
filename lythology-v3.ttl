@@ -1,0 +1,766 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://crust.irk.ru/ontology/contents/terms/1.0/> .
+
+#################################################################
+# ДОПОЛНЕНИЯ К ОНТОЛОГИИ ДЛЯ КИМБЕРЛИТОВЫХ ТРУБОК
+# Обобщенные структуры на основе Excel-базы данных
+#################################################################
+
+### 1. КИМБЕРЛИТОВАЯ ТРУБКА КАК ЦЕЛОСТНЫЙ ОБЪЕКТ ###
+
+:KimberlitePipe a rdfs:Class ;
+    rdfs:label "Kimberlite Pipe" ;
+    rdfs:comment "Кимберлитовая трубка - вулканическое тело, сложенное кимберлитами и содержащее ксенолиты мантийных пород" ;
+    rdfs:subClassOf :GeologicalBody .
+
+:pipeId a rdf:Property ;
+    rdfs:label "pipe identifier" ;
+    rdfs:comment "Условный идентификатор трубки в базе данных (например, '1-1')" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range xsd:string .
+
+### 2. ЦЕЛЕВЫЕ ПОКАЗАТЕЛИ (ABCDE) - ИНТЕГРАЛЬНАЯ ОЦЕНКА ###
+
+:TargetIndicators a rdfs:Class ;
+    rdfs:label "Target Indicators" ;
+    rdfs:comment "Интегральные целевые показатели для оценки промышленной значимости трубки (параметры A, B, C, D, E)" .
+
+:hasTargetIndicators a rdf:Property ;
+    rdfs:label "has target indicators" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :TargetIndicators .
+
+:paramA a rdf:Property ;
+    rdfs:label "parameter A" ;
+    rdfs:comment "Целевой показатель A (секретный параметр)" ;
+    rdfs:domain :TargetIndicators ;
+    rdfs:range xsd:decimal .
+
+:paramB a rdf:Property ;
+    rdfs:label "parameter B" ;
+    rdfs:comment "Целевой показатель B (секретный параметр)" ;
+    rdfs:domain :TargetIndicators ;
+    rdfs:range xsd:decimal .
+
+:paramC a rdf:Property ;
+    rdfs:label "parameter C" ;
+    rdfs:comment "Целевой показатель C (секретный параметр)" ;
+    rdfs:domain :TargetIndicators ;
+    rdfs:range xsd:decimal .
+
+:paramD a rdf:Property ;
+    rdfs:label "parameter D" ;
+    rdfs:comment "Целевой показатель D (секретный параметр)" ;
+    rdfs:domain :TargetIndicators ;
+    rdfs:range xsd:decimal .
+
+:paramE a rdf:Property ;
+    rdfs:label "parameter E" ;
+    rdfs:comment "Целевой показатель E (секретный параметр, часто отсутствует)" ;
+    rdfs:domain :TargetIndicators ;
+    rdfs:range xsd:string .
+
+### 3. ГЕОЛОГИЧЕСКИЕ ХАРАКТЕРИСТИКИ ТРУБКИ ###
+
+:PipeGeology a rdfs:Class ;
+    rdfs:label "Pipe Geology" ;
+    rdfs:comment "Геологические характеристики кимберлитовой трубки" .
+
+:hasGeology a rdf:Property ;
+    rdfs:label "has geology" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :PipeGeology .
+
+:overburden a rdf:Property ;
+    rdfs:label "overburden" ;
+    rdfs:comment "Наличие перекрывающих отложений" ;
+    rdfs:domain :PipeGeology ;
+    rdfs:range xsd:string .  # "нет", "есть"
+
+### 4. ПЕТРОГРАФИЧЕСКИЕ ХАРАКТЕРИСТИКИ ###
+
+:Petrography a rdfs:Class ;
+    rdfs:label "Petrography" ;
+    rdfs:comment "Петрографические характеристики пород трубки" .
+
+:hasPetrography a rdf:Property ;
+    rdfs:label "has petrography" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :Petrography .
+
+:OlivineSizeFraction a rdfs:Class ;
+    rdfs:label "Olivine Size Fraction" ;
+    rdfs:comment "Размерная фракция оливинов I генерации" .
+
+:fractionRange a rdf:Property ;
+    rdfs:label "fraction range" ;
+    rdfs:comment "Диапазон размеров фракции (например, '1-2 мм')" ;
+    rdfs:domain :OlivineSizeFraction ;
+    rdfs:range xsd:string .
+
+:fractionPercentage a rdf:Property ;
+    rdfs:label "fraction percentage" ;
+    rdfs:comment "Процентное содержание данной фракции" ;
+    rdfs:domain :OlivineSizeFraction ;
+    rdfs:range xsd:decimal .
+
+:hasOlivineFraction a rdf:Property ;
+    rdfs:label "has olivine fraction" ;
+    rdfs:comment "Связь петрографии с размерной фракцией оливинов" ;
+    rdfs:domain :Petrography ;
+    rdfs:range :OlivineSizeFraction .
+
+### 5. АЛМАЗНАЯ АССОЦИАЦИЯ - ОБОБЩЕННАЯ СТРУКТУРА ###
+
+:DiamondAssociation a rdfs:Class ;
+    rdfs:label "Diamond Association" ;
+    rdfs:comment "Показатели алмазной ассоциации для трубки (интегральные оценки по минералам-индикаторам)" .
+
+:hasDiamondAssociation a rdf:Property ;
+    rdfs:label "has diamond association" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :DiamondAssociation .
+
+# Классификация гранатов по Соболеву/Shulze
+:GarnetDiamondClassification a rdfs:Class ;
+    rdfs:label "Garnet Diamond Classification" ;
+    rdfs:comment "Классификация гранатов по отношению к алмазоносности (по Соболеву 1974, Shulze 2003)" .
+
+:hasGarnetClassification a rdf:Property ;
+    rdfs:label "has garnet classification" ;
+    rdfs:domain :DiamondAssociation ;
+    rdfs:range :GarnetDiamondClassification .
+
+:garSobolev1974Peridotitic a rdf:Property ;
+    rdfs:label "gar Sobolev 1974 peridotitic %" ;
+    rdfs:comment "Алмазная ассоциация гранатов (по Соболев 1974) % от перидотитовых гранатов (по Shulze 2003)" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:g10Percent a rdf:Property ;
+    rdfs:label "G10 %" ;
+    rdfs:comment "Процент гранатов G10" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:g10dPercent a rdf:Property ;
+    rdfs:label "G10D %" ;
+    rdfs:comment "Процент гранатов G10D" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:g3dPercent a rdf:Property ;
+    rdfs:label "G3D %" ;
+    rdfs:comment "Процент гранатов G3D" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:g4dPercent a rdf:Property ;
+    rdfs:label "G4D %" ;
+    rdfs:comment "Процент гранатов G4D" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:g5dPercent a rdf:Property ;
+    rdfs:label "G5D %" ;
+    rdfs:comment "Процент гранатов G5D" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:cr2o3gt5Percent a rdf:Property ;
+    rdfs:label "Cr2O3 > 5 wt.% %" ;
+    rdfs:comment "Процент зерен с Cr2O3 > 5 мас.%" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:tio2Peridotitic a rdf:Property ;
+    rdfs:label "TiO2 peridotitic wt.%" ;
+    rdfs:comment "TiO2, мас.% (для перидотитовых гранатов)" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+:tio2HighCr a rdf:Property ;
+    rdfs:label "TiO2 high-Cr wt.%" ;
+    rdfs:comment "TiO2, мас.% (при Cr2O3 > 5 мас.%)" ;
+    rdfs:domain :GarnetDiamondClassification ;
+    rdfs:range xsd:decimal .
+
+# Хромитовая алмазная ассоциация
+:ChromiteDiamondAssociation a rdfs:Class ;
+    rdfs:label "Chromite Diamond Association" ;
+    rdfs:comment "Показатели алмазной ассоциации по хромитам" .
+
+:hasChromiteAssociation a rdf:Property ;
+    rdfs:label "has chromite association" ;
+    rdfs:domain :DiamondAssociation ;
+    rdfs:range :ChromiteDiamondAssociation .
+
+:chromiteDiamondPercent a rdf:Property ;
+    rdfs:label "chromite diamond association %" ;
+    rdfs:comment "Алмазная ассоциация, % хромитов" ;
+    rdfs:domain :ChromiteDiamondAssociation ;
+    rdfs:range xsd:decimal .
+
+:chromitePeridotiticTrendPercent a rdf:Property ;
+    rdfs:label "chromite peridotitic trend %" ;
+    rdfs:comment "% принадлежащих к перидотитовому тренду хромитов" ;
+    rdfs:domain :ChromiteDiamondAssociation ;
+    rdfs:range xsd:decimal .
+
+# Ильменитовая классификация
+:IlmeniteClassification a rdfs:Class ;
+    rdfs:label "Ilmenite Classification" ;
+    rdfs:comment "Классификация ильменитов по происхождению" .
+
+:hasIlmeniteClassification a rdf:Property ;
+    rdfs:label "has ilmenite classification" ;
+    rdfs:domain :DiamondAssociation ;
+    rdfs:range :IlmeniteClassification .
+
+:kimberliticIlmenitePercent a rdf:Property ;
+    rdfs:label "kimberlitic ilmenite %" ;
+    rdfs:comment "Кимберлитовые ильмениты, %" ;
+    rdfs:domain :IlmeniteClassification ;
+    rdfs:range xsd:decimal .
+
+:nonKimberliticIlmenitePercent a rdf:Property ;
+    rdfs:label "non-kimberlitic ilmenite %" ;
+    rdfs:comment "Не кимберлитовые ильмениты, %" ;
+    rdfs:domain :IlmeniteClassification ;
+    rdfs:range xsd:decimal .
+
+# Качественные показатели алмазоносности
+:QualityIndicators a rdfs:Class ;
+    rdfs:label "Quality Indicators" ;
+    rdfs:comment "Качественные показатели алмазоносности" .
+
+:hasQualityIndicators a rdf:Property ;
+    rdfs:label "has quality indicators" ;
+    rdfs:domain :DiamondAssociation ;
+    rdfs:range :QualityIndicators .
+
+:goodQualityPercent a rdf:Property ;
+    rdfs:label "good quality %" ;
+    rdfs:comment "Хорошая алмазоносность, %" ;
+    rdfs:domain :QualityIndicators ;
+    rdfs:range xsd:decimal .
+
+:mediumQualityPercent a rdf:Property ;
+    rdfs:label "medium quality %" ;
+    rdfs:comment "Средняя алмазоносность, %" ;
+    rdfs:domain :QualityIndicators ;
+    rdfs:range xsd:decimal .
+
+:poorQualityPercent a rdf:Property ;
+    rdfs:label "poor quality %" ;
+    rdfs:comment "Плохая алмазоносность, %" ;
+    rdfs:domain :QualityIndicators ;
+    rdfs:range xsd:decimal .
+
+:limitQualityPercent a rdf:Property ;
+    rdfs:label "limit quality %" ;
+    rdfs:comment "Предельная алмазоносность, %" ;
+    rdfs:domain :QualityIndicators ;
+    rdfs:range xsd:decimal .
+
+:absentPercent a rdf:Property ;
+    rdfs:label "absent %" ;
+    rdfs:comment "Отсутствует алмазоносность, %" ;
+    rdfs:domain :QualityIndicators ;
+    rdfs:range xsd:decimal .
+
+### 6. ТИПЫ МИНЕРАЛОВ - УНИВЕРСАЛЬНАЯ СТРУКТУРА ###
+
+:MineralTypeComposition a rdfs:Class ;
+    rdfs:label "Mineral Type Composition" ;
+    rdfs:comment "Распределение типов для конкретного минерала (процентное содержание каждой разновидности)" .
+
+:mineralComposition a rdf:Property ;
+    rdfs:label "mineral composition" ;
+    rdfs:comment "Состав по типам для данного минерала" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :MineralTypeComposition .
+
+:forMineral a rdf:Property ;
+    rdfs:label "for mineral" ;
+    rdfs:comment "Минерал, для которого приводится распределение типов" ;
+    rdfs:domain :MineralTypeComposition ;
+    rdfs:range :Mineral .
+
+:totalGrainsCount a rdf:Property ;
+    rdfs:label "total grains count" ;
+    rdfs:comment "Общее количество изученных зерен (n=)" ;
+    rdfs:domain :MineralTypeComposition ;
+    rdfs:range xsd:integer .
+
+:unknownPercent a rdf:Property ;
+    rdfs:label "unknown percent" ;
+    rdfs:comment "Процент неопределенных зерен" ;
+    rdfs:domain :MineralTypeComposition ;
+    rdfs:range xsd:decimal .
+
+:laIcPmsCount a rdf:Property ;
+    rdfs:label "LA-ICPMS count" ;
+    rdfs:comment "Количество анализов LA-ICPMS для данного минерала" ;
+    rdfs:domain :MineralTypeComposition ;
+    rdfs:range xsd:integer .
+
+# Отдельный класс для каждого типа-значения
+:MineralTypeValue a rdfs:Class ;
+    rdfs:label "Mineral Type Value" ;
+    rdfs:comment "Значение для конкретного типа минерала" .
+
+:hasTypeValue a rdf:Property ;
+    rdfs:label "has type value" ;
+    rdfs:comment "Список значений по типам" ;
+    rdfs:domain :MineralTypeComposition ;
+    rdfs:range :MineralTypeValue .
+
+:typeNumber a rdf:Property ;
+    rdfs:label "type number" ;
+    rdfs:comment "Номер типа (внутренняя классификация)" ;
+    rdfs:domain :MineralTypeValue ;
+    rdfs:range xsd:integer .
+
+:percentage a rdf:Property ;
+    rdfs:label "percentage" ;
+    rdfs:comment "Процентное содержание данного типа" ;
+    rdfs:domain :MineralTypeValue ;
+    rdfs:range xsd:decimal .
+
+### 7. ГЕОХИМИЯ МИНЕРАЛОВ (обобщенная структура) ###
+
+:MineralGeochemistry a rdfs:Class ;
+    rdfs:label "Mineral Geochemistry" ;
+    rdfs:comment "Геохимические характеристики минералов (содержания элементов, температуры и др.)" .
+
+:hasMineralGeochemistry a rdf:Property ;
+    rdfs:label "has mineral geochemistry" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :MineralGeochemistry .
+
+:forMineralGeo a rdf:Property ;
+    rdfs:label "for mineral (geochemistry)" ;
+    rdfs:comment "Минерал, для которого приводятся геохимические данные" ;
+    rdfs:domain :MineralGeochemistry ;
+    rdfs:range :Mineral .
+
+# Для гранатов
+:yContentPeridotitic a rdf:Property ;
+    rdfs:label "Y content peridotitic (g/t)" ;
+    rdfs:comment "Y, гр/т (для перидотитовых гранатов)" ;
+    rdfs:domain :MineralGeochemistry ;
+    rdfs:range xsd:decimal .
+
+:yContentHighCr a rdf:Property ;
+    rdfs:label "Y content high-Cr (g/t)" ;
+    rdfs:comment "Y, гр/т (при Cr2O3 > 5 мас.%)" ;
+    rdfs:domain :MineralGeochemistry ;
+    rdfs:range xsd:decimal .
+
+:yRimTemperature a rdf:Property ;
+    rdfs:label "Y-rim temperature (°C)" ;
+    rdfs:comment "Y-край температура, °С" ;
+    rdfs:domain :MineralGeochemistry ;
+    rdfs:range xsd:decimal .
+
+### 8. ГЕОТЕРМАЛЬНЫЕ ДАННЫЕ ###
+
+:GeothermalData a rdfs:Class ;
+    rdfs:label "Geothermal Data" ;
+    rdfs:comment "Геотермальные данные, полученные по различным минералам-геотермометрам" .
+
+:hasGeothermalData a rdf:Property ;
+    rdfs:label "has geothermal data" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :GeothermalData .
+
+:geothermalMineral a rdf:Property ;
+    rdfs:label "geothermal mineral" ;
+    rdfs:comment "Минерал, по которому получены геотермальные данные" ;
+    rdfs:domain :GeothermalData ;
+    rdfs:range :Mineral .
+
+:heatFlow a rdf:Property ;
+    rdfs:label "heat flow (mW/m²)" ;
+    rdfs:comment "Геотерма, мВт/м²" ;
+    rdfs:domain :GeothermalData ;
+    rdfs:range xsd:decimal .
+
+:lithosphereThickness a rdf:Property ;
+    rdfs:label "lithosphere thickness (km)" ;
+    rdfs:comment "Мощность литосферы, км" ;
+    rdfs:domain :GeothermalData ;
+    rdfs:range xsd:decimal .
+
+:diamondStabilityZone a rdf:Property ;
+    rdfs:label "diamond stability zone (km)" ;
+    rdfs:comment "Мощность области стабильности алмаза, км" ;
+    rdfs:domain :GeothermalData ;
+    rdfs:range xsd:decimal .
+
+:diamondWindowThickness a rdf:Property ;
+    rdfs:label "diamond window thickness (km)" ;
+    rdfs:comment "Мощность алмазного окна, км" ;
+    rdfs:domain :GeothermalData ;
+    rdfs:range xsd:decimal .
+
+:metasomatismZone a rdf:Property ;
+    rdfs:label "metasomatism zone (km)" ;
+    rdfs:comment "Мощность области метасоматоза, км" ;
+    rdfs:domain :GeothermalData ;
+    rdfs:range xsd:decimal .
+
+### 9. СИСТЕМА КЛАССИФИКАЦИИ ТИПОВ МИНЕРАЛОВ ###
+
+:MineralTypeClassifier a rdfs:Class ;
+    rdfs:label "Mineral Type Classifier" ;
+    rdfs:comment "Классификатор типов минералов (внутренняя система)" .
+
+:hasTypeClassifier a rdf:Property ;
+    rdfs:label "has type classifier" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :MineralTypeClassifier .
+
+:classifierMineral a rdf:Property ;
+    rdfs:label "classifier mineral" ;
+    rdfs:comment "Минерал, для которого определена классификация типов" ;
+    rdfs:domain :MineralTypeClassifier ;
+    rdfs:range :Mineral .
+
+:typeDefinition a rdf:Property ;
+    rdfs:label "type definition" ;
+    rdfs:comment "Определение типа (например, 'высокохромистый гранат')" ;
+    rdfs:domain :MineralTypeClassifier ;
+    rdfs:range xsd:string .
+
+:typeGeneticInterpretation a rdf:Property ;
+    rdfs:label "type genetic interpretation" ;
+    rdfs:comment "Генетическая интерпретация типа (например, 'перидотитовый парагенезис')" ;
+    rdfs:domain :MineralTypeClassifier ;
+    rdfs:range xsd:string .
+
+:typeDiamondPotential a rdf:Property ;
+    rdfs:label "type diamond potential" ;
+    rdfs:comment "Алмазный потенциал данного типа (высокий, средний, низкий)" ;
+    rdfs:domain :MineralTypeClassifier ;
+    rdfs:range xsd:string .
+
+### 10. ИНТЕГРАЛЬНАЯ ОЦЕНКА ТРУБКИ ###
+
+:IntegralAssessment a rdfs:Class ;
+    rdfs:label "Integral Assessment" ;
+    rdfs:comment "Интегральная оценка алмазоносности трубки на основе всех показателей" .
+
+:hasIntegralAssessment a rdf:Property ;
+    rdfs:label "has integral assessment" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :IntegralAssessment .
+
+:assessmentScore a rdf:Property ;
+    rdfs:label "assessment score" ;
+    rdfs:comment "Интегральный балл алмазоносности (расчетный)" ;
+    rdfs:domain :IntegralAssessment ;
+    rdfs:range xsd:decimal .
+
+:assessmentCategory a rdf:Property ;
+    rdfs:label "assessment category" ;
+    rdfs:comment "Категория алмазоносности (промышленная, непромышленная, etc.)" ;
+    rdfs:domain :IntegralAssessment ;
+    rdfs:range xsd:string .
+
+:recommendedExploration a rdf:Property ;
+    rdfs:label "recommended exploration" ;
+    rdfs:comment "Рекомендуемый тип дальнейших разведочных работ" ;
+    rdfs:domain :IntegralAssessment ;
+    rdfs:range xsd:string .
+
+### 11. СТАТИСТИЧЕСКИЕ ПОКАЗАТЕЛИ ПО ВЫБОРКЕ ###
+
+:StatisticalSummary a rdfs:Class ;
+    rdfs:label "Statistical Summary" ;
+    rdfs:comment "Статистические показатели по группе трубок или по анализам" .
+
+:hasStatistics a rdf:Property ;
+    rdfs:label "has statistics" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :StatisticalSummary .
+
+:meanValue a rdf:Property ;
+    rdfs:label "mean value" ;
+    rdfs:comment "Среднее значение" ;
+    rdfs:domain :StatisticalSummary ;
+    rdfs:range xsd:decimal .
+
+:medianValue a rdf:Property ;
+    rdfs:label "median value" ;
+    rdfs:comment "Медианное значение" ;
+    rdfs:domain :StatisticalSummary ;
+    rdfs:range xsd:decimal .
+
+:standardDeviation a rdf:Property ;
+    rdfs:label "standard deviation" ;
+    rdfs:comment "Стандартное отклонение" ;
+    rdfs:domain :StatisticalSummary ;
+    rdfs:range xsd:decimal .
+
+:minimumValue a rdf:Property ;
+    rdfs:label "minimum value" ;
+    rdfs:comment "Минимальное значение" ;
+    rdfs:domain :StatisticalSummary ;
+    rdfs:range xsd:decimal .
+
+:maximumValue a rdf:Property ;
+    rdfs:label "maximum value" ;
+    rdfs:comment "Максимальное значение" ;
+    rdfs:domain :StatisticalSummary ;
+    rdfs:range xsd:decimal .
+
+:percentile25 a rdf:Property ;
+    rdfs:label "25th percentile" ;
+    rdfs:comment "25-й процентиль" ;
+    rdfs:domain :StatisticalSummary ;
+    rdfs:range xsd:decimal .
+
+:percentile75 a rdf:Property ;
+    rdfs:label "75th percentile" ;
+    rdfs:comment "75-й процентиль" ;
+    rdfs:domain :StatisticalSummary ;
+    rdfs:range xsd:decimal .
+
+### 12. МЕТАДАННЫЕ ИССЛЕДОВАНИЯ ###
+
+:ResearchMetadata a rdfs:Class ;
+    rdfs:label "Research Metadata" ;
+    rdfs:comment "Метаданные о проведенных исследованиях" .
+
+:hasResearchMetadata a rdf:Property ;
+    rdfs:label "has research metadata" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :ResearchMetadata .
+
+:researchDate a rdf:Property ;
+    rdfs:label "research date" ;
+    rdfs:comment "Дата проведения исследований" ;
+    rdfs:domain :ResearchMetadata ;
+    rdfs:range xsd:date .
+
+:researchInstitution a rdf:Property ;
+    rdfs:label "research institution" ;
+    rdfs:comment "Учреждение, проводившее исследования" ;
+    rdfs:domain :ResearchMetadata ;
+    rdfs:range xsd:string .
+
+:researcherName a rdf:Property ;
+    rdfs:label "researcher name" ;
+    rdfs:comment "Имя исследователя" ;
+    rdfs:domain :ResearchMetadata ;
+    rdfs:range xsd:string .
+
+:analyticalMethod a rdf:Property ;
+    rdfs:label "analytical method" ;
+    rdfs:comment "Метод анализа (обобщенный)" ;
+    rdfs:domain :ResearchMetadata ;
+    rdfs:range xsd:string .
+
+:samplePreparation a rdf:Property ;
+    rdfs:label "sample preparation" ;
+    rdfs:comment "Методика подготовки образцов" ;
+    rdfs:domain :ResearchMetadata ;
+    rdfs:range xsd:string .
+
+### 13. ПРОСТРАНСТВЕННЫЕ ДАННЫЕ ###
+
+:SpatialData a rdfs:Class ;
+    rdfs:label "Spatial Data" ;
+    rdfs:comment "Пространственные данные о трубке" .
+
+:hasSpatialData a rdf:Property ;
+    rdfs:label "has spatial data" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :SpatialData .
+
+:coordinateSystem a rdf:Property ;
+    rdfs:label "coordinate system" ;
+    rdfs:comment "Система координат" ;
+    rdfs:domain :SpatialData ;
+    rdfs:range xsd:string .
+
+:latitude a rdf:Property ;
+    rdfs:label "latitude" ;
+    rdfs:comment "Широта (десятичные градусы)" ;
+    rdfs:domain :SpatialData ;
+    rdfs:range xsd:decimal .
+
+:longitude a rdf:Property ;
+    rdfs:label "longitude" ;
+    rdfs:comment "Долгота (десятичные градусы)" ;
+    rdfs:domain :SpatialData ;
+    rdfs:range xsd:decimal .
+
+:fieldName a rdf:Property ;
+    rdfs:label "field name" ;
+    rdfs:comment "Название месторождения/поля" ;
+    rdfs:domain :SpatialData ;
+    rdfs:range xsd:string .
+
+:region a rdf:Property ;
+    rdfs:label "region" ;
+    rdfs:comment "Регион расположения" ;
+    rdfs:domain :SpatialData ;
+    rdfs:range xsd:string .
+
+### 14. КОРРЕЛЯЦИОННЫЕ СВЯЗИ ###
+
+:Correlation a rdfs:Class ;
+    rdfs:label "Correlation" ;
+    rdfs:comment "Корреляционная связь между различными показателями" .
+
+:hasCorrelation a rdf:Property ;
+    rdfs:label "has correlation" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :Correlation .
+
+:correlationParameter1 a rdf:Property ;
+    rdfs:label "correlation parameter 1" ;
+    rdfs:comment "Первый параметр корреляции" ;
+    rdfs:domain :Correlation ;
+    rdfs:range xsd:string .
+
+:correlationParameter2 a rdf:Property ;
+    rdfs:label "correlation parameter 2" ;
+    rdfs:comment "Второй параметр корреляции" ;
+    rdfs:domain :Correlation ;
+    rdfs:range xsd:string .
+
+:correlationCoefficient a rdf:Property ;
+    rdfs:label "correlation coefficient" ;
+    rdfs:comment "Коэффициент корреляции" ;
+    rdfs:domain :Correlation ;
+    rdfs:range xsd:decimal .
+
+:correlationSignificance a rdf:Property ;
+    rdfs:label "correlation significance" ;
+    rdfs:comment "Статистическая значимость корреляции" ;
+    rdfs:domain :Correlation ;
+    rdfs:range xsd:string .
+
+### 15. ТЕРМОБАРОМЕТРИЯ ###
+
+:ThermobarometryData a rdfs:Class ;
+    rdfs:label "Thermobarometry Data" ;
+    rdfs:comment "Данные термобарометрии (P-T условия формирования)" .
+
+:hasThermobarometry a rdf:Property ;
+    rdfs:label "has thermobarometry" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :ThermobarometryData .
+
+:temperatureMin a rdf:Property ;
+    rdfs:label "temperature min (°C)" ;
+    rdfs:comment "Минимальная температура" ;
+    rdfs:domain :ThermobarometryData ;
+    rdfs:range xsd:decimal .
+
+:temperatureMax a rdf:Property ;
+    rdfs:label "temperature max (°C)" ;
+    rdfs:comment "Максимальная температура" ;
+    rdfs:domain :ThermobarometryData ;
+    rdfs:range xsd:decimal .
+
+:pressureMin a rdf:Property ;
+    rdfs:label "pressure min (kbar)" ;
+    rdfs:comment "Минимальное давление" ;
+    rdfs:domain :ThermobarometryData ;
+    rdfs:range xsd:decimal .
+
+:pressureMax a rdf:Property ;
+    rdfs:label "pressure max (kbar)" ;
+    rdfs:comment "Максимальное давление" ;
+    rdfs:domain :ThermobarometryData ;
+    rdfs:range xsd:decimal .
+
+:thermobarometryMethod a rdf:Property ;
+    rdfs:label "thermobarometry method" ;
+    rdfs:comment "Метод термобарометрии" ;
+    rdfs:domain :ThermobarometryData ;
+    rdfs:range xsd:string .
+
+### 16. КЛАССЫ ДЛЯ УМОЗРИТЕЛЬНЫХ ОБОБЩЕНИЙ ###
+
+# Генетические типы трубок
+:PipeGeneticType a rdfs:Class ;
+    rdfs:label "Pipe Genetic Type" ;
+    rdfs:comment "Генетический тип кимберлитовой трубки" .
+
+:KimberliticType a :PipeGeneticType ; rdfs:label "кимберлитовый тип" .
+:LamproiticType a :PipeGeneticType ; rdfs:label "лампроитовый тип" .
+:TransitionalType a :PipeGeneticType ; rdfs:label "переходный тип" .
+
+:hasGeneticType a rdf:Property ;
+    rdfs:label "has genetic type" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :PipeGeneticType .
+
+# Фации глубинности
+:DepthFacies a rdfs:Class ;
+    rdfs:label "Depth Facies" ;
+    rdfs:comment "Фации глубинности формирования" .
+
+:DeepFacies a :DepthFacies ; rdfs:label "глубинная фация" .
+:MediumFacies a :DepthFacies ; rdfs:label "среднеглубинная фация" .
+:SubvolcanicFacies a :DepthFacies ; rdfs:label "субвулканическая фация" .
+
+:hasDepthFacies a rdf:Property ;
+    rdfs:label "has depth facies" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :DepthFacies .
+
+# Степень сохранности
+:PreservationDegree a rdfs:Class ;
+    rdfs:label "Preservation Degree" ;
+    rdfs:comment "Степень сохранности трубки" .
+
+:WellPreserved a :PreservationDegree ; rdfs:label "хорошая сохранность" .
+:ModeratelyPreserved a :PreservationDegree ; rdfs:label "средняя сохранность" .
+:PoorlyPreserved a :PreservationDegree ; rdfs:label "плохая сохранность" .
+:Eroded a :PreservationDegree ; rdfs:label "эродированная" .
+
+:hasPreservationDegree a rdf:Property ;
+    rdfs:label "has preservation degree" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :PreservationDegree .
+
+# Тип мантийного субстрата
+:MantleSubstrateType a rdfs:Class ;
+    rdfs:label "Mantle Substrate Type" ;
+    rdfs:comment "Тип мантийного субстрата под трубкой" .
+
+:DepletedLherzolite a :MantleSubstrateType ; rdfs:label "истощенный лерцолит" .
+:FertileLherzolite a :MantleSubstrateType ; rdfs:label "плодородный лерцолит" .
+:Harzburgitic a :MantleSubstrateType ; rdfs:label "гарцбургитовый" .
+:Eclogitic a :MantleSubstrateType ; rdfs:label "эклогитовый" .
+:Metasomatized a :MantleSubstrateType ; rdfs:label "метасоматизированный" .
+
+:hasMantleSubstrate a rdf:Property ;
+    rdfs:label "has mantle substrate" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :MantleSubstrateType .
+
+# Прогнозный потенциал
+:PredictedPotential a rdfs:Class ;
+    rdfs:label "Predicted Potential" ;
+    rdfs:comment "Прогнозный алмазный потенциал" .
+
+:HighPotential a :PredictedPotential ; rdfs:label "высокий" .
+:MediumPotential a :PredictedPotential ; rdfs:label "средний" .
+:LowPotential a :PredictedPotential ; rdfs:label "низкий" .
+:Barren a :PredictedPotential ; rdfs:label "непродуктивный" .
+
+:hasPredictedPotential a rdf:Property ;
+    rdfs:label "has predicted potential" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :PredictedPotential .
+    
