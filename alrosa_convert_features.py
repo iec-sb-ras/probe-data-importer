@@ -94,8 +94,6 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
     g.add((pipe_uri, RDFS.label, Literal(f"Pipe {pipe_id}", lang="en")))
     g.add((pipe_uri, CRUST.pipeId, Literal(pipe_id, datatype=XSD.string)))
 
-    pprint(data_dict)
-    quit()
     # 1. GEOLOGY - геологические характеристики
     if "geology" in data_dict:
         geo_data = data_dict["geology"]
@@ -105,8 +103,8 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         # Маппинг ключей геологии на свойства
         geo_mapping = {
-            "Форма тела": CRUST.bodyShape,
-            "Возраст, млн лет": CRUST.ageMillionYears,
+            "Форма_тела": CRUST.bodyShape,
+            "Возраст_млн_лет": CRUST.ageMillionYears,
             "Перекрытие": CRUST.overburden,
             "Размер": None,  # Обрабатывается отдельно
             "Площадь": CRUST.area,
@@ -115,7 +113,7 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         for key, prop in geo_mapping.items():
             if key in geo_data and prop:
                 value = geo_data[key]
-                if key == "Возраст, млн лет":
+                if key == "Возраст_млн_лет":
                     num_val = clean_numeric(value)
                     if num_val is not None:
                         g.add((geo_bnode, prop, Literal(num_val, datatype=XSD.decimal)))
@@ -156,10 +154,10 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         # Маппинг фракций
         fraction_mapping = {
-            "1-2 мм": "1-2 mm",
-            "2-4 мм": "2-4 mm",
-            "4-8 мм": "4-8 mm",
-            "8-16 мм": "8-16 mm",
+            "1_2_мм": "1_2_mm",
+            "2_4_мм": "2_4_mm",
+            "4_8_мм": "4_8_mm",
+            "8_16_мм": "8_16_mm",
         }
 
         for fraction_key, fraction_label in fraction_mapping.items():
@@ -185,8 +183,8 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
                     )
 
     # 3. FEATURES (ABCDE) - целевые показатели
-    if "features" in data_dict:
-        features_data = data_dict["features"]
+    if "target" in data_dict:
+        features_data = data_dict["target"]
         target_bnode = BNode()
         g.add((pipe_uri, CRUST.hasTargetIndicators, target_bnode))
         g.add((target_bnode, RDF.type, CRUST.TargetIndicators))
@@ -226,15 +224,15 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((garnet_class_bnode, RDF.type, CRUST.GarnetDiamondClassification))
 
         garnet_class_mapping = {
-            "алмазная ассоциация gar (по Соболев 1974) % от перидотитовых gar (по Shulze 2003)": CRUST.garSobolev1974Peridotitic,
-            "G10, %": CRUST.g10Percent,
-            "G10D, %": CRUST.g10dPercent,
-            "G3D, %": CRUST.g3dPercent,
-            "G4D, %": CRUST.g4dPercent,
-            "G5D, %": CRUST.g5dPercent,
-            "Cr2O3 > 5 мас.%, %": CRUST.cr2o3gt5Percent,
-            "TiO2, мас.% (для перидоти-товых)": CRUST.tio2Peridotitic,
-            "TiO2, мас.% (при Cr2O3 > 5 мас. %)": CRUST.tio2HighCr,
+            "алмазная_ассоциация_gar_(по_Соболев_1974)_%_от перидотитовых_gar_(по_Shulze_2003)": CRUST.garSobolev1974Peridotitic,
+            "G10_%": CRUST.g10Percent,
+            "G10D_%": CRUST.g10dPercent,
+            "G3D_%": CRUST.g3dPercent,
+            "G4D_%": CRUST.g4dPercent,
+            "G5D_%": CRUST.g5dPercent,
+            "Cr2O3_>_5_мас.%_%": CRUST.cr2o3gt5Percent,
+            "TiO2_мас.%_(для_перидоти_товых)": CRUST.tio2Peridotitic,
+            "TiO2_мас.%_(при_Cr2O3_>_5_мас._%)": CRUST.tio2HighCr,
         }
 
         for raw_key, prop in garnet_class_mapping.items():
@@ -260,8 +258,8 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((chromite_assoc_bnode, RDF.type, CRUST.ChromiteDiamondAssociation))
 
         chromite_mapping = {
-            "Алмазная ассоциация, % chr": CRUST.chromiteDiamondPercent,
-            "% принадлежащих к перидотитовому тренду chr": CRUST.chromitePeridotiticTrendPercent,
+            "Алмазная_ассоциация_%_chr": CRUST.chromiteDiamondPercent,
+            "%_принадлежащих_к_перидотитовому_тренду_chr": CRUST.chromitePeridotiticTrendPercent,
         }
 
         for raw_key, prop in chromite_mapping.items():
@@ -286,8 +284,8 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((ilmenite_class_bnode, RDF.type, CRUST.IlmeniteClassification))
 
         ilmenite_mapping = {
-            "Кимбер-литовые": CRUST.kimberliticIlmenitePercent,
-            "Не кимбер-литовые": CRUST.nonKimberliticIlmenitePercent,
+            "Кимбер_литовые": CRUST.kimberliticIlmenitePercent,
+            "Не_кимбер_литовые": CRUST.nonKimberliticIlmenitePercent,
         }
 
         for raw_key, prop in ilmenite_mapping.items():
@@ -380,11 +378,11 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         # 5.1 Добавляем общее количество зерен (n=)
         count_keys = {
-            "gar": "(n=   )\ngar",
-            "chr": "(n=   )\nchr",
-            "cpx": "(n=   )\nCpx",
-            "ilm": "(n=   )\nIlm",
-            "ol": "(n=   )\nOl",
+            "gar": "(n=_)_gar",
+            "chr": "(n=_)_chr",
+            "cpx": "(n=_)_Cpx",
+            "ilm": "(n=_)_Ilm",
+            "ol": "(n=_)_Ol",
         }
 
         for mineral_code, key_pattern in count_keys.items():
@@ -405,7 +403,7 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
                         break
 
         # 5.2 Добавляем неизвестные проценты
-        unknown_keys = {"chr": "unknown, %\nchr", "ilm": "unknown,%\nIlm"}
+        unknown_keys = {"chr": "unknown_%_chr", "ilm": "unknown_%_Ilm"}
 
         for mineral_code, key_pattern in unknown_keys.items():
             if mineral_code in mineral_compositions:
@@ -426,8 +424,8 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         # 5.3 Добавляем LA-ICPMS counts
         la_icpms_keys = {
-            "gar": "LA-ICPMS\nгранат\nN=",
-            "cpx": "LA-ICPMS\nклинопироксен\nN=",
+            "gar": "LA-ICPMS_гранат_N=",
+            "cpx": "LA-ICPMS_клинопироксен_N=",
         }
 
         for mineral_code, key_pattern in la_icpms_keys.items():
@@ -455,9 +453,9 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((garnet_geo_bnode, CRUST.forMineralGeo, CRUST.garnet))
 
         garnet_geo_mapping = {
-            "Y, гр/т (для перидотитовых) по Gar": CRUST.yContentPeridotitic,
-            "Y, гр/т (при Cr2O3 > 5 мас. %) по Gar": CRUST.yContentHighCr,
-            "Y-край Температура, оС по Gar": CRUST.yRimTemperature,
+            "Y_гр/т_(для_перидотитовых)_по_Gar": CRUST.yContentPeridotitic,
+            "Y_гр/т_(при_Cr2O3_>_5_мас._%)_по_Gar": CRUST.yContentHighCr,
+            "Y_край_Температура_оС_по_Gar": CRUST.yRimTemperature,
         }
 
         for raw_key, prop in garnet_geo_mapping.items():
@@ -484,9 +482,9 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((cpx_geo_bnode, CRUST.geothermalMineral, CRUST.clinopyroxene))
 
         cpx_geo_mapping = {
-            "Геотерма, мВт/м2 по CPx": CRUST.heatFlow,
-            "Мощность литосферы, км по CPx": CRUST.lithosphereThickness,
-            "Мощность области стабильности алмаза, км по CPx": CRUST.diamondStabilityZone,
+            "Геотерма_мВт/м2_по_CPx": CRUST.heatFlow,
+            "Мощность_литосферы_км_по_CPx": CRUST.lithosphereThickness,
+            "Мощность_области_стабильности_алмаза_км_по_CPx": CRUST.diamondStabilityZone,
         }
 
         for raw_key, prop in cpx_geo_mapping.items():
@@ -512,10 +510,10 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((gar_geo_bnode, CRUST.geothermalMineral, CRUST.garnet))
 
         gar_geo_mapping = {
-            "Геотерма, мВт/м2 по Gar": CRUST.heatFlow,
-            "Мощность литосферы, км по Gar": CRUST.lithosphereThickness,
-            "Мощность алмазного окна, кмпо Gar": CRUST.diamondWindowThickness,
-            "Мощность области метасоматоза, км по Gar": CRUST.metasomatismZone,
+            "Геотерма_мВт/м2_по_Gar": CRUST.heatFlow,
+            "Мощность_литосферы_км_по_Gar": CRUST.lithosphereThickness,
+            "Мощность_алмазного_окна_км_по_Gar": CRUST.diamondWindowThickness,
+            "Мощность_области_метасоматоза_км_по_Gar": CRUST.metasomatismZone,
         }
 
         for raw_key, prop in gar_geo_mapping.items():
