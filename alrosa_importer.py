@@ -1,9 +1,11 @@
 import base64
+import hashlib
 import os
 import os.path
 import re
 import time
 import unicodedata
+import uuid
 from enum import Enum
 from pprint import pprint
 from pyexpat import features
@@ -576,6 +578,18 @@ def convert_to_canonic_form(tube):
     return name, new_data
 
 
+def generate_deterministic_uuid(
+    pipe_name: str, namespace: str = "http://crust.irk.ru/ontology/contents/1.0/"
+) -> str:
+    """
+    Генерирует детерминированный UUID v5 на основе имени трубки
+    """
+    # Создаем UUID v5 на основе пространства имен и имени
+    namespace_uuid = uuid.NAMESPACE_DNS  # Или можно создать свой
+    pipe_uuid = uuid.uuid5(namespace_uuid, f"{namespace}{pipe_name}")
+    return str(pipe_uuid)
+
+
 def export_tube(g, tube):
     tube_name, tube_dict = tube
 
@@ -586,6 +600,11 @@ def export_tube(g, tube):
 
     # Add type assertion
     g.add((tube_uri, RDF.type, PT.KimberlitePipe))
+
+    # Генерируем детерминированный UUID
+    pipe_uuid = generate_deterministic_uuid(tube_name)
+
+    g.add((tube_uri, PT.uuid, Literal(pipe_uuid, datatype=XSD.string)))
 
     features = tube_dict.get("features", {})
 

@@ -242,10 +242,15 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
                 "Возраст_млн_лет": CRUST.ageMillionYears,
                 "Перекрытие": CRUST.overburden,
                 "Площадь": CRUST.area,
-                # "Размер": CRUST.area,
-                "None": CRUST.none_geology_value,
+                "Размер": CRUST.sizeLength,
+                "None": CRUST.sizeWidth,
             },
-            numeric_props=[CRUST.ageMillionYears, CRUST.area, CRUST.none_geology_value],
+            numeric_props=[
+                CRUST.ageMillionYears,
+                CRUST.area,
+                CRUST.sizeLength,
+                CRUST.sizeWidth,
+            ],
         )
 
         # Обработка размеров (длина/ширина)
