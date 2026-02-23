@@ -593,6 +593,8 @@ def generate_deterministic_uuid(
 def export_tube(g, tube):
     tube_name, tube_dict = tube
 
+    print("Processing pipe {}".format(tube_name))
+
     if tube_dict is None:  # ценник, really
         return None
 

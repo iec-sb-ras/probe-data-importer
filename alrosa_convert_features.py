@@ -547,19 +547,20 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         # 5.3 Добавляем LA-ICPMS counts
         la_icpms_keys = {
-            "gar": "LA_ICPMS_гранат_N=",
-            "cpx": "LA_ICPMS_клинопироксен_N=",
+            "LA_ICPMS_гранат_N": "gar",
+            "LA_ICPMS_клинопироксен_N": "cpx",
+            "LA_ICPMS_клинопироксен": "cpx",
+            "LA_ICPMSклинопироксен": "cpx",
         }
 
-        for mineral_code, key_pattern in la_icpms_keys.items():
+        for key_pattern, mineral_code in la_icpms_keys.items():
             if mineral_code in mineral_compositions:
                 for data_key, value in ad.items():
-                    if key_pattern in data_key or key_pattern.replace(
-                        " ", "_"
-                    ) in normalize_key(data_key):
+                    if key_pattern in data_key:
                         num_val = clean_numeric(value)
                         if num_val is not None:
-                            del assoc_data[data_key]
+                            if data_key in assoc_data:
+                                del assoc_data[data_key]
                             g.add(
                                 (
                                     mineral_compositions[mineral_code],
