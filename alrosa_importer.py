@@ -1,33 +1,35 @@
-import openpyxl
-
-from rdflib import (
-    Graph,
-    Namespace,
-    FOAF,
-    XSD,
-    RDF,
-    RDFS,
-    DCTERMS,
-    URIRef,
-    Literal,
-    BNode,
-)
-from rdflib.namespace import WGS, SDO
-import os.path
-import unicodedata
-from enum import Enum
-import re
-import requests as rq
-from requests.auth import HTTPBasicAuth
 import base64
 import os
-from namespace import PT, P, SCHEMA, BIBO, MT, GS, CGI, DBP, DBP_OWL
-from pprint import pprint
-import pandas as pd
-from openpyxl.cell import Cell
+import os.path
+import re
 import time
+import unicodedata
+from enum import Enum
+from pprint import pprint
 
+import openpyxl
+import pandas as pd
 import pudb
+import requests as rq
+from openpyxl.cell import Cell
+from pandas.core.generic import Frequency
+from pandas.io.formats.info import frame_examples_sub
+from rdflib import (
+    DCTERMS,
+    FOAF,
+    RDF,
+    RDFS,
+    XSD,
+    BNode,
+    Graph,
+    Literal,
+    URIRef,
+)
+from rdflib.namespace import SDO, WGS
+from requests.auth import HTTPBasicAuth
+
+from alrosa_convert_features import canonicalize_keys, convert_features_to_rdf
+from namespace import BIBO, CGI, DBP, DBP_OWL, GS, MT, PT, SCHEMA, P
 
 # Создание графа
 G = Graph()
@@ -378,46 +380,71 @@ def search_file_to_root(name):
     return None
 
 
+keymaster = {}
+
+
+def keymaster_update(section_key, data_section):
+    a_set = keymaster.setdefault(section_key, set())
+    a_set.update(data_section.keys())
+
+
 def convert_target_features(features):
-    print(features.keys)
+    keymaster_update("features", features)
     return features
 
 
-# Make sich stubs for other features
+def convert_geology_features(features):
+    """Convert geology features to RDF triples."""
+    keymaster_update("geology", features)
+    return features
+
+
+def convert_olivine_features(features):
+    """Convert olivine features to RDF triples."""
+    keymaster_update("olivine", features)
+    return features
+
+
+def convert_assoc_features(features):
+    """Convert diamond association features to RDF triples."""
+    keymaster_update("assoc", features)
+    return features
 
 
 def convert_to_canonic_form_features(features):
     new_features = {}
     new_features.update(features)
-    new_features["target"] = convert_target_features(features.get("target", {}))
-    new_features["geology"] = convert_geology_features(features.get("geology", {}))
-    new_features["olivine"] = convert_olivine_features(features.get("olivine", {}))
-    new_features["assoc"] = convert_assoc_features(features.get("assoc", {}))
+    # new_features["target"] = convert_target_features(features.get("target", {}))
+    # new_features["geology"] = convert_geology_features(features.get("geology", {}))
+    # new_features["olivine"] = convert_olivine_features(features.get("olivine", {}))
+    # new_features["assoc"] = convert_assoc_features(features.get("assoc", {}))
+    new_features = canonicalize_keys(new_features)
     return new_features
 
 
 def convert_to_canonic_form_frames(frames):
     """Convert all dataframes to canonical form."""
     new_frames = {}
-    for key, df in frames.items():
-        if key == "phlogopite":
-            new_frames[key] = convert_phlogopite_df(df)
-        elif key == "isotopic":
-            new_frames[key] = convert_isotopic_df(df)
-        elif key == "epma":
-            new_frames[key] = convert_epma_df(df)
-        elif key == "lam":
-            new_frames[key] = convert_lam_df(df)
-        elif key == "diamonds":
-            new_frames[key] = convert_diamonds_df(df)
-        elif key == "oxides":
-            new_frames[key] = convert_oxides_df(df)
-        elif key == "petrochemy":
-            new_frames[key] = convert_petrochemy_df(df)
-        elif key == "geochemy":
-            new_frames[key] = convert_geochemy_df(df)
-        else:
-            new_frames[key] = df
+    new_frames.update(frames)
+    # for key, df in frames.items():
+    #     if key == "phlogopite":
+    #         new_frames[key] = convert_phlogopite_df(df)
+    #     elif key == "isotopic":
+    #         new_frames[key] = convert_isotopic_df(df)
+    #     elif key == "epma":
+    #         new_frames[key] = convert_epma_df(df)
+    #     elif key == "lam":
+    #         new_frames[key] = convert_lam_df(df)
+    #     elif key == "diamonds":
+    #         new_frames[key] = convert_diamonds_df(df)
+    #     elif key == "oxides":
+    #         new_frames[key] = convert_oxides_df(df)
+    #     elif key == "petrochemy":
+    #         new_frames[key] = convert_petrochemy_df(df)
+    #     elif key == "geochemy":
+    #         new_frames[key] = convert_geochemy_df(df)
+    #     else:
+    #         new_frames[key] = df
     return new_frames
 
 
@@ -516,15 +543,6 @@ def main():
         print("No tube data found in the Excel file.")
 
 
-if __name__ == "__main__":
-    main()
-    return features
-
-
-def convert_to_canonic_form_frames(frames):
-    return frames
-
-
 def convert_to_canonic_form(tube):
     """
     Convrts tube data in form of dictionary and pandas dataframe in the same structurebut ranamed keys into canonic format
@@ -537,7 +555,7 @@ def convert_to_canonic_form(tube):
     features = data.get("features", {})
     features = convert_to_canonic_form_features(features)
     frames = data.get("frames", {})
-    features = convert_to_canonic_form_frames(frames)
+    frames = convert_to_canonic_form_frames(frames)
 
     new_data = {"features": features, "frames": frames}
     return name, new_data
@@ -552,76 +570,9 @@ def export_tube(g, tube):
     tube_uri = P[tube_name]
 
     # Add type assertion
-    g.add((tube_uri, RDF.type, PT.KimberlitePipe))
+    g.add((tube_uri, RDF.type, P.KimberlitePipe))
 
-    # Add features
-    if "features" in tube_dict:
-        features = tube_dict["features"]
-        for feature_name, feature_value in features.items():
-            # Create predicate URI
-            predicate_uri = URIRef(
-                f"http://crust.irk.ru/ontology/contents/terms/1.0/feature/{feature_name}"
-            )
-
-            # Add literal value
-            if isinstance(feature_value, (int, float)):
-                g.add(
-                    (
-                        tube_uri,
-                        predicate_uri,
-                        Literal(feature_value, datatype=XSD.decimal),
-                    )
-                )
-            elif isinstance(feature_value, str):
-                g.add(
-                    (
-                        tube_uri,
-                        predicate_uri,
-                        Literal(feature_value, datatype=XSD.string),
-                    )
-                )
-            else:
-                g.add((tube_uri, predicate_uri, Literal(str(feature_value))))
-
-    # Add data frames as structured data
-    if "frames" in tube_dict:
-        frames = tube_dict["frames"]
-        for frame_name, frame_data in frames.items():
-            if isinstance(frame_data, pd.DataFrame):
-                # Create a blank node for the data frame
-                frame_bnode = BNode()
-                g.add(
-                    (
-                        tube_uri,
-                        URIRef(
-                            f"http://crust.irk.ru/ontology/contents/terms/1.0/hasDataFrame/{frame_name}"
-                        ),
-                        frame_bnode,
-                    )
-                )
-
-                # Add DataFrame metadata
-                g.add((frame_bnode, RDF.type, PT.DataFrame))
-                g.add(
-                    (
-                        frame_bnode,
-                        PT.hasRowCount,
-                        Literal(len(frame_data), datatype=XSD.integer),
-                    )
-                )
-                g.add(
-                    (
-                        frame_bnode,
-                        PT.hasColumnCount,
-                        Literal(len(frame_data.columns), datatype=XSD.integer),
-                    )
-                )
-
-                # Optionally add column names
-                for i, col in enumerate(frame_data.columns):
-                    g.add(
-                        (frame_bnode, PT.hasColumn, Literal(col, datatype=XSD.string))
-                    )
+    convert_features_to_rdf(G, (tube_name, tube_dict.get("features", {})), tube_uri)
 
     return tube_uri
 
@@ -638,6 +589,7 @@ def main():
         tubes = load_dict_from_pickle(tubes_pn)
         load_time = time.time() - start_time
         print(f"INFO: Load success! Time: {load_time:.2f} sec")
+        del tubes["ценник"]
     else:
         tubes = {}
         workbook = openpyxl.load_workbook(
@@ -653,8 +605,11 @@ def main():
         save_dict_as_pickle(tubes, tubes_path)
 
     for tube_item in tubes.items():
-        canon_form = convert_to_canonic_form(tube_item)
-        export_tube(G, canon_form)
+        tube_item = convert_to_canonic_form(tube_item)
+        export_tube(G, tube_item)
+        break
+
+    # pprint(keymaster)
 
     # save Graph G in ../gql-server/fuseki/a-box.ttl
 
@@ -664,6 +619,10 @@ def main():
         "fuseki",
         "a-box.ttl",
     )
+    # G.serialize(destination=output_path, format="turtle")
+    # print(f"RDF graph saved to {output_path}")
+
+    output_path = "a-box.ttl"
     G.serialize(destination=output_path, format="turtle")
     print(f"RDF graph saved to {output_path}")
 
