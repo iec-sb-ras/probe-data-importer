@@ -649,7 +649,7 @@ def main():
     for tube_item in tubes.items():
         tube_item = convert_to_canonic_form(tube_item)
         export_tube(G, tube_item)
-        break
+        # break
 
     # pprint(keymaster)
 

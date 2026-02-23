@@ -126,7 +126,7 @@ def add_mapped_triples_with_callback(
     for key, val in dt.items():
         if key in mapping:
             map_key = mapping[key]
-            print(key, val, map_key)
+            # print(key, val, map_key)
             del data_dict[key]
             callback(g, new_node, key, val, map_key, **callback_kwargs)
         else:
@@ -279,33 +279,37 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         olivine_data = data_dict["olivine"]
 
         # Callback функция для создания фракций оливина
-        def create_olivine_fraction(g, parent_node, key, value, fraction_label):
+        def create_olivine_fraction(
+            g, parent_node, key, value, fraction_class, numeric_props
+        ):
             num_val = clean_numeric(value)
             if num_val is not None:
                 fraction_bnode = BNode()
                 g.add((parent_node, CRUST.hasOlivineFraction, fraction_bnode))
                 g.add((fraction_bnode, RDF.type, CRUST.OlivineSizeFraction))
-                g.add(
-                    (
-                        fraction_bnode,
-                        CRUST.fractionRange,
-                        Literal(fraction_label, lang="en"),
-                    )
-                )
+
+                # Используем класс размера зерна из T-Box
+                g.add((fraction_bnode, CRUST.hasGrainSizeClass, fraction_class))
+
+                # Добавляем процентное содержание
                 g.add(
                     (
                         fraction_bnode,
                         CRUST.fractionPercentage,
-                        Literal(num_val, datatype=XSD.decimal),
+                        Literal(value, datatype=XSD.decimal),
                     )
                 )
 
         # Маппинг фракций
         fraction_mapping = {
-            "1_2_мм": "1_2_mm",
-            "2_4_мм": "2_4_mm",
-            "4_8_мм": "4_8_mm",
-            "8_16_мм": "8_16_mm",
+            "1_2_мм": CRUST.GrainSize1_2mm,
+            "2_4_мм": CRUST.GrainSize2_4mm,
+            "4_8_мм": CRUST.GrainSize4_8mm,
+            "8_16_мм": CRUST.GrainSize8_16mm,
+            "1_2_mm": CRUST.GrainSize1_2mm,
+            "2_4_mm": CRUST.GrainSize2_4mm,
+            "4_8_mm": CRUST.GrainSize4_8mm,
+            "8_16_mm": CRUST.GrainSize8_16mm,
         }
 
         petro_bnode = add_mapped_triples_with_callback(
@@ -316,6 +320,12 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
             olivine_data,
             fraction_mapping,
             create_olivine_fraction,
+            numeric_props=[
+                CRUST.GrainSize1_2mm,
+                CRUST.GrainSize2_4mm,
+                CRUST.GrainSize4_8mm,
+                CRUST.GrainSize8_16mm,
+            ],
         )
 
     # 3. FEATURES (ABCDE) - целевые показатели
