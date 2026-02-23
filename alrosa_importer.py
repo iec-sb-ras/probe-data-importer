@@ -378,7 +378,146 @@ def search_file_to_root(name):
     return None
 
 
+def convert_target_features(features):
+    print(features.keys)
+    return features
+
+
+# Make sich stubs for other features
+
+
 def convert_to_canonic_form_features(features):
+    new_features = {}
+    new_features.update(features)
+    new_features["target"] = convert_target_features(features.get("target", {}))
+    new_features["geology"] = convert_geology_features(features.get("geology", {}))
+    new_features["olivine"] = convert_olivine_features(features.get("olivine", {}))
+    new_features["assoc"] = convert_assoc_features(features.get("assoc", {}))
+    return new_features
+
+
+def convert_to_canonic_form_frames(frames):
+    """Convert all dataframes to canonical form."""
+    new_frames = {}
+    for key, df in frames.items():
+        if key == "phlogopite":
+            new_frames[key] = convert_phlogopite_df(df)
+        elif key == "isotopic":
+            new_frames[key] = convert_isotopic_df(df)
+        elif key == "epma":
+            new_frames[key] = convert_epma_df(df)
+        elif key == "lam":
+            new_frames[key] = convert_lam_df(df)
+        elif key == "diamonds":
+            new_frames[key] = convert_diamonds_df(df)
+        elif key == "oxides":
+            new_frames[key] = convert_oxides_df(df)
+        elif key == "petrochemy":
+            new_frames[key] = convert_petrochemy_df(df)
+        elif key == "geochemy":
+            new_frames[key] = convert_geochemy_df(df)
+        else:
+            new_frames[key] = df
+    return new_frames
+
+
+def convert_to_canonic_form(data_dict):
+    """Convert entire data dictionary to canonical form."""
+    if not data_dict:
+        return data_dict
+
+    new_dict = {}
+    new_dict["features"] = convert_to_canonic_form_features(
+        data_dict.get("features", {})
+    )
+    new_dict["frames"] = convert_to_canonic_form_frames(data_dict.get("frames", {}))
+    return new_dict
+
+
+def process_excel_file(file_path):
+    """
+    Process an Excel file and extract all tube data.
+
+    Args:
+        file_path (str): Path to the Excel file.
+
+    Returns:
+        dict: Dictionary with sheet names as keys and extracted data as values.
+    """
+    wb = openpyxl.load_workbook(file_path, data_only=True)
+    all_data = {}
+
+    for sheet in wb.worksheets:
+        sheet_name = sheet.title
+        print(f"Processing sheet: {sheet_name}")
+
+        # Check if this sheet contains tube data
+        matches = search_substring_on_sheet(sheet, 1, "НДС")
+        if matches:
+            print(f"  Skipping sheet '{sheet_name}' - not a tube sheet")
+            continue
+
+        # Import data from this sheet
+        _, data_dict = import_excel_table_into_dict(wb, sheet_name)
+
+        if data_dict:
+            # Convert to canonical form
+            canonical_data = convert_to_canonic_form(data_dict)
+            all_data[sheet_name] = canonical_data
+            print(f"  Successfully extracted data from '{sheet_name}'")
+        else:
+            print(f"  No data extracted from '{sheet_name}'")
+
+    return all_data
+
+
+def main():
+    """Main function to search for and process Excel files."""
+    # Search for Excel files
+    excel_files = [
+        "tubes.xlsx",
+        "data.xlsx",
+        "kimberlite_tubes.xlsx",
+        "kimberlite_data.xlsx",
+    ]
+
+    found_file = None
+    for file_name in excel_files:
+        file_path = search_file_to_root(file_name)
+        if file_path:
+            found_file = file_path
+            print(f"Found Excel file: {found_file}")
+            break
+
+    if not found_file:
+        print("No Excel files found in current or parent directories.")
+        return
+
+    # Process the Excel file
+    print(f"Processing file: {found_file}")
+    all_data = process_excel_file(found_file)
+
+    # Save the results
+    if all_data:
+        output_file = "extracted_tube_data.pkl"
+        save_dict_as_pickle(all_data, output_file)
+        print(f"Data saved to {output_file}")
+
+        # Print summary
+        print(f"\nSummary:")
+        print(f"  Total sheets processed: {len(all_data)}")
+        for sheet_name, data in all_data.items():
+            features_count = len(data.get("features", {}))
+            frames_count = len(data.get("frames", {}))
+            print(
+                f"  {sheet_name}: {features_count} features, {frames_count} dataframes"
+            )
+    else:
+        print("No tube data found in the Excel file.")
+
+
+if __name__ == "__main__":
+    main()
     return features
 
 
