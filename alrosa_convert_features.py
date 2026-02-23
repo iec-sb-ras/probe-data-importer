@@ -224,7 +224,7 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((garnet_class_bnode, RDF.type, CRUST.GarnetDiamondClassification))
 
         garnet_class_mapping = {
-            "алмазная_ассоциация_gar_(по_Соболев_1974)_%_от перидотитовых_gar_(по_Shulze_2003)": CRUST.garSobolev1974Peridotitic,
+            "алмазная_ассоциация_gar_(по_Соболев_1974)_%_от_перидотитовых_gar_(по_Shulze_2003)": CRUST.garSobolev1974Peridotitic,
             "G10_%": CRUST.g10Percent,
             "G10D_%": CRUST.g10dPercent,
             "G3D_%": CRUST.g3dPercent,
@@ -234,7 +234,7 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
             "TiO2_мас.%_(для_перидоти_товых)": CRUST.tio2Peridotitic,
             "TiO2_мас.%_(при_Cr2O3_>_5_мас._%)": CRUST.tio2HighCr,
         }
-
+        pu.db
         for raw_key, prop in garnet_class_mapping.items():
             # Ищем ключ в данных с учетом возможных вариаций
             for data_key, value in assoc_data.items():
