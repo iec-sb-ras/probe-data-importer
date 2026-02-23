@@ -1,6 +1,6 @@
 import re
 from pprint import pprint
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 import pudb
 import rdflib
@@ -32,25 +32,28 @@ def clean_numeric(value: str) -> Optional[float]:
     """
     Преобразует строковое значение в число, обрабатывая запятые и 'н.д.'
     """
-    if not value or value == "н.д." or value == "н.д":
+    if value is None or value == "н.д." or value == "н.д":
         return None
 
     # Заменяем запятую на точку и убираем пробелы
     cleaned = str(value).replace(",", ".").strip()
     try:
-        return float(cleaned)
+        if "." in cleaned:
+            return float(cleaned)
+        else:
+            return int(cleaned)
     except ValueError:
         return None
 
 
 def extract_type_number_and_mineral(key: str) -> tuple:
     """
-    Извлекает номер типа и минерал из ключей вида '1,% gar' или '1, % chr'
+    Извлекает номер типа и минерал из ключей вида '1%_gar' или '1%_chr'
     Возвращает (type_number, mineral_code, mineral_uri)
     """
     # Паттерн для поиска номера типа и минерала
     # Ищем цифру в начале, затем необязательные пробелы и запятую, затем код минерала
-    match = re.search(r"(\d+),?\s*%\s*(\w+)", key)
+    match = re.search(r"(\d+)_?%_(\w+)", key)
     if match:
         type_num = int(match.group(1))
         mineral_code = match.group(2).lower()
@@ -77,6 +80,137 @@ def create_pipe_uri(pipe_id: str) -> URIRef:
     return CRUST[f"KimberlitePipe/{pipe_id}"]
 
 
+def data_take_value(ddata_dict, key):
+    val = data_dict.get(key)
+    del data_dict[key]
+    return val
+
+
+def add_mapped_triples_with_callback(
+    g: Graph,
+    parent_node,
+    predicate,
+    node_type,
+    data_dict: Dict[str, Any],
+    mapping: Dict[str, Any],
+    callback: Callable,
+    **callback_kwargs,
+) -> BNode:
+    """
+    Добавляет набор триплетов с использованием callback-функции для создания сложных структур.
+
+    Args:
+        g: RDF граф
+        parent_node: Родительский узел (URI или BNode)
+        predicate: Предикат для связи родительского узла с новым узлом
+        node_type: Тип нового узла
+        data_dict: Словарь с данными
+        mapping: Словарь маппинга ключей на значения для callback
+        callback: Функция, которая создает триплеты для каждого элемента маппинга
+        **callback_kwargs: Дополнительные аргументы для callback
+
+    Returns:
+        Созданный BNode
+    """
+    # Создаем новый узел
+    new_node = BNode()
+    g.add((parent_node, predicate, new_node))
+    g.add((new_node, RDF.type, node_type))
+
+    # Для каждого элемента в маппинге вызываем callback
+    # for key, value in mapping.items():
+    #     if key in data_dict:
+    #         callback(g, new_node, key, data_dict[key], value, **callback_kwargs)
+    dt = {}
+    dt.update(data_dict)
+    for key, val in dt.items():
+        if key in mapping:
+            map_key = mapping[key]
+            print(key, val, map_key)
+            del data_dict[key]
+            callback(g, new_node, key, val, map_key, **callback_kwargs)
+        else:
+            print("ERROR: cannot map {} with {}.".format(key, val))
+
+    return new_node
+
+
+def add_mapped_triples(
+    g: Graph,
+    parent_node,
+    predicate,
+    node_type,
+    data_dict: Dict[str, Any],
+    mapping: Dict[str, Any],
+    numeric_props: Optional[List] = None,
+    search_keys: bool = False,
+    normalize_search: bool = False,
+) -> BNode:
+    """
+    Добавляет набор триплетов в функциональном стиле.
+
+    Args:
+        g: RDF граф
+        parent_node: Родительский узел (URI или BNode)
+        predicate: Предикат для связи родительского узла с новым узлом
+        node_type: Тип нового узла
+        data_dict: Словарь с данными
+        mapping: Словарь маппинга ключей на свойства
+        numeric_props: Список свойств, которые нужно обрабатывать как числа
+        search_keys: Если True, ищет ключи в data_dict с помощью поиска по подстроке
+        normalize_search: Если True, нормализует ключи при поиске
+
+    Returns:
+        Созданный BNode
+    """
+    # Создаем новый узел
+    new_node = BNode()
+    g.add((parent_node, predicate, new_node))
+    g.add((new_node, RDF.type, node_type))
+
+    # Если numeric_props не указан, создаем пустой список
+    if numeric_props is None:
+        numeric_props = []
+
+    # Функция для поиска значения по ключу
+    def find_value(key):
+        if not search_keys:
+            # Прямой поиск по ключу
+            val = data_dict.get(key)
+            if key in data_dict:
+                del data_dict[key]
+            return val
+        else:
+            # Поиск по подстроке в ключах
+            for data_key, value in data_dict.items():
+                search_key = normalize_key(key) if normalize_search else key
+                data_key_normalized = (
+                    normalize_key(data_key) if normalize_search else data_key
+                )
+                if search_key in data_key_normalized:
+                    del data_dict[data_key]
+                    return value
+            return None
+
+    # Добавляем триплеты согласно маппингу
+    for key, prop in mapping.items():
+        if prop is None:
+            continue
+
+        value = find_value(key)
+        if value is not None:
+            # Проверяем, нужно ли обрабатывать как число
+            if prop in numeric_props:
+                num_val = clean_numeric(value)
+                if num_val is not None:
+                    g.add((new_node, prop, Literal(num_val, datatype=XSD.decimal)))
+                else:
+                    print("ERROR: None value ", key)
+            else:
+                g.add((new_node, prop, Literal(str(value), lang="ru")))
+    return new_node
+
+
 def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
     """
     Основной конвертер из словарной структуры в RDF A-Box
@@ -97,32 +231,22 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
     # 1. GEOLOGY - геологические характеристики
     if "geology" in data_dict:
         geo_data = data_dict["geology"]
-        geo_bnode = BNode()
-        g.add((pipe_uri, CRUST.hasGeology, geo_bnode))
-        g.add((geo_bnode, RDF.type, CRUST.PipeGeology))
-
-        # Маппинг ключей геологии на свойства
-        geo_mapping = {
-            "Форма_тела": CRUST.bodyShape,
-            "Возраст_млн_лет": CRUST.ageMillionYears,
-            "Перекрытие": CRUST.overburden,
-            "Размер": None,  # Обрабатывается отдельно
-            "Площадь": CRUST.area,
-        }
-
-        for key, prop in geo_mapping.items():
-            if key in geo_data and prop:
-                value = geo_data[key]
-                if key == "Возраст_млн_лет":
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add((geo_bnode, prop, Literal(num_val, datatype=XSD.decimal)))
-                elif key == "Площадь":
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add((geo_bnode, prop, Literal(num_val, datatype=XSD.decimal)))
-                else:
-                    g.add((geo_bnode, prop, Literal(str(value), lang="ru")))
+        geo_bnode = add_mapped_triples(
+            g,
+            pipe_uri,
+            CRUST.hasGeology,
+            CRUST.PipeGeology,
+            geo_data,
+            {
+                "Форма_тела": CRUST.bodyShape,
+                "Возраст_млн_лет": CRUST.ageMillionYears,
+                "Перекрытие": CRUST.overburden,
+                "Площадь": CRUST.area,
+                # "Размер": CRUST.area,
+                "None": CRUST.none_geology_value,
+            },
+            numeric_props=[CRUST.ageMillionYears, CRUST.area, CRUST.none_geology_value],
+        )
 
         # Обработка размеров (длина/ширина)
         if "Размер" in geo_data:
@@ -148,9 +272,28 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
     # 2. OLIVINE - петрография оливинов
     if "olivine" in data_dict:
         olivine_data = data_dict["olivine"]
-        petro_bnode = BNode()
-        g.add((pipe_uri, CRUST.hasPetrography, petro_bnode))
-        g.add((petro_bnode, RDF.type, CRUST.Petrography))
+
+        # Callback функция для создания фракций оливина
+        def create_olivine_fraction(g, parent_node, key, value, fraction_label):
+            num_val = clean_numeric(value)
+            if num_val is not None:
+                fraction_bnode = BNode()
+                g.add((parent_node, CRUST.hasOlivineFraction, fraction_bnode))
+                g.add((fraction_bnode, RDF.type, CRUST.OlivineSizeFraction))
+                g.add(
+                    (
+                        fraction_bnode,
+                        CRUST.fractionRange,
+                        Literal(fraction_label, lang="en"),
+                    )
+                )
+                g.add(
+                    (
+                        fraction_bnode,
+                        CRUST.fractionPercentage,
+                        Literal(num_val, datatype=XSD.decimal),
+                    )
+                )
 
         # Маппинг фракций
         fraction_mapping = {
@@ -160,54 +303,34 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
             "8_16_мм": "8_16_mm",
         }
 
-        for fraction_key, fraction_label in fraction_mapping.items():
-            if fraction_key in olivine_data:
-                value = clean_numeric(olivine_data[fraction_key])
-                if value is not None:
-                    fraction_bnode = BNode()
-                    g.add((petro_bnode, CRUST.hasOlivineFraction, fraction_bnode))
-                    g.add((fraction_bnode, RDF.type, CRUST.OlivineSizeFraction))
-                    g.add(
-                        (
-                            fraction_bnode,
-                            CRUST.fractionRange,
-                            Literal(fraction_label, lang="en"),
-                        )
-                    )
-                    g.add(
-                        (
-                            fraction_bnode,
-                            CRUST.fractionPercentage,
-                            Literal(value, datatype=XSD.decimal),
-                        )
-                    )
+        petro_bnode = add_mapped_triples_with_callback(
+            g,
+            pipe_uri,
+            CRUST.hasPetrography,
+            CRUST.Petrography,
+            olivine_data,
+            fraction_mapping,
+            create_olivine_fraction,
+        )
 
     # 3. FEATURES (ABCDE) - целевые показатели
     if "target" in data_dict:
         features_data = data_dict["target"]
-        target_bnode = BNode()
-        g.add((pipe_uri, CRUST.hasTargetIndicators, target_bnode))
-        g.add((target_bnode, RDF.type, CRUST.TargetIndicators))
-
-        feature_mapping = {
-            "A": CRUST.paramA,
-            "B": CRUST.paramB,
-            "C": CRUST.paramC,
-            "D": CRUST.paramD,
-            "E": CRUST.paramE,
-        }
-
-        for key, prop in feature_mapping.items():
-            if key in features_data:
-                value = features_data[key]
-                if prop in [CRUST.paramA, CRUST.paramB, CRUST.paramC, CRUST.paramD]:
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (target_bnode, prop, Literal(num_val, datatype=XSD.decimal))
-                        )
-                else:
-                    g.add((target_bnode, prop, Literal(str(value), lang="ru")))
+        target_bnode = add_mapped_triples(
+            g,
+            pipe_uri,
+            CRUST.hasTargetIndicators,
+            CRUST.TargetIndicators,
+            features_data,
+            {
+                "A": CRUST.paramA,
+                "B": CRUST.paramB,
+                "C": CRUST.paramC,
+                "D": CRUST.paramD,
+                "E": CRUST.paramE,
+            },
+            numeric_props=[CRUST.paramA, CRUST.paramB, CRUST.paramC, CRUST.paramD],
+        )
 
     # 4. ASSOC - алмазная ассоциация и типы минералов
     if "assoc" in data_dict:
@@ -219,130 +342,113 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
         g.add((assoc_bnode, RDF.type, CRUST.DiamondAssociation))
 
         # 4.1 Классификация гранатов
-        garnet_class_bnode = BNode()
-        g.add((assoc_bnode, CRUST.hasGarnetClassification, garnet_class_bnode))
-        g.add((garnet_class_bnode, RDF.type, CRUST.GarnetDiamondClassification))
-
-        garnet_class_mapping = {
-            "алмазная_ассоциация_gar_(по_Соболев_1974)_%_от_перидотитовых_gar_(по_Shulze_2003)": CRUST.garSobolev1974Peridotitic,
-            "G10_%": CRUST.g10Percent,
-            "G10D_%": CRUST.g10dPercent,
-            "G3D_%": CRUST.g3dPercent,
-            "G4D_%": CRUST.g4dPercent,
-            "G5D_%": CRUST.g5dPercent,
-            "Cr2O3_>_5_мас.%_%": CRUST.cr2o3gt5Percent,
-            "TiO2_мас.%_(для_перидоти_товых)": CRUST.tio2Peridotitic,
-            "TiO2_мас.%_(при_Cr2O3_>_5_мас._%)": CRUST.tio2HighCr,
-        }
-        pu.db
-        for raw_key, prop in garnet_class_mapping.items():
-            # Ищем ключ в данных с учетом возможных вариаций
-            for data_key, value in assoc_data.items():
-                if raw_key in data_key or raw_key.replace(" ", "_") in normalize_key(
-                    data_key
-                ):
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (
-                                garnet_class_bnode,
-                                prop,
-                                Literal(num_val, datatype=XSD.decimal),
-                            )
-                        )
-                    break
+        garnet_class_bnode = add_mapped_triples(
+            g,
+            assoc_bnode,
+            CRUST.hasGarnetClassification,
+            CRUST.GarnetDiamondClassification,
+            assoc_data,
+            {
+                "алмазная_ассоциация_gar_(по_Соболев_1974)_%_от_перидотитовых_gar_(по_Shulze_2003)": CRUST.garSobolev1974Peridotitic,
+                "G10_%": CRUST.g10Percent,
+                "G10D_%": CRUST.g10dPercent,
+                "G3D_%": CRUST.g3dPercent,
+                "G4D_%": CRUST.g4dPercent,
+                "G5D_%": CRUST.g5dPercent,
+                "Cr2O3_>_5_мас.%_%": CRUST.cr2o3gt5Percent,
+                "TiO2_мас.%_(для_перидоти_товых)": CRUST.tio2Peridotitic,
+                "TiO2_мас.%_(при_Cr2O3_>_5_мас._%)": CRUST.tio2HighCr,
+            },
+            numeric_props=[
+                CRUST.garSobolev1974Peridotitic,
+                CRUST.g10Percent,
+                CRUST.g10dPercent,
+                CRUST.g3dPercent,
+                CRUST.g4dPercent,
+                CRUST.g5dPercent,
+                CRUST.cr2o3gt5Percent,
+                CRUST.tio2Peridotitic,
+                CRUST.tio2HighCr,
+            ],
+            search_keys=True,
+            normalize_search=True,
+        )
 
         # 4.2 Хромитовая ассоциация
-        chromite_assoc_bnode = BNode()
-        g.add((assoc_bnode, CRUST.hasChromiteAssociation, chromite_assoc_bnode))
-        g.add((chromite_assoc_bnode, RDF.type, CRUST.ChromiteDiamondAssociation))
-
-        chromite_mapping = {
-            "Алмазная_ассоциация_%_chr": CRUST.chromiteDiamondPercent,
-            "%_принадлежащих_к_перидотитовому_тренду_chr": CRUST.chromitePeridotiticTrendPercent,
-        }
-
-        for raw_key, prop in chromite_mapping.items():
-            for data_key, value in assoc_data.items():
-                if raw_key in data_key or raw_key.replace(" ", "_") in normalize_key(
-                    data_key
-                ):
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (
-                                chromite_assoc_bnode,
-                                prop,
-                                Literal(num_val, datatype=XSD.decimal),
-                            )
-                        )
-                    break
+        chromite_assoc_bnode = add_mapped_triples(
+            g,
+            assoc_bnode,
+            CRUST.hasChromiteAssociation,
+            CRUST.ChromiteDiamondAssociation,
+            assoc_data,
+            {
+                "Алмазная_ассоциация_%_chr": CRUST.chromiteDiamondPercent,
+                "%_принадлежащих_к_перидотитовому_тренду_chr": CRUST.chromitePeridotiticTrendPercent,
+            },
+            numeric_props=[
+                CRUST.chromiteDiamondPercent,
+                CRUST.chromitePeridotiticTrendPercent,
+            ],
+            search_keys=True,
+            normalize_search=True,
+        )
 
         # 4.3 Ильменитовая классификация
-        ilmenite_class_bnode = BNode()
-        g.add((assoc_bnode, CRUST.hasIlmeniteClassification, ilmenite_class_bnode))
-        g.add((ilmenite_class_bnode, RDF.type, CRUST.IlmeniteClassification))
-
-        ilmenite_mapping = {
-            "Кимбер_литовые": CRUST.kimberliticIlmenitePercent,
-            "Не_кимбер_литовые": CRUST.nonKimberliticIlmenitePercent,
-        }
-
-        for raw_key, prop in ilmenite_mapping.items():
-            for data_key, value in assoc_data.items():
-                if raw_key in data_key or raw_key.replace(" ", "_") in normalize_key(
-                    data_key
-                ):
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (
-                                ilmenite_class_bnode,
-                                prop,
-                                Literal(num_val, datatype=XSD.decimal),
-                            )
-                        )
-                    break
+        ilmenite_class_bnode = add_mapped_triples(
+            g,
+            assoc_bnode,
+            CRUST.hasIlmeniteClassification,
+            CRUST.IlmeniteClassification,
+            assoc_data,
+            {
+                "Кимбер_литовые": CRUST.kimberliticIlmenitePercent,
+                "Не_кимбер_литовые": CRUST.nonKimberliticIlmenitePercent,
+            },
+            numeric_props=[
+                CRUST.kimberliticIlmenitePercent,
+                CRUST.nonKimberliticIlmenitePercent,
+            ],
+            search_keys=True,
+            normalize_search=True,
+        )
 
         # 4.4 Качественные показатели
-        quality_bnode = BNode()
-        g.add((assoc_bnode, CRUST.hasQualityIndicators, quality_bnode))
-        g.add((quality_bnode, RDF.type, CRUST.QualityIndicators))
-
-        quality_mapping = {
-            "Хорошая": CRUST.goodQualityPercent,
-            "Средняя": CRUST.mediumQualityPercent,
-            "Плохая": CRUST.poorQualityPercent,
-            "Предельная": CRUST.limitQualityPercent,
-            "Отсутствует": CRUST.absentPercent,
-        }
-
-        for raw_key, prop in quality_mapping.items():
-            for data_key, value in assoc_data.items():
-                if raw_key in data_key or raw_key.replace(" ", "_") in normalize_key(
-                    data_key
-                ):
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (
-                                quality_bnode,
-                                prop,
-                                Literal(num_val, datatype=XSD.decimal),
-                            )
-                        )
-                    break
+        quality_bnode = add_mapped_triples(
+            g,
+            assoc_bnode,
+            CRUST.hasQualityIndicators,
+            CRUST.QualityIndicators,
+            assoc_data,
+            {
+                "Хорошая": CRUST.goodQualityPercent,
+                "Средняя": CRUST.mediumQualityPercent,
+                "Плохая": CRUST.poorQualityPercent,
+                "Предельная": CRUST.limitQualityPercent,
+                "Отсутствует": CRUST.absentPercent,
+            },
+            numeric_props=[
+                CRUST.goodQualityPercent,
+                CRUST.mediumQualityPercent,
+                CRUST.poorQualityPercent,
+                CRUST.limitQualityPercent,
+                CRUST.absentPercent,
+            ],
+            search_keys=True,
+            normalize_search=True,
+        )
 
         # 5. МИНЕРАЛЬНЫЕ ТИПЫ - собираем по всем минералам
+        ad = {}
+        ad.update(assoc_data)
         mineral_compositions = {}
-
-        for data_key, value in assoc_data.items():
+        for data_key, value in ad.items():
             type_num, mineral_code, mineral_uri = extract_type_number_and_mineral(
                 data_key
             )
             if type_num is not None and mineral_uri:
                 num_val = clean_numeric(value)
                 if num_val is not None:
+                    del assoc_data[data_key]
                     # Создаем композицию для минерала, если еще не создана
                     if mineral_code not in mineral_compositions:
                         comp_bnode = BNode()
@@ -387,12 +493,13 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         for mineral_code, key_pattern in count_keys.items():
             if mineral_code in mineral_compositions:
-                for data_key, value in assoc_data.items():
+                for data_key, value in ad.items():
                     if key_pattern in data_key or key_pattern.replace(
                         " ", "_"
                     ) in normalize_key(data_key):
                         num_val = clean_numeric(value)
                         if num_val is not None:
+                            del assoc_data[data_key]
                             g.add(
                                 (
                                     mineral_compositions[mineral_code],
@@ -403,16 +510,17 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
                         break
 
         # 5.2 Добавляем неизвестные проценты
-        unknown_keys = {"chr": "unknown_%_chr", "ilm": "unknown_%_Ilm"}
+        unknown_keys = {"chr": "unknown_%_chr", "ilm": "unknown%_Ilm"}
 
         for mineral_code, key_pattern in unknown_keys.items():
             if mineral_code in mineral_compositions:
-                for data_key, value in assoc_data.items():
+                for data_key, value in ad.items():
                     if key_pattern in data_key or key_pattern.replace(
                         " ", "_"
                     ) in normalize_key(data_key):
                         num_val = clean_numeric(value)
                         if num_val is not None:
+                            del assoc_data[data_key]
                             g.add(
                                 (
                                     mineral_compositions[mineral_code],
@@ -424,18 +532,19 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         # 5.3 Добавляем LA-ICPMS counts
         la_icpms_keys = {
-            "gar": "LA-ICPMS_гранат_N=",
-            "cpx": "LA-ICPMS_клинопироксен_N=",
+            "gar": "LA_ICPMS_гранат_N=",
+            "cpx": "LA_ICPMS_клинопироксен_N=",
         }
 
         for mineral_code, key_pattern in la_icpms_keys.items():
             if mineral_code in mineral_compositions:
-                for data_key, value in assoc_data.items():
+                for data_key, value in ad.items():
                     if key_pattern in data_key or key_pattern.replace(
                         " ", "_"
                     ) in normalize_key(data_key):
                         num_val = clean_numeric(value)
                         if num_val is not None:
+                            del assoc_data[data_key]
                             g.add(
                                 (
                                     mineral_compositions[mineral_code],
@@ -447,90 +556,77 @@ def convert_features_to_rdf(g: Graph, tube, pipe_uri=None) -> Graph:
 
         # 6. ГЕОХИМИЯ МИНЕРАЛОВ
         # 6.1 Геохимия гранатов
-        garnet_geo_bnode = BNode()
-        g.add((pipe_uri, CRUST.hasMineralGeochemistry, garnet_geo_bnode))
-        g.add((garnet_geo_bnode, RDF.type, CRUST.MineralGeochemistry))
+        garnet_geo_bnode = add_mapped_triples(
+            g,
+            pipe_uri,
+            CRUST.hasMineralGeochemistry,
+            CRUST.MineralGeochemistry,
+            assoc_data,
+            {
+                "Y_гр/т_(для_перидотитовых)_по_Gar": CRUST.yContentPeridotitic,
+                "Y_гр/т_(при_Cr2O3_>_5_мас._%)_по_Gar": CRUST.yContentHighCr,
+                "Y_край_Температура_оС_по_Gar": CRUST.yRimTemperature,
+            },
+            numeric_props=[
+                CRUST.yContentPeridotitic,
+                CRUST.yContentHighCr,
+                CRUST.yRimTemperature,
+            ],
+            search_keys=True,
+            normalize_search=True,
+        )
+        # Добавляем связь с минералом
         g.add((garnet_geo_bnode, CRUST.forMineralGeo, CRUST.garnet))
-
-        garnet_geo_mapping = {
-            "Y_гр/т_(для_перидотитовых)_по_Gar": CRUST.yContentPeridotitic,
-            "Y_гр/т_(при_Cr2O3_>_5_мас._%)_по_Gar": CRUST.yContentHighCr,
-            "Y_край_Температура_оС_по_Gar": CRUST.yRimTemperature,
-        }
-
-        for raw_key, prop in garnet_geo_mapping.items():
-            for data_key, value in assoc_data.items():
-                if raw_key in data_key or raw_key.replace(" ", "_") in normalize_key(
-                    data_key
-                ):
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (
-                                garnet_geo_bnode,
-                                prop,
-                                Literal(num_val, datatype=XSD.decimal),
-                            )
-                        )
-                    break
 
         # 7. ГЕОТЕРМАЛЬНЫЕ ДАННЫЕ
         # 7.1 По клинопироксену
-        cpx_geo_bnode = BNode()
-        g.add((pipe_uri, CRUST.hasGeothermalData, cpx_geo_bnode))
-        g.add((cpx_geo_bnode, RDF.type, CRUST.GeothermalData))
+        cpx_geo_bnode = add_mapped_triples(
+            g,
+            pipe_uri,
+            CRUST.hasGeothermalData,
+            CRUST.GeothermalData,
+            assoc_data,
+            {
+                "Геотерма_мВт/м2_по_CPx": CRUST.heatFlow,
+                "Мощность_литосферы_км_по_CPx": CRUST.lithosphereThickness,
+                "Мощность_области_стабильности_алмаза_км_по_CPx": CRUST.diamondStabilityZone,
+            },
+            numeric_props=[
+                CRUST.heatFlow,
+                CRUST.lithosphereThickness,
+                CRUST.diamondStabilityZone,
+            ],
+            search_keys=True,
+            normalize_search=True,
+        )
+        # Добавляем связь с минералом
         g.add((cpx_geo_bnode, CRUST.geothermalMineral, CRUST.clinopyroxene))
 
-        cpx_geo_mapping = {
-            "Геотерма_мВт/м2_по_CPx": CRUST.heatFlow,
-            "Мощность_литосферы_км_по_CPx": CRUST.lithosphereThickness,
-            "Мощность_области_стабильности_алмаза_км_по_CPx": CRUST.diamondStabilityZone,
-        }
-
-        for raw_key, prop in cpx_geo_mapping.items():
-            for data_key, value in assoc_data.items():
-                if raw_key in data_key or raw_key.replace(" ", "_") in normalize_key(
-                    data_key
-                ):
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (
-                                cpx_geo_bnode,
-                                prop,
-                                Literal(num_val, datatype=XSD.decimal),
-                            )
-                        )
-                    break
-
         # 7.2 По гранату
-        gar_geo_bnode = BNode()
-        g.add((pipe_uri, CRUST.hasGeothermalData, gar_geo_bnode))
-        g.add((gar_geo_bnode, RDF.type, CRUST.GeothermalData))
+        gar_geo_bnode = add_mapped_triples(
+            g,
+            pipe_uri,
+            CRUST.hasGeothermalData,
+            CRUST.GeothermalData,
+            assoc_data,
+            {
+                "Геотерма_мВт/м2_по_Gar": CRUST.heatFlow,
+                "Мощность_литосферы_км_по_Gar": CRUST.lithosphereThickness,
+                "Мощность_алмазного_окна_км_по_Gar": CRUST.diamondWindowThickness,
+                "Мощность_алмазного_окна_кмпо_Gar": CRUST.diamondWindowThickness,
+                "Мощность_области_метасоматоза_км_по_Gar": CRUST.metasomatismZone,
+            },
+            numeric_props=[
+                CRUST.heatFlow,
+                CRUST.lithosphereThickness,
+                CRUST.diamondWindowThickness,
+                CRUST.metasomatismZone,
+            ],
+            search_keys=True,
+            normalize_search=True,
+        )
+        # Добавляем связь с минералом
         g.add((gar_geo_bnode, CRUST.geothermalMineral, CRUST.garnet))
-
-        gar_geo_mapping = {
-            "Геотерма_мВт/м2_по_Gar": CRUST.heatFlow,
-            "Мощность_литосферы_км_по_Gar": CRUST.lithosphereThickness,
-            "Мощность_алмазного_окна_км_по_Gar": CRUST.diamondWindowThickness,
-            "Мощность_области_метасоматоза_км_по_Gar": CRUST.metasomatismZone,
-        }
-
-        for raw_key, prop in gar_geo_mapping.items():
-            for data_key, value in assoc_data.items():
-                if raw_key in data_key or raw_key.replace(" ", "_") in normalize_key(
-                    data_key
-                ):
-                    num_val = clean_numeric(value)
-                    if num_val is not None:
-                        g.add(
-                            (
-                                gar_geo_bnode,
-                                prop,
-                                Literal(num_val, datatype=XSD.decimal),
-                            )
-                        )
-                    break
 
     return g
 

@@ -6,11 +6,13 @@ import time
 import unicodedata
 from enum import Enum
 from pprint import pprint
+from pyexpat import features
 
 import openpyxl
 import pandas as pd
 import pudb
 import requests as rq
+from numpy import False_
 from openpyxl.cell import Cell
 from pandas.core.generic import Frequency
 from pandas.io.formats.info import frame_examples_sub
@@ -129,15 +131,28 @@ def clean_value_of_cell(cell):
     return value
 
 
-def append_features(a_dict, name_row, value_row):
-    """Append cleaned feature values from two rows to a dictionary."""
+def append_features(a_dict, name_row, value_row, skip_zeros=False):
+    """
+    Append cleaned feature values from two rows to a dictionary.
+
+    Args:
+        a_dict: словарь для заполнения
+        name_row: строка с названиями параметров
+        value_row: строка со значениями
+        skip_zeros: если True, пропускает нулевые значения (0 и 0.0)
+    """
     if name_row and value_row:
         for name_cell, value_cell in zip(name_row, value_row):
-            if name_cell.value and value_cell.value:
-                key = str(name_cell.value).strip()
-                val = clean_value_of_cell(value_cell)
-                if val is not None:
-                    a_dict[key] = val
+            if value_cell.value is None:
+                continue
+            key = str(name_cell.value).strip()
+            val = clean_value_of_cell(value_cell)
+
+            if val is not None:
+                # Проверяем на ноль только если нужно пропускать
+                if skip_zeros and isinstance(val, (int, float)) and val == 0:
+                    continue
+                a_dict[key] = val
 
 
 def import_head_title_one_row_features(
@@ -570,9 +585,14 @@ def export_tube(g, tube):
     tube_uri = P[tube_name]
 
     # Add type assertion
-    g.add((tube_uri, RDF.type, P.KimberlitePipe))
+    g.add((tube_uri, RDF.type, PT.KimberlitePipe))
 
-    convert_features_to_rdf(G, (tube_name, tube_dict.get("features", {})), tube_uri)
+    features = tube_dict.get("features", {})
+
+    convert_features_to_rdf(G, (tube_name, features), tube_uri)
+
+    print("INFO: features after conversion:", end=": ")
+    pprint(features)
 
     return tube_uri
 
@@ -591,6 +611,7 @@ def main():
         print(f"INFO: Load success! Time: {load_time:.2f} sec")
         del tubes["ценник"]
     else:
+        print("INFO: Starting import from excel")
         tubes = {}
         workbook = openpyxl.load_workbook(
             search_file_to_root(file_path), data_only=True
@@ -603,6 +624,8 @@ def main():
             tubes[sheet.title.strip()] = excel_data
 
         save_dict_as_pickle(tubes, tubes_path)
+        print("INFO: Conversionhas been done. Rerun if export needed.")
+        quit()
 
     for tube_item in tubes.items():
         tube_item = convert_to_canonic_form(tube_item)
