@@ -4,20 +4,14 @@ import os
 import os.path
 import re
 import time
-import unicodedata
 import uuid
-from enum import Enum
 from pprint import pprint
-from pyexpat import features
 
 import openpyxl
 import pandas as pd
 import pudb
-import requests as rq
-from numpy import False_
 from openpyxl.cell import Cell
-from pandas.core.generic import Frequency
-from pandas.io.formats.info import frame_examples_sub
+from pandas.core.internals.managers import new_block
 from rdflib import (
     DCTERMS,
     FOAF,
@@ -30,7 +24,6 @@ from rdflib import (
     URIRef,
 )
 from rdflib.namespace import SDO, WGS
-from requests.auth import HTTPBasicAuth
 
 from alrosa_convert_features import canonicalize_keys, convert_features_to_rdf
 from namespace import BIBO, CGI, DBP, DBP_OWL, GS, MT, PT, SCHEMA, P
@@ -402,39 +395,15 @@ keymaster = {}
 
 def keymaster_update(section_key, data_section):
     a_set = keymaster.setdefault(section_key, set())
-    a_set.update(data_section.keys())
-
-
-def convert_target_features(features):
-    keymaster_update("features", features)
-    return features
-
-
-def convert_geology_features(features):
-    """Convert geology features to RDF triples."""
-    keymaster_update("geology", features)
-    return features
-
-
-def convert_olivine_features(features):
-    """Convert olivine features to RDF triples."""
-    keymaster_update("olivine", features)
-    return features
-
-
-def convert_assoc_features(features):
-    """Convert diamond association features to RDF triples."""
-    keymaster_update("assoc", features)
-    return features
+    if isinstance(data_section, list):
+        a_set.update(data_section)
+    else:
+        a_set.update(data_section.keys())
 
 
 def convert_to_canonic_form_features(features):
     new_features = {}
     new_features.update(features)
-    # new_features["target"] = convert_target_features(features.get("target", {}))
-    # new_features["geology"] = convert_geology_features(features.get("geology", {}))
-    # new_features["olivine"] = convert_olivine_features(features.get("olivine", {}))
-    # new_features["assoc"] = convert_assoc_features(features.get("assoc", {}))
     new_features = canonicalize_keys(new_features)
     return new_features
 
@@ -443,39 +412,21 @@ def convert_to_canonic_form_frames(frames):
     """Convert all dataframes to canonical form."""
     new_frames = {}
     new_frames.update(frames)
-    # for key, df in frames.items():
-    #     if key == "phlogopite":
-    #         new_frames[key] = convert_phlogopite_df(df)
-    #     elif key == "isotopic":
-    #         new_frames[key] = convert_isotopic_df(df)
-    #     elif key == "epma":
-    #         new_frames[key] = convert_epma_df(df)
-    #     elif key == "lam":
-    #         new_frames[key] = convert_lam_df(df)
-    #     elif key == "diamonds":
-    #         new_frames[key] = convert_diamonds_df(df)
-    #     elif key == "oxides":
-    #         new_frames[key] = convert_oxides_df(df)
-    #     elif key == "petrochemy":
-    #         new_frames[key] = convert_petrochemy_df(df)
-    #     elif key == "geochemy":
-    #         new_frames[key] = convert_geochemy_df(df)
-    #     else:
-    #         new_frames[key] = df
+    frame_names = [
+        "phlogopite",
+        "isotopic",
+        "epma",
+        "lam",
+        "diamonds",
+        "oxides",
+        "petrochemy",
+        "geochemy",
+    ]
+    for fn in frame_names:
+        df = frames[fn]
+        column_names = df.columns.tolist()
+        keymaster_update(fn, column_names)
     return new_frames
-
-
-def convert_to_canonic_form(data_dict):
-    """Convert entire data dictionary to canonical form."""
-    if not data_dict:
-        return data_dict
-
-    new_dict = {}
-    new_dict["features"] = convert_to_canonic_form_features(
-        data_dict.get("features", {})
-    )
-    new_dict["frames"] = convert_to_canonic_form_frames(data_dict.get("frames", {}))
-    return new_dict
 
 
 def process_excel_file(file_path):
@@ -579,15 +530,23 @@ def convert_to_canonic_form(tube):
 
 
 def generate_deterministic_uuid(
-    pipe_name: str, namespace: str = "http://crust.irk.ru/ontology/contents/1.0/"
-) -> str:
+    pipe_name: str = "",
+    namespace: str = "http://crust.irk.ru/ontology/contents/1.0/",
+    pipe_uuid: str = "",
+    **kwargs,
+) -> uuid.UUID:
     """
-    Генерирует детерминированный UUID v5 на основе имени трубки
+    Генерирует детерминированный UUID v5 на основе имени трубки (и/или UUID) и дополнительных данных
     """
     # Создаем UUID v5 на основе пространства имен и имени
     namespace_uuid = uuid.NAMESPACE_DNS  # Или можно создать свой
-    pipe_uuid = uuid.uuid5(namespace_uuid, f"{namespace}{pipe_name}")
-    return str(pipe_uuid)
+    uuid_additional_data = ""
+    for key, value in kwargs.items():
+        uuid_additional_data += f"{str(key)}:{str(value)}"
+    new_pipe_uuid = uuid.uuid5(
+        namespace_uuid, f"{namespace}{pipe_name}{str(pipe_uuid)}{uuid_additional_data}"
+    )
+    return new_pipe_uuid
 
 
 def export_tube(g, tube):
@@ -605,6 +564,8 @@ def export_tube(g, tube):
 
     # Генерируем детерминированный UUID
     pipe_uuid = generate_deterministic_uuid(tube_name)
+
+    tube_dict["UUID"] = str(pipe_uuid)
 
     g.add((tube_uri, PT.uuid, Literal(pipe_uuid, datatype=XSD.string)))
 
@@ -653,7 +614,7 @@ def main():
         export_tube(G, tube_item)
         # break
 
-    # pprint(keymaster)
+    pprint(keymaster)
 
     # save Graph G in ../gql-server/fuseki/a-box.ttl
 
@@ -667,8 +628,8 @@ def main():
     # print(f"RDF graph saved to {output_path}")
 
     output_path = "a-box.ttl"
-    G.serialize(destination=output_path, format="turtle")
-    print(f"RDF graph saved to {output_path}")
+    # G.serialize(destination=output_path, format="turtle")
+    # print(f"RDF graph saved to {output_path}")
 
 
 if __name__ == "__main__":
