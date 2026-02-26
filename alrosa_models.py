@@ -1,5 +1,5 @@
 import uuid
-from multiprocessing import Value
+from pprint import pprint
 
 from sqlalchemy import (
     JSON,
@@ -908,6 +908,13 @@ class Phlogopite(Base):
         Session = sessionmaker(bind=engine)
         session = Session()
 
+        def clean(x):
+            if isinstance(x, float):
+                return x
+            elif isinstance(x, int):
+                return x
+            return None
+
         try:
             # Проверяем существующие данные
             existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
@@ -929,6 +936,7 @@ class Phlogopite(Base):
             imported_count = 0
 
             for record in records:
+                # pprint(record)
                 phlog = cls(
                     pipe_uuid=pipe_uuid,
                     # Идентификаторы
@@ -939,37 +947,39 @@ class Phlogopite(Base):
                     source=record.get("Источник"),
                     rock_type=record.get("Порода"),
                     # Основные оксиды
-                    sio2=record.get("SiO2"),
-                    tio2=record.get("TiO2"),
-                    al2o3=record.get("Al2O3"),
-                    feo=record.get("FeO"),
-                    mgo=record.get("MgO"),
-                    cao=record.get("CaO"),
-                    na2o=record.get("Na2O"),
-                    k2o=record.get("K2O"),
-                    mno=record.get("MnO"),
-                    p2o5=record.get("P2O5"),
-                    cr2o3=record.get("Cr2O3"),
-                    nio=record.get("NiO"),
+                    sio2=clean(record.get("SiO2")),
+                    tio2=clean(record.get("TiO2")),
+                    al2o3=clean(record.get("Al2O3")),
+                    feo=clean(record.get("FeO")),
+                    mgo=clean(record.get("MgO")),
+                    cao=clean(record.get("CaO")),
+                    na2o=clean(record.get("Na2O")),
+                    k2o=clean(record.get("K2O")),
+                    mno=clean(record.get("MnO")),
+                    p2o5=clean(record.get("P2O5")),
+                    cr2o3=clean(record.get("Cr2O3")),
+                    nio=clean(record.get("NiO")),
                     # Редкоземельные
-                    bao=record.get("BaO"),
-                    sro=record.get("SrO"),
-                    ce2o3=record.get("Ce2O3"),
-                    la2o3=record.get("La2O3"),
-                    nd2o3=record.get("Nd2O3"),
-                    nb2o5=record.get("Nb2O5"),
-                    ta2o5=record.get("Ta2O5"),
-                    tho2=record.get("ThO2"),
-                    so3=record.get("SO3"),
+                    bao=clean(record.get("BaO")),
+                    sro=clean(record.get("SrO")),
+                    ce2o3=clean(record.get("Ce2O3")),
+                    la2o3=clean(record.get("La2O3")),
+                    nd2o3=clean(record.get("Nd2O3")),
+                    nb2o5=clean(record.get("Nb2O5")),
+                    ta2o5=clean(record.get("Ta2O5")),
+                    tho2=clean(record.get("ThO2")),
+                    so3=clean(record.get("SO3")),
                     # Летучие
-                    f=record.get("F"),
-                    cl=record.get("Cl"),
+                    f=clean(record.get("F")),
+                    cl=clean(record.get("Cl")),
                     # Service fields
-                    total=record.get("Total"),  # DataFrame: 'Total' -> model: total
-                    measurement_17=record.get(
-                        "val_17"
+                    total=clean(
+                        record.get("Total")
+                    ),  # DataFrame: 'Total' -> model: total
+                    measurement_17=clean(
+                        record.get("val_17")
                     ),  # DataFrame: 'val_17' -> model: measurement_17
-                    zno=record.get("ZnO"),  # DataFrame: 'ZnO' -> model: zno
+                    zno=clean(record.get("ZnO")),  # DataFrame: 'ZnO' -> model: zno
                 )
 
                 session.add(phlog)
@@ -1111,6 +1121,13 @@ class Geochemy(Base):
             records = df.to_dict("records")
             imported_count = 0
 
+            def clean(x):
+                if isinstance(x, float):
+                    return x
+                elif isinstance(x, int):
+                    return x
+                return None
+
             for record in records:
                 geochem = cls(
                     pipe_uuid=pipe_uuid,
@@ -1122,49 +1139,49 @@ class Geochemy(Base):
                     source=record.get("Источник"),
                     number=record.get("п_п"),
                     # LILE
-                    rb=record.get("Rb"),
-                    cs=record.get("Cs"),  # если есть
-                    ba=record.get("Ba"),
-                    sr=record.get("Sr"),
+                    rb=clean(record.get("Rb")),
+                    cs=clean(record.get("Cs")),  # если есть
+                    ba=clean(record.get("Ba")),
+                    sr=clean(record.get("Sr")),
                     # HFSE
-                    zr=record.get("Zr"),
-                    hf=record.get("Hf"),
-                    nb=record.get("Nb"),
-                    ta=record.get("Ta"),
-                    th=record.get("Th"),
-                    u=record.get("U"),
+                    zr=clean(record.get("Zr")),
+                    hf=clean(record.get("Hf")),
+                    nb=clean(record.get("Nb")),
+                    ta=clean(record.get("Ta")),
+                    th=clean(record.get("Th")),
+                    u=clean(record.get("U")),
                     # REE
-                    la=record.get("La"),
-                    ce=record.get("Ce"),
-                    pr=record.get("Pr"),
-                    nd=record.get("Nd"),
-                    sm=record.get("Sm"),
-                    eu=record.get("Eu"),
-                    gd=record.get("Gd"),
-                    tb=record.get("Tb"),
-                    dy=record.get("Dy"),
-                    ho=record.get("Ho"),
-                    er=record.get("Er"),
-                    tm=record.get("Tm"),
-                    yb=record.get("Yb"),
-                    lu=record.get("Lu"),
+                    la=clean(record.get("La")),
+                    ce=clean(record.get("Ce")),
+                    pr=clean(record.get("Pr")),
+                    nd=clean(record.get("Nd")),
+                    sm=clean(record.get("Sm")),
+                    eu=clean(record.get("Eu")),
+                    gd=clean(record.get("Gd")),
+                    tb=clean(record.get("Tb")),
+                    dy=clean(record.get("Dy")),
+                    ho=clean(record.get("Ho")),
+                    er=clean(record.get("Er")),
+                    tm=clean(record.get("Tm")),
+                    yb=clean(record.get("Yb")),
+                    lu=clean(record.get("Lu")),
                     # Переходные
-                    sc=record.get("Sc"),
-                    v=record.get("V"),
-                    cr=record.get("Cr"),
-                    co=record.get("Co"),
-                    ni=record.get("Ni"),
-                    cu=record.get("Cu"),
-                    zn=record.get("Zn"),
+                    sc=clean(record.get("Sc")),
+                    v=clean(record.get("V")),
+                    cr=clean(record.get("Cr")),
+                    co=clean(record.get("Co")),
+                    ni=clean(record.get("Ni")),
+                    cu=clean(record.get("Cu")),
+                    zn=clean(record.get("Zn")),
                     # Другие
-                    y=record.get("Y"),
-                    ga=record.get("Ga"),
-                    arsenic=record.get("As"),
-                    mo=record.get("Mo"),
-                    sn=record.get("Sn"),
-                    pb=record.get("Pb"),
-                    be=record.get("Be"),
-                    li=record.get("Li"),
+                    y=clean(record.get("Y")),
+                    ga=clean(record.get("Ga")),
+                    arsenic=clean(record.get("As")),
+                    mo=clean(record.get("Mo")),
+                    sn=clean(record.get("Sn")),
+                    pb=clean(record.get("Pb")),
+                    be=clean(record.get("Be")),
+                    li=clean(record.get("Li")),
                 )
 
                 session.add(geochem)
@@ -1260,6 +1277,13 @@ class Petrochemy(Base):
         Session = sessionmaker(bind=engine)
         session = Session()
 
+        def clean(x):
+            if isinstance(x, float):
+                return x
+            elif isinstance(x, int):
+                return x
+            return None
+
         try:
             # Проверяем существующие данные
             existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
@@ -1291,35 +1315,35 @@ class Petrochemy(Base):
                     source=record.get("Источник"),
                     number=record.get("п_п"),
                     # Основные оксиды
-                    sio2=record.get("SiO2"),
-                    tio2=record.get("TiO2"),
-                    al2o3=record.get("Al2O3"),
-                    fe2o3=record.get("Fe2O3"),
-                    feo_total=record.get("FeOtotal"),
-                    mgo=record.get("MgO"),
-                    cao=record.get("CaO"),
-                    na2o=record.get("Na2O"),
-                    k2o=record.get("K2O"),
-                    mno=record.get("MnO"),
-                    p2o5=record.get("P2O5"),
+                    sio2=clean(record.get("SiO2")),
+                    tio2=clean(record.get("TiO2")),
+                    al2o3=clean(record.get("Al2O3")),
+                    fe2o3=clean(record.get("Fe2O3")),
+                    feo_total=clean(record.get("FeOtotal")),
+                    mgo=clean(record.get("MgO")),
+                    cao=clean(record.get("CaO")),
+                    na2o=clean(record.get("Na2O")),
+                    k2o=clean(record.get("K2O")),
+                    mno=clean(record.get("MnO")),
+                    p2o5=clean(record.get("P2O5")),
                     # Летучие
-                    h2o=record.get("H2O"),
-                    co2=record.get("СО2"),
-                    f=record.get("F"),
-                    s=record.get("S"),
-                    loi=record.get("Ппп"),
+                    h2o=clean(record.get("H2O")),
+                    co2=clean(record.get("СО2")),
+                    f=clean(record.get("F")),
+                    s=clean(record.get("S")),
+                    loi=clean(record.get("Ппп")),
                     # Индексы
-                    fe_num=record.get("Fenum"),
-                    mg_num=record.get("Mgnum"),
-                    k_na=record.get("K_Na"),
-                    na2o_k2o=record.get("Na2O_K2O"),
-                    ic=record.get("I_C"),
-                    ilm_i=record.get("Ilm_I"),
+                    fe_num=clean(record.get("Fenum")),
+                    mg_num=clean(record.get("Mgnum")),
+                    k_na=clean(record.get("K_Na")),
+                    na2o_k2o=clean(record.get("Na2O_K2O")),
+                    ic=clean(record.get("I_C")),
+                    ilm_i=clean(record.get("Ilm_I")),
                     # Суммы
-                    total=record.get("Сумма"),
+                    total=clean(record.get("Сумма")),
                     # Service fields
-                    measurement_21=record.get(
-                        "val_21"
+                    measurement_21=clean(
+                        record.get("val_21")
                     ),  # DataFrame: 'val_21' -> model: measurement_21
                 )
 

@@ -120,7 +120,7 @@ def clean_value_of_cell(cell):
         cleaned = value.strip()
         lc = cleaned.lower()
 
-        if lc in ["н.д.", ""]:
+        if lc in ["н.д.", "", " "]:
             return None
 
         if lc.startswith("<"):
@@ -932,12 +932,14 @@ def convert_dataframes_to_sql(dfs, connection_string, pipe_uuid):
     if "petrochemy" in dfs:  #
         print("Importing Petrochemy")
         df = dfs["petrochemy"]
+        pprint(df.keys())
         Petrochemy.import_from_dataframe(
             df, pipe_uuid, connection_string, if_exists="fail"
         )
     if "geochemy" in dfs:  #
         print("Importing Geochemy")
         df = dfs["geochemy"]
+        pprint(df.keys())
         Geochemy.import_from_dataframe(
             df, pipe_uuid, connection_string, if_exists="fail"
         )
@@ -1022,7 +1024,7 @@ def main():
         export_tube(G, tube_item)
         # break
 
-    pprint(keymaster)
+    # pprint(keymaster)
 
     # save Graph G in ../gql-server/fuseki/a-box.ttl
 
