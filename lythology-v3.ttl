@@ -2,11 +2,44 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix : <http://crust.irk.ru/ontology/contents/terms/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 #################################################################
-# ДОПОЛНЕНИЯ К ОНТОЛОГИИ ДЛЯ КИМБЕРЛИТОВЫХ ТРУБОК
-# Обобщенные структуры на основе Excel-базы данных
+# СВЯЗЬ С T-BOX (SQL) ЧЕРЕЗ UUID
 #################################################################
+
+# Добавляем UUID как свойство трубки
+:pipeUUID a rdf:Property ;
+    rdfs:label "pipe UUID" ;
+    rdfs:comment "Универсальный уникальный идентификатор трубки для связи с SQL-данными (T-Box)" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range xsd:string ;
+    owl:datatypeProperty .
+
+# Альтернативно можно сделать класс для UUID
+:UUID a rdfs:Class ;
+    rdfs:label "UUID" ;
+    rdfs:comment "Универсальный уникальный идентификатор" .
+
+:hasUUID a rdf:Property ;
+    rdfs:label "has UUID" ;
+    rdfs:comment "Связь трубки с её UUID" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range :UUID .
+
+:uuidValue a rdf:Property ;
+    rdfs:label "UUID value" ;
+    rdfs:comment "Строковое значение UUID" ;
+    rdfs:domain :UUID ;
+    rdfs:range xsd:string .
+
+# Добавляем свойство для ссылки на SQL-записи
+:hasSQLData a rdf:Property ;
+    rdfs:label "has SQL data" ;
+    rdfs:comment "Ссылка на данные в SQL (T-Box) по UUID" ;
+    rdfs:domain :KimberlitePipe ;
+    rdfs:range xsd:string ;
+    owl:datatypeProperty .
 
 ### 1. КИМБЕРЛИТОВАЯ ТРУБКА КАК ЦЕЛОСТНЫЙ ОБЪЕКТ ###
 
@@ -763,4 +796,4 @@
     rdfs:label "has predicted potential" ;
     rdfs:domain :KimberlitePipe ;
     rdfs:range :PredictedPotential .
-    
+
