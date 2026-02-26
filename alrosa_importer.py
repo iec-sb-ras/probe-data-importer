@@ -489,6 +489,175 @@ def normalize_columns(df, table_name):
     return df
 
 
+"""
+  1_1:diamonds: колонка 35 была None -> 'val_35'
+  1_2:epma: колонка '№' стала пустой -> 'val_20'
+  1_2:epma: '№' -> 'val_20'
+  1_2:diamonds: колонка 16 была None -> 'val_16'
+  1_3:diamonds: колонка 14 была None -> 'val_14'
+  1_4:diamonds: колонка 14 была None -> 'val_14'
+  1_5:epma: колонка 17 была None -> 'val_17'
+  1_6:epma: колонка '№' стала пустой -> 'val_20'
+  1_6:epma: '№' -> 'val_20'
+  1_7:epma: колонка 15 была None -> 'val_15'
+  1_10:epma: колонка 12 была None -> 'val_12'
+  1_10:epma: колонка 13 была None -> 'val_13'
+  1_10:epma: колонка 14 была None -> 'val_14'
+  2_1:epma: колонка 13 была None -> 'val_13'
+  2_1:epma: колонка 14 была None -> 'val_14'
+  2_1:epma: колонка 17 была None -> 'val_17'
+  2_2:oxides: колонка 16 была None -> 'val_16'
+  2_2:oxides: колонка 17 была None -> 'val_17'
+  2_4:diamonds: колонка 13 была None -> 'val_13'
+  2_5:phlogopite: колонка 17 была None -> 'val_17'
+  2_5:diamonds: колонка 27 была None -> 'val_27'
+  2_9:epma: колонка 16 была None -> 'val_16'
+  2_11:diamonds: колонка 27 была None -> 'val_27'
+  2_12:diamonds: колонка 21 была None -> 'val_21'
+  2_13:diamonds: колонка 31 была None -> 'val_31'
+  2_14:diamonds: колонка 26 была None -> 'val_26'
+"""
+
+import re
+
+import pandas as pd
+
+
+def post_process_dataframes(normalized_dfs):
+    """
+    Пост-обработка нормализованных DataFrame согласно правилам
+
+    Parameters:
+    normalized_dfs: dict {table_name: DataFrame} - результат normalize_columns
+
+    Returns:
+    dict с обработанными DataFrame
+    """
+
+    # Копируем словарь, чтобы не менять исходный
+    processed_dfs = {name: df.copy() for name, df in normalized_dfs.items()}
+
+    # 1. Обработка diamonds
+    if "diamonds" in processed_dfs:
+        df = processed_dfs["diamonds"]
+
+        # Находим все колонки вида val_%d
+        val_cols = [col for col in df.columns if re.match(r"val_\d+", col)]
+
+        if val_cols:
+            print(f"\ndiamonds: найдены колонки {val_cols}")
+
+            # Переименовываем первую найденную val_ в 'check'
+            first_val = val_cols[0]
+            df.rename(columns={first_val: "check"}, inplace=True)
+            print(f"  Переименована {first_val} -> check")
+
+            # Если были другие val_ колонки, оставляем их как есть
+            if len(val_cols) > 1:
+                print(f"  Остальные val_ колонки оставлены: {val_cols[1:]}")
+
+            # Преобразуем значения в колонке check
+            if "check" in df.columns:
+                # ok -> True, всё остальное -> False
+                df["check"] = df["check"].apply(lambda x: True if x == "ok" else False)
+                print(f"  Колонка check преобразована: 'ok' -> True, иначе -> False")
+
+    # 2. Обработка epma
+    if "epma" in processed_dfs:
+        df = processed_dfs["epma"]
+
+        # 2.1 Все val_20 -> a_number
+        val_20_cols = [col for col in df.columns if col == "val_20"]
+        for col in val_20_cols:
+            df.rename(columns={col: "a_number"}, inplace=True)
+            print(f"\nepma: {col} -> a_number")
+
+        # 2.2 Обработка val_17
+        if "val_17" in df.columns:
+            # Создаем маску для трубки 1_5
+            # Предполагаем, что идентификатор пробы/трубки хранится в какой-то колонке
+            # Нужно определить, как называется колонка с ID пробы
+            id_columns = [
+                col
+                for col in df.columns
+                if any(
+                    x in col.lower()
+                    for x in ["проба", "образец", "sample", "id", "зерно", "шашка"]
+                )
+            ]
+
+            if id_columns:
+                id_col = id_columns[0]  # Берём первую подходящую колонку
+                print(f"\nepma: используем колонку '{id_col}' для идентификации проб")
+
+                # Для трубки 1_5 переименовываем в correction
+                mask_1_5 = df[id_col] == "1_5"
+                if mask_1_5.any():
+                    # Создаём новую колонку correction только для строк с 1_5
+                    df.loc[mask_1_5, "correction"] = df.loc[mask_1_5, "val_17"]
+                    print(f"  val_17 для трубки 1_5 -> correction")
+
+                # Для трубки 2_1 удаляем значения
+                mask_2_1 = df[id_col] == "2_1"
+                if mask_2_1.any():
+                    df.loc[mask_2_1, "val_17"] = None
+                    print(f"  val_17 для трубки 2_1 удалён (значения заменены на None)")
+            else:
+                print(f"\nepma: не найдена колонка с идентификатором пробы")
+
+    # 3. Обработка oxides
+    if "oxides" in processed_dfs:
+        df = processed_dfs["oxides"]
+
+        # 3.1 val_16 -> удалить
+        if "val_16" in df.columns:
+            df.drop(columns=["val_16"], inplace=True)
+            print(f"\noxides: val_16 удалён")
+
+        # 3.2 val_17 -> total
+        if "val_17" in df.columns:
+            df.rename(columns={"val_17": "total"}, inplace=True)
+            print(f"oxides: val_17 -> total")
+
+    # 4. Обработка phlogopite - val_17 игнорируем
+    if "phlogopite" in processed_dfs:
+        df = processed_dfs["phlogopite"]
+
+        if "val_17" in df.columns:
+            print(f"\nphlogopite: val_17 оставлен без изменений (игнорируем)")
+
+    # 5. Проверяем, нет ли ещё где val_ колонок
+    for name, df in processed_dfs.items():
+        val_cols = [col for col in df.columns if re.match(r"val_\d+", col)]
+        if val_cols and name not in ["diamonds", "epma", "oxides", "phlogopite"]:
+            print(f"\n{name}: найдены необработанные val_ колонки: {val_cols}")
+
+    return processed_dfs
+
+
+# Пример использования:
+# def process_all_dataframes(dataframes):
+#     """
+#     Полный цикл обработки: нормализация + пост-обработка
+#     """
+#     # Шаг 1: Нормализация имён
+#     print("ШАГ 1: Нормализация имён столбцов")
+#     normalized = {}
+#     for name, df in dataframes.items():
+#         print(f"\n{name}:")
+#         normalized[name] = normalize_columns(df, name)
+
+#     # Шаг 2: Пост-обработка по правилам
+#     print("\n" + "="*50)
+#     print("ШАГ 2: Пост-обработка")
+#     processed = post_process_dataframes(normalized)
+
+#     return processed
+
+# Для epma нужно передать информацию о пробах
+# Предполагаем, что в epma есть колонка 'проба' или 'зерно' с идентификаторами
+
+
 def convert_to_canonic_form_frames(frames, pipe_name):
     """Convert all dataframes to canonical form."""
     new_frames = {}
@@ -506,6 +675,10 @@ def convert_to_canonic_form_frames(frames, pipe_name):
     for fn in frame_names:
         df = frames[fn]
         df = normalize_columns(df, pipe_name + ":" + fn)
+        new_frames[fn] = df
+    new_frames = post_process_dataframes(new_frames)
+    for fn in frame_names:
+        df = new_frames[fn]
         column_names = df.columns.tolist()
         keymaster_update(fn, column_names, pipe_name=pipe_name, with_pipe_names=True)
     return new_frames
