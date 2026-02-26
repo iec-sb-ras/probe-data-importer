@@ -357,7 +357,7 @@ class Grain(Base):
     sample_id = Column(
         UUID(as_uuid=True), ForeignKey("samples.id", ondelete="CASCADE"), nullable=False
     )
-    grain_name = Column(String(50), nullable=False)
+    grain_name = Column(String(50), nullable=True)
 
     # Связи
     sample = relationship("Sample", back_populates="grains")
@@ -729,6 +729,13 @@ class LAMAnalysis(Base):
         Session = sessionmaker(bind=engine)
         session = Session()
 
+        def clean(x):
+            if isinstance(x, float):
+                return x
+            elif isinstance(x, int):
+                return x
+            return None
+
         try:
             # Получаем все зерна для данной трубки с их sample_id
             grains = (
@@ -766,59 +773,59 @@ class LAMAnalysis(Base):
                 analysis = cls(
                     grain_id=grain_id,
                     # Основные элементы
-                    si=row.get("Si"),
-                    ti=row.get("Ti"),
-                    al=row.get("Al"),
-                    fe=row.get("Fe"),
-                    mn=row.get("Mn"),
-                    mg=row.get("Mg"),
-                    ca=row.get("Ca"),
-                    na=row.get("Na"),
-                    k=row.get("K"),
-                    p=row.get("P"),
+                    si=clean(row.get("Si")),
+                    ti=clean(row.get("Ti")),
+                    al=clean(row.get("Al")),
+                    fe=clean(row.get("Fe")),
+                    mn=clean(row.get("Mn")),
+                    mg=clean(row.get("Mg")),
+                    ca=clean(row.get("Ca")),
+                    na=clean(row.get("Na")),
+                    k=clean(row.get("K")),
+                    p=clean(row.get("P")),
                     # Редкоземельные
-                    la=row.get("La"),
-                    ce=row.get("Ce"),
-                    pr=row.get("Pr"),
-                    nd=row.get("Nd"),
-                    sm=row.get("Sm"),
-                    eu=row.get("Eu"),
-                    gd=row.get("Gd"),
-                    tb=row.get("Tb"),
-                    dy=row.get("Dy"),
-                    ho=row.get("Ho"),
-                    er=row.get("Er"),
-                    tm=row.get("Tm"),
-                    yb=row.get("Yb"),
-                    lu=row.get("Lu"),
+                    la=clean(row.get("La")),
+                    ce=clean(row.get("Ce")),
+                    pr=clean(row.get("Pr")),
+                    nd=clean(row.get("Nd")),
+                    sm=clean(row.get("Sm")),
+                    eu=clean(row.get("Eu")),
+                    gd=clean(row.get("Gd")),
+                    tb=clean(row.get("Tb")),
+                    dy=clean(row.get("Dy")),
+                    ho=clean(row.get("Ho")),
+                    er=clean(row.get("Er")),
+                    tm=clean(row.get("Tm")),
+                    yb=clean(row.get("Yb")),
+                    lu=clean(row.get("Lu")),
                     # HFSE
-                    zr=row.get("Zr"),
-                    hf=row.get("Hf"),
-                    nb=row.get("Nb"),
-                    ta=row.get("Ta"),
+                    zr=clean(row.get("Zr")),
+                    hf=clean(row.get("Hf")),
+                    nb=clean(row.get("Nb")),
+                    ta=clean(row.get("Ta")),
                     # LILE
-                    rb=row.get("Rb"),
-                    cs=row.get("Cs"),
-                    ba=row.get("Ba"),
-                    sr=row.get("Sr"),
+                    rb=clean(row.get("Rb")),
+                    cs=clean(row.get("Cs")),
+                    ba=clean(row.get("Ba")),
+                    sr=clean(row.get("Sr")),
                     # Переходные металлы
-                    sc=row.get("Sc"),
-                    v=row.get("V"),
-                    cr=row.get("Cr"),
-                    co=row.get("Co"),
-                    ni=row.get("Ni"),
-                    cu=row.get("Cu"),
-                    zn=row.get("Zn"),
+                    sc=clean(row.get("Sc")),
+                    v=clean(row.get("V")),
+                    cr=clean(row.get("Cr")),
+                    co=clean(row.get("Co")),
+                    ni=clean(row.get("Ni")),
+                    cu=clean(row.get("Cu")),
+                    zn=clean(row.get("Zn")),
                     # Другие
-                    ga=row.get("Ga"),
-                    y=row.get("Y"),
-                    sn=row.get("Sn"),
-                    pb=row.get("Pb"),
-                    th=row.get("Th"),
-                    u=row.get("U"),
-                    be=row.get("Be"),
-                    b=row.get("B"),
-                    li=row.get("Li"),
+                    ga=clean(row.get("Ga")),
+                    y=clean(row.get("Y")),
+                    sn=clean(row.get("Sn")),
+                    pb=clean(row.get("Pb")),
+                    th=clean(row.get("Th")),
+                    u=clean(row.get("U")),
+                    be=clean(row.get("Be")),
+                    b=clean(row.get("B")),
+                    li=clean(row.get("Li")),
                     # Счетчики
                     count_akb=row.get("счет_АКБ"),
                     count_pk=row.get("счет_ПК"),
@@ -1093,6 +1100,8 @@ class Geochemy(Base):
     def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
         """
         Импорт геохимических данных для конкретной трубки
+        
+        Все концентрации элементов в ppm (частей на миллион)
         """
         engine = create_engine(connection_string)
         cls.metadata.create_all(engine)
@@ -1130,56 +1139,59 @@ class Geochemy(Base):
                 geochem = cls(
                     pipe_uuid=pipe_uuid,
                     # Идентификаторы
-                    sample_id=record.get("Образец"),
-                    sample_interval=record.get("Образец_интервал_от"),
-                    borehole=record.get("Скважина"),
-                    rock_type=record.get("Порода"),
-                    source=record.get("Источник"),
-                    number=record.get("п_п"),
-                    # LILE
-                    rb=clean(record.get("Rb")),
-                    cs=clean(record.get("Cs")),  # если есть
-                    ba=clean(record.get("Ba")),
-                    sr=clean(record.get("Sr")),
-                    # HFSE
-                    zr=clean(record.get("Zr")),
-                    hf=clean(record.get("Hf")),
-                    nb=clean(record.get("Nb")),
-                    ta=clean(record.get("Ta")),
-                    th=clean(record.get("Th")),
-                    u=clean(record.get("U")),
-                    # REE
-                    la=clean(record.get("La")),
-                    ce=clean(record.get("Ce")),
-                    pr=clean(record.get("Pr")),
-                    nd=clean(record.get("Nd")),
-                    sm=clean(record.get("Sm")),
-                    eu=clean(record.get("Eu")),
-                    gd=clean(record.get("Gd")),
-                    tb=clean(record.get("Tb")),
-                    dy=clean(record.get("Dy")),
-                    ho=clean(record.get("Ho")),
-                    er=clean(record.get("Er")),
-                    tm=clean(record.get("Tm")),
-                    yb=clean(record.get("Yb")),
-                    lu=clean(record.get("Lu")),
-                    # Переходные
-                    sc=clean(record.get("Sc")),
-                    v=clean(record.get("V")),
-                    cr=clean(record.get("Cr")),
-                    co=clean(record.get("Co")),
-                    ni=clean(record.get("Ni")),
-                    cu=clean(record.get("Cu")),
-                    zn=clean(record.get("Zn")),
-                    # Другие
-                    y=clean(record.get("Y")),
-                    ga=clean(record.get("Ga")),
-                    arsenic=clean(record.get("As")),
-                    mo=clean(record.get("Mo")),
-                    sn=clean(record.get("Sn")),
-                    pb=clean(record.get("Pb")),
-                    be=clean(record.get("Be")),
-                    li=clean(record.get("Li")),
+                    sample_id=record.get("Образец"),  # DataFrame: "Образец" -> model: sample_id
+                    sample_interval=record.get("Образец_интервал_от"),  # DataFrame: "Образец_интервал_от" -> model: sample_interval
+                    borehole=record.get("Скважина"),  # DataFrame: "Скважина" -> model: borehole
+                    rock_type=record.get("Порода"),  # DataFrame: "Порода" -> model: rock_type
+                    source=record.get("Источник"),  # DataFrame: "Источник" -> model: source
+                    number=record.get("п_п"),  # DataFrame: "п_п" -> model: number
+                    # LILE (Large Ion Lithophile Elements)
+                    rb=clean(record.get("Rb")),  # DataFrame: "Rb" -> model: rb (ppm)
+                    cs=clean(record.get("Cs")),  # DataFrame: "Cs" -> model: cs (ppm)
+                    ba=clean(record.get("Ba")),  # DataFrame: "Ba" -> model: ba (ppm)
+                    sr=clean(record.get("Sr")),  # DataFrame: "Sr" -> model: sr (ppm)
+                    # HFSE (High Field Strength Elements)
+                    zr=clean(record.get("Zr")),  # DataFrame: "Zr" -> model: zr (ppm)
+                    hf=clean(record.get("Hf")),  # DataFrame: "Hf" -> model: hf (ppm)
+                    nb=clean(record.get("Nb")),  # DataFrame: "Nb" -> model: nb (ppm)
+                    ta=clean(record.get("Ta")),  # DataFrame: "Ta" -> model: ta (ppm)
+                    th=clean(record.get("Th")),  # DataFrame: "Th" -> model: th (ppm)
+                    u=clean(record.get("U")),  # DataFrame: "U" -> model: u (ppm)
+                    # REE (Rare Earth Elements)
+                    la=clean(record.get("La")),  # DataFrame: "La" -> model: la (ppm)
+                    ce=clean(record.get("Ce")),  # DataFrame: "Ce" -> model: ce (ppm)
+                    pr=clean(record.get("Pr")),  # DataFrame: "Pr" -> model: pr (ppm)
+                    nd=clean(record.get("Nd")),  # DataFrame: "Nd" -> model: nd (ppm)
+                    sm=clean(record.get("Sm")),  # DataFrame: "Sm" -> model: sm (ppm)
+                    eu=clean(record.get("Eu")),  # DataFrame: "Eu" -> model: eu (ppm)
+                    gd=clean(record.get("Gd")),  # DataFrame: "Gd" -> model: gd (ppm)
+                    tb=clean(record.get("Tb")),  # DataFrame: "Tb" -> model: tb (ppm)
+                    dy=clean(record.get("Dy")),  # DataFrame: "Dy" -> model: dy (ppm)
+                    ho=clean(record.get("Ho")),  # DataFrame: "Ho" -> model: ho (ppm)
+                    er=clean(record.get("Er")),  # DataFrame: "Er" -> model: er (ppm)
+                    tm=clean(record.get("Tm")),  # DataFrame: "Tm" -> model: tm (ppm)
+                    yb=clean(record.get("Yb")),  # DataFrame: "Yb" -> model: yb (ppm)
+                    lu=clean(record.get("Lu")),  # DataFrame: "Lu" -> model: lu (ppm)
+                    # Transition metals
+                    sc=clean(record.get("Sc")),  # DataFrame: "Sc" -> model: sc (ppm)
+                    v=clean(record.get("V")),  # DataFrame: "V" -> model: v (ppm)
+                    cr=clean(record.get("Cr")),  # DataFrame: "Cr" -> model: cr (ppm)
+                    co=clean(record.get("Co")),  # DataFrame: "Co" -> model: co (ppm)
+                    ni=clean(record.get("Ni")),  # DataFrame: "Ni" -> model: ni (ppm)
+                    cu=clean(record.get("Cu")),  # DataFrame: "Cu" -> model: cu (ppm)
+                    zn=clean(record.get("Zn")),  # DataFrame: "Zn" -> model: zn (ppm)
+                    # Other elements
+                    y=clean(record.get("Y")),  # DataFrame: "Y" -> model: y (ppm)
+                    ga=clean(record.get("Ga")),  # DataFrame: "Ga" -> model: ga (ppm)
+                    ge=clean(record.get("Ge")),  # DataFrame: "Ge" -> model: ge (ppm)
+                    arsenic=clean(record.get("As")),  # DataFrame: "As" -> model: arsenic (ppm)
+                    mo=clean(record.get("Mo")),  # DataFrame: "Mo" -> model: mo (ppm)
+                    sn=clean(record.get("Sn")),  # DataFrame: "Sn" -> model: sn (ppm)
+                    sb=clean(record.get("Sb")),  # DataFrame: "Sb" -> model: sb (ppm)
+                    pb=clean(record.get("Pb")),  # DataFrame: "Pb" -> model: pb (ppm)
+                    bi=clean(record.get("Bi")),  # DataFrame: "Bi" -> model: bi (ppm)
+                    be=clean(record.get("Be")),  # DataFrame: "Be" -> model: be (ppm)
+                    li=clean(record.get("Li")),  # DataFrame: "Li" -> model: li (ppm)
                 )
 
                 session.add(geochem)
