@@ -7,6 +7,8 @@ from sqlalchemy import (
     JSON,
     DateTime,
     UniqueConstraint,
+    ForeignKey,
+    relationship,
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
@@ -31,37 +33,37 @@ class Diamonds(Base):
     # Связь с A-Box (трубка) - одинаковый для всех записей при одноразовом импорте
     pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
 
-    # Идентификаторы пробы (из исходных данных)
-    sample_id = Column(String(50), nullable=False, index=True)  # 'пробы'
-    sample_id_alt = Column(String(50), nullable=True)  # 'пробы_1' (если есть)
-    borehole = Column(String(50), nullable=True)  # 'скважина'
-    rock_type = Column(String(100), nullable=True)  # 'порода'
-    interval = Column(String(50), nullable=True)  # 'Интервал'
+    # Sample identifiers (from source data)
+    sample_id = Column(String(50), nullable=False, index=True)  # 'пробы' -> sample_id
+    sample_id_alt = Column(String(50), nullable=True)  # 'пробы_1' -> sample_id_alt
+    borehole = Column(String(50), nullable=True)  # 'скважина' -> borehole
+    rock_type = Column(String(100), nullable=True)  # 'порода' -> rock_type
+    interval = Column(String(50), nullable=True)  # 'Интервал' -> interval
 
-    # Весовые показатели
-    initial_weight_kg = Column(Float, nullable=True)  # 'Исход_вес_кг'
+    # Weight indicators
+    initial_weight_kg = Column(Float, nullable=True)  # 'Исход_вес_кг' -> initial_weight_kg
     acid_concentrate_kg = Column(
         Float, nullable=True
-    )  # 'Выход_кислотного_концентрата_кг'
-    salt_concentrate_g = Column(Float, nullable=True)  # 'Выход_солевого_концентр_г'
+    )  # 'Выход_кислотного_концентрата_кг' -> acid_concentrate_kg
+    salt_concentrate_g = Column(Float, nullable=True)  # 'Выход_солевого_концентр_г' -> salt_concentrate_g
     alkaline_concentrate_g = Column(
         Float, nullable=True
-    )  # 'Выход_щелочного_концентрата_г'
-    heavy_fraction_g = Column(Float, nullable=True)  # 'Выход_тяжелой_фракции_г'
-    acid_cleaning_g = Column(Float, nullable=True)  # 'Кислотная_очистка_солев_Конц_г'
+    )  # 'Выход_щелочного_концентрата_г' -> alkaline_concentrate_g
+    heavy_fraction_g = Column(Float, nullable=True)  # 'Выход_тяжелой_фракции_г' -> heavy_fraction_g
+    acid_cleaning_g = Column(Float, nullable=True)  # 'Кислотная_очистка_солев_Конц_г' -> acid_cleaning_g
 
-    # Алмазы
+    # Diamonds
     diamonds_monocrystals = Column(
         Integer, nullable=True
-    )  # 'Количество_обнаруженных_алмазов_монокристаллы'
+    )  # 'Количество_обнаруженных_алмазов_монокристаллы' -> diamonds_monocrystals
     diamonds_fragments = Column(
         Integer, nullable=True
-    )  # 'Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы'
-    crystals_per_kg = Column(Float, nullable=True)  # 'кристаллов_обломков_кг'
+    )  # 'Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы' -> diamonds_fragments
+    crystals_per_kg = Column(Float, nullable=True)  # 'кристаллов_обломков_кг' -> crystals_per_kg
 
-    # Служебные поля
-    check = Column(Boolean, nullable=True)  # 'check' (ok -> True)
-    total = Column(Float, nullable=True)  # 'total'
+    # Service fields (from val_XX substitutions)
+    quality_check = Column(Boolean, nullable=True)  # 'check' (from first val_) -> quality_check
+    total_weight = Column(Float, nullable=True)  # 'total' -> total_weight
 
     # JSONB с фракциями (все диапазоны)
     fractions = Column(JSON, nullable=False, default={})
@@ -135,30 +137,34 @@ class Diamonds(Base):
             imported_count = 0
 
             for record in records:
-                # Создаём объект модели
+                # Create model object with field mapping from DataFrame columns
                 diamond = cls(
                     pipe_uuid=pipe_uuid,
-                    sample_id=record.get("пробы"),
-                    sample_id_alt=record.get("пробы_1"),
-                    borehole=record.get("скважина"),
-                    rock_type=record.get("порода"),
-                    interval=record.get("Интервал"),
-                    initial_weight_kg=record.get("Исход_вес_кг"),
-                    acid_concentrate_kg=record.get("Выход_кислотного_концентрата_кг"),
-                    salt_concentrate_g=record.get("Выход_солевого_концентр_г"),
-                    alkaline_concentrate_g=record.get("Выход_щелочного_концентрата_г"),
-                    heavy_fraction_g=record.get("Выход_тяжелой_фракции_г"),
-                    acid_cleaning_g=record.get("Кислотная_очистка_солев_Конц_г"),
+                    # Map Russian DataFrame columns to English model fields
+                    sample_id=record.get("пробы"),  # DataFrame: "пробы" -> model: sample_id
+                    sample_id_alt=record.get("пробы_1"),  # DataFrame: "пробы_1" -> model: sample_id_alt
+                    borehole=record.get("скважина"),  # DataFrame: "скважина" -> model: borehole
+                    rock_type=record.get("порода"),  # DataFrame: "порода" -> model: rock_type
+                    interval=record.get("Интервал"),  # DataFrame: "Интервал" -> model: interval
+                    # Weight indicators
+                    initial_weight_kg=record.get("Исход_вес_кг"),  # DataFrame: "Исход_вес_кг" -> model: initial_weight_kg
+                    acid_concentrate_kg=record.get("Выход_кислотного_концентрата_кг"),  # DataFrame: "Выход_кислотного_концентрата_кг" -> model: acid_concentrate_kg
+                    salt_concentrate_g=record.get("Выход_солевого_концентр_г"),  # DataFrame: "Выход_солевого_концентр_г" -> model: salt_concentrate_g
+                    alkaline_concentrate_g=record.get("Выход_щелочного_концентрата_г"),  # DataFrame: "Выход_щелочного_концентрата_г" -> model: alkaline_concentrate_g
+                    heavy_fraction_g=record.get("Выход_тяжелой_фракции_г"),  # DataFrame: "Выход_тяжелой_фракции_г" -> model: heavy_fraction_g
+                    acid_cleaning_g=record.get("Кислотная_очистка_солев_Конц_г"),  # DataFrame: "Кислотная_очистка_солев_Конц_г" -> model: acid_cleaning_g
+                    # Diamonds
                     diamonds_monocrystals=record.get(
                         "Количество_обнаруженных_алмазов_монокристаллы"
-                    ),
+                    ),  # DataFrame: "Количество_обнаруженных_алмазов_монокристаллы" -> model: diamonds_monocrystals
                     diamonds_fragments=record.get(
                         "Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы"
-                    ),
-                    crystals_per_kg=record.get("кристаллов_обломков_кг"),
-                    check=record.get("check"),
-                    total=record.get("total"),
-                    fractions=record.get("fractions", {}),
+                    ),  # DataFrame: "Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы" -> model: diamonds_fragments
+                    crystals_per_kg=record.get("кристаллов_обломков_кг"),  # DataFrame: "кристаллов_обломков_кг" -> model: crystals_per_kg
+                    # Service fields (from val_XX substitutions)
+                    quality_check=record.get("check"),  # DataFrame: "check" (from first val_) -> model: quality_check
+                    total_weight=record.get("total"),  # DataFrame: "total" -> model: total_weight
+                    fractions=record.get("fractions", {}),  # DataFrame: "fractions" -> model: fractions
                 )
                 session.add(diamond)
                 imported_count += 1
@@ -212,19 +218,19 @@ class Sample(Base):
     # Связь с трубкой (A-Box)
     pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
 
-    # Идентификатор шашки из исходных данных
-    sample_name = Column(String(50), nullable=False)  # 'шашка'
+    # Sample identifier from source data
+    sample_name = Column(String(50), nullable=False)  # 'шашка' -> sample_name
 
-    # Метаданные шашки
-    laboratory = Column(String(100), nullable=True)  # 'Лаборатория'
-    rock_type = Column(String(100), nullable=True)  # 'Порода'
-    depth = Column(Float, nullable=True)  # 'глубина'
-    class_name = Column(String(50), nullable=True)  # 'класс'
-    line_borehole = Column(String(100), nullable=True)  # 'линия_скважина'
-    body = Column(String(100), nullable=True)  # 'тело'
-    fraction = Column(String(50), nullable=True)  # 'фракция'
-    note = Column(String(500), nullable=True)  # 'примечание'
-    dimension = Column(String(50), nullable=True)  # 'размерность'
+    # Sample metadata
+    laboratory = Column(String(100), nullable=True)  # 'Лаборатория' -> laboratory
+    rock_type = Column(String(100), nullable=True)  # 'Порода' -> rock_type
+    depth = Column(Float, nullable=True)  # 'глубина' -> depth
+    class_name = Column(String(50), nullable=True)  # 'класс' -> class_name
+    line_borehole = Column(String(100), nullable=True)  # 'линия_скважина' -> line_borehole
+    body = Column(String(100), nullable=True)  # 'тело' -> body
+    fraction = Column(String(50), nullable=True)  # 'фракция' -> fraction
+    note = Column(String(500), nullable=True)  # 'примечание' -> note
+    dimension = Column(String(50), nullable=True)  # 'размерность' -> dimension
 
     # Связи
     grains = relationship(
@@ -368,25 +374,26 @@ class EPMAAnalysis(Base):
     total = Column(Float, nullable=True)  # Total
     no = Column(String(20), nullable=True)  # No.
 
-    # Служебные поля
-    a_number = Column(Float, nullable=True)  # a_number (из val_20)
-    correction = Column(Float, nullable=True)  # correction (из val_17 для 1_5)
-    # TODO: REPROCESS THESE FIELDS
-    val_12 = Column(Float, nullable=True)
-    val_13 = Column(Float, nullable=True)
-    val_14 = Column(Float, nullable=True)
-    val_15 = Column(Float, nullable=True)
-    val_16 = Column(Float, nullable=True)
-    val_17 = Column(Float, nullable=True)  # для 2_1 (оставлен)
+    # Service fields (from val_XX substitutions)
+    a_number = Column(Float, nullable=True)  # a_number (from val_20)
+    correction = Column(Float, nullable=True)  # correction (from val_17 for tube 1_5)
+    
+    # Additional measurement fields (renamed from val_XX)
+    measurement_12 = Column(Float, nullable=True)  # val_12 -> measurement_12
+    measurement_13 = Column(Float, nullable=True)  # val_13 -> measurement_13
+    measurement_14 = Column(Float, nullable=True)  # val_14 -> measurement_14
+    measurement_15 = Column(Float, nullable=True)  # val_15 -> measurement_15
+    measurement_16 = Column(Float, nullable=True)  # val_16 -> measurement_16
+    measurement_17 = Column(Float, nullable=True)  # val_17 (for tube 2_1) -> measurement_17
 
-    # Счетчики
-    count_akb = Column(Integer, nullable=True)  # 'счет_АКБ'
-    count_pk = Column(Integer, nullable=True)  # 'счет_ПК'
+    # Counters
+    count_akb = Column(Integer, nullable=True)  # 'счет_АКБ' -> count_akb
+    count_pk = Column(Integer, nullable=True)  # 'счет_ПК' -> count_pk
 
-    # Дополнительная информация
-    mineral = Column(String(100), nullable=True)  # 'минерал'
-    mineral_alt = Column(String(100), nullable=True)  # 'минерал_1'
-    summa = Column(Float, nullable=True)  # 'Сумма'
+    # Additional information
+    mineral = Column(String(100), nullable=True)  # 'минерал' -> mineral
+    mineral_alt = Column(String(100), nullable=True)  # 'минерал_1' -> mineral_alt
+    sum_total = Column(Float, nullable=True)  # 'Сумма' -> sum_total
 
     # Связь
     grain = relationship("Grain", back_populates="analyses")
@@ -480,26 +487,27 @@ class EPMAAnalysis(Base):
                     zn=row.get("Zn"),
                     x_coord=row.get("X"),
                     y_coord=row.get("Y"),
-                    # Специальные
-                    t_zn_chr=row.get("T_Zn_Chr"),
-                    total=row.get("Total"),
-                    no=row.get("No"),
-                    # Служебные
-                    a_number=row.get("a_number"),
-                    correction=row.get("correction"),
-                    val_12=row.get("val_12"),
-                    val_13=row.get("val_13"),
-                    val_14=row.get("val_14"),
-                    val_15=row.get("val_15"),
-                    val_16=row.get("val_16"),
-                    val_17=row.get("val_17"),
-                    # Счетчики
-                    count_akb=row.get("счет_АКБ"),
-                    count_pk=row.get("счет_ПК"),
-                    # Минералы
-                    mineral=row.get("минерал"),
-                    mineral_alt=row.get("минерал_1"),
-                    summa=row.get("Сумма"),
+                    # Special parameters
+                    t_zn_chr=row.get("T_Zn_Chr"),  # DataFrame: "T_Zn_Chr" -> model: t_zn_chr
+                    total=row.get("Total"),  # DataFrame: "Total" -> model: total
+                    no=row.get("No"),  # DataFrame: "No" -> model: no
+                    # Service fields (from val_XX substitutions)
+                    a_number=row.get("a_number"),  # DataFrame: "a_number" (from val_20) -> model: a_number
+                    correction=row.get("correction"),  # DataFrame: "correction" (from val_17 for tube 1_5) -> model: correction
+                    # Additional measurement fields
+                    measurement_12=row.get("val_12"),  # DataFrame: "val_12" -> model: measurement_12
+                    measurement_13=row.get("val_13"),  # DataFrame: "val_13" -> model: measurement_13
+                    measurement_14=row.get("val_14"),  # DataFrame: "val_14" -> model: measurement_14
+                    measurement_15=row.get("val_15"),  # DataFrame: "val_15" -> model: measurement_15
+                    measurement_16=row.get("val_16"),  # DataFrame: "val_16" -> model: measurement_16
+                    measurement_17=row.get("val_17"),  # DataFrame: "val_17" (for tube 2_1) -> model: measurement_17
+                    # Counters
+                    count_akb=row.get("счет_АКБ"),  # DataFrame: "счет_АКБ" -> model: count_akb
+                    count_pk=row.get("счет_ПК"),  # DataFrame: "счет_ПК" -> model: count_pk
+                    # Minerals
+                    mineral=row.get("минерал"),  # DataFrame: "минерал" -> model: mineral
+                    mineral_alt=row.get("минерал_1"),  # DataFrame: "минерал_1" -> model: mineral_alt
+                    sum_total=row.get("Сумма"),  # DataFrame: "Сумма" -> model: sum_total
                 )
 
                 session.add(analysis)
@@ -582,15 +590,15 @@ class LAMAnalysis(Base):
     cu = Column(Float, nullable=True)  # Cu
     zn = Column(Float, nullable=True)  # Zn
 
-    # Другие элементы
+    # Other elements
     ga = Column(Float, nullable=True)  # Ga
-    ge = Column(Float, nullable=True)  # Ge (если есть)
-    as = Column(Float, nullable=True)  # As (если есть)
+    ge = Column(Float, nullable=True)  # Ge (if present)
+    arsenic = Column(Float, nullable=True)  # As (if present) - renamed from 'as' (Python keyword)
     y = Column(Float, nullable=True)   # Y
     sn = Column(Float, nullable=True)  # Sn
-    sb = Column(Float, nullable=True)  # Sb (если есть)
+    sb = Column(Float, nullable=True)  # Sb (if present)
     pb = Column(Float, nullable=True)  # Pb
-    bi = Column(Float, nullable=True)  # Bi (если есть)
+    bi = Column(Float, nullable=True)  # Bi (if present)
     th = Column(Float, nullable=True)  # Th
     u = Column(Float, nullable=True)   # U
 
@@ -796,10 +804,10 @@ class Phlogopite(Base):
     f = Column(Float, nullable=True)       # F
     cl = Column(Float, nullable=True)      # Cl
 
-    # Суммы и служебные
-    total = Column(Float, nullable=True)   # Total
-    val_17 = Column(Float, nullable=True)  # val_17 (оставляем как есть)
-    zno = Column(Float, nullable=True)     # ZnO
+    # Totals and service fields
+    total = Column(Float, nullable=True)   # 'Total' -> total
+    measurement_17 = Column(Float, nullable=True)  # 'val_17' (ignored, left as is) -> measurement_17
+    zno = Column(Float, nullable=True)     # 'ZnO' -> zno
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -876,10 +884,10 @@ class Phlogopite(Base):
                     f=record.get('F'),
                     cl=record.get('Cl'),
 
-                    # Служебные
-                    total=record.get('Total'),
-                    val_17=record.get('val_17'),
-                    zno=record.get('ZnO')
+                    # Service fields
+                    total=record.get('Total'),  # DataFrame: 'Total' -> model: total
+                    measurement_17=record.get('val_17'),  # DataFrame: 'val_17' -> model: measurement_17
+                    zno=record.get('ZnO')  # DataFrame: 'ZnO' -> model: zno
                 )
 
                 session.add(phlog)
@@ -951,8 +959,8 @@ class Petrochemy(Base):
     # Суммы
     total = Column(Float, nullable=True)   # Сумма
 
-    # Служебные поля
-    val_21 = Column(Float, nullable=True)  # val_21 (только для 2_4)
+    # Service fields
+    measurement_21 = Column(Float, nullable=True)  # 'val_21' (only for tube 2_4) -> measurement_21
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -1031,8 +1039,8 @@ class Petrochemy(Base):
                     # Суммы
                     total=record.get('Сумма'),
 
-                    # Служебные
-                    val_21=record.get('val_21')
+                    # Service fields
+                    measurement_21=record.get('val_21')  # DataFrame: 'val_21' -> model: measurement_21
                 )
 
                 session.add(petro)
@@ -1110,9 +1118,9 @@ class Oxides(Base):
     # Летучие компоненты
     f = Column(Float, nullable=True)       # F
 
-    # Суммы
-    total = Column(Float, nullable=True)   # Total
-    total_alt = Column(Float, nullable=True)  # total (из val_17 для 2_2)
+    # Totals
+    total_oxides = Column(Float, nullable=True)   # 'Total' -> total_oxides
+    total_calculated = Column(Float, nullable=True)  # 'total' (from val_17 for tube 2_2) -> total_calculated
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -1190,9 +1198,9 @@ class Oxides(Base):
                     # Летучие
                     f=record.get('F'),
 
-                    # Суммы
-                    total=record.get('Total'),
-                    total_alt=record.get('total')  # для трубки 2_2
+                    # Totals
+                    total_oxides=record.get('Total'),  # DataFrame: 'Total' -> model: total_oxides
+                    total_calculated=record.get('total')  # DataFrame: 'total' (from val_17 for tube 2_2) -> model: total_calculated
                 )
 
                 session.add(oxides)
