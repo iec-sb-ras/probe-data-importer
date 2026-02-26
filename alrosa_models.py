@@ -1,21 +1,22 @@
+import uuid
+from multiprocessing import Value
+
 from sqlalchemy import (
-    Column,
-    String,
-    Float,
-    Integer,
-    Boolean,
     JSON,
+    Boolean,
+    Column,
     DateTime,
-    UniqueConstraint,
+    Float,
     ForeignKey,
-    relationship,
+    Integer,
+    String,
+    UniqueConstraint,
+    create_engine,
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import uuid
 
 Base = declarative_base()
 
@@ -41,16 +42,24 @@ class Diamonds(Base):
     interval = Column(String(50), nullable=True)  # 'Интервал' -> interval
 
     # Weight indicators
-    initial_weight_kg = Column(Float, nullable=True)  # 'Исход_вес_кг' -> initial_weight_kg
+    initial_weight_kg = Column(
+        Float, nullable=True
+    )  # 'Исход_вес_кг' -> initial_weight_kg
     acid_concentrate_kg = Column(
         Float, nullable=True
     )  # 'Выход_кислотного_концентрата_кг' -> acid_concentrate_kg
-    salt_concentrate_g = Column(Float, nullable=True)  # 'Выход_солевого_концентр_г' -> salt_concentrate_g
+    salt_concentrate_g = Column(
+        Float, nullable=True
+    )  # 'Выход_солевого_концентр_г' -> salt_concentrate_g
     alkaline_concentrate_g = Column(
         Float, nullable=True
     )  # 'Выход_щелочного_концентрата_г' -> alkaline_concentrate_g
-    heavy_fraction_g = Column(Float, nullable=True)  # 'Выход_тяжелой_фракции_г' -> heavy_fraction_g
-    acid_cleaning_g = Column(Float, nullable=True)  # 'Кислотная_очистка_солев_Конц_г' -> acid_cleaning_g
+    heavy_fraction_g = Column(
+        Float, nullable=True
+    )  # 'Выход_тяжелой_фракции_г' -> heavy_fraction_g
+    acid_cleaning_g = Column(
+        Float, nullable=True
+    )  # 'Кислотная_очистка_солев_Конц_г' -> acid_cleaning_g
 
     # Diamonds
     diamonds_monocrystals = Column(
@@ -59,10 +68,14 @@ class Diamonds(Base):
     diamonds_fragments = Column(
         Integer, nullable=True
     )  # 'Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы' -> diamonds_fragments
-    crystals_per_kg = Column(Float, nullable=True)  # 'кристаллов_обломков_кг' -> crystals_per_kg
+    crystals_per_kg = Column(
+        Float, nullable=True
+    )  # 'кристаллов_обломков_кг' -> crystals_per_kg
 
     # Service fields (from val_XX substitutions)
-    quality_check = Column(Boolean, nullable=True)  # 'check' (from first val_) -> quality_check
+    quality_check = Column(
+        Boolean, nullable=True
+    )  # 'check' (from first val_) -> quality_check
     total_weight = Column(Float, nullable=True)  # 'total' -> total_weight
 
     # JSONB с фракциями (все диапазоны)
@@ -141,18 +154,40 @@ class Diamonds(Base):
                 diamond = cls(
                     pipe_uuid=pipe_uuid,
                     # Map Russian DataFrame columns to English model fields
-                    sample_id=record.get("пробы"),  # DataFrame: "пробы" -> model: sample_id
-                    sample_id_alt=record.get("пробы_1"),  # DataFrame: "пробы_1" -> model: sample_id_alt
-                    borehole=record.get("скважина"),  # DataFrame: "скважина" -> model: borehole
-                    rock_type=record.get("порода"),  # DataFrame: "порода" -> model: rock_type
-                    interval=record.get("Интервал"),  # DataFrame: "Интервал" -> model: interval
+                    sample_id=record.get(
+                        "пробы"
+                    ),  # DataFrame: "пробы" -> model: sample_id
+                    sample_id_alt=record.get(
+                        "пробы_1"
+                    ),  # DataFrame: "пробы_1" -> model: sample_id_alt
+                    borehole=record.get(
+                        "скважина"
+                    ),  # DataFrame: "скважина" -> model: borehole
+                    rock_type=record.get(
+                        "порода"
+                    ),  # DataFrame: "порода" -> model: rock_type
+                    interval=record.get(
+                        "Интервал"
+                    ),  # DataFrame: "Интервал" -> model: interval
                     # Weight indicators
-                    initial_weight_kg=record.get("Исход_вес_кг"),  # DataFrame: "Исход_вес_кг" -> model: initial_weight_kg
-                    acid_concentrate_kg=record.get("Выход_кислотного_концентрата_кг"),  # DataFrame: "Выход_кислотного_концентрата_кг" -> model: acid_concentrate_kg
-                    salt_concentrate_g=record.get("Выход_солевого_концентр_г"),  # DataFrame: "Выход_солевого_концентр_г" -> model: salt_concentrate_g
-                    alkaline_concentrate_g=record.get("Выход_щелочного_концентрата_г"),  # DataFrame: "Выход_щелочного_концентрата_г" -> model: alkaline_concentrate_g
-                    heavy_fraction_g=record.get("Выход_тяжелой_фракции_г"),  # DataFrame: "Выход_тяжелой_фракции_г" -> model: heavy_fraction_g
-                    acid_cleaning_g=record.get("Кислотная_очистка_солев_Конц_г"),  # DataFrame: "Кислотная_очистка_солев_Конц_г" -> model: acid_cleaning_g
+                    initial_weight_kg=record.get(
+                        "Исход_вес_кг"
+                    ),  # DataFrame: "Исход_вес_кг" -> model: initial_weight_kg
+                    acid_concentrate_kg=record.get(
+                        "Выход_кислотного_концентрата_кг"
+                    ),  # DataFrame: "Выход_кислотного_концентрата_кг" -> model: acid_concentrate_kg
+                    salt_concentrate_g=record.get(
+                        "Выход_солевого_концентр_г"
+                    ),  # DataFrame: "Выход_солевого_концентр_г" -> model: salt_concentrate_g
+                    alkaline_concentrate_g=record.get(
+                        "Выход_щелочного_концентрата_г"
+                    ),  # DataFrame: "Выход_щелочного_концентрата_г" -> model: alkaline_concentrate_g
+                    heavy_fraction_g=record.get(
+                        "Выход_тяжелой_фракции_г"
+                    ),  # DataFrame: "Выход_тяжелой_фракции_г" -> model: heavy_fraction_g
+                    acid_cleaning_g=record.get(
+                        "Кислотная_очистка_солев_Конц_г"
+                    ),  # DataFrame: "Кислотная_очистка_солев_Конц_г" -> model: acid_cleaning_g
                     # Diamonds
                     diamonds_monocrystals=record.get(
                         "Количество_обнаруженных_алмазов_монокристаллы"
@@ -160,11 +195,19 @@ class Diamonds(Base):
                     diamonds_fragments=record.get(
                         "Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы"
                     ),  # DataFrame: "Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы" -> model: diamonds_fragments
-                    crystals_per_kg=record.get("кристаллов_обломков_кг"),  # DataFrame: "кристаллов_обломков_кг" -> model: crystals_per_kg
+                    crystals_per_kg=record.get(
+                        "кристаллов_обломков_кг"
+                    ),  # DataFrame: "кристаллов_обломков_кг" -> model: crystals_per_kg
                     # Service fields (from val_XX substitutions)
-                    quality_check=record.get("check"),  # DataFrame: "check" (from first val_) -> model: quality_check
-                    total_weight=record.get("total"),  # DataFrame: "total" -> model: total_weight
-                    fractions=record.get("fractions", {}),  # DataFrame: "fractions" -> model: fractions
+                    quality_check=record.get(
+                        "check"
+                    ),  # DataFrame: "check" (from first val_) -> model: quality_check
+                    total_weight=record.get(
+                        "total"
+                    ),  # DataFrame: "total" -> model: total_weight
+                    fractions=record.get(
+                        "fractions", {}
+                    ),  # DataFrame: "fractions" -> model: fractions
                 )
                 session.add(diamond)
                 imported_count += 1
@@ -203,7 +246,6 @@ class Diamonds(Base):
         return deleted
 
 
-
 class Sample(Base):
     """
     Сущность Шашка (Sample)
@@ -226,7 +268,9 @@ class Sample(Base):
     rock_type = Column(String(100), nullable=True)  # 'Порода' -> rock_type
     depth = Column(Float, nullable=True)  # 'глубина' -> depth
     class_name = Column(String(50), nullable=True)  # 'класс' -> class_name
-    line_borehole = Column(String(100), nullable=True)  # 'линия_скважина' -> line_borehole
+    line_borehole = Column(
+        String(100), nullable=True
+    )  # 'линия_скважина' -> line_borehole
     body = Column(String(100), nullable=True)  # 'тело' -> body
     fraction = Column(String(50), nullable=True)  # 'фракция' -> fraction
     note = Column(String(500), nullable=True)  # 'примечание' -> note
@@ -306,21 +350,28 @@ class Grain(Base):
     Сущность Зерно (Grain)
     Привязка зерна к шашке
     """
-    __tablename__ = 'grains'
+
+    __tablename__ = "grains"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    sample_id = Column(UUID(as_uuid=True), ForeignKey('samples.id', ondelete='CASCADE'), nullable=False)
+    sample_id = Column(
+        UUID(as_uuid=True), ForeignKey("samples.id", ondelete="CASCADE"), nullable=False
+    )
     grain_name = Column(String(50), nullable=False)
 
     # Связи
     sample = relationship("Sample", back_populates="grains")
-    epma_analyses = relationship("EPMAAnalysis", back_populates="grain", cascade="all, delete-orphan")
-    lam_analyses = relationship("LAMAnalysis", back_populates="grain", cascade="all, delete-orphan")
+    epma_analyses = relationship(
+        "EPMAAnalysis", back_populates="grain", cascade="all, delete-orphan"
+    )
+    lam_analyses = relationship(
+        "LAMAnalysis", back_populates="grain", cascade="all, delete-orphan"
+    )
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     __table_args__ = (
-        UniqueConstraint('sample_id', 'grain_name', name='uix_sample_grain'),
+        UniqueConstraint("sample_id", "grain_name", name="uix_sample_grain"),
     )
 
 
@@ -377,14 +428,16 @@ class EPMAAnalysis(Base):
     # Service fields (from val_XX substitutions)
     a_number = Column(Float, nullable=True)  # a_number (from val_20)
     correction = Column(Float, nullable=True)  # correction (from val_17 for tube 1_5)
-    
+
     # Additional measurement fields (renamed from val_XX)
     measurement_12 = Column(Float, nullable=True)  # val_12 -> measurement_12
     measurement_13 = Column(Float, nullable=True)  # val_13 -> measurement_13
     measurement_14 = Column(Float, nullable=True)  # val_14 -> measurement_14
     measurement_15 = Column(Float, nullable=True)  # val_15 -> measurement_15
     measurement_16 = Column(Float, nullable=True)  # val_16 -> measurement_16
-    measurement_17 = Column(Float, nullable=True)  # val_17 (for tube 2_1) -> measurement_17
+    measurement_17 = Column(
+        Float, nullable=True
+    )  # val_17 (for tube 2_1) -> measurement_17
 
     # Counters
     count_akb = Column(Integer, nullable=True)  # 'счет_АКБ' -> count_akb
@@ -396,7 +449,7 @@ class EPMAAnalysis(Base):
     sum_total = Column(Float, nullable=True)  # 'Сумма' -> sum_total
 
     # Связь
-    grain = relationship("Grain", back_populates="analyses")
+    grain = relationship("Grain", back_populates="epma_analyses")
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -488,33 +541,62 @@ class EPMAAnalysis(Base):
                     x_coord=row.get("X"),
                     y_coord=row.get("Y"),
                     # Special parameters
-                    t_zn_chr=row.get("T_Zn_Chr"),  # DataFrame: "T_Zn_Chr" -> model: t_zn_chr
+                    t_zn_chr=row.get(
+                        "T_Zn_Chr"
+                    ),  # DataFrame: "T_Zn_Chr" -> model: t_zn_chr
                     total=row.get("Total"),  # DataFrame: "Total" -> model: total
                     no=row.get("No"),  # DataFrame: "No" -> model: no
                     # Service fields (from val_XX substitutions)
-                    a_number=row.get("a_number"),  # DataFrame: "a_number" (from val_20) -> model: a_number
-                    correction=row.get("correction"),  # DataFrame: "correction" (from val_17 for tube 1_5) -> model: correction
+                    a_number=row.get(
+                        "a_number"
+                    ),  # DataFrame: "a_number" (from val_20) -> model: a_number
+                    correction=row.get(
+                        "correction"
+                    ),  # DataFrame: "correction" (from val_17 for tube 1_5) -> model: correction
                     # Additional measurement fields
-                    measurement_12=row.get("val_12"),  # DataFrame: "val_12" -> model: measurement_12
-                    measurement_13=row.get("val_13"),  # DataFrame: "val_13" -> model: measurement_13
-                    measurement_14=row.get("val_14"),  # DataFrame: "val_14" -> model: measurement_14
-                    measurement_15=row.get("val_15"),  # DataFrame: "val_15" -> model: measurement_15
-                    measurement_16=row.get("val_16"),  # DataFrame: "val_16" -> model: measurement_16
-                    measurement_17=row.get("val_17"),  # DataFrame: "val_17" (for tube 2_1) -> model: measurement_17
+                    measurement_12=row.get(
+                        "val_12"
+                    ),  # DataFrame: "val_12" -> model: measurement_12
+                    measurement_13=row.get(
+                        "val_13"
+                    ),  # DataFrame: "val_13" -> model: measurement_13
+                    measurement_14=row.get(
+                        "val_14"
+                    ),  # DataFrame: "val_14" -> model: measurement_14
+                    measurement_15=row.get(
+                        "val_15"
+                    ),  # DataFrame: "val_15" -> model: measurement_15
+                    measurement_16=row.get(
+                        "val_16"
+                    ),  # DataFrame: "val_16" -> model: measurement_16
+                    measurement_17=row.get(
+                        "val_17"
+                    ),  # DataFrame: "val_17" (for tube 2_1) -> model: measurement_17
                     # Counters
-                    count_akb=row.get("счет_АКБ"),  # DataFrame: "счет_АКБ" -> model: count_akb
-                    count_pk=row.get("счет_ПК"),  # DataFrame: "счет_ПК" -> model: count_pk
+                    count_akb=row.get(
+                        "счет_АКБ"
+                    ),  # DataFrame: "счет_АКБ" -> model: count_akb
+                    count_pk=row.get(
+                        "счет_ПК"
+                    ),  # DataFrame: "счет_ПК" -> model: count_pk
                     # Minerals
-                    mineral=row.get("минерал"),  # DataFrame: "минерал" -> model: mineral
-                    mineral_alt=row.get("минерал_1"),  # DataFrame: "минерал_1" -> model: mineral_alt
-                    sum_total=row.get("Сумма"),  # DataFrame: "Сумма" -> model: sum_total
+                    mineral=row.get(
+                        "минерал"
+                    ),  # DataFrame: "минерал" -> model: mineral
+                    mineral_alt=row.get(
+                        "минерал_1"
+                    ),  # DataFrame: "минерал_1" -> model: mineral_alt
+                    sum_total=row.get(
+                        "Сумма"
+                    ),  # DataFrame: "Сумма" -> model: sum_total
                 )
 
                 session.add(analysis)
                 imported_count += 1
 
                 # Периодический commit для больших DataFrame
-                if imported_count % 100 == 0:                    session.commit()
+                if imported_count % 100 == 0:
+                    session.commit()
 
             session.commit()
             print(
@@ -528,18 +610,22 @@ class EPMAAnalysis(Base):
         finally:
             session.close()
 
+
 class LAMAnalysis(Base):
     """
     LAM (LA-ICP-MS) анализ зерна
     Данные лазерной абляции для выбранных зерен
     """
-    __tablename__ = 'lam_analyses'
+
+    __tablename__ = "lam_analyses"
 
     # Primary Key
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
     # Связь с зерном (те же зерна, что и в EPMA)
-    grain_id = Column(UUID(as_uuid=True), ForeignKey('grains.id', ondelete='CASCADE'), nullable=False)
+    grain_id = Column(
+        UUID(as_uuid=True), ForeignKey("grains.id", ondelete="CASCADE"), nullable=False
+    )
 
     # Основные элементы (породообразующие)
     si = Column(Float, nullable=True)  # Si
@@ -550,8 +636,8 @@ class LAMAnalysis(Base):
     mg = Column(Float, nullable=True)  # Mg
     ca = Column(Float, nullable=True)  # Ca
     na = Column(Float, nullable=True)  # Na
-    k = Column(Float, nullable=True)   # K
-    p = Column(Float, nullable=True)   # P
+    k = Column(Float, nullable=True)  # K
+    p = Column(Float, nullable=True)  # P
 
     # Редкоземельные элементы (REE)
     la = Column(Float, nullable=True)  # La
@@ -583,7 +669,7 @@ class LAMAnalysis(Base):
 
     # Переходные металлы
     sc = Column(Float, nullable=True)  # Sc
-    v = Column(Float, nullable=True)   # V
+    v = Column(Float, nullable=True)  # V
     cr = Column(Float, nullable=True)  # Cr
     co = Column(Float, nullable=True)  # Co
     ni = Column(Float, nullable=True)  # Ni
@@ -593,23 +679,25 @@ class LAMAnalysis(Base):
     # Other elements
     ga = Column(Float, nullable=True)  # Ga
     ge = Column(Float, nullable=True)  # Ge (if present)
-    arsenic = Column(Float, nullable=True)  # As (if present) - renamed from 'as' (Python keyword)
-    y = Column(Float, nullable=True)   # Y
+    arsenic = Column(
+        Float, nullable=True
+    )  # As (if present) - renamed from 'as' (Python keyword)
+    y = Column(Float, nullable=True)  # Y
     sn = Column(Float, nullable=True)  # Sn
     sb = Column(Float, nullable=True)  # Sb (if present)
     pb = Column(Float, nullable=True)  # Pb
     bi = Column(Float, nullable=True)  # Bi (if present)
     th = Column(Float, nullable=True)  # Th
-    u = Column(Float, nullable=True)   # U
+    u = Column(Float, nullable=True)  # U
 
     # Элементы, которые есть в ваших данных
     be = Column(Float, nullable=True)  # Be
-    b = Column(Float, nullable=True)   # B
+    b = Column(Float, nullable=True)  # B
     li = Column(Float, nullable=True)  # Li
 
     # Счетчики (если есть в LAM)
     count_akb = Column(Integer, nullable=True)  # 'счет_АКБ'
-    count_pk = Column(Integer, nullable=True)   # 'счет_ПК'
+    count_pk = Column(Integer, nullable=True)  # 'счет_ПК'
 
     # Дополнительная информация
     rock_type = Column(String(100), nullable=True)  # 'порода' (только для 1_8)
@@ -635,13 +723,12 @@ class LAMAnalysis(Base):
 
         try:
             # Получаем все зерна для данной трубки с их sample_id
-            grains = session.query(
-                Grain.id,
-                Grain.grain_name,
-                Sample.sample_name
-            ).join(Sample).filter(
-                Sample.pipe_uuid == pipe_uuid
-            ).all()
+            grains = (
+                session.query(Grain.id, Grain.grain_name, Sample.sample_name)
+                .join(Sample)
+                .filter(Sample.pipe_uuid == pipe_uuid)
+                .all()
+            )
 
             # Создаем маппинг (sample_name, grain_name) -> grain_id
             grain_map = {}
@@ -653,8 +740,8 @@ class LAMAnalysis(Base):
             skipped_count = 0
 
             for _, row in df.iterrows():
-                sample_name = row.get('шашка')
-                grain_name = row.get('зерно')
+                sample_name = row.get("шашка")
+                grain_name = row.get("зерно")
 
                 if not sample_name or not grain_name:
                     continue
@@ -670,71 +757,64 @@ class LAMAnalysis(Base):
                 # Создаем LAM анализ
                 analysis = cls(
                     grain_id=grain_id,
-
                     # Основные элементы
-                    si=row.get('Si'),
-                    ti=row.get('Ti'),
-                    al=row.get('Al'),
-                    fe=row.get('Fe'),
-                    mn=row.get('Mn'),
-                    mg=row.get('Mg'),
-                    ca=row.get('Ca'),
-                    na=row.get('Na'),
-                    k=row.get('K'),
-                    p=row.get('P'),
-
+                    si=row.get("Si"),
+                    ti=row.get("Ti"),
+                    al=row.get("Al"),
+                    fe=row.get("Fe"),
+                    mn=row.get("Mn"),
+                    mg=row.get("Mg"),
+                    ca=row.get("Ca"),
+                    na=row.get("Na"),
+                    k=row.get("K"),
+                    p=row.get("P"),
                     # Редкоземельные
-                    la=row.get('La'),
-                    ce=row.get('Ce'),
-                    pr=row.get('Pr'),
-                    nd=row.get('Nd'),
-                    sm=row.get('Sm'),
-                    eu=row.get('Eu'),
-                    gd=row.get('Gd'),
-                    tb=row.get('Tb'),
-                    dy=row.get('Dy'),
-                    ho=row.get('Ho'),
-                    er=row.get('Er'),
-                    tm=row.get('Tm'),
-                    yb=row.get('Yb'),
-                    lu=row.get('Lu'),
-
+                    la=row.get("La"),
+                    ce=row.get("Ce"),
+                    pr=row.get("Pr"),
+                    nd=row.get("Nd"),
+                    sm=row.get("Sm"),
+                    eu=row.get("Eu"),
+                    gd=row.get("Gd"),
+                    tb=row.get("Tb"),
+                    dy=row.get("Dy"),
+                    ho=row.get("Ho"),
+                    er=row.get("Er"),
+                    tm=row.get("Tm"),
+                    yb=row.get("Yb"),
+                    lu=row.get("Lu"),
                     # HFSE
-                    zr=row.get('Zr'),
-                    hf=row.get('Hf'),
-                    nb=row.get('Nb'),
-                    ta=row.get('Ta'),
-
+                    zr=row.get("Zr"),
+                    hf=row.get("Hf"),
+                    nb=row.get("Nb"),
+                    ta=row.get("Ta"),
                     # LILE
-                    rb=row.get('Rb'),
-                    cs=row.get('Cs'),
-                    ba=row.get('Ba'),
-                    sr=row.get('Sr'),
-
+                    rb=row.get("Rb"),
+                    cs=row.get("Cs"),
+                    ba=row.get("Ba"),
+                    sr=row.get("Sr"),
                     # Переходные металлы
-                    sc=row.get('Sc'),
-                    v=row.get('V'),
-                    cr=row.get('Cr'),
-                    co=row.get('Co'),
-                    ni=row.get('Ni'),
-                    cu=row.get('Cu'),
-                    zn=row.get('Zn'),
-
+                    sc=row.get("Sc"),
+                    v=row.get("V"),
+                    cr=row.get("Cr"),
+                    co=row.get("Co"),
+                    ni=row.get("Ni"),
+                    cu=row.get("Cu"),
+                    zn=row.get("Zn"),
                     # Другие
-                    ga=row.get('Ga'),
-                    y=row.get('Y'),
-                    sn=row.get('Sn'),
-                    pb=row.get('Pb'),
-                    th=row.get('Th'),
-                    u=row.get('U'),
-                    be=row.get('Be'),
-                    b=row.get('B'),
-                    li=row.get('Li'),
-
+                    ga=row.get("Ga"),
+                    y=row.get("Y"),
+                    sn=row.get("Sn"),
+                    pb=row.get("Pb"),
+                    th=row.get("Th"),
+                    u=row.get("U"),
+                    be=row.get("Be"),
+                    b=row.get("B"),
+                    li=row.get("Li"),
                     # Счетчики
-                    count_akb=row.get('счет_АКБ'),
-                    count_pk=row.get('счет_ПК'),
-                    rock_type=row.get('порода')
+                    count_akb=row.get("счет_АКБ"),
+                    count_pk=row.get("счет_ПК"),
+                    rock_type=row.get("порода"),
                 )
 
                 session.add(analysis)
@@ -759,7 +839,8 @@ class Phlogopite(Base):
     """
     Данные по флогопиту (прямая привязка к трубке)
     """
-    __tablename__ = 'phlogopite'
+
+    __tablename__ = "phlogopite"
 
     # Primary Key
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -769,45 +850,47 @@ class Phlogopite(Base):
 
     # Идентификаторы из исходных данных
     sample_id = Column(String(50), nullable=True)  # 'Образец'
-    point_id = Column(String(50), nullable=True)   # 'точки'
-    mineral = Column(String(100), nullable=True)   # 'минерал'
+    point_id = Column(String(50), nullable=True)  # 'точки'
+    mineral = Column(String(100), nullable=True)  # 'минерал'
     mineral_alt = Column(String(100), nullable=True)  # 'Минерал' (с заглавной)
-    source = Column(String(100), nullable=True)    # 'Источник'
-    rock_type = Column(String(100), nullable=True) # 'Порода'
+    source = Column(String(100), nullable=True)  # 'Источник'
+    rock_type = Column(String(100), nullable=True)  # 'Порода'
 
     # Основные оксиды
-    sio2 = Column(Float, nullable=True)   # SiO2
-    tio2 = Column(Float, nullable=True)   # TiO2
+    sio2 = Column(Float, nullable=True)  # SiO2
+    tio2 = Column(Float, nullable=True)  # TiO2
     al2o3 = Column(Float, nullable=True)  # Al2O3
-    feo = Column(Float, nullable=True)    # FeO
-    mgo = Column(Float, nullable=True)    # MgO
-    cao = Column(Float, nullable=True)    # CaO
-    na2o = Column(Float, nullable=True)   # Na2O
-    k2o = Column(Float, nullable=True)    # K2O
-    mno = Column(Float, nullable=True)    # MnO
-    p2o5 = Column(Float, nullable=True)   # P2O5
+    feo = Column(Float, nullable=True)  # FeO
+    mgo = Column(Float, nullable=True)  # MgO
+    cao = Column(Float, nullable=True)  # CaO
+    na2o = Column(Float, nullable=True)  # Na2O
+    k2o = Column(Float, nullable=True)  # K2O
+    mno = Column(Float, nullable=True)  # MnO
+    p2o5 = Column(Float, nullable=True)  # P2O5
     cr2o3 = Column(Float, nullable=True)  # Cr2O3
-    nio = Column(Float, nullable=True)    # NiO
+    nio = Column(Float, nullable=True)  # NiO
 
     # Редкоземельные и другие оксиды
-    bao = Column(Float, nullable=True)    # BaO
-    sro = Column(Float, nullable=True)    # SrO
+    bao = Column(Float, nullable=True)  # BaO
+    sro = Column(Float, nullable=True)  # SrO
     ce2o3 = Column(Float, nullable=True)  # Ce2O3
     la2o3 = Column(Float, nullable=True)  # La2O3
     nd2o3 = Column(Float, nullable=True)  # Nd2O3
     nb2o5 = Column(Float, nullable=True)  # Nb2O5
     ta2o5 = Column(Float, nullable=True)  # Ta2O5
-    tho2 = Column(Float, nullable=True)   # ThO2
-    so3 = Column(Float, nullable=True)    # SO3
+    tho2 = Column(Float, nullable=True)  # ThO2
+    so3 = Column(Float, nullable=True)  # SO3
 
     # Летучие компоненты
-    f = Column(Float, nullable=True)       # F
-    cl = Column(Float, nullable=True)      # Cl
+    f = Column(Float, nullable=True)  # F
+    cl = Column(Float, nullable=True)  # Cl
 
     # Totals and service fields
-    total = Column(Float, nullable=True)   # 'Total' -> total
-    measurement_17 = Column(Float, nullable=True)  # 'val_17' (ignored, left as is) -> measurement_17
-    zno = Column(Float, nullable=True)     # 'ZnO' -> zno
+    total = Column(Float, nullable=True)  # 'Total' -> total
+    measurement_17 = Column(
+        Float, nullable=True
+    )  # 'val_17' (ignored, left as is) -> measurement_17
+    zno = Column(Float, nullable=True)  # 'ZnO' -> zno
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -816,7 +899,7 @@ class Phlogopite(Base):
         return f"<Phlogopite(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
 
     @classmethod
-    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
         """
         Импорт данных флогопита для конкретной трубки
         """
@@ -830,64 +913,63 @@ class Phlogopite(Base):
             existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
 
             if existing_count > 0:
-                if if_exists == 'fail':
-                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
-                elif if_exists == 'replace':
+                if if_exists == "fail":
+                    raise ValueError(
+                        f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)"
+                    )
+                elif if_exists == "replace":
                     deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
                     session.commit()
                     print(f"Удалено {deleted} существующих записей")
-                elif if_exists == 'append':
+                elif if_exists == "append":
                     print(f"Добавление к {existing_count} существующим записям")
 
             # Импортируем новые данные
-            records = df.to_dict('records')
+            records = df.to_dict("records")
             imported_count = 0
 
             for record in records:
                 phlog = cls(
                     pipe_uuid=pipe_uuid,
-
                     # Идентификаторы
-                    sample_id=record.get('Образец'),
-                    point_id=record.get('точки'),
-                    mineral=record.get('минерал'),
-                    mineral_alt=record.get('Минерал'),
-                    source=record.get('Источник'),
-                    rock_type=record.get('Порода'),
-
+                    sample_id=record.get("Образец"),
+                    point_id=record.get("точки"),
+                    mineral=record.get("минерал"),
+                    mineral_alt=record.get("Минерал"),
+                    source=record.get("Источник"),
+                    rock_type=record.get("Порода"),
                     # Основные оксиды
-                    sio2=record.get('SiO2'),
-                    tio2=record.get('TiO2'),
-                    al2o3=record.get('Al2O3'),
-                    feo=record.get('FeO'),
-                    mgo=record.get('MgO'),
-                    cao=record.get('CaO'),
-                    na2o=record.get('Na2O'),
-                    k2o=record.get('K2O'),
-                    mno=record.get('MnO'),
-                    p2o5=record.get('P2O5'),
-                    cr2o3=record.get('Cr2O3'),
-                    nio=record.get('NiO'),
-
+                    sio2=record.get("SiO2"),
+                    tio2=record.get("TiO2"),
+                    al2o3=record.get("Al2O3"),
+                    feo=record.get("FeO"),
+                    mgo=record.get("MgO"),
+                    cao=record.get("CaO"),
+                    na2o=record.get("Na2O"),
+                    k2o=record.get("K2O"),
+                    mno=record.get("MnO"),
+                    p2o5=record.get("P2O5"),
+                    cr2o3=record.get("Cr2O3"),
+                    nio=record.get("NiO"),
                     # Редкоземельные
-                    bao=record.get('BaO'),
-                    sro=record.get('SrO'),
-                    ce2o3=record.get('Ce2O3'),
-                    la2o3=record.get('La2O3'),
-                    nd2o3=record.get('Nd2O3'),
-                    nb2o5=record.get('Nb2O5'),
-                    ta2o5=record.get('Ta2O5'),
-                    tho2=record.get('ThO2'),
-                    so3=record.get('SO3'),
-
+                    bao=record.get("BaO"),
+                    sro=record.get("SrO"),
+                    ce2o3=record.get("Ce2O3"),
+                    la2o3=record.get("La2O3"),
+                    nd2o3=record.get("Nd2O3"),
+                    nb2o5=record.get("Nb2O5"),
+                    ta2o5=record.get("Ta2O5"),
+                    tho2=record.get("ThO2"),
+                    so3=record.get("SO3"),
                     # Летучие
-                    f=record.get('F'),
-                    cl=record.get('Cl'),
-
+                    f=record.get("F"),
+                    cl=record.get("Cl"),
                     # Service fields
-                    total=record.get('Total'),  # DataFrame: 'Total' -> model: total
-                    measurement_17=record.get('val_17'),  # DataFrame: 'val_17' -> model: measurement_17
-                    zno=record.get('ZnO')  # DataFrame: 'ZnO' -> model: zno
+                    total=record.get("Total"),  # DataFrame: 'Total' -> model: total
+                    measurement_17=record.get(
+                        "val_17"
+                    ),  # DataFrame: 'val_17' -> model: measurement_17
+                    zno=record.get("ZnO"),  # DataFrame: 'ZnO' -> model: zno
                 )
 
                 session.add(phlog)
@@ -897,7 +979,9 @@ class Phlogopite(Base):
                     session.commit()
 
             session.commit()
-            print(f"Импортировано {imported_count} записей флогопита для трубки {pipe_uuid}")
+            print(
+                f"Импортировано {imported_count} записей флогопита для трубки {pipe_uuid}"
+            )
             return imported_count
 
         except Exception as e:
@@ -908,11 +992,12 @@ class Phlogopite(Base):
             session.close()
 
 
-class Petrochemy(Base):
+class Geochemy(Base):
     """
-    Петрохимические данные (прямая привязка к трубке)
+    Геохимические данные (прямая привязка к трубке)
     """
-    __tablename__ = 'petrochemy'
+
+    __tablename__ = "geochemy"
 
     # Primary Key
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -929,38 +1014,192 @@ class Petrochemy(Base):
     number = Column(String(50), nullable=True)  # 'п_п' (№ п/п)
 
     # Основные оксиды (петрогенные элементы)
-    sio2 = Column(Float, nullable=True)   # SiO2
-    tio2 = Column(Float, nullable=True)   # TiO2
+    sio2 = Column(Float, nullable=True)  # SiO2
+    tio2 = Column(Float, nullable=True)  # TiO2
     al2o3 = Column(Float, nullable=True)  # Al2O3
     fe2o3 = Column(Float, nullable=True)  # Fe2O3
     feo_total = Column(Float, nullable=True)  # FeOtotal
-    mgo = Column(Float, nullable=True)    # MgO
-    cao = Column(Float, nullable=True)    # CaO
-    na2o = Column(Float, nullable=True)   # Na2O
-    k2o = Column(Float, nullable=True)    # K2O
-    mno = Column(Float, nullable=True)    # MnO
-    p2o5 = Column(Float, nullable=True)   # P2O5
+    mgo = Column(Float, nullable=True)  # MgO
+    cao = Column(Float, nullable=True)  # CaO
+    na2o = Column(Float, nullable=True)  # Na2O
+    k2o = Column(Float, nullable=True)  # K2O
+    mno = Column(Float, nullable=True)  # MnO
+    p2o5 = Column(Float, nullable=True)  # P2O5
 
     # Летучие компоненты
-    h2o = Column(Float, nullable=True)    # H2O
-    co2 = Column(Float, nullable=True)    # СО2
-    f = Column(Float, nullable=True)      # F
-    s = Column(Float, nullable=True)      # S
-    loi = Column(Float, nullable=True)    # Ппп (потери при прокаливании)
+    h2o = Column(Float, nullable=True)  # H2O
+    co2 = Column(Float, nullable=True)  # СО2
+    f = Column(Float, nullable=True)  # F
+    s = Column(Float, nullable=True)  # S
+    loi = Column(Float, nullable=True)  # Ппп (потери при прокаливании)
 
     # Петрохимические индексы и отношения
     fe_num = Column(Float, nullable=True)  # Fe# (Fenum)
     mg_num = Column(Float, nullable=True)  # Mg# (Mgnum)
-    k_na = Column(Float, nullable=True)    # K/Na
+    k_na = Column(Float, nullable=True)  # K/Na
     na2o_k2o = Column(Float, nullable=True)  # Na2O+K2O
-    ic = Column(Float, nullable=True)      # I.C.
-    ilm_i = Column(Float, nullable=True)   # Ilm.I
+    ic = Column(Float, nullable=True)  # I.C.
+    ilm_i = Column(Float, nullable=True)  # Ilm.I
 
     # Суммы
-    total = Column(Float, nullable=True)   # Сумма
+    total = Column(Float, nullable=True)  # Сумма
+
+    # Служебные поля
+    val_21 = Column(Float, nullable=True)  # val_21 (только для 2_4)
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __repr__(self):
+        return f"<Geochemy(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
+        """
+        Импорт геохимических данных для конкретной трубки
+        """
+        engine = create_engine(connection_string)
+        cls.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Проверяем существующие данные
+            existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
+
+            if existing_count > 0:
+                if if_exists == "fail":
+                    raise ValueError(
+                        f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)"
+                    )
+                elif if_exists == "replace":
+                    deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
+                    session.commit()
+                    print(f"Удалено {deleted} существующих записей")
+                elif if_exists == "append":
+                    print(f"Добавление к {existing_count} существующим записям")
+
+            # Импортируем новые данные
+            records = df.to_dict("records")
+            imported_count = 0
+
+            for record in records:
+                geochem = cls(
+                    pipe_uuid=pipe_uuid,
+                    # Идентификаторы
+                    sample_id=record.get("Образец"),
+                    sample_interval=record.get("Образец_интервал_от"),
+                    borehole=record.get("Скважина"),
+                    rock_type=record.get("Порода"),
+                    source=record.get("Источник"),
+                    number=record.get("п_п"),
+                    # Основные оксиды
+                    sio2=record.get("SiO2"),
+                    tio2=record.get("TiO2"),
+                    al2o3=record.get("Al2O3"),
+                    fe2o3=record.get("Fe2O3"),
+                    feo_total=record.get("FeOtotal"),
+                    mgo=record.get("MgO"),
+                    cao=record.get("CaO"),
+                    na2o=record.get("Na2O"),
+                    k2o=record.get("K2O"),
+                    mno=record.get("MnO"),
+                    p2o5=record.get("P2O5"),
+                    # Летучие
+                    h2o=record.get("H2O"),
+                    co2=record.get("СО2"),
+                    f=record.get("F"),
+                    s=record.get("S"),
+                    loi=record.get("Ппп"),
+                    # Индексы
+                    fe_num=record.get("Fenum"),
+                    mg_num=record.get("Mgnum"),
+                    k_na=record.get("K_Na"),
+                    na2o_k2o=record.get("Na2O_K2O"),
+                    ic=record.get("I_C"),
+                    ilm_i=record.get("Ilm_I"),
+                    # Суммы
+                    total=record.get("Сумма"),
+                    # Служебные
+                    val_21=record.get("val_21"),
+                )
+
+                session.add(geochem)
+                imported_count += 1
+
+                if imported_count % 100 == 0:
+                    session.commit()
+
+            session.commit()
+            print(
+                f"Импортировано {imported_count} записей геохимии для трубки {pipe_uuid}"
+            )
+            return imported_count
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
+
+
+class Petrochemy(Base):
+    """
+    Петрохимические данные (прямая привязка к трубке)
+    """
+
+    __tablename__ = "petrochemy"
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с трубкой (A-Box)
+    pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
+
+    # Идентификаторы из исходных данных
+    sample_id = Column(String(50), nullable=True)  # 'Образец'
+    sample_interval = Column(String(50), nullable=True)  # 'Образец_интервал_от'
+    borehole = Column(String(50), nullable=True)  # 'Скважина'
+    rock_type = Column(String(100), nullable=True)  # 'Порода'
+    source = Column(String(100), nullable=True)  # 'Источник'
+    number = Column(String(50), nullable=True)  # 'п_п' (№ п/п)
+
+    # Основные оксиды (петрогенные элементы)
+    sio2 = Column(Float, nullable=True)  # SiO2
+    tio2 = Column(Float, nullable=True)  # TiO2
+    al2o3 = Column(Float, nullable=True)  # Al2O3
+    fe2o3 = Column(Float, nullable=True)  # Fe2O3
+    feo_total = Column(Float, nullable=True)  # FeOtotal
+    mgo = Column(Float, nullable=True)  # MgO
+    cao = Column(Float, nullable=True)  # CaO
+    na2o = Column(Float, nullable=True)  # Na2O
+    k2o = Column(Float, nullable=True)  # K2O
+    mno = Column(Float, nullable=True)  # MnO
+    p2o5 = Column(Float, nullable=True)  # P2O5
+
+    # Летучие компоненты
+    h2o = Column(Float, nullable=True)  # H2O
+    co2 = Column(Float, nullable=True)  # СО2
+    f = Column(Float, nullable=True)  # F
+    s = Column(Float, nullable=True)  # S
+    loi = Column(Float, nullable=True)  # Ппп (потери при прокаливании)
+
+    # Петрохимические индексы и отношения
+    fe_num = Column(Float, nullable=True)  # Fe# (Fenum)
+    mg_num = Column(Float, nullable=True)  # Mg# (Mgnum)
+    k_na = Column(Float, nullable=True)  # K/Na
+    na2o_k2o = Column(Float, nullable=True)  # Na2O+K2O
+    ic = Column(Float, nullable=True)  # I.C.
+    ilm_i = Column(Float, nullable=True)  # Ilm.I
+
+    # Суммы
+    total = Column(Float, nullable=True)  # Сумма
 
     # Service fields
-    measurement_21 = Column(Float, nullable=True)  # 'val_21' (only for tube 2_4) -> measurement_21
+    measurement_21 = Column(
+        Float, nullable=True
+    )  # 'val_21' (only for tube 2_4) -> measurement_21
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -969,7 +1208,7 @@ class Petrochemy(Base):
         return f"<Petrochemy(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
 
     @classmethod
-    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
         """
         Импорт петрохимических данных для конкретной трубки
         """
@@ -983,64 +1222,62 @@ class Petrochemy(Base):
             existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
 
             if existing_count > 0:
-                if if_exists == 'fail':
-                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
-                elif if_exists == 'replace':
+                if if_exists == "fail":
+                    raise ValueError(
+                        f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)"
+                    )
+                elif if_exists == "replace":
                     deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
                     session.commit()
                     print(f"Удалено {deleted} существующих записей")
-                elif if_exists == 'append':
+                elif if_exists == "append":
                     print(f"Добавление к {existing_count} существующим записям")
 
             # Импортируем новые данные
-            records = df.to_dict('records')
+            records = df.to_dict("records")
             imported_count = 0
 
             for record in records:
                 petro = cls(
                     pipe_uuid=pipe_uuid,
-
                     # Идентификаторы
-                    sample_id=record.get('Образец'),
-                    sample_interval=record.get('Образец_интервал_от'),
-                    borehole=record.get('Скважина'),
-                    rock_type=record.get('Порода'),
-                    source=record.get('Источник'),
-                    number=record.get('п_п'),
-
+                    sample_id=record.get("Образец"),
+                    sample_interval=record.get("Образец_интервал_от"),
+                    borehole=record.get("Скважина"),
+                    rock_type=record.get("Порода"),
+                    source=record.get("Источник"),
+                    number=record.get("п_п"),
                     # Основные оксиды
-                    sio2=record.get('SiO2'),
-                    tio2=record.get('TiO2'),
-                    al2o3=record.get('Al2O3'),
-                    fe2o3=record.get('Fe2O3'),
-                    feo_total=record.get('FeOtotal'),
-                    mgo=record.get('MgO'),
-                    cao=record.get('CaO'),
-                    na2o=record.get('Na2O'),
-                    k2o=record.get('K2O'),
-                    mno=record.get('MnO'),
-                    p2o5=record.get('P2O5'),
-
+                    sio2=record.get("SiO2"),
+                    tio2=record.get("TiO2"),
+                    al2o3=record.get("Al2O3"),
+                    fe2o3=record.get("Fe2O3"),
+                    feo_total=record.get("FeOtotal"),
+                    mgo=record.get("MgO"),
+                    cao=record.get("CaO"),
+                    na2o=record.get("Na2O"),
+                    k2o=record.get("K2O"),
+                    mno=record.get("MnO"),
+                    p2o5=record.get("P2O5"),
                     # Летучие
-                    h2o=record.get('H2O'),
-                    co2=record.get('СО2'),
-                    f=record.get('F'),
-                    s=record.get('S'),
-                    loi=record.get('Ппп'),
-
+                    h2o=record.get("H2O"),
+                    co2=record.get("СО2"),
+                    f=record.get("F"),
+                    s=record.get("S"),
+                    loi=record.get("Ппп"),
                     # Индексы
-                    fe_num=record.get('Fenum'),
-                    mg_num=record.get('Mgnum'),
-                    k_na=record.get('K_Na'),
-                    na2o_k2o=record.get('Na2O_K2O'),
-                    ic=record.get('I_C'),
-                    ilm_i=record.get('Ilm_I'),
-
+                    fe_num=record.get("Fenum"),
+                    mg_num=record.get("Mgnum"),
+                    k_na=record.get("K_Na"),
+                    na2o_k2o=record.get("Na2O_K2O"),
+                    ic=record.get("I_C"),
+                    ilm_i=record.get("Ilm_I"),
                     # Суммы
-                    total=record.get('Сумма'),
-
+                    total=record.get("Сумма"),
                     # Service fields
-                    measurement_21=record.get('val_21')  # DataFrame: 'val_21' -> model: measurement_21
+                    measurement_21=record.get(
+                        "val_21"
+                    ),  # DataFrame: 'val_21' -> model: measurement_21
                 )
 
                 session.add(petro)
@@ -1050,7 +1287,9 @@ class Petrochemy(Base):
                     session.commit()
 
             session.commit()
-            print(f"Импортировано {imported_count} записей петрохимии для трубки {pipe_uuid}")
+            print(
+                f"Импортировано {imported_count} записей петрохимии для трубки {pipe_uuid}"
+            )
             return imported_count
 
         except Exception as e:
@@ -1060,19 +1299,13 @@ class Petrochemy(Base):
         finally:
             session.close()
 
-from sqlalchemy import Column, String, Float, DateTime
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql import func
-import uuid
-
-Base = declarative_base()
 
 class Oxides(Base):
     """
     Данные по оксидам (прямая привязка к трубке)
     """
-    __tablename__ = 'oxides'
+
+    __tablename__ = "oxides"
 
     # Primary Key
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -1082,45 +1315,44 @@ class Oxides(Base):
 
     # Идентификаторы из исходных данных
     sample_id = Column(String(50), nullable=True)  # 'Образец'
-    point_id = Column(String(50), nullable=True)   # 'точки'
-    mineral = Column(String(100), nullable=True)   # 'минерал'
-    source = Column(String(100), nullable=True)    # 'Источник'
-    rock_type = Column(String(100), nullable=True) # 'Порода'
+    point_id = Column(String(50), nullable=True)  # 'точки'
+    mineral = Column(String(100), nullable=True)  # 'минерал'
+    source = Column(String(100), nullable=True)  # 'Источник'
+    rock_type = Column(String(100), nullable=True)  # 'Порода'
 
     # Основные оксиды
-    sio2 = Column(Float, nullable=True)   # SiO2
-    tio2 = Column(Float, nullable=True)   # TiO2
+    sio2 = Column(Float, nullable=True)  # SiO2
+    tio2 = Column(Float, nullable=True)  # TiO2
     al2o3 = Column(Float, nullable=True)  # Al2O3
     fe2o3 = Column(Float, nullable=True)  # Fe2O3
-    feo = Column(Float, nullable=True)    # FeO
-    mgo = Column(Float, nullable=True)    # MgO
-    cao = Column(Float, nullable=True)    # CaO
-    na2o = Column(Float, nullable=True)   # Na2O
-    k2o = Column(Float, nullable=True)    # K2O
-    mno = Column(Float, nullable=True)    # MnO
-    p2o5 = Column(Float, nullable=True)   # P2O5
+    feo = Column(Float, nullable=True)  # FeO
+    mgo = Column(Float, nullable=True)  # MgO
+    cao = Column(Float, nullable=True)  # CaO
+    na2o = Column(Float, nullable=True)  # Na2O
+    k2o = Column(Float, nullable=True)  # K2O
+    mno = Column(Float, nullable=True)  # MnO
+    p2o5 = Column(Float, nullable=True)  # P2O5
     cr2o3 = Column(Float, nullable=True)  # Cr2O3
-    nio = Column(Float, nullable=True)    # NiO
+    nio = Column(Float, nullable=True)  # NiO
 
     # Редкоземельные и другие оксиды
-    bao = Column(Float, nullable=True)    # BaO
-    sro = Column(Float, nullable=True)    # SrO
+    bao = Column(Float, nullable=True)  # BaO
+    sro = Column(Float, nullable=True)  # SrO
     ce2o3 = Column(Float, nullable=True)  # Ce2O3
     la2o3 = Column(Float, nullable=True)  # La2O3
     nd2o3 = Column(Float, nullable=True)  # Nd2O3
     nb2o5 = Column(Float, nullable=True)  # Nb2O5
     ta2o5 = Column(Float, nullable=True)  # Ta2O5
-    tho2 = Column(Float, nullable=True)   # ThO2
-    v2o3 = Column(Float, nullable=True)   # V2O3
-    zno = Column(Float, nullable=True)    # ZnO
-    so3 = Column(Float, nullable=True)    # SO3
+    tho2 = Column(Float, nullable=True)  # ThO2
+    v2o3 = Column(Float, nullable=True)  # V2O3
+    zno = Column(Float, nullable=True)  # ZnO
+    so3 = Column(Float, nullable=True)  # SO3
 
     # Летучие компоненты
-    f = Column(Float, nullable=True)       # F
+    f = Column(Float, nullable=True)  # F
 
     # Totals
-    total_oxides = Column(Float, nullable=True)   # 'Total' -> total_oxides
-    total_calculated = Column(Float, nullable=True)  # 'total' (from val_17 for tube 2_2) -> total_calculated
+    total_oxides = Column(Float, nullable=True)  # 'Total' -> total_oxides
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -1129,7 +1361,7 @@ class Oxides(Base):
         return f"<Oxides(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
 
     @classmethod
-    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
         """
         Импорт данных по оксидам для конкретной трубки
         """
@@ -1143,64 +1375,62 @@ class Oxides(Base):
             existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
 
             if existing_count > 0:
-                if if_exists == 'fail':
-                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
-                elif if_exists == 'replace':
+                if if_exists == "fail":
+                    raise ValueError(
+                        f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)"
+                    )
+                elif if_exists == "replace":
                     deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
                     session.commit()
                     print(f"Удалено {deleted} существующих записей")
-                elif if_exists == 'append':
+                elif if_exists == "append":
                     print(f"Добавление к {existing_count} существующим записям")
 
             # Импортируем новые данные
-            records = df.to_dict('records')
+            records = df.to_dict("records")
             imported_count = 0
 
             for record in records:
                 oxides = cls(
                     pipe_uuid=pipe_uuid,
-
                     # Идентификаторы
-                    sample_id=record.get('Образец'),
-                    point_id=record.get('точки'),
-                    mineral=record.get('минерал'),
-                    source=record.get('Источник'),
-                    rock_type=record.get('Порода'),
-
+                    sample_id=record.get("Образец"),
+                    point_id=record.get("точки"),
+                    mineral=record.get("минерал"),
+                    source=record.get("Источник"),
+                    rock_type=record.get("Порода"),
                     # Основные оксиды
-                    sio2=record.get('SiO2'),
-                    tio2=record.get('TiO2'),
-                    al2o3=record.get('Al2O3'),
-                    fe2o3=record.get('Fe2O3'),
-                    feo=record.get('FeO'),
-                    mgo=record.get('MgO'),
-                    cao=record.get('CaO'),
-                    na2o=record.get('Na2O'),
-                    k2o=record.get('K2O'),
-                    mno=record.get('MnO'),
-                    p2o5=record.get('P2O5'),
-                    cr2o3=record.get('Cr2O3'),
-                    nio=record.get('NiO'),
-
+                    sio2=record.get("SiO2"),
+                    tio2=record.get("TiO2"),
+                    al2o3=record.get("Al2O3"),
+                    fe2o3=record.get("Fe2O3"),
+                    feo=record.get("FeO"),
+                    mgo=record.get("MgO"),
+                    cao=record.get("CaO"),
+                    na2o=record.get("Na2O"),
+                    k2o=record.get("K2O"),
+                    mno=record.get("MnO"),
+                    p2o5=record.get("P2O5"),
+                    cr2o3=record.get("Cr2O3"),
+                    nio=record.get("NiO"),
                     # Редкоземельные и другие
-                    bao=record.get('BaO'),
-                    sro=record.get('SrO'),
-                    ce2o3=record.get('Ce2O3'),
-                    la2o3=record.get('La2O3'),
-                    nd2o3=record.get('Nd2O3'),
-                    nb2o5=record.get('Nb2O5'),
-                    ta2o5=record.get('Ta2O5'),
-                    tho2=record.get('ThO2'),
-                    v2o3=record.get('V2O3'),
-                    zno=record.get('ZnO'),
-                    so3=record.get('SO3'),
-
+                    bao=record.get("BaO"),
+                    sro=record.get("SrO"),
+                    ce2o3=record.get("Ce2O3"),
+                    la2o3=record.get("La2O3"),
+                    nd2o3=record.get("Nd2O3"),
+                    nb2o5=record.get("Nb2O5"),
+                    ta2o5=record.get("Ta2O5"),
+                    tho2=record.get("ThO2"),
+                    v2o3=record.get("V2O3"),
+                    zno=record.get("ZnO"),
+                    so3=record.get("SO3"),
                     # Летучие
-                    f=record.get('F'),
-
+                    f=record.get("F"),
                     # Totals
-                    total_oxides=record.get('Total'),  # DataFrame: 'Total' -> model: total_oxides
-                    total_calculated=record.get('total')  # DataFrame: 'total' (from val_17 for tube 2_2) -> model: total_calculated
+                    total_oxides=record.get(
+                        "Total", record.get("total", record.get("val_17"))
+                    ),  # DataFrame: 'Total' -> model: total_oxides
                 )
 
                 session.add(oxides)
@@ -1210,7 +1440,9 @@ class Oxides(Base):
                     session.commit()
 
             session.commit()
-            print(f"Импортировано {imported_count} записей оксидов для трубки {pipe_uuid}")
+            print(
+                f"Импортировано {imported_count} записей оксидов для трубки {pipe_uuid}"
+            )
             return imported_count
 
         except Exception as e:
@@ -1225,7 +1457,8 @@ class Isotopes(Base):
     """
     Изотопные данные (прямая привязка к трубке)
     """
-    __tablename__ = 'isotopes'
+
+    __tablename__ = "isotopes"
 
     # Primary Key
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -1239,50 +1472,50 @@ class Isotopes(Base):
     source = Column(String(100), nullable=True)  # 'Источник'
 
     # Концентрации элементов (ppm)
-    rb_ppm = Column(Float, nullable=True)   # Rb (ppm)
-    sr_ppm = Column(Float, nullable=True)   # Sr (ppm)
-    sm_ppm = Column(Float, nullable=True)   # Sm (ppm)
-    nd_ppm = Column(Float, nullable=True)   # Nd (ppm)
-    lu_ppm = Column(Float, nullable=True)   # Lu (ppm)
-    hf_ppm = Column(Float, nullable=True)   # Hf (ppm)
+    rb_ppm = Column(Float, nullable=True)  # Rb (ppm)
+    sr_ppm = Column(Float, nullable=True)  # Sr (ppm)
+    sm_ppm = Column(Float, nullable=True)  # Sm (ppm)
+    nd_ppm = Column(Float, nullable=True)  # Nd (ppm)
+    lu_ppm = Column(Float, nullable=True)  # Lu (ppm)
+    hf_ppm = Column(Float, nullable=True)  # Hf (ppm)
 
     # Отношения концентраций
-    rb_sr = Column(Float, nullable=True)    # Rb/Sr
-    sm_nd = Column(Float, nullable=True)    # Sm/Nd
-    lu_hf = Column(Float, nullable=True)    # Lu/Hf (если есть)
+    rb_sr = Column(Float, nullable=True)  # Rb/Sr
+    sm_nd = Column(Float, nullable=True)  # Sm/Nd
+    lu_hf = Column(Float, nullable=True)  # Lu/Hf (если есть)
 
     # Обратные величины
-    one_nd = Column(Float, nullable=True)   # 1/Nd
-    one_sr = Column(Float, nullable=True)   # 1/Sr
+    one_nd = Column(Float, nullable=True)  # 1/Nd
+    one_sr = Column(Float, nullable=True)  # 1/Sr
 
     # Изотопные отношения
-    nd143_nd144 = Column(Float, nullable=True)      # 143Nd/144Nd
-    nd143_nd144_i = Column(Float, nullable=True)    # (143Nd/144Nd)i
-    sm147_nd144 = Column(Float, nullable=True)      # 147Sm/144Nd
+    nd143_nd144 = Column(Float, nullable=True)  # 143Nd/144Nd
+    nd143_nd144_i = Column(Float, nullable=True)  # (143Nd/144Nd)i
+    sm147_nd144 = Column(Float, nullable=True)  # 147Sm/144Nd
 
-    sr87_sr86 = Column(Float, nullable=True)        # 87Sr/86Sr
-    sr87_sr86_i = Column(Float, nullable=True)      # (87Sr/86Sr)i
-    rb87_sr86 = Column(Float, nullable=True)        # 87Rb/86Sr
+    sr87_sr86 = Column(Float, nullable=True)  # 87Sr/86Sr
+    sr87_sr86_i = Column(Float, nullable=True)  # (87Sr/86Sr)i
+    rb87_sr86 = Column(Float, nullable=True)  # 87Rb/86Sr
 
-    hf176_hf177 = Column(Float, nullable=True)      # 176Hf/177Hf
-    lu176_hf177 = Column(Float, nullable=True)      # 176Lu/177Hf
+    hf176_hf177 = Column(Float, nullable=True)  # 176Hf/177Hf
+    lu176_hf177 = Column(Float, nullable=True)  # 176Lu/177Hf
 
     # Эпсилон-нотации
-    eps_nd = Column(Float, nullable=True)    # εNd
-    eps_sr = Column(Float, nullable=True)    # εSr
-    eps_hf = Column(Float, nullable=True)    # εHf
+    eps_nd = Column(Float, nullable=True)  # εNd
+    eps_sr = Column(Float, nullable=True)  # εSr
+    eps_hf = Column(Float, nullable=True)  # εHf
 
     # Погрешности (2σ)
-    sigma_2 = Column(Float, nullable=True)           # 2σ
-    sigma_2_1 = Column(Float, nullable=True)         # 2σ_1
-    sigma_2_2 = Column(Float, nullable=True)         # 2σ_2
-    sigma_2_3 = Column(Float, nullable=True)         # 2σ_3
-    sigma_2_4 = Column(Float, nullable=True)         # 2σ_4
+    sigma_2 = Column(Float, nullable=True)  # 2σ
+    sigma_2_1 = Column(Float, nullable=True)  # 2σ_1
+    sigma_2_2 = Column(Float, nullable=True)  # 2σ_2
+    sigma_2_3 = Column(Float, nullable=True)  # 2σ_3
+    sigma_2_4 = Column(Float, nullable=True)  # 2σ_4
 
     # Возраст
-    age_ma = Column(Float, nullable=True)            # 'Возраст_млн'
-    age_ma_1 = Column(Float, nullable=True)          # 'Возраст_млн_1'
-    age_ma_2 = Column(Float, nullable=True)          # 'Возраст_млн_2'
+    age_ma = Column(Float, nullable=True)  # 'Возраст_млн'
+    age_ma_1 = Column(Float, nullable=True)  # 'Возраст_млн_1'
+    age_ma_2 = Column(Float, nullable=True)  # 'Возраст_млн_2'
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -1291,10 +1524,19 @@ class Isotopes(Base):
         return f"<Isotopes(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
 
     @classmethod
-    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
         """
         Импорт изотопных данных для конкретной трубки
         """
+
+        def sigma(value):
+            if value is None:
+                return None
+            if isinstance(value, str) and value.startswith("±"):
+                return float(value[1:])
+            else:
+                return float(value)
+
         engine = create_engine(connection_string)
         cls.metadata.create_all(engine)
         Session = sessionmaker(bind=engine)
@@ -1305,74 +1547,66 @@ class Isotopes(Base):
             existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
 
             if existing_count > 0:
-                if if_exists == 'fail':
-                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
-                elif if_exists == 'replace':
+                if if_exists == "fail":
+                    raise ValueError(
+                        f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)"
+                    )
+                elif if_exists == "replace":
                     deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
                     session.commit()
                     print(f"Удалено {deleted} существующих записей")
-                elif if_exists == 'append':
+                elif if_exists == "append":
                     print(f"Добавление к {existing_count} существующим записям")
 
             # Импортируем новые данные
-            records = df.to_dict('records')
+            records = df.to_dict("records")
             imported_count = 0
 
             for record in records:
                 isotopes = cls(
                     pipe_uuid=pipe_uuid,
-
                     # Идентификаторы
-                    sample_id=record.get('Образец'),
-                    sample_id_alt=record.get('Образец_1') or record.get('Образец_2'),
-                    source=record.get('Источник'),
-
+                    sample_id=record.get("Образец"),
+                    sample_id_alt=record.get("Образец_1") or record.get("Образец_2"),
+                    source=record.get("Источник"),
                     # Концентрации
-                    rb_ppm=record.get('Rb_ppm'),
-                    sr_ppm=record.get('Sr_ppm'),
-                    sm_ppm=record.get('Sm_ppm'),
-                    nd_ppm=record.get('Nd_ppm'),
-                    lu_ppm=record.get('Lu_ppm'),
-                    hf_ppm=record.get('Hf_ppm'),
-
+                    rb_ppm=record.get("Rb_ppm"),
+                    sr_ppm=record.get("Sr_ppm"),
+                    sm_ppm=record.get("Sm_ppm"),
+                    nd_ppm=record.get("Nd_ppm"),
+                    lu_ppm=record.get("Lu_ppm"),
+                    hf_ppm=record.get("Hf_ppm"),
                     # Отношения
-                    rb_sr=record.get('Rb_Sr'),
-                    sm_nd=record.get('Sm_Nd'),
-
+                    rb_sr=record.get("Rb_Sr"),
+                    sm_nd=record.get("Sm_Nd"),
                     # Обратные
-                    one_nd=record.get('1_Nd'),
-                    one_sr=record.get('1_Sr'),
-
+                    one_nd=record.get("1_Nd"),
+                    one_sr=record.get("1_Sr"),
                     # Nd изотопы
-                    nd143_nd144=record.get('143Nd_144Nd'),
-                    nd143_nd144_i=record.get('143Nd_144Nd_i'),
-                    sm147_nd144=record.get('147Sm_144Nd'),
-
+                    nd143_nd144=record.get("143Nd_144Nd"),
+                    nd143_nd144_i=record.get("143Nd_144Nd_i"),
+                    sm147_nd144=record.get("147Sm_144Nd"),
                     # Sr изотопы
-                    sr87_sr86=record.get('87Sr_86Sr'),
-                    sr87_sr86_i=record.get('87Sr_86Sr_i'),
-                    rb87_sr86=record.get('87Rb_86Sr'),
-
+                    sr87_sr86=record.get("87Sr_86Sr"),
+                    sr87_sr86_i=record.get("87Sr_86Sr_i"),
+                    rb87_sr86=record.get("87Rb_86Sr"),
                     # Hf изотопы
-                    hf176_hf177=record.get('176Hf_177Hf'),
-                    lu176_hf177=record.get('176Lu_177Hf'),
-
+                    hf176_hf177=record.get("176Hf_177Hf"),
+                    lu176_hf177=record.get("176Lu_177Hf"),
                     # Эпсилон
-                    eps_nd=record.get('epsNd'),
-                    eps_sr=record.get('epsSr'),
-                    eps_hf=record.get('epsHf'),
-
+                    eps_nd=record.get("epsNd"),
+                    eps_sr=record.get("epsSr"),
+                    eps_hf=record.get("epsHf"),
                     # Погрешности
-                    sigma_2=record.get('2σ'),
-                    sigma_2_1=record.get('2σ_1'),
-                    sigma_2_2=record.get('2σ_2'),
-                    sigma_2_3=record.get('2σ_3'),
-                    sigma_2_4=record.get('2σ_4'),
-
+                    sigma_2=sigma(record.get("2σ")),
+                    sigma_2_1=sigma(record.get("2σ_1")),
+                    sigma_2_2=sigma(record.get("2σ_2")),
+                    sigma_2_3=sigma(record.get("2σ_3")),
+                    sigma_2_4=sigma(record.get("2σ_4")),
                     # Возраст
-                    age_ma=record.get('Возраст_млн'),
-                    age_ma_1=record.get('Возраст_млн_1'),
-                    age_ma_2=record.get('Возраст_млн_2')
+                    age_ma=record.get("Возраст_млн"),
+                    age_ma_1=record.get("Возраст_млн_1"),
+                    age_ma_2=record.get("Возраст_млн_2"),
                 )
 
                 session.add(isotopes)
@@ -1382,7 +1616,9 @@ class Isotopes(Base):
                     session.commit()
 
             session.commit()
-            print(f"Импортировано {imported_count} записей изотопии для трубки {pipe_uuid}")
+            print(
+                f"Импортировано {imported_count} записей изотопии для трубки {pipe_uuid}"
+            )
             return imported_count
 
         except Exception as e:

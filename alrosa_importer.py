@@ -11,6 +11,7 @@ import openpyxl
 import pandas as pd
 import pudb
 from openpyxl.cell import Cell
+from pandas.core.internals.blocks import IgnoreRaise
 from pandas.core.internals.managers import new_block
 from rdflib import (
     DCTERMS,
@@ -26,8 +27,20 @@ from rdflib import (
 from rdflib.namespace import SDO, WGS
 
 from alrosa_convert_features import canonicalize_keys, convert_features_to_rdf
+from alrosa_models import (
+    Diamonds,
+    EPMAAnalysis,
+    Geochemy,
+    Isotopes,
+    LAMAnalysis,
+    Oxides,
+    Petrochemy,
+    Phlogopite,
+)
 from namespace import BIBO, CGI, DBP, DBP_OWL, GS, MT, PT, SCHEMA, P
 
+# CONNECTION_STRING = "sqlite://./tubes.db"
+CONNECTION_STRING = "sqlite:///:memory:"
 # Создание графа
 G = Graph()
 
@@ -352,11 +365,11 @@ def import_excel_table_into_dict(workbook, sheet_name_or_index):
     micro_oxides = import_head_title_multirow_as_data_frame(sheet, 1, "МИКРООКСИДЫ")
     add_to_dict_if_not_none(dfs, "oxides", micro_oxides)
 
-    petrochemistry = import_transposed_table_as_data_frame(sheet, 1, "Петрохимия")
-    add_to_dict_if_not_none(dfs, "petrochemy", petrochemistry)
+    petrochemy = import_transposed_table_as_data_frame(sheet, 1, "Петрохимия")
+    add_to_dict_if_not_none(dfs, "petrochemy", petrochemy)
 
     geochemy = import_transposed_table_as_data_frame(sheet, 1, "Геохимия")
-    add_to_dict_if_not_none(dfs, "geochemy", petrochemistry)
+    add_to_dict_if_not_none(dfs, "geochemy", geochemy)
 
     add_to_dict_if_not_none(data_dict, "frames", dfs)
 
@@ -519,15 +532,12 @@ def normalize_columns(df, table_name):
 """
 
 import re
+import uuid
 
 import pandas as pd
-
-import pandas as pd
-import re
-from sqlalchemy import Column, String, Float, JSON, DateTime, func
+from sqlalchemy import JSON, Column, DateTime, Float, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
-import uuid
 
 
 def preprocess_diamonds(df):
@@ -883,6 +893,64 @@ def generate_deterministic_uuid(
     return new_pipe_uuid
 
 
+def convert_dataframes_to_sql(dfs, connection_string, pipe_uuid):
+    frame_names = [
+        "phlogopite",
+        "isotopic",
+        "epma",
+        "lam",
+        "diamonds",
+        "oxides",
+        "petrochemy",
+        "geochemy",
+    ]
+    if "oxides" in dfs:  #
+        print("Importing Oxides")
+        df = dfs["oxides"]
+        Oxides.import_from_dataframe(df, pipe_uuid, connection_string, if_exists="fail")
+    if "diamonds" in dfs:  #
+        print("Importing Diamonds")
+        df = dfs["diamonds"]
+        Diamonds.import_from_dataframe(
+            df, pipe_uuid, connection_string, if_exists="fail"
+        )
+    if "isotopic" in dfs:  #
+        print("Importing Isotopic")
+        df = dfs["isotopic"]
+        Isotopes.import_from_dataframe(
+            df, pipe_uuid, connection_string, if_exists="fail"
+        )
+    if "phlogopite" in dfs:  #
+        print("Importing Phlogopite")
+        df = dfs["phlogopite"]
+        Phlogopite.import_from_dataframe(
+            df, pipe_uuid, connection_string, if_exists="fail"
+        )
+    if "petrochemy" in dfs:  #
+        print("Importing Petrochemy")
+        df = dfs["petrochemy"]
+        Petrochemy.import_from_dataframe(
+            df, pipe_uuid, connection_string, if_exists="fail"
+        )
+    if "geochemy" in dfs:  #
+        print("Importing Geochemy")
+        df = dfs["geochemy"]
+        Geochemy.import_from_dataframe(
+            df, pipe_uuid, connection_string, if_exists="fail"
+        )
+    # Import serious tables EPMA, LAM
+    if "epma" in dfs:  #
+        print("Importing EPMA")
+        df = dfs["epma"]
+        EPMAAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
+    if "lam" in dfs:  #
+        print("Importing LAM")
+        df = dfs["lam"]
+        LAMAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
+    print("Frames:", dfs.keys())
+    # quit()
+
+
 def export_tube(g, tube):
     tube_name, tube_dict = tube
 
@@ -904,8 +972,11 @@ def export_tube(g, tube):
     g.add((tube_uri, PT.uuid, Literal(pipe_uuid, datatype=XSD.string)))
 
     features = tube_dict.get("features", {})
+    dataframes = tube_dict.get("frames", {})
 
     convert_features_to_rdf(G, (tube_name, features), tube_uri)
+
+    convert_dataframes_to_sql(dataframes, CONNECTION_STRING, pipe_uuid)
 
     print("INFO: features after conversion:", end=": ")
     pprint(features)
