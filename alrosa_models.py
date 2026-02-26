@@ -1,0 +1,748 @@
+from sqlalchemy import (
+    Column,
+    String,
+    Float,
+    Integer,
+    Boolean,
+    JSON,
+    DateTime,
+    UniqueConstraint,
+)
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import uuid
+
+Base = declarative_base()
+
+
+class Diamonds(Base):
+    """
+    T-Box таблица для данных по алмазам
+    """
+
+    __tablename__ = "diamonds"
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с A-Box (трубка) - одинаковый для всех записей при одноразовом импорте
+    pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
+
+    # Идентификаторы пробы (из исходных данных)
+    sample_id = Column(String(50), nullable=False, index=True)  # 'пробы'
+    sample_id_alt = Column(String(50), nullable=True)  # 'пробы_1' (если есть)
+    borehole = Column(String(50), nullable=True)  # 'скважина'
+    rock_type = Column(String(100), nullable=True)  # 'порода'
+    interval = Column(String(50), nullable=True)  # 'Интервал'
+
+    # Весовые показатели
+    initial_weight_kg = Column(Float, nullable=True)  # 'Исход_вес_кг'
+    acid_concentrate_kg = Column(
+        Float, nullable=True
+    )  # 'Выход_кислотного_концентрата_кг'
+    salt_concentrate_g = Column(Float, nullable=True)  # 'Выход_солевого_концентр_г'
+    alkaline_concentrate_g = Column(
+        Float, nullable=True
+    )  # 'Выход_щелочного_концентрата_г'
+    heavy_fraction_g = Column(Float, nullable=True)  # 'Выход_тяжелой_фракции_г'
+    acid_cleaning_g = Column(Float, nullable=True)  # 'Кислотная_очистка_солев_Конц_г'
+
+    # Алмазы
+    diamonds_monocrystals = Column(
+        Integer, nullable=True
+    )  # 'Количество_обнаруженных_алмазов_монокристаллы'
+    diamonds_fragments = Column(
+        Integer, nullable=True
+    )  # 'Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы'
+    crystals_per_kg = Column(Float, nullable=True)  # 'кристаллов_обломков_кг'
+
+    # Служебные поля
+    check = Column(Boolean, nullable=True)  # 'check' (ok -> True)
+    total = Column(Float, nullable=True)  # 'total'
+
+    # JSONB с фракциями (все диапазоны)
+    fractions = Column(JSON, nullable=False, default={})
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    def __repr__(self):
+        return f"<Diamonds(sample_id='{self.sample_id}', pipe_uuid={self.pipe_uuid})>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
+        """
+        Одноразовый импорт данных для конкретной трубки
+
+        Parameters:
+        df: pandas DataFrame - предобработанный DataFrame (после preprocess_diamonds)
+        pipe_uuid: UUID или str - UUID трубки из A-Box (одинаковый для всех записей)
+        connection_string: str - строка подключения к БД
+        if_exists: str - что делать если данные уже существуют:
+            'fail' - выбросить ошибку
+            'replace' - заменить существующие данные
+            'append' - добавить к существующим (не рекомендуется для одноразового импорта)
+
+        Returns:
+        int - количество загруженных записей
+        """
+
+        # Конвертируем pipe_uuid в UUID если передан строкой
+        if isinstance(pipe_uuid, str):
+            pipe_uuid = uuid.UUID(pipe_uuid)
+
+        # Создаём движок и сессию
+        engine = create_engine(connection_string)
+
+        # Создаём таблицу если не существует
+        cls.metadata.create_all(engine)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Проверяем, есть ли уже данные для этой трубки
+            existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
+
+            if existing_count > 0:
+                if if_exists == "fail":
+                    raise ValueError(
+                        f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей). "
+                        f"Используйте if_exists='replace' для замены или 'append' для добавления."
+                    )
+
+                elif if_exists == "replace":
+                    # Удаляем существующие записи
+                    deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
+                    session.commit()
+                    print(
+                        f"Удалено {deleted} существующих записей для трубки {pipe_uuid}"
+                    )
+
+                elif if_exists == "append":
+                    print(
+                        f"Добавление к {existing_count} существующим записям для трубки {pipe_uuid}"
+                    )
+                else:
+                    raise ValueError(f"Недопустимое значение if_exists: {if_exists}")
+
+            # Преобразуем DataFrame в список словарей
+            records = df.to_dict("records")
+            imported_count = 0
+
+            for record in records:
+                # Создаём объект модели
+                diamond = cls(
+                    pipe_uuid=pipe_uuid,
+                    sample_id=record.get("пробы"),
+                    sample_id_alt=record.get("пробы_1"),
+                    borehole=record.get("скважина"),
+                    rock_type=record.get("порода"),
+                    interval=record.get("Интервал"),
+                    initial_weight_kg=record.get("Исход_вес_кг"),
+                    acid_concentrate_kg=record.get("Выход_кислотного_концентрата_кг"),
+                    salt_concentrate_g=record.get("Выход_солевого_концентр_г"),
+                    alkaline_concentrate_g=record.get("Выход_щелочного_концентрата_г"),
+                    heavy_fraction_g=record.get("Выход_тяжелой_фракции_г"),
+                    acid_cleaning_g=record.get("Кислотная_очистка_солев_Конц_г"),
+                    diamonds_monocrystals=record.get(
+                        "Количество_обнаруженных_алмазов_монокристаллы"
+                    ),
+                    diamonds_fragments=record.get(
+                        "Количество_обнаруженных_алмазов_обломки_и_поликр_исталлы"
+                    ),
+                    crystals_per_kg=record.get("кристаллов_обломков_кг"),
+                    check=record.get("check"),
+                    total=record.get("total"),
+                    fractions=record.get("fractions", {}),
+                )
+                session.add(diamond)
+                imported_count += 1
+
+            session.commit()
+            print(
+                f"Успешно импортировано {imported_count} записей для трубки {pipe_uuid}"
+            )
+            return imported_count
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
+
+    @classmethod
+    def get_by_pipe(cls, pipe_uuid, session):
+        """
+        Получить все записи для конкретной трубки
+        """
+        if isinstance(pipe_uuid, str):
+            pipe_uuid = uuid.UUID(pipe_uuid)
+        return session.query(cls).filter_by(pipe_uuid=pipe_uuid).all()
+
+    @classmethod
+    def delete_by_pipe(cls, pipe_uuid, session):
+        """
+        Удалить все записи для конкретной трубки
+        """
+        if isinstance(pipe_uuid, str):
+            pipe_uuid = uuid.UUID(pipe_uuid)
+        deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
+        session.commit()
+        return deleted
+
+
+
+class Sample(Base):
+    """
+    Сущность Шашка (Sample)
+    Связывает шашку с трубкой
+    """
+
+    __tablename__ = "samples"
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с трубкой (A-Box)
+    pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
+
+    # Идентификатор шашки из исходных данных
+    sample_name = Column(String(50), nullable=False)  # 'шашка'
+
+    # Метаданные шашки
+    laboratory = Column(String(100), nullable=True)  # 'Лаборатория'
+    rock_type = Column(String(100), nullable=True)  # 'Порода'
+    depth = Column(Float, nullable=True)  # 'глубина'
+    class_name = Column(String(50), nullable=True)  # 'класс'
+    line_borehole = Column(String(100), nullable=True)  # 'линия_скважина'
+    body = Column(String(100), nullable=True)  # 'тело'
+    fraction = Column(String(50), nullable=True)  # 'фракция'
+    note = Column(String(500), nullable=True)  # 'примечание'
+    dimension = Column(String(50), nullable=True)  # 'размерность'
+
+    # Связи
+    grains = relationship(
+        "Grain", back_populates="sample", cascade="all, delete-orphan"
+    )
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    # Уникальность sample_name в пределах трубки
+    __table_args__ = (
+        UniqueConstraint("pipe_uuid", "sample_name", name="uix_pipe_sample"),
+    )
+
+    def __repr__(self):
+        return f"<Sample(sample_name='{self.sample_name}', pipe_uuid={self.pipe_uuid})>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string):
+        """
+        Импорт уникальных шашек из DataFrame EPMA
+        """
+        engine = create_engine(connection_string)
+        cls.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Получаем уникальные шашки
+            unique_samples = df[["шашка"]].drop_duplicates()
+            imported_count = 0
+
+            for _, row in unique_samples.iterrows():
+                sample_name = row["шашка"]
+
+                # Проверяем, существует ли уже
+                existing = (
+                    session.query(cls)
+                    .filter_by(pipe_uuid=pipe_uuid, sample_name=sample_name)
+                    .first()
+                )
+
+                if not existing:
+                    # Собираем метаданные для этой шашки
+                    sample_data = df[df["шашка"] == sample_name].iloc[0]
+
+                    sample = cls(
+                        pipe_uuid=pipe_uuid,
+                        sample_name=sample_name,
+                        laboratory=sample_data.get("Лаборатория"),
+                        rock_type=sample_data.get("Порода"),
+                        depth=sample_data.get("глубина"),
+                        class_name=sample_data.get("класс"),
+                        line_borehole=sample_data.get("линия_скважина"),
+                        body=sample_data.get("тело"),
+                        fraction=sample_data.get("фракция"),
+                        note=sample_data.get("примечание"),
+                        dimension=sample_data.get("размерность"),
+                    )
+                    session.add(sample)
+                    imported_count += 1
+
+            session.commit()
+            print(f"Импортировано {imported_count} новых шашек для трубки {pipe_uuid}")
+
+        finally:
+            session.close()
+
+
+class Grain(Base):
+    """
+    Сущность Зерно (Grain)
+    Привязка зерна к шашке
+    """
+    __tablename__ = 'grains'
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    sample_id = Column(UUID(as_uuid=True), ForeignKey('samples.id', ondelete='CASCADE'), nullable=False)
+    grain_name = Column(String(50), nullable=False)
+
+    # Связи
+    sample = relationship("Sample", back_populates="grains")
+    epma_analyses = relationship("EPMAAnalysis", back_populates="grain", cascade="all, delete-orphan")
+    lam_analyses = relationship("LAMAnalysis", back_populates="grain", cascade="all, delete-orphan")
+
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    __table_args__ = (
+        UniqueConstraint('sample_id', 'grain_name', name='uix_sample_grain'),
+    )
+
+
+class EPMAAnalysis(Base):
+    """
+    EPMA анализ зерна
+    Содержит все геохимические данные для конкретного зерна
+    """
+
+    __tablename__ = "epma_analyses"
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с зерном
+    grain_id = Column(
+        UUID(as_uuid=True), ForeignKey("grains.id", ondelete="CASCADE"), nullable=False
+    )
+
+    # Основные оксиды
+    al2o3 = Column(Float, nullable=True)  # Al2O3
+    sio2 = Column(Float, nullable=True)  # SiO2
+    tio2 = Column(Float, nullable=True)  # TiO2
+    feo = Column(Float, nullable=True)  # FeO
+    fe2o3 = Column(Float, nullable=True)  # Fe2O3
+    feo_alt = Column(Float, nullable=True)  # FeO_1 (альтернативное измерение)
+    mgo = Column(Float, nullable=True)  # MgO
+    cao = Column(Float, nullable=True)  # CaO
+    na2o = Column(Float, nullable=True)  # Na2O
+    k2o = Column(Float, nullable=True)  # K2O
+    mno = Column(Float, nullable=True)  # MnO
+    p2o5 = Column(Float, nullable=True)  # P2O5
+    cr2o3 = Column(Float, nullable=True)  # Cr2O3
+    nio = Column(Float, nullable=True)  # NiO
+    nio_1 = Column(Float, nullable=True)  # NiO (вариант 2)
+    nio_2 = Column(Float, nullable=True)  # NiO (вариант 3)
+    coo = Column(Float, nullable=True)  # CoO
+    v2o3 = Column(Float, nullable=True)  # V2O3
+    v2o3_1 = Column(Float, nullable=True)  # V2O3 (вариант 2)
+    zno = Column(Float, nullable=True)  # ZnO
+    zno_1 = Column(Float, nullable=True)  # ZnO (вариант 2)
+
+    # Минорные элементы
+    v = Column(Float, nullable=True)  # V (металл)
+    zn = Column(Float, nullable=True)  # Zn (металл)
+    x_coord = Column(Float, nullable=True)  # X координата
+    y_coord = Column(Float, nullable=True)  # Y координата
+
+    # Специальные параметры
+    t_zn_chr = Column(Float, nullable=True)  # T(Zn) Chr
+    total = Column(Float, nullable=True)  # Total
+    no = Column(String(20), nullable=True)  # No.
+
+    # Служебные поля
+    a_number = Column(Float, nullable=True)  # a_number (из val_20)
+    correction = Column(Float, nullable=True)  # correction (из val_17 для 1_5)
+    # TODO: REPROCESS THESE FIELDS
+    val_12 = Column(Float, nullable=True)
+    val_13 = Column(Float, nullable=True)
+    val_14 = Column(Float, nullable=True)
+    val_15 = Column(Float, nullable=True)
+    val_16 = Column(Float, nullable=True)
+    val_17 = Column(Float, nullable=True)  # для 2_1 (оставлен)
+
+    # Счетчики
+    count_akb = Column(Integer, nullable=True)  # 'счет_АКБ'
+    count_pk = Column(Integer, nullable=True)  # 'счет_ПК'
+
+    # Дополнительная информация
+    mineral = Column(String(100), nullable=True)  # 'минерал'
+    mineral_alt = Column(String(100), nullable=True)  # 'минерал_1'
+    summa = Column(Float, nullable=True)  # 'Сумма'
+
+    # Связь
+    grain = relationship("Grain", back_populates="analyses")
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __repr__(self):
+        return f"<EPMAAnalysis(grain_id={self.grain_id})>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string):
+        """
+        Импорт EPMA данных с созданием иерархии Sample -> Grain -> Analysis
+        """
+        engine = create_engine(connection_string)
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # 1. Сначала импортируем шашки
+            Sample.import_from_dataframe(df, pipe_uuid, connection_string)
+
+            # 2. Создаем маппинг sample_name -> sample_id
+            samples = {s.sample_name: s.id for s in session.query(Sample).all()}
+
+            # 3. Группируем по шашкам и зернам
+            grain_cache = {}  # (sample_id, grain_name) -> grain_id
+            imported_count = 0
+
+            for _, row in df.iterrows():
+                sample_name = row.get("шашка")
+                grain_name = row.get("зерно")
+
+                if not sample_name or not grain_name:
+                    continue
+
+                sample_id = samples.get(sample_name)
+                if not sample_id:
+                    continue
+
+                # Получаем или создаем зерно
+                grain_key = (sample_id, grain_name)
+                if grain_key not in grain_cache:
+                    grain = (
+                        session.query(Grain)
+                        .filter_by(sample_id=sample_id, grain_name=grain_name)
+                        .first()
+                    )
+
+                    if not grain:
+                        grain = Grain(sample_id=sample_id, grain_name=grain_name)
+                        session.add(grain)
+                        session.flush()  # чтобы получить ID
+
+                    grain_cache[grain_key] = grain.id
+
+                grain_id = grain_cache[grain_key]
+
+                # Создаем анализ
+                analysis = cls(
+                    grain_id=grain_id,
+                    # Основные оксиды
+                    al2o3=row.get("Al2O3"),
+                    sio2=row.get("SiO2"),
+                    tio2=row.get("TiO2"),
+                    feo=row.get("FeO"),
+                    fe2o3=row.get("Fe2O3"),
+                    feo_alt=row.get("FeO_1"),
+                    mgo=row.get("MgO"),
+                    cao=row.get("CaO"),
+                    na2o=row.get("Na2O"),
+                    k2o=row.get("K2O"),
+                    mno=row.get("MnO"),
+                    p2o5=row.get("P2O5"),
+                    cr2o3=row.get("Cr2O3"),
+                    # Никель (три варианта)
+                    nio=row.get("NiO") if "NiO" in row else None,
+                    nio_1=row.get("NiO_1") if "NiO_1" in row else None,
+                    nio_2=row.get("NiO_2") if "NiO_2" in row else None,
+                    coo=row.get("CoO"),
+                    # Ванадий (два варианта)
+                    v2o3=row.get("V2O3") if "V2O3" in row else None,
+                    v2o3_1=row.get("V2O3_1") if "V2O3_1" in row else None,
+                    # Цинк (два варианта)
+                    zno=row.get("ZnO") if "ZnO" in row else None,
+                    zno_1=row.get("ZnO_1") if "ZnO_1" in row else None,
+                    # Минорные элементы
+                    v=row.get("V"),
+                    zn=row.get("Zn"),
+                    x_coord=row.get("X"),
+                    y_coord=row.get("Y"),
+                    # Специальные
+                    t_zn_chr=row.get("T_Zn_Chr"),
+                    total=row.get("Total"),
+                    no=row.get("No"),
+                    # Служебные
+                    a_number=row.get("a_number"),
+                    correction=row.get("correction"),
+                    val_12=row.get("val_12"),
+                    val_13=row.get("val_13"),
+                    val_14=row.get("val_14"),
+                    val_15=row.get("val_15"),
+                    val_16=row.get("val_16"),
+                    val_17=row.get("val_17"),
+                    # Счетчики
+                    count_akb=row.get("счет_АКБ"),
+                    count_pk=row.get("счет_ПК"),
+                    # Минералы
+                    mineral=row.get("минерал"),
+                    mineral_alt=row.get("минерал_1"),
+                    summa=row.get("Сумма"),
+                )
+
+                session.add(analysis)
+                imported_count += 1
+
+                # Периодический commit для больших DataFrame
+                if imported_count % 100 == 0:                    session.commit()
+
+            session.commit()
+            print(
+                f"Импортировано {imported_count} EPMA анализов для трубки {pipe_uuid}"
+            )
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
+
+class LAMAnalysis(Base):
+    """
+    LAM (LA-ICP-MS) анализ зерна
+    Данные лазерной абляции для выбранных зерен
+    """
+    __tablename__ = 'lam_analyses'
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с зерном (те же зерна, что и в EPMA)
+    grain_id = Column(UUID(as_uuid=True), ForeignKey('grains.id', ondelete='CASCADE'), nullable=False)
+
+    # Основные элементы (породообразующие)
+    si = Column(Float, nullable=True)  # Si
+    ti = Column(Float, nullable=True)  # Ti
+    al = Column(Float, nullable=True)  # Al
+    fe = Column(Float, nullable=True)  # Fe
+    mn = Column(Float, nullable=True)  # Mn
+    mg = Column(Float, nullable=True)  # Mg
+    ca = Column(Float, nullable=True)  # Ca
+    na = Column(Float, nullable=True)  # Na
+    k = Column(Float, nullable=True)   # K
+    p = Column(Float, nullable=True)   # P
+
+    # Редкоземельные элементы (REE)
+    la = Column(Float, nullable=True)  # La
+    ce = Column(Float, nullable=True)  # Ce
+    pr = Column(Float, nullable=True)  # Pr
+    nd = Column(Float, nullable=True)  # Nd
+    sm = Column(Float, nullable=True)  # Sm
+    eu = Column(Float, nullable=True)  # Eu
+    gd = Column(Float, nullable=True)  # Gd
+    tb = Column(Float, nullable=True)  # Tb
+    dy = Column(Float, nullable=True)  # Dy
+    ho = Column(Float, nullable=True)  # Ho
+    er = Column(Float, nullable=True)  # Er
+    tm = Column(Float, nullable=True)  # Tm
+    yb = Column(Float, nullable=True)  # Yb
+    lu = Column(Float, nullable=True)  # Lu
+
+    # Высокозарядные элементы (HFSE)
+    zr = Column(Float, nullable=True)  # Zr
+    hf = Column(Float, nullable=True)  # Hf
+    nb = Column(Float, nullable=True)  # Nb
+    ta = Column(Float, nullable=True)  # Ta
+
+    # Крупноионные литофилы (LILE)
+    rb = Column(Float, nullable=True)  # Rb
+    cs = Column(Float, nullable=True)  # Cs
+    ba = Column(Float, nullable=True)  # Ba
+    sr = Column(Float, nullable=True)  # Sr
+
+    # Переходные металлы
+    sc = Column(Float, nullable=True)  # Sc
+    v = Column(Float, nullable=True)   # V
+    cr = Column(Float, nullable=True)  # Cr
+    co = Column(Float, nullable=True)  # Co
+    ni = Column(Float, nullable=True)  # Ni
+    cu = Column(Float, nullable=True)  # Cu
+    zn = Column(Float, nullable=True)  # Zn
+
+    # Другие элементы
+    ga = Column(Float, nullable=True)  # Ga
+    ge = Column(Float, nullable=True)  # Ge (если есть)
+    as = Column(Float, nullable=True)  # As (если есть)
+    y = Column(Float, nullable=True)   # Y
+    sn = Column(Float, nullable=True)  # Sn
+    sb = Column(Float, nullable=True)  # Sb (если есть)
+    pb = Column(Float, nullable=True)  # Pb
+    bi = Column(Float, nullable=True)  # Bi (если есть)
+    th = Column(Float, nullable=True)  # Th
+    u = Column(Float, nullable=True)   # U
+
+    # Элементы, которые есть в ваших данных
+    be = Column(Float, nullable=True)  # Be
+    b = Column(Float, nullable=True)   # B
+    li = Column(Float, nullable=True)  # Li
+
+    # Счетчики (если есть в LAM)
+    count_akb = Column(Integer, nullable=True)  # 'счет_АКБ'
+    count_pk = Column(Integer, nullable=True)   # 'счет_ПК'
+
+    # Дополнительная информация
+    rock_type = Column(String(100), nullable=True)  # 'порода' (только для 1_8)
+
+    # Связь с зерном
+    grain = relationship("Grain", back_populates="lam_analyses")
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __repr__(self):
+        return f"<LAMAnalysis(grain_id={self.grain_id})>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string):
+        """
+        Импорт LAM данных с привязкой к существующим зернам из EPMA
+        """
+        engine = create_engine(connection_string)
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Получаем все зерна для данной трубки с их sample_id
+            grains = session.query(
+                Grain.id,
+                Grain.grain_name,
+                Sample.sample_name
+            ).join(Sample).filter(
+                Sample.pipe_uuid == pipe_uuid
+            ).all()
+
+            # Создаем маппинг (sample_name, grain_name) -> grain_id
+            grain_map = {}
+            for grain_id, grain_name, sample_name in grains:
+                key = (sample_name, grain_name)
+                grain_map[key] = grain_id
+
+            imported_count = 0
+            skipped_count = 0
+
+            for _, row in df.iterrows():
+                sample_name = row.get('шашка')
+                grain_name = row.get('зерно')
+
+                if not sample_name or not grain_name:
+                    continue
+
+                # Ищем зерно в маппинге
+                grain_id = grain_map.get((sample_name, grain_name))
+
+                if not grain_id:
+                    # Зерно не найдено в EPMA - пропускаем (экспертный отбор)
+                    skipped_count += 1
+                    continue
+
+                # Создаем LAM анализ
+                analysis = cls(
+                    grain_id=grain_id,
+
+                    # Основные элементы
+                    si=row.get('Si'),
+                    ti=row.get('Ti'),
+                    al=row.get('Al'),
+                    fe=row.get('Fe'),
+                    mn=row.get('Mn'),
+                    mg=row.get('Mg'),
+                    ca=row.get('Ca'),
+                    na=row.get('Na'),
+                    k=row.get('K'),
+                    p=row.get('P'),
+
+                    # Редкоземельные
+                    la=row.get('La'),
+                    ce=row.get('Ce'),
+                    pr=row.get('Pr'),
+                    nd=row.get('Nd'),
+                    sm=row.get('Sm'),
+                    eu=row.get('Eu'),
+                    gd=row.get('Gd'),
+                    tb=row.get('Tb'),
+                    dy=row.get('Dy'),
+                    ho=row.get('Ho'),
+                    er=row.get('Er'),
+                    tm=row.get('Tm'),
+                    yb=row.get('Yb'),
+                    lu=row.get('Lu'),
+
+                    # HFSE
+                    zr=row.get('Zr'),
+                    hf=row.get('Hf'),
+                    nb=row.get('Nb'),
+                    ta=row.get('Ta'),
+
+                    # LILE
+                    rb=row.get('Rb'),
+                    cs=row.get('Cs'),
+                    ba=row.get('Ba'),
+                    sr=row.get('Sr'),
+
+                    # Переходные металлы
+                    sc=row.get('Sc'),
+                    v=row.get('V'),
+                    cr=row.get('Cr'),
+                    co=row.get('Co'),
+                    ni=row.get('Ni'),
+                    cu=row.get('Cu'),
+                    zn=row.get('Zn'),
+
+                    # Другие
+                    ga=row.get('Ga'),
+                    y=row.get('Y'),
+                    sn=row.get('Sn'),
+                    pb=row.get('Pb'),
+                    th=row.get('Th'),
+                    u=row.get('U'),
+                    be=row.get('Be'),
+                    b=row.get('B'),
+                    li=row.get('Li'),
+
+                    # Счетчики
+                    count_akb=row.get('счет_АКБ'),
+                    count_pk=row.get('счет_ПК'),
+                    rock_type=row.get('порода')
+                )
+
+                session.add(analysis)
+                imported_count += 1
+
+                if imported_count % 100 == 0:
+                    session.commit()
+
+            session.commit()
+            print(f"Импортировано {imported_count} LAM анализов для трубки {pipe_uuid}")
+            print(f"Пропущено {skipped_count} записей (зерна не найдены в EPMA)")
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
+

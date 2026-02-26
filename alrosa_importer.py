@@ -522,6 +522,83 @@ import re
 
 import pandas as pd
 
+import pandas as pd
+import re
+from sqlalchemy import Column, String, Float, JSON, DateTime, func
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import declarative_base
+import uuid
+
+
+def preprocess_diamonds(df):
+    """
+    Предобработка DataFrame diamonds перед загрузкой в SQL
+    """
+    df = df.copy()
+
+    # 1. Переименовываем колонку '75' в '000_075'
+    if "75" in df.columns:
+        df.rename(columns={"75": "000_075"}, inplace=True)
+        print("Переименована колонка '75' -> '000_075'")
+
+    # 2. Словарь для переименования всех диапазонов в формат XXX_YYY
+    range_columns = {}
+    for col in df.columns:
+        # Ищем колонки вида 'XXX_YYY' или 'XXX_YYY' с цифрами
+        if re.match(r"^\d+_\d+$", col) or re.match(r"^\d+$", col):
+            if col == "000_075":  # уже обработали
+                continue
+
+            # Обработка колонок типа '700_650' (нужно переставить)
+            if "_" in col:
+                parts = col.split("_")
+                if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+                    # Переставляем в порядке возрастания
+                    start, end = sorted([int(parts[0]), int(parts[1])])
+                    new_name = f"{start:03d}_{end:03d}"
+                    range_columns[col] = new_name
+            # Обработка одиночных чисел (как '75')
+            elif col.isdigit():
+                num = int(col)
+                new_name = f"000_{num:03d}"
+                range_columns[col] = new_name
+
+    # Применяем переименование
+    df.rename(columns=range_columns, inplace=True)
+    for old, new in range_columns.items():
+        print(f"Переименована колонка '{old}' -> '{new}'")
+
+    # 3. Собираем все колонки с диапазонами
+    range_pattern = re.compile(r"^\d{3}_\d{3}$")
+    range_cols = [col for col in df.columns if range_pattern.match(col)]
+
+    # Сортируем диапазоны по возрастанию
+    def sort_key(col):
+        start, end = map(int, col.split("_"))
+        return start
+
+    range_cols.sort(key=sort_key)
+
+    print(f"\nНайдены диапазоны ({len(range_cols)}): {range_cols}")
+
+    # 4. Создаём JSONB колонку с фракциями
+    def create_fractions_json(row):
+        fractions = {}
+        for col in range_cols:
+            if pd.notna(row[col]):
+                fractions[col] = row[col]
+        return fractions
+
+    df["fractions"] = df.apply(create_fractions_json, axis=1)
+
+    # 5. Удаляем исходные колонки с диапазонами (опционально)
+    # df = df.drop(columns=range_cols)
+
+    # 6. Добавляем pipe_uuid (пока пустой, заполним позже из A-Box)
+    df["pipe_uuid"] = None
+
+    return df, range_cols
+
 
 def post_process_dataframes(normalized_dfs):
     """
@@ -561,6 +638,8 @@ def post_process_dataframes(normalized_dfs):
                 # ok -> True, всё остальное -> False
                 df["check"] = df["check"].apply(lambda x: True if x == "ok" else False)
                 print(f"  Колонка check преобразована: 'ok' -> True, иначе -> False")
+        df, _range_cols = preprocess_diamonds(df)
+        processed_dfs["diamonds"] = df
 
     # 2. Обработка epma
     if "epma" in processed_dfs:
