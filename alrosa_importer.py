@@ -393,12 +393,24 @@ def search_file_to_root(name):
 keymaster = {}
 
 
-def keymaster_update(section_key, data_section):
-    a_set = keymaster.setdefault(section_key, set())
-    if isinstance(data_section, list):
-        a_set.update(data_section)
+def keymaster_update(section_key, data_section, with_pipe_names=False, pipe_name=None):
+
+    if with_pipe_names:
+        a_set = keymaster.setdefault(section_key, dict())
     else:
-        a_set.update(data_section.keys())
+        a_set = keymaster.setdefault(section_key, set())
+
+    if isinstance(data_section, list):
+        update_list = data_section
+    else:
+        update_list = data_section.keys()
+
+    if with_pipe_names:
+        for item in update_list:
+            s = a_set.setdefault(item, set())
+            s.add(pipe_name)
+    else:
+        a_set.update(update_list)
 
 
 def convert_to_canonic_form_features(features):
@@ -408,7 +420,76 @@ def convert_to_canonic_form_features(features):
     return new_features
 
 
-def convert_to_canonic_form_frames(frames):
+def normalize_columns(df, table_name):
+    """
+    Нормализует имена столбцов DataFrame
+
+    Parameters:
+    df: pandas DataFrame
+    table_name: str, название таблицы для логирования
+
+    Returns:
+    DataFrame с нормализованными именами столбцов
+    """
+    new_columns = []
+
+    for i, col in enumerate(df.columns):
+        # Пропускаем None
+        if pd.isna(col) or col is None:
+            new_col = f"val_{i}"
+            print(f"  {table_name}: колонка {i} была None -> '{new_col}'")
+            new_columns.append(new_col)
+            continue
+
+        # Преобразуем в строку и удаляем пробелы в начале/конце
+        col_str = str(col).strip()
+        original = col_str
+
+        # Удаляем \n и лишние пробелы внутри
+        col_str = " ".join(col_str.split())
+        col_str = col_str.replace("\n", "")
+
+        # Заменяем / на _
+        col_str = col_str.replace("/", "_")
+
+        # Заменяем # на num
+        col_str = col_str.replace("#", "num")
+
+        # Заменяем ε на eps
+        col_str = col_str.replace("ε", "eps")
+
+        # Заменяем остальные проблемные символы на _
+        col_str = re.sub(r"[^\w\d\s]", "_", col_str)
+        col_str = re.sub(r"\s+", "_", col_str)
+
+        # Убираем множественные подчёркивания
+        col_str = re.sub(r"_+", "_", col_str)
+
+        # Убираем подчёркивания в начале и конце
+        col_str = col_str.strip("_")
+
+        # Если после всех преобразований получилась пустая строка
+        if not col_str:
+            col_str = f"val_{i}"
+            print(f"  {table_name}: колонка '{original}' стала пустой -> '{col_str}'")
+
+        # Проверка на дубликаты (если такое имя уже есть)
+        base_col = col_str
+        counter = 1
+        while col_str in new_columns:
+            col_str = f"{base_col}_{counter}"
+            counter += 1
+
+        if original != col_str:
+            print(f"  {table_name}: '{original}' -> '{col_str}'")
+
+        new_columns.append(col_str)
+
+    df.columns = new_columns
+    return df
+
+
+def convert_to_canonic_form_frames(frames, pipe_name):
     """Convert all dataframes to canonical form."""
     new_frames = {}
     new_frames.update(frames)
@@ -424,8 +505,9 @@ def convert_to_canonic_form_frames(frames):
     ]
     for fn in frame_names:
         df = frames[fn]
+        df = normalize_columns(df, pipe_name + ":" + fn)
         column_names = df.columns.tolist()
-        keymaster_update(fn, column_names)
+        keymaster_update(fn, column_names, pipe_name=pipe_name, with_pipe_names=True)
     return new_frames
 
 
@@ -523,7 +605,7 @@ def convert_to_canonic_form(tube):
     features = data.get("features", {})
     features = convert_to_canonic_form_features(features)
     frames = data.get("frames", {})
-    frames = convert_to_canonic_form_frames(frames)
+    frames = convert_to_canonic_form_frames(frames, pipe_name=name)
 
     new_data = {"features": features, "frames": frames}
     return name, new_data
