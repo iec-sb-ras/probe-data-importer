@@ -123,6 +123,9 @@ def clean_value_of_cell(cell):
         if lc in ["н.д.", ""]:
             return None
 
+        if lc.startswith("<"):
+            return None
+
         # Try to convert to int or float if possible
         try:
             # Check for integer
@@ -939,14 +942,14 @@ def convert_dataframes_to_sql(dfs, connection_string, pipe_uuid):
             df, pipe_uuid, connection_string, if_exists="fail"
         )
     # Import serious tables EPMA, LAM
-    if "epma" in dfs:  #
-        print("Importing EPMA")
-        df = dfs["epma"]
-        EPMAAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
-    if "lam" in dfs:  #
-        print("Importing LAM")
-        df = dfs["lam"]
-        LAMAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
+    # if "epma" in dfs:  #
+    #     print("Importing EPMA")
+    #     df = dfs["epma"]
+    #     EPMAAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
+    # if "lam" in dfs:  #
+    #     print("Importing LAM")
+    #     df = dfs["lam"]
+    #     LAMAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
     print("Frames:", dfs.keys())
     # quit()
 
@@ -976,7 +979,7 @@ def export_tube(g, tube):
 
     convert_features_to_rdf(G, (tube_name, features), tube_uri)
 
-    # convert_dataframes_to_sql(dataframes, CONNECTION_STRING, pipe_uuid)
+    convert_dataframes_to_sql(dataframes, CONNECTION_STRING, pipe_uuid)
 
     print("INFO: features after conversion:", end=": ")
     pprint(features)
