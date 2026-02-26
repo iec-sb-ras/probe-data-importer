@@ -39,8 +39,8 @@ from alrosa_models import (
 )
 from namespace import BIBO, CGI, DBP, DBP_OWL, GS, MT, PT, SCHEMA, P
 
-# CONNECTION_STRING = "sqlite://./tubes.db"
-CONNECTION_STRING = "sqlite:///:memory:"
+CONNECTION_STRING = "sqlite:///tubes.db"
+# CONNECTION_STRING = "sqlite:///:memory:"
 # Создание графа
 G = Graph()
 
@@ -120,7 +120,7 @@ def clean_value_of_cell(cell):
         cleaned = value.strip()
         lc = cleaned.lower()
 
-        if lc in ["н.д.", "", " "]:
+        if lc in ["н.д.", "", " ", "н.п.о.", "н.п.о."]:
             return None
 
         if lc.startswith("<"):
@@ -950,7 +950,7 @@ def convert_dataframes_to_sql(dfs, connection_string, pipe_uuid):
         print("Importing LAM")
         df = dfs["lam"]
         LAMAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
-    print("Frames:", dfs.keys())
+    # print("Frames:", dfs.keys())
     # quit()
 
 

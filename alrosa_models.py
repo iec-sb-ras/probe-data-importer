@@ -468,6 +468,13 @@ class EPMAAnalysis(Base):
         Session = sessionmaker(bind=engine)
         session = Session()
 
+        def clean(x):
+            if isinstance(x, float):
+                return x
+            elif isinstance(x, int):
+                return x
+            return None
+
         try:
             # 1. Сначала импортируем шашки
             Sample.import_from_dataframe(df, pipe_uuid, connection_string)
@@ -512,40 +519,40 @@ class EPMAAnalysis(Base):
                 analysis = cls(
                     grain_id=grain_id,
                     # Основные оксиды
-                    al2o3=row.get("Al2O3"),
-                    sio2=row.get("SiO2"),
-                    tio2=row.get("TiO2"),
-                    feo=row.get("FeO"),
-                    fe2o3=row.get("Fe2O3"),
-                    feo_alt=row.get("FeO_1"),
-                    mgo=row.get("MgO"),
-                    cao=row.get("CaO"),
-                    na2o=row.get("Na2O"),
-                    k2o=row.get("K2O"),
-                    mno=row.get("MnO"),
-                    p2o5=row.get("P2O5"),
-                    cr2o3=row.get("Cr2O3"),
+                    al2o3=clean(row.get("Al2O3")),
+                    sio2=clean(row.get("SiO2")),
+                    tio2=clean(row.get("TiO2")),
+                    feo=clean(row.get("FeO")),
+                    fe2o3=clean(row.get("Fe2O3")),
+                    feo_alt=clean(row.get("FeO_1")),
+                    mgo=clean(row.get("MgO")),
+                    cao=clean(row.get("CaO")),
+                    na2o=clean(row.get("Na2O")),
+                    k2o=clean(row.get("K2O")),
+                    mno=clean(row.get("MnO")),
+                    p2o5=clean(row.get("P2O5")),
+                    cr2o3=clean(row.get("Cr2O3")),
                     # Никель (три варианта)
-                    nio=row.get("NiO") if "NiO" in row else None,
-                    nio_1=row.get("NiO_1") if "NiO_1" in row else None,
-                    nio_2=row.get("NiO_2") if "NiO_2" in row else None,
-                    coo=row.get("CoO"),
+                    nio=clean(row.get("NiO")) if "NiO" in row else None,
+                    nio_1=clean(row.get("NiO_1")) if "NiO_1" in row else None,
+                    nio_2=clean(row.get("NiO_2")) if "NiO_2" in row else None,
+                    coo=clean(row.get("CoO")),
                     # Ванадий (два варианта)
-                    v2o3=row.get("V2O3") if "V2O3" in row else None,
-                    v2o3_1=row.get("V2O3_1") if "V2O3_1" in row else None,
+                    v2o3=clean(row.get("V2O3")) if "V2O3" in row else None,
+                    v2o3_1=clean(row.get("V2O3_1")) if "V2O3_1" in row else None,
                     # Цинк (два варианта)
-                    zno=row.get("ZnO") if "ZnO" in row else None,
-                    zno_1=row.get("ZnO_1") if "ZnO_1" in row else None,
+                    zno=clean(row.get("ZnO")) if "ZnO" in row else None,
+                    zno_1=clean(row.get("ZnO_1")) if "ZnO_1" in row else None,
                     # Минорные элементы
-                    v=row.get("V"),
-                    zn=row.get("Zn"),
-                    x_coord=row.get("X"),
-                    y_coord=row.get("Y"),
+                    v=clean(row.get("V")),
+                    zn=clean(row.get("Zn")),
+                    x_coord=clean(row.get("X")),
+                    y_coord=clean(row.get("Y")),
                     # Special parameters
-                    t_zn_chr=row.get(
-                        "T_Zn_Chr"
+                    t_zn_chr=clean(
+                        row.get("T_Zn_Chr")
                     ),  # DataFrame: "T_Zn_Chr" -> model: t_zn_chr
-                    total=row.get("Total"),  # DataFrame: "Total" -> model: total
+                    total=clean(row.get("Total")),  # DataFrame: "Total" -> model: total
                     no=row.get("No"),  # DataFrame: "No" -> model: no
                     # Service fields (from val_XX substitutions)
                     a_number=row.get(
@@ -555,23 +562,23 @@ class EPMAAnalysis(Base):
                         "correction"
                     ),  # DataFrame: "correction" (from val_17 for tube 1_5) -> model: correction
                     # Additional measurement fields
-                    measurement_12=row.get(
-                        "val_12"
+                    measurement_12=clean(
+                        row.get("val_12")
                     ),  # DataFrame: "val_12" -> model: measurement_12
-                    measurement_13=row.get(
-                        "val_13"
+                    measurement_13=clean(
+                        row.get("val_13")
                     ),  # DataFrame: "val_13" -> model: measurement_13
-                    measurement_14=row.get(
-                        "val_14"
+                    measurement_14=clean(
+                        row.get("val_14")
                     ),  # DataFrame: "val_14" -> model: measurement_14
-                    measurement_15=row.get(
-                        "val_15"
+                    measurement_15=clean(
+                        row.get("val_15")
                     ),  # DataFrame: "val_15" -> model: measurement_15
-                    measurement_16=row.get(
-                        "val_16"
+                    measurement_16=clean(
+                        row.get("val_16")
                     ),  # DataFrame: "val_16" -> model: measurement_16
-                    measurement_17=row.get(
-                        "val_17"
+                    measurement_17=clean(
+                        row.get("val_17")
                     ),  # DataFrame: "val_17" (for tube 2_1) -> model: measurement_17
                     # Counters
                     count_akb=row.get(
