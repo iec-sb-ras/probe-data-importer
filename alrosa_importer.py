@@ -932,26 +932,24 @@ def convert_dataframes_to_sql(dfs, connection_string, pipe_uuid):
     if "petrochemy" in dfs:  #
         print("Importing Petrochemy")
         df = dfs["petrochemy"]
-        pprint(df.keys())
         Petrochemy.import_from_dataframe(
             df, pipe_uuid, connection_string, if_exists="fail"
         )
     if "geochemy" in dfs:  #
         print("Importing Geochemy")
         df = dfs["geochemy"]
-        pprint(df.keys())
         Geochemy.import_from_dataframe(
             df, pipe_uuid, connection_string, if_exists="fail"
         )
     # Import serious tables EPMA, LAM
-    # if "epma" in dfs:  #
-    #     print("Importing EPMA")
-    #     df = dfs["epma"]
-    #     EPMAAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
-    # if "lam" in dfs:  #
-    #     print("Importing LAM")
-    #     df = dfs["lam"]
-    #     LAMAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
+    if "epma" in dfs:  #
+        print("Importing EPMA")
+        df = dfs["epma"]
+        EPMAAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
+    if "lam" in dfs:  #
+        print("Importing LAM")
+        df = dfs["lam"]
+        LAMAnalysis.import_from_dataframe(df, pipe_uuid, connection_string)
     print("Frames:", dfs.keys())
     # quit()
 
@@ -1034,12 +1032,13 @@ def main():
         "fuseki",
         "a-box.ttl",
     )
-    # G.serialize(destination=output_path, format="turtle")
-    # print(f"RDF graph saved to {output_path}")
+
+    G.serialize(destination=output_path, format="turtle")
+    print(f"RDF graph saved to {output_path}")
 
     output_path = "a-box.ttl"
-    # G.serialize(destination=output_path, format="turtle")
-    # print(f"RDF graph saved to {output_path}")
+    G.serialize(destination=output_path, format="turtle")
+    print(f"RDF graph saved to {output_path}")
 
 
 if __name__ == "__main__":

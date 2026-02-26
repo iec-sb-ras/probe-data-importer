@@ -266,7 +266,7 @@ class Sample(Base):
     # Sample metadata
     laboratory = Column(String(100), nullable=True)  # 'Лаборатория' -> laboratory
     rock_type = Column(String(100), nullable=True)  # 'Порода' -> rock_type
-    depth = Column(Float, nullable=True)  # 'глубина' -> depth
+    depth = Column(String(10), nullable=True)  # 'глубина' -> depth
     class_name = Column(String(50), nullable=True)  # 'класс' -> class_name
     line_borehole = Column(
         String(100), nullable=True
@@ -464,6 +464,7 @@ class EPMAAnalysis(Base):
         """
         engine = create_engine(connection_string)
         Base.metadata.create_all(engine)
+        # pprint(Base.metadata.tables.keys())
         Session = sessionmaker(bind=engine)
         session = Session()
 
@@ -1000,16 +1001,6 @@ class Phlogopite(Base):
             raise
         finally:
             session.close()
-
-
-import uuid
-
-from sqlalchemy import Column, DateTime, Float, String
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql import func
-
-Base = declarative_base()
 
 
 class Geochemy(Base):
