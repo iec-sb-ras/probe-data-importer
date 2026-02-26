@@ -680,7 +680,7 @@ class LAMAnalysis(Base):
     ga = Column(Float, nullable=True)  # Ga
     ge = Column(Float, nullable=True)  # Ge (if present)
     arsenic = Column(
-        Float, nullable=True
+        "as", Float, nullable=True
     )  # As (if present) - renamed from 'as' (Python keyword)
     y = Column(Float, nullable=True)  # Y
     sn = Column(Float, nullable=True)  # Sn
@@ -992,9 +992,19 @@ class Phlogopite(Base):
             session.close()
 
 
+import uuid
+
+from sqlalchemy import Column, DateTime, Float, String
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
+
+Base = declarative_base()
+
+
 class Geochemy(Base):
     """
-    Геохимические данные (прямая привязка к трубке)
+    Геохимия микроэлементов (прямая привязка к трубке)
     """
 
     __tablename__ = "geochemy"
@@ -1013,39 +1023,57 @@ class Geochemy(Base):
     source = Column(String(100), nullable=True)  # 'Источник'
     number = Column(String(50), nullable=True)  # 'п_п' (№ п/п)
 
-    # Основные оксиды (петрогенные элементы)
-    sio2 = Column(Float, nullable=True)  # SiO2
-    tio2 = Column(Float, nullable=True)  # TiO2
-    al2o3 = Column(Float, nullable=True)  # Al2O3
-    fe2o3 = Column(Float, nullable=True)  # Fe2O3
-    feo_total = Column(Float, nullable=True)  # FeOtotal
-    mgo = Column(Float, nullable=True)  # MgO
-    cao = Column(Float, nullable=True)  # CaO
-    na2o = Column(Float, nullable=True)  # Na2O
-    k2o = Column(Float, nullable=True)  # K2O
-    mno = Column(Float, nullable=True)  # MnO
-    p2o5 = Column(Float, nullable=True)  # P2O5
+    # Литофильные элементы (LILE)
+    rb = Column(Float, nullable=True)  # Rb
+    cs = Column(Float, nullable=True)  # Cs
+    ba = Column(Float, nullable=True)  # Ba
+    sr = Column(Float, nullable=True)  # Sr
 
-    # Летучие компоненты
-    h2o = Column(Float, nullable=True)  # H2O
-    co2 = Column(Float, nullable=True)  # СО2
-    f = Column(Float, nullable=True)  # F
-    s = Column(Float, nullable=True)  # S
-    loi = Column(Float, nullable=True)  # Ппп (потери при прокаливании)
+    # Высокозарядные элементы (HFSE)
+    zr = Column(Float, nullable=True)  # Zr
+    hf = Column(Float, nullable=True)  # Hf
+    nb = Column(Float, nullable=True)  # Nb
+    ta = Column(Float, nullable=True)  # Ta
+    th = Column(Float, nullable=True)  # Th
+    u = Column(Float, nullable=True)  # U
 
-    # Петрохимические индексы и отношения
-    fe_num = Column(Float, nullable=True)  # Fe# (Fenum)
-    mg_num = Column(Float, nullable=True)  # Mg# (Mgnum)
-    k_na = Column(Float, nullable=True)  # K/Na
-    na2o_k2o = Column(Float, nullable=True)  # Na2O+K2O
-    ic = Column(Float, nullable=True)  # I.C.
-    ilm_i = Column(Float, nullable=True)  # Ilm.I
+    # Редкоземельные элементы (REE)
+    la = Column(Float, nullable=True)  # La
+    ce = Column(Float, nullable=True)  # Ce
+    pr = Column(Float, nullable=True)  # Pr
+    nd = Column(Float, nullable=True)  # Nd
+    sm = Column(Float, nullable=True)  # Sm
+    eu = Column(Float, nullable=True)  # Eu
+    gd = Column(Float, nullable=True)  # Gd
+    tb = Column(Float, nullable=True)  # Tb
+    dy = Column(Float, nullable=True)  # Dy
+    ho = Column(Float, nullable=True)  # Ho
+    er = Column(Float, nullable=True)  # Er
+    tm = Column(Float, nullable=True)  # Tm
+    yb = Column(Float, nullable=True)  # Yb
+    lu = Column(Float, nullable=True)  # Lu
 
-    # Суммы
-    total = Column(Float, nullable=True)  # Сумма
+    # Переходные металлы
+    sc = Column(Float, nullable=True)  # Sc
+    v = Column(Float, nullable=True)  # V
+    cr = Column(Float, nullable=True)  # Cr
+    co = Column(Float, nullable=True)  # Co
+    ni = Column(Float, nullable=True)  # Ni
+    cu = Column(Float, nullable=True)  # Cu
+    zn = Column(Float, nullable=True)  # Zn
 
-    # Служебные поля
-    val_21 = Column(Float, nullable=True)  # val_21 (только для 2_4)
+    # Другие элементы
+    y = Column(Float, nullable=True)  # Y
+    ga = Column(Float, nullable=True)  # Ga
+    ge = Column(Float, nullable=True)  # Ge (если есть)
+    arsenic = Column("as", Float, nullable=True)  # As
+    mo = Column(Float, nullable=True)  # Mo
+    sn = Column(Float, nullable=True)  # Sn
+    sb = Column(Float, nullable=True)  # Sb (если есть)
+    pb = Column(Float, nullable=True)  # Pb
+    bi = Column(Float, nullable=True)  # Bi (если есть)
+    be = Column(Float, nullable=True)  # Be
+    li = Column(Float, nullable=True)  # Li
 
     # Метаданные
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -1093,35 +1121,50 @@ class Geochemy(Base):
                     rock_type=record.get("Порода"),
                     source=record.get("Источник"),
                     number=record.get("п_п"),
-                    # Основные оксиды
-                    sio2=record.get("SiO2"),
-                    tio2=record.get("TiO2"),
-                    al2o3=record.get("Al2O3"),
-                    fe2o3=record.get("Fe2O3"),
-                    feo_total=record.get("FeOtotal"),
-                    mgo=record.get("MgO"),
-                    cao=record.get("CaO"),
-                    na2o=record.get("Na2O"),
-                    k2o=record.get("K2O"),
-                    mno=record.get("MnO"),
-                    p2o5=record.get("P2O5"),
-                    # Летучие
-                    h2o=record.get("H2O"),
-                    co2=record.get("СО2"),
-                    f=record.get("F"),
-                    s=record.get("S"),
-                    loi=record.get("Ппп"),
-                    # Индексы
-                    fe_num=record.get("Fenum"),
-                    mg_num=record.get("Mgnum"),
-                    k_na=record.get("K_Na"),
-                    na2o_k2o=record.get("Na2O_K2O"),
-                    ic=record.get("I_C"),
-                    ilm_i=record.get("Ilm_I"),
-                    # Суммы
-                    total=record.get("Сумма"),
-                    # Служебные
-                    val_21=record.get("val_21"),
+                    # LILE
+                    rb=record.get("Rb"),
+                    cs=record.get("Cs"),  # если есть
+                    ba=record.get("Ba"),
+                    sr=record.get("Sr"),
+                    # HFSE
+                    zr=record.get("Zr"),
+                    hf=record.get("Hf"),
+                    nb=record.get("Nb"),
+                    ta=record.get("Ta"),
+                    th=record.get("Th"),
+                    u=record.get("U"),
+                    # REE
+                    la=record.get("La"),
+                    ce=record.get("Ce"),
+                    pr=record.get("Pr"),
+                    nd=record.get("Nd"),
+                    sm=record.get("Sm"),
+                    eu=record.get("Eu"),
+                    gd=record.get("Gd"),
+                    tb=record.get("Tb"),
+                    dy=record.get("Dy"),
+                    ho=record.get("Ho"),
+                    er=record.get("Er"),
+                    tm=record.get("Tm"),
+                    yb=record.get("Yb"),
+                    lu=record.get("Lu"),
+                    # Переходные
+                    sc=record.get("Sc"),
+                    v=record.get("V"),
+                    cr=record.get("Cr"),
+                    co=record.get("Co"),
+                    ni=record.get("Ni"),
+                    cu=record.get("Cu"),
+                    zn=record.get("Zn"),
+                    # Другие
+                    y=record.get("Y"),
+                    ga=record.get("Ga"),
+                    arsenic=record.get("As"),
+                    mo=record.get("Mo"),
+                    sn=record.get("Sn"),
+                    pb=record.get("Pb"),
+                    be=record.get("Be"),
+                    li=record.get("Li"),
                 )
 
                 session.add(geochem)
