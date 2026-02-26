@@ -746,3 +746,640 @@ class LAMAnalysis(Base):
         finally:
             session.close()
 
+
+class Phlogopite(Base):
+    """
+    Данные по флогопиту (прямая привязка к трубке)
+    """
+    __tablename__ = 'phlogopite'
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с трубкой (A-Box)
+    pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
+
+    # Идентификаторы из исходных данных
+    sample_id = Column(String(50), nullable=True)  # 'Образец'
+    point_id = Column(String(50), nullable=True)   # 'точки'
+    mineral = Column(String(100), nullable=True)   # 'минерал'
+    mineral_alt = Column(String(100), nullable=True)  # 'Минерал' (с заглавной)
+    source = Column(String(100), nullable=True)    # 'Источник'
+    rock_type = Column(String(100), nullable=True) # 'Порода'
+
+    # Основные оксиды
+    sio2 = Column(Float, nullable=True)   # SiO2
+    tio2 = Column(Float, nullable=True)   # TiO2
+    al2o3 = Column(Float, nullable=True)  # Al2O3
+    feo = Column(Float, nullable=True)    # FeO
+    mgo = Column(Float, nullable=True)    # MgO
+    cao = Column(Float, nullable=True)    # CaO
+    na2o = Column(Float, nullable=True)   # Na2O
+    k2o = Column(Float, nullable=True)    # K2O
+    mno = Column(Float, nullable=True)    # MnO
+    p2o5 = Column(Float, nullable=True)   # P2O5
+    cr2o3 = Column(Float, nullable=True)  # Cr2O3
+    nio = Column(Float, nullable=True)    # NiO
+
+    # Редкоземельные и другие оксиды
+    bao = Column(Float, nullable=True)    # BaO
+    sro = Column(Float, nullable=True)    # SrO
+    ce2o3 = Column(Float, nullable=True)  # Ce2O3
+    la2o3 = Column(Float, nullable=True)  # La2O3
+    nd2o3 = Column(Float, nullable=True)  # Nd2O3
+    nb2o5 = Column(Float, nullable=True)  # Nb2O5
+    ta2o5 = Column(Float, nullable=True)  # Ta2O5
+    tho2 = Column(Float, nullable=True)   # ThO2
+    so3 = Column(Float, nullable=True)    # SO3
+
+    # Летучие компоненты
+    f = Column(Float, nullable=True)       # F
+    cl = Column(Float, nullable=True)      # Cl
+
+    # Суммы и служебные
+    total = Column(Float, nullable=True)   # Total
+    val_17 = Column(Float, nullable=True)  # val_17 (оставляем как есть)
+    zno = Column(Float, nullable=True)     # ZnO
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __repr__(self):
+        return f"<Phlogopite(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+        """
+        Импорт данных флогопита для конкретной трубки
+        """
+        engine = create_engine(connection_string)
+        cls.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Проверяем существующие данные
+            existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
+
+            if existing_count > 0:
+                if if_exists == 'fail':
+                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
+                elif if_exists == 'replace':
+                    deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
+                    session.commit()
+                    print(f"Удалено {deleted} существующих записей")
+                elif if_exists == 'append':
+                    print(f"Добавление к {existing_count} существующим записям")
+
+            # Импортируем новые данные
+            records = df.to_dict('records')
+            imported_count = 0
+
+            for record in records:
+                phlog = cls(
+                    pipe_uuid=pipe_uuid,
+
+                    # Идентификаторы
+                    sample_id=record.get('Образец'),
+                    point_id=record.get('точки'),
+                    mineral=record.get('минерал'),
+                    mineral_alt=record.get('Минерал'),
+                    source=record.get('Источник'),
+                    rock_type=record.get('Порода'),
+
+                    # Основные оксиды
+                    sio2=record.get('SiO2'),
+                    tio2=record.get('TiO2'),
+                    al2o3=record.get('Al2O3'),
+                    feo=record.get('FeO'),
+                    mgo=record.get('MgO'),
+                    cao=record.get('CaO'),
+                    na2o=record.get('Na2O'),
+                    k2o=record.get('K2O'),
+                    mno=record.get('MnO'),
+                    p2o5=record.get('P2O5'),
+                    cr2o3=record.get('Cr2O3'),
+                    nio=record.get('NiO'),
+
+                    # Редкоземельные
+                    bao=record.get('BaO'),
+                    sro=record.get('SrO'),
+                    ce2o3=record.get('Ce2O3'),
+                    la2o3=record.get('La2O3'),
+                    nd2o3=record.get('Nd2O3'),
+                    nb2o5=record.get('Nb2O5'),
+                    ta2o5=record.get('Ta2O5'),
+                    tho2=record.get('ThO2'),
+                    so3=record.get('SO3'),
+
+                    # Летучие
+                    f=record.get('F'),
+                    cl=record.get('Cl'),
+
+                    # Служебные
+                    total=record.get('Total'),
+                    val_17=record.get('val_17'),
+                    zno=record.get('ZnO')
+                )
+
+                session.add(phlog)
+                imported_count += 1
+
+                if imported_count % 100 == 0:
+                    session.commit()
+
+            session.commit()
+            print(f"Импортировано {imported_count} записей флогопита для трубки {pipe_uuid}")
+            return imported_count
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
+
+
+class Petrochemy(Base):
+    """
+    Петрохимические данные (прямая привязка к трубке)
+    """
+    __tablename__ = 'petrochemy'
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с трубкой (A-Box)
+    pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
+
+    # Идентификаторы из исходных данных
+    sample_id = Column(String(50), nullable=True)  # 'Образец'
+    sample_interval = Column(String(50), nullable=True)  # 'Образец_интервал_от'
+    borehole = Column(String(50), nullable=True)  # 'Скважина'
+    rock_type = Column(String(100), nullable=True)  # 'Порода'
+    source = Column(String(100), nullable=True)  # 'Источник'
+    number = Column(String(50), nullable=True)  # 'п_п' (№ п/п)
+
+    # Основные оксиды (петрогенные элементы)
+    sio2 = Column(Float, nullable=True)   # SiO2
+    tio2 = Column(Float, nullable=True)   # TiO2
+    al2o3 = Column(Float, nullable=True)  # Al2O3
+    fe2o3 = Column(Float, nullable=True)  # Fe2O3
+    feo_total = Column(Float, nullable=True)  # FeOtotal
+    mgo = Column(Float, nullable=True)    # MgO
+    cao = Column(Float, nullable=True)    # CaO
+    na2o = Column(Float, nullable=True)   # Na2O
+    k2o = Column(Float, nullable=True)    # K2O
+    mno = Column(Float, nullable=True)    # MnO
+    p2o5 = Column(Float, nullable=True)   # P2O5
+
+    # Летучие компоненты
+    h2o = Column(Float, nullable=True)    # H2O
+    co2 = Column(Float, nullable=True)    # СО2
+    f = Column(Float, nullable=True)      # F
+    s = Column(Float, nullable=True)      # S
+    loi = Column(Float, nullable=True)    # Ппп (потери при прокаливании)
+
+    # Петрохимические индексы и отношения
+    fe_num = Column(Float, nullable=True)  # Fe# (Fenum)
+    mg_num = Column(Float, nullable=True)  # Mg# (Mgnum)
+    k_na = Column(Float, nullable=True)    # K/Na
+    na2o_k2o = Column(Float, nullable=True)  # Na2O+K2O
+    ic = Column(Float, nullable=True)      # I.C.
+    ilm_i = Column(Float, nullable=True)   # Ilm.I
+
+    # Суммы
+    total = Column(Float, nullable=True)   # Сумма
+
+    # Служебные поля
+    val_21 = Column(Float, nullable=True)  # val_21 (только для 2_4)
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __repr__(self):
+        return f"<Petrochemy(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+        """
+        Импорт петрохимических данных для конкретной трубки
+        """
+        engine = create_engine(connection_string)
+        cls.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Проверяем существующие данные
+            existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
+
+            if existing_count > 0:
+                if if_exists == 'fail':
+                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
+                elif if_exists == 'replace':
+                    deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
+                    session.commit()
+                    print(f"Удалено {deleted} существующих записей")
+                elif if_exists == 'append':
+                    print(f"Добавление к {existing_count} существующим записям")
+
+            # Импортируем новые данные
+            records = df.to_dict('records')
+            imported_count = 0
+
+            for record in records:
+                petro = cls(
+                    pipe_uuid=pipe_uuid,
+
+                    # Идентификаторы
+                    sample_id=record.get('Образец'),
+                    sample_interval=record.get('Образец_интервал_от'),
+                    borehole=record.get('Скважина'),
+                    rock_type=record.get('Порода'),
+                    source=record.get('Источник'),
+                    number=record.get('п_п'),
+
+                    # Основные оксиды
+                    sio2=record.get('SiO2'),
+                    tio2=record.get('TiO2'),
+                    al2o3=record.get('Al2O3'),
+                    fe2o3=record.get('Fe2O3'),
+                    feo_total=record.get('FeOtotal'),
+                    mgo=record.get('MgO'),
+                    cao=record.get('CaO'),
+                    na2o=record.get('Na2O'),
+                    k2o=record.get('K2O'),
+                    mno=record.get('MnO'),
+                    p2o5=record.get('P2O5'),
+
+                    # Летучие
+                    h2o=record.get('H2O'),
+                    co2=record.get('СО2'),
+                    f=record.get('F'),
+                    s=record.get('S'),
+                    loi=record.get('Ппп'),
+
+                    # Индексы
+                    fe_num=record.get('Fenum'),
+                    mg_num=record.get('Mgnum'),
+                    k_na=record.get('K_Na'),
+                    na2o_k2o=record.get('Na2O_K2O'),
+                    ic=record.get('I_C'),
+                    ilm_i=record.get('Ilm_I'),
+
+                    # Суммы
+                    total=record.get('Сумма'),
+
+                    # Служебные
+                    val_21=record.get('val_21')
+                )
+
+                session.add(petro)
+                imported_count += 1
+
+                if imported_count % 100 == 0:
+                    session.commit()
+
+            session.commit()
+            print(f"Импортировано {imported_count} записей петрохимии для трубки {pipe_uuid}")
+            return imported_count
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
+
+from sqlalchemy import Column, String, Float, DateTime
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
+import uuid
+
+Base = declarative_base()
+
+class Oxides(Base):
+    """
+    Данные по оксидам (прямая привязка к трубке)
+    """
+    __tablename__ = 'oxides'
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с трубкой (A-Box)
+    pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
+
+    # Идентификаторы из исходных данных
+    sample_id = Column(String(50), nullable=True)  # 'Образец'
+    point_id = Column(String(50), nullable=True)   # 'точки'
+    mineral = Column(String(100), nullable=True)   # 'минерал'
+    source = Column(String(100), nullable=True)    # 'Источник'
+    rock_type = Column(String(100), nullable=True) # 'Порода'
+
+    # Основные оксиды
+    sio2 = Column(Float, nullable=True)   # SiO2
+    tio2 = Column(Float, nullable=True)   # TiO2
+    al2o3 = Column(Float, nullable=True)  # Al2O3
+    fe2o3 = Column(Float, nullable=True)  # Fe2O3
+    feo = Column(Float, nullable=True)    # FeO
+    mgo = Column(Float, nullable=True)    # MgO
+    cao = Column(Float, nullable=True)    # CaO
+    na2o = Column(Float, nullable=True)   # Na2O
+    k2o = Column(Float, nullable=True)    # K2O
+    mno = Column(Float, nullable=True)    # MnO
+    p2o5 = Column(Float, nullable=True)   # P2O5
+    cr2o3 = Column(Float, nullable=True)  # Cr2O3
+    nio = Column(Float, nullable=True)    # NiO
+
+    # Редкоземельные и другие оксиды
+    bao = Column(Float, nullable=True)    # BaO
+    sro = Column(Float, nullable=True)    # SrO
+    ce2o3 = Column(Float, nullable=True)  # Ce2O3
+    la2o3 = Column(Float, nullable=True)  # La2O3
+    nd2o3 = Column(Float, nullable=True)  # Nd2O3
+    nb2o5 = Column(Float, nullable=True)  # Nb2O5
+    ta2o5 = Column(Float, nullable=True)  # Ta2O5
+    tho2 = Column(Float, nullable=True)   # ThO2
+    v2o3 = Column(Float, nullable=True)   # V2O3
+    zno = Column(Float, nullable=True)    # ZnO
+    so3 = Column(Float, nullable=True)    # SO3
+
+    # Летучие компоненты
+    f = Column(Float, nullable=True)       # F
+
+    # Суммы
+    total = Column(Float, nullable=True)   # Total
+    total_alt = Column(Float, nullable=True)  # total (из val_17 для 2_2)
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __repr__(self):
+        return f"<Oxides(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+        """
+        Импорт данных по оксидам для конкретной трубки
+        """
+        engine = create_engine(connection_string)
+        cls.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Проверяем существующие данные
+            existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
+
+            if existing_count > 0:
+                if if_exists == 'fail':
+                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
+                elif if_exists == 'replace':
+                    deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
+                    session.commit()
+                    print(f"Удалено {deleted} существующих записей")
+                elif if_exists == 'append':
+                    print(f"Добавление к {existing_count} существующим записям")
+
+            # Импортируем новые данные
+            records = df.to_dict('records')
+            imported_count = 0
+
+            for record in records:
+                oxides = cls(
+                    pipe_uuid=pipe_uuid,
+
+                    # Идентификаторы
+                    sample_id=record.get('Образец'),
+                    point_id=record.get('точки'),
+                    mineral=record.get('минерал'),
+                    source=record.get('Источник'),
+                    rock_type=record.get('Порода'),
+
+                    # Основные оксиды
+                    sio2=record.get('SiO2'),
+                    tio2=record.get('TiO2'),
+                    al2o3=record.get('Al2O3'),
+                    fe2o3=record.get('Fe2O3'),
+                    feo=record.get('FeO'),
+                    mgo=record.get('MgO'),
+                    cao=record.get('CaO'),
+                    na2o=record.get('Na2O'),
+                    k2o=record.get('K2O'),
+                    mno=record.get('MnO'),
+                    p2o5=record.get('P2O5'),
+                    cr2o3=record.get('Cr2O3'),
+                    nio=record.get('NiO'),
+
+                    # Редкоземельные и другие
+                    bao=record.get('BaO'),
+                    sro=record.get('SrO'),
+                    ce2o3=record.get('Ce2O3'),
+                    la2o3=record.get('La2O3'),
+                    nd2o3=record.get('Nd2O3'),
+                    nb2o5=record.get('Nb2O5'),
+                    ta2o5=record.get('Ta2O5'),
+                    tho2=record.get('ThO2'),
+                    v2o3=record.get('V2O3'),
+                    zno=record.get('ZnO'),
+                    so3=record.get('SO3'),
+
+                    # Летучие
+                    f=record.get('F'),
+
+                    # Суммы
+                    total=record.get('Total'),
+                    total_alt=record.get('total')  # для трубки 2_2
+                )
+
+                session.add(oxides)
+                imported_count += 1
+
+                if imported_count % 100 == 0:
+                    session.commit()
+
+            session.commit()
+            print(f"Импортировано {imported_count} записей оксидов для трубки {pipe_uuid}")
+            return imported_count
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
+
+
+class Isotopes(Base):
+    """
+    Изотопные данные (прямая привязка к трубке)
+    """
+    __tablename__ = 'isotopes'
+
+    # Primary Key
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Связь с трубкой (A-Box)
+    pipe_uuid = Column(UUID(as_uuid=True), nullable=False, index=True)
+
+    # Идентификаторы из исходных данных
+    sample_id = Column(String(50), nullable=True)  # 'Образец'
+    sample_id_alt = Column(String(50), nullable=True)  # 'Образец_1', 'Образец_2'
+    source = Column(String(100), nullable=True)  # 'Источник'
+
+    # Концентрации элементов (ppm)
+    rb_ppm = Column(Float, nullable=True)   # Rb (ppm)
+    sr_ppm = Column(Float, nullable=True)   # Sr (ppm)
+    sm_ppm = Column(Float, nullable=True)   # Sm (ppm)
+    nd_ppm = Column(Float, nullable=True)   # Nd (ppm)
+    lu_ppm = Column(Float, nullable=True)   # Lu (ppm)
+    hf_ppm = Column(Float, nullable=True)   # Hf (ppm)
+
+    # Отношения концентраций
+    rb_sr = Column(Float, nullable=True)    # Rb/Sr
+    sm_nd = Column(Float, nullable=True)    # Sm/Nd
+    lu_hf = Column(Float, nullable=True)    # Lu/Hf (если есть)
+
+    # Обратные величины
+    one_nd = Column(Float, nullable=True)   # 1/Nd
+    one_sr = Column(Float, nullable=True)   # 1/Sr
+
+    # Изотопные отношения
+    nd143_nd144 = Column(Float, nullable=True)      # 143Nd/144Nd
+    nd143_nd144_i = Column(Float, nullable=True)    # (143Nd/144Nd)i
+    sm147_nd144 = Column(Float, nullable=True)      # 147Sm/144Nd
+
+    sr87_sr86 = Column(Float, nullable=True)        # 87Sr/86Sr
+    sr87_sr86_i = Column(Float, nullable=True)      # (87Sr/86Sr)i
+    rb87_sr86 = Column(Float, nullable=True)        # 87Rb/86Sr
+
+    hf176_hf177 = Column(Float, nullable=True)      # 176Hf/177Hf
+    lu176_hf177 = Column(Float, nullable=True)      # 176Lu/177Hf
+
+    # Эпсилон-нотации
+    eps_nd = Column(Float, nullable=True)    # εNd
+    eps_sr = Column(Float, nullable=True)    # εSr
+    eps_hf = Column(Float, nullable=True)    # εHf
+
+    # Погрешности (2σ)
+    sigma_2 = Column(Float, nullable=True)           # 2σ
+    sigma_2_1 = Column(Float, nullable=True)         # 2σ_1
+    sigma_2_2 = Column(Float, nullable=True)         # 2σ_2
+    sigma_2_3 = Column(Float, nullable=True)         # 2σ_3
+    sigma_2_4 = Column(Float, nullable=True)         # 2σ_4
+
+    # Возраст
+    age_ma = Column(Float, nullable=True)            # 'Возраст_млн'
+    age_ma_1 = Column(Float, nullable=True)          # 'Возраст_млн_1'
+    age_ma_2 = Column(Float, nullable=True)          # 'Возраст_млн_2'
+
+    # Метаданные
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    def __repr__(self):
+        return f"<Isotopes(pipe_uuid={self.pipe_uuid}, sample_id='{self.sample_id}')>"
+
+    @classmethod
+    def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists='fail'):
+        """
+        Импорт изотопных данных для конкретной трубки
+        """
+        engine = create_engine(connection_string)
+        cls.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        try:
+            # Проверяем существующие данные
+            existing_count = session.query(cls).filter_by(pipe_uuid=pipe_uuid).count()
+
+            if existing_count > 0:
+                if if_exists == 'fail':
+                    raise ValueError(f"Данные для трубки {pipe_uuid} уже существуют ({existing_count} записей)")
+                elif if_exists == 'replace':
+                    deleted = session.query(cls).filter_by(pipe_uuid=pipe_uuid).delete()
+                    session.commit()
+                    print(f"Удалено {deleted} существующих записей")
+                elif if_exists == 'append':
+                    print(f"Добавление к {existing_count} существующим записям")
+
+            # Импортируем новые данные
+            records = df.to_dict('records')
+            imported_count = 0
+
+            for record in records:
+                isotopes = cls(
+                    pipe_uuid=pipe_uuid,
+
+                    # Идентификаторы
+                    sample_id=record.get('Образец'),
+                    sample_id_alt=record.get('Образец_1') or record.get('Образец_2'),
+                    source=record.get('Источник'),
+
+                    # Концентрации
+                    rb_ppm=record.get('Rb_ppm'),
+                    sr_ppm=record.get('Sr_ppm'),
+                    sm_ppm=record.get('Sm_ppm'),
+                    nd_ppm=record.get('Nd_ppm'),
+                    lu_ppm=record.get('Lu_ppm'),
+                    hf_ppm=record.get('Hf_ppm'),
+
+                    # Отношения
+                    rb_sr=record.get('Rb_Sr'),
+                    sm_nd=record.get('Sm_Nd'),
+
+                    # Обратные
+                    one_nd=record.get('1_Nd'),
+                    one_sr=record.get('1_Sr'),
+
+                    # Nd изотопы
+                    nd143_nd144=record.get('143Nd_144Nd'),
+                    nd143_nd144_i=record.get('143Nd_144Nd_i'),
+                    sm147_nd144=record.get('147Sm_144Nd'),
+
+                    # Sr изотопы
+                    sr87_sr86=record.get('87Sr_86Sr'),
+                    sr87_sr86_i=record.get('87Sr_86Sr_i'),
+                    rb87_sr86=record.get('87Rb_86Sr'),
+
+                    # Hf изотопы
+                    hf176_hf177=record.get('176Hf_177Hf'),
+                    lu176_hf177=record.get('176Lu_177Hf'),
+
+                    # Эпсилон
+                    eps_nd=record.get('epsNd'),
+                    eps_sr=record.get('epsSr'),
+                    eps_hf=record.get('epsHf'),
+
+                    # Погрешности
+                    sigma_2=record.get('2σ'),
+                    sigma_2_1=record.get('2σ_1'),
+                    sigma_2_2=record.get('2σ_2'),
+                    sigma_2_3=record.get('2σ_3'),
+                    sigma_2_4=record.get('2σ_4'),
+
+                    # Возраст
+                    age_ma=record.get('Возраст_млн'),
+                    age_ma_1=record.get('Возраст_млн_1'),
+                    age_ma_2=record.get('Возраст_млн_2')
+                )
+
+                session.add(isotopes)
+                imported_count += 1
+
+                if imported_count % 100 == 0:
+                    session.commit()
+
+            session.commit()
+            print(f"Импортировано {imported_count} записей изотопии для трубки {pipe_uuid}")
+            return imported_count
+
+        except Exception as e:
+            session.rollback()
+            print(f"Ошибка при импорте: {e}")
+            raise
+        finally:
+            session.close()
