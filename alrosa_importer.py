@@ -979,7 +979,7 @@ def export_tube(g, tube):
 
     convert_features_to_rdf(G, (tube_name, features), tube_uri)
 
-    # convert_dataframes_to_sql(dataframes, CONNECTION_STRING, pipe_uuid)
+    convert_dataframes_to_sql(dataframes, CONNECTION_STRING, pipe_uuid)
 
     print("INFO: features after conversion:", end=": ")
     pprint(features)
