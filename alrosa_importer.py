@@ -772,7 +772,7 @@ def convert_to_canonic_form_frames(frames, pipe_name):
     for fn in frame_names:
         df = new_frames[fn]
         column_names = df.columns.tolist()
-        keymaster_update(fn, column_names, pipe_name=pipe_name, with_pipe_names=True)
+        keymaster_update(fn, column_names, pipe_name=pipe_name, with_pipe_names=False)
     return new_frames
 
 
@@ -979,7 +979,7 @@ def export_tube(g, tube):
 
     convert_features_to_rdf(G, (tube_name, features), tube_uri)
 
-    convert_dataframes_to_sql(dataframes, CONNECTION_STRING, pipe_uuid)
+    # convert_dataframes_to_sql(dataframes, CONNECTION_STRING, pipe_uuid)
 
     print("INFO: features after conversion:", end=": ")
     pprint(features)
@@ -1022,7 +1022,7 @@ def main():
         export_tube(G, tube_item)
         # break
 
-    # pprint(keymaster)
+    print(keymaster)
 
     # save Graph G in ../gql-server/fuseki/a-box.ttl
 

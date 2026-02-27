@@ -488,7 +488,7 @@ class EPMAAnalysis(Base):
 
             for _, row in df.iterrows():
                 sample_name = row.get("шашка")
-                grain_name = row.get("зерно")
+                grain_name = row.get("зерно", "?")
 
                 if not sample_name or not grain_name:
                     continue
@@ -686,15 +686,9 @@ class LAMAnalysis(Base):
 
     # Other elements
     ga = Column(Float, nullable=True)  # Ga
-    ge = Column(Float, nullable=True)  # Ge (if present)
-    arsenic = Column(
-        "as", Float, nullable=True
-    )  # As (if present) - renamed from 'as' (Python keyword)
     y = Column(Float, nullable=True)  # Y
     sn = Column(Float, nullable=True)  # Sn
-    sb = Column(Float, nullable=True)  # Sb (if present)
     pb = Column(Float, nullable=True)  # Pb
-    bi = Column(Float, nullable=True)  # Bi (if present)
     th = Column(Float, nullable=True)  # Th
     u = Column(Float, nullable=True)  # U
 
@@ -1080,13 +1074,10 @@ class Geochemy(Base):
     # Другие элементы
     y = Column(Float, nullable=True)  # Y
     ga = Column(Float, nullable=True)  # Ga
-    ge = Column(Float, nullable=True)  # Ge (если есть)
     arsenic = Column("as", Float, nullable=True)  # As
     mo = Column(Float, nullable=True)  # Mo
     sn = Column(Float, nullable=True)  # Sn
-    sb = Column(Float, nullable=True)  # Sb (если есть)
     pb = Column(Float, nullable=True)  # Pb
-    bi = Column(Float, nullable=True)  # Bi (если есть)
     be = Column(Float, nullable=True)  # Be
     li = Column(Float, nullable=True)  # Li
 
@@ -1100,7 +1091,7 @@ class Geochemy(Base):
     def import_from_dataframe(cls, df, pipe_uuid, connection_string, if_exists="fail"):
         """
         Импорт геохимических данных для конкретной трубки
-        
+
         Все концентрации элементов в ppm (частей на миллион)
         """
         engine = create_engine(connection_string)
@@ -1139,11 +1130,21 @@ class Geochemy(Base):
                 geochem = cls(
                     pipe_uuid=pipe_uuid,
                     # Идентификаторы
-                    sample_id=record.get("Образец"),  # DataFrame: "Образец" -> model: sample_id
-                    sample_interval=record.get("Образец_интервал_от"),  # DataFrame: "Образец_интервал_от" -> model: sample_interval
-                    borehole=record.get("Скважина"),  # DataFrame: "Скважина" -> model: borehole
-                    rock_type=record.get("Порода"),  # DataFrame: "Порода" -> model: rock_type
-                    source=record.get("Источник"),  # DataFrame: "Источник" -> model: source
+                    sample_id=record.get(
+                        "Образец"
+                    ),  # DataFrame: "Образец" -> model: sample_id
+                    sample_interval=record.get(
+                        "Образец_интервал_от"
+                    ),  # DataFrame: "Образец_интервал_от" -> model: sample_interval
+                    borehole=record.get(
+                        "Скважина"
+                    ),  # DataFrame: "Скважина" -> model: borehole
+                    rock_type=record.get(
+                        "Порода"
+                    ),  # DataFrame: "Порода" -> model: rock_type
+                    source=record.get(
+                        "Источник"
+                    ),  # DataFrame: "Источник" -> model: source
                     number=record.get("п_п"),  # DataFrame: "п_п" -> model: number
                     # LILE (Large Ion Lithophile Elements)
                     rb=clean(record.get("Rb")),  # DataFrame: "Rb" -> model: rb (ppm)
@@ -1183,13 +1184,12 @@ class Geochemy(Base):
                     # Other elements
                     y=clean(record.get("Y")),  # DataFrame: "Y" -> model: y (ppm)
                     ga=clean(record.get("Ga")),  # DataFrame: "Ga" -> model: ga (ppm)
-                    ge=clean(record.get("Ge")),  # DataFrame: "Ge" -> model: ge (ppm)
-                    arsenic=clean(record.get("As")),  # DataFrame: "As" -> model: arsenic (ppm)
+                    arsenic=clean(
+                        record.get("As")
+                    ),  # DataFrame: "As" -> model: arsenic (ppm)
                     mo=clean(record.get("Mo")),  # DataFrame: "Mo" -> model: mo (ppm)
                     sn=clean(record.get("Sn")),  # DataFrame: "Sn" -> model: sn (ppm)
-                    sb=clean(record.get("Sb")),  # DataFrame: "Sb" -> model: sb (ppm)
                     pb=clean(record.get("Pb")),  # DataFrame: "Pb" -> model: pb (ppm)
-                    bi=clean(record.get("Bi")),  # DataFrame: "Bi" -> model: bi (ppm)
                     be=clean(record.get("Be")),  # DataFrame: "Be" -> model: be (ppm)
                     li=clean(record.get("Li")),  # DataFrame: "Li" -> model: li (ppm)
                 )
@@ -1559,7 +1559,6 @@ class Isotopes(Base):
     # Отношения концентраций
     rb_sr = Column(Float, nullable=True)  # Rb/Sr
     sm_nd = Column(Float, nullable=True)  # Sm/Nd
-    lu_hf = Column(Float, nullable=True)  # Lu/Hf (если есть)
 
     # Обратные величины
     one_nd = Column(Float, nullable=True)  # 1/Nd
